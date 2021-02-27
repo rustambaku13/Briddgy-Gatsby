@@ -31,39 +31,8 @@ import plane from "../../images/planeicon.svg"
 import note from "../../images/noteicon.svg"
 import card from "../../images/debit-cardicon.svg"
 import { OrderTypeButton } from "../../components/Cards/Order/OrderTypeButton"
+import { BlogLinkCard } from "../../components/Cards/Blog/BlogLinkCard"
 
-export const query = graphql`
-  query {
-    thrift_shop: file(relativePath: { eq: "thrift_shop.png" }) {
-      childImageSharp {
-        fixed(width: 250) {
-          ...GatsbyImageSharpFixed
-        }
-      }
-    }
-    delivery_bro: file(relativePath: { eq: "delivery_bro.png" }) {
-      childImageSharp {
-        fixed(width: 250) {
-          ...GatsbyImageSharpFixed
-        }
-      }
-    }
-    ipad: file(relativePath: { eq: "ipad.png" }) {
-      childImageSharp {
-        fixed(height: 450) {
-          ...GatsbyImageSharpFixed
-        }
-      }
-    }
-    laptop: file(relativePath: { eq: "laptop.png" }) {
-      childImageSharp {
-        fixed(height: 450) {
-          ...GatsbyImageSharpFixed
-        }
-      }
-    }
-  }
-`
 const AddTrip = ({ data }: PageProps) => {
   return (
     <>
@@ -203,61 +172,48 @@ const AddTrip = ({ data }: PageProps) => {
         <Heading mb="50px" textAlign="center">
           Information for travelers
         </Heading>
-        <Flex mb={8} minH="300px" maxW="800px" w="100%">
-          <Box mr={6} flex="3" bg="purple.200" borderRadius="xl"></Box>
-          <Box flex="2">
-            <Tag colorScheme="purple" mb={5}>
-              New
-            </Tag>
-            <Heading mb={5} fontSize="3xl" as="h3">
-              How to add trip in Briddgy
-            </Heading>
-            <Text variant="secondary">
-              Adding a trip in Briddgy is an essential step of earning. This
-              post is going to guide you using Briddgy.
-            </Text>
-          </Box>
-        </Flex>
+        <BlogLinkCard
+          title={data.blogs.edges[0].node.childMarkdownRemark.frontmatter.title}
+          description={
+            data.blogs.edges[0].node.childMarkdownRemark.frontmatter.description
+          }
+          tags={data.blogs.edges[0].node.childMarkdownRemark.frontmatter.tag}
+          orientation="horizontal"
+        />
         <HStack spacing="8">
-          <Box>
-            <Box mb={5} h="200px" bg="blue.200" borderRadius="xl"></Box>
-            <Tag mb={5} colorScheme="blue">
-              New
-            </Tag>
-            <Heading mb={5} fontSize="2xl" as="h3">
-              Using your baggage space to the most
-            </Heading>
-            <Text variant="secondary">
-              Adding a trip in Briddgy is an essential step of earning. This
-              post is going to guide you using Briddgy.
-            </Text>
-          </Box>
-          <Box>
-            <Box mb={5} h="200px" bg="blue.200" borderRadius="xl"></Box>
-            <Tag mb={5} colorScheme="blue">
-              New
-            </Tag>
-            <Heading mb={5} fontSize="2xl" as="h3">
-              Using your baggage space to the most
-            </Heading>
-            <Text variant="secondary">
-              Adding a trip in Briddgy is an essential step of earning. This
-              post is going to guide you using Briddgy.
-            </Text>
-          </Box>
-          <Box>
-            <Box mb={5} h="200px" bg="blue.200" borderRadius="xl"></Box>
-            <Tag mb={5} colorScheme="blue">
-              New
-            </Tag>
-            <Heading mb={5} fontSize="2xl" as="h3">
-              Using your baggage space to the most
-            </Heading>
-            <Text variant="secondary">
-              Adding a trip in Briddgy is an essential step of earning. This
-              post is going to guide you using Briddgy.
-            </Text>
-          </Box>
+          <BlogLinkCard
+            title={
+              data.blogs.edges[0].node.childMarkdownRemark.frontmatter.title
+            }
+            description={
+              data.blogs.edges[0].node.childMarkdownRemark.frontmatter
+                .description
+            }
+            tags={data.blogs.edges[0].node.childMarkdownRemark.frontmatter.tag}
+            orientation="vertical"
+          />
+          <BlogLinkCard
+            title={
+              data.blogs.edges[0].node.childMarkdownRemark.frontmatter.title
+            }
+            description={
+              data.blogs.edges[0].node.childMarkdownRemark.frontmatter
+                .description
+            }
+            tags={data.blogs.edges[0].node.childMarkdownRemark.frontmatter.tag}
+            orientation="vertical"
+          />
+          <BlogLinkCard
+            title={
+              data.blogs.edges[0].node.childMarkdownRemark.frontmatter.title
+            }
+            description={
+              data.blogs.edges[0].node.childMarkdownRemark.frontmatter
+                .description
+            }
+            tags={data.blogs.edges[0].node.childMarkdownRemark.frontmatter.tag}
+            orientation="vertical"
+          />
         </HStack>
       </Container>
       <Container my="80px" pt={8} maxW="full" as="section">
@@ -356,5 +312,58 @@ const AddTrip = ({ data }: PageProps) => {
     </>
   )
 }
-
+export const query = graphql`
+  query {
+    # Markdowns
+    blogs: allFile(
+      filter: {
+        sourceInstanceName: { eq: "blogs" }
+        childMarkdownRemark: { frontmatter: {} }
+      }
+    ) {
+      edges {
+        node {
+          childMarkdownRemark {
+            frontmatter {
+              description
+              title
+              image
+              date
+              tag
+            }
+          }
+        }
+      }
+    }
+    # Images
+    thrift_shop: file(relativePath: { eq: "thrift_shop.png" }) {
+      childImageSharp {
+        fixed(width: 250) {
+          ...GatsbyImageSharpFixed
+        }
+      }
+    }
+    delivery_bro: file(relativePath: { eq: "delivery_bro.png" }) {
+      childImageSharp {
+        fixed(width: 250) {
+          ...GatsbyImageSharpFixed
+        }
+      }
+    }
+    ipad: file(relativePath: { eq: "ipad.png" }) {
+      childImageSharp {
+        fixed(height: 450) {
+          ...GatsbyImageSharpFixed
+        }
+      }
+    }
+    laptop: file(relativePath: { eq: "laptop.png" }) {
+      childImageSharp {
+        fixed(height: 450) {
+          ...GatsbyImageSharpFixed
+        }
+      }
+    }
+  }
+`
 export default AddTrip
