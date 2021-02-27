@@ -1,0 +1,1 @@
+export { TestimonialLanding } from "./TestimonialLanding"

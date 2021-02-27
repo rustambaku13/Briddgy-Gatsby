@@ -1,0 +1,26 @@
+backend:
+  name: git-gateway
+
+media_folder: static/assets
+public_folder: /assets
+
+collections:
+  - name: product
+    label: Product
+    folder: product
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    fields:
+      - { name: title, label: Title, required: true }
+      - { name: price, label: Price, required: true, widget: "number" }
+      - { name: image, label: Image, required: true, widget: "image" }
+  - name: blog
+    label: Blog
+    folder: blog
+    create: true
+    fields:
+      - { name: path, label: Path }
+      - { name: date, label: Date, widget: datetime }
+      - { name: title, label: Title }
+      - { name: body, label: Body, widget: markdown }
