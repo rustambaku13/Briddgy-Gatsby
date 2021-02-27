@@ -1,5 +1,5 @@
-import { Box, Center, chakra, Flex, Heading, Text } from "@chakra-ui/react"
-import Img from "gatsby-image"
+import { Box, Center, chakra, Flex, Heading, Text, Img } from "@chakra-ui/react"
+
 import React from "react"
 
 const ProductCard = chakra(
@@ -28,7 +28,7 @@ const ProductCard = chakra(
         </Box>
         <Box overflow="hidden" flexGrow={1}>
           <Center minH="300px" m="auto" w="60%">
-            <Img fixed={img} />
+            <Img src={img} />
           </Center>
         </Box>
         <Box p={2}>

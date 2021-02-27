@@ -7,6 +7,7 @@ import {
   Heading,
   HStack,
   Link as CLink,
+  SimpleGrid,
   Text,
 } from "@chakra-ui/react"
 import { graphql } from "gatsby"
@@ -26,9 +27,39 @@ import { ChevronRightIcon } from "../icons/ChevronRight"
 import { ClockIcon } from "../icons/Clock"
 import { HeartIcon } from "../icons/Heart"
 import { SmileIcon } from "../icons/Smile"
+
 export const query = graphql`
   query {
-    # Md
+    # MarkDowns
+    products_vertical: allMarkdownRemark(
+      limit: 2
+      filter: { frontmatter: { vertical: { eq: true } } }
+    ) {
+      edges {
+        node {
+          frontmatter {
+            image
+            price
+            title
+            store
+            date
+            vertical
+          }
+        }
+      }
+    }
+    products_horizontal: markdownRemark(
+      frontmatter: { vertical: { eq: false } }
+    ) {
+      frontmatter {
+        image
+        price
+        title
+        store
+        date
+        vertical
+      }
+    }
 
     # Images
     image1: file(relativePath: { eq: "traveling_man.png" }) {
@@ -346,31 +377,35 @@ const Home = ({ data, intl }: PageProps) => {
               </Link>
             </CLink>
           </Text>
-          <Flex pt="50px" h="400px" w="100%">
-            <HStack d="flex" h="100%" w="100%" spacing="32px">
+          <Flex pt="50px" w="100%">
+            <SimpleGrid columns={4} h="100%" w="100%" spacing="32px">
               <ProductCard
-                productId="1"
-                price="1999"
-                productName="Ipad Air 10.9 inch"
-                store="apple.com"
-                img={data.ipad.childImageSharp.fluid}
+                productId={1}
+                price={data.products_vertical.edges[0].node.frontmatter.price}
+                productName={
+                  data.products_vertical.edges[0].node.frontmatter.title
+                }
+                store={data.products_vertical.edges[0].node.frontmatter.store}
+                img={data.products_vertical.edges[0].node.frontmatter.image}
               />
               <ProductCard
                 productId="1"
-                price="1999"
-                productName="Ipad Air 10.9 inch"
-                store="apple.com"
-                img={data.ipad.childImageSharp.fluid}
+                price={data.products_vertical.edges[1].node.frontmatter.price}
+                productName={
+                  data.products_vertical.edges[1].node.frontmatter.title
+                }
+                store={data.products_vertical.edges[1].node.frontmatter.store}
+                img={data.products_vertical.edges[1].node.frontmatter.image}
               />
               <ProductCard
+                gridColumn="3 / span 2"
                 productId="1"
-                price="3000"
-                flex="1"
-                productName="ASUS Zenbook Pro 15 inch"
-                store="asus.com"
-                img={data.laptop.childImageSharp.fluid}
+                price={data.products_horizontal.frontmatter.price}
+                productName={data.products_horizontal.frontmatter.title}
+                store={data.products_horizontal.frontmatter.store}
+                img={data.products_horizontal.frontmatter.image}
               />
-            </HStack>
+            </SimpleGrid>
           </Flex>
 
           <Heading fontSize="2xl" as="h2" fontWeight="normal" mb={3} mt="75px">
