@@ -34,6 +34,7 @@ import { OrderTypeButton } from "../../components/Cards/Order/OrderTypeButton"
 import { BlogLinkCard } from "../../components/Cards/Blog/BlogLinkCard"
 
 const AddTrip = ({ data }) => {
+  console.log(data)
   return (
     <>
       <Box mb="50px" py="50px" bg="lightBlue.100" minW="100%" as="header">

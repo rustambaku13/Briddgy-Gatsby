@@ -23,6 +23,7 @@ import { HeartIcon } from "../icons/Heart"
 import { SmileIcon } from "../icons/Smile"
 
 const Home = ({ data }) => {
+  console.log(data)
   return (
     <>
       <Box w="100%" mb="100px" as="header">
@@ -357,7 +358,7 @@ const Home = ({ data }) => {
       <Box w="100%" mb="100px" as="section">
         <Container h="100%" maxW="1200px">
           <Heading mb="80px" fontSize="5xl" fontWeight="600" textAlign="center">
-            Why people love Briddgy{" "}
+            Why people love Briddgy
             <HeartIcon display="inline-block" color="red.400" />
           </Heading>
           <TestimonialLanding />
