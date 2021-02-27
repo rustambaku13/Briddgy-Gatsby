@@ -52,7 +52,6 @@ export const AddTripDetailsModal = ({ isOpen, setOpen }) => {
         <ModalFooter>
           <Button
             variant="solid"
-            bgGradient="linear(to-b, red.400,red.600)"
             _hover={{
               bgGradient: "linear(to-b, red.400,red.600)",
               boxShadow: "lg",
