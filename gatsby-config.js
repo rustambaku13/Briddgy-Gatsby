@@ -6,24 +6,8 @@
 module.exports = {
   plugins: [
     `gatsby-plugin-sass`,
-    `gatsby-plugin-sharp`,
-    "gatsby-plugin-netlify-cms",
-    `gatsby-transformer-sharp`,
-    {
-      resolve: `gatsby-transformer-remark`,
-      options: {
-        // CommonMark mode (default: true)
-        commonmark: true,
-        // Footnotes mode (default: true)
-        footnotes: true,
-        // Pedantic mode (default: true)
-        pedantic: true,
-        // GitHub Flavored Markdown mode (default: true)
-        gfm: true,
-        // Plugins configs
-        plugins: [],
-      },
-    },
+    `@chakra-ui/gatsby-plugin`,
+
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -52,13 +36,32 @@ module.exports = {
         path: `${__dirname}/tag`,
       },
     },
-
+    `gatsby-plugin-sharp`,
+    `gatsby-transformer-sharp`,
+    "gatsby-remark-source-name",
+    {
+      resolve: `gatsby-transformer-remark`,
+      options: {
+        // CommonMark mode (default: true)
+        commonmark: true,
+        // Footnotes mode (default: true)
+        footnotes: true,
+        // Pedantic mode (default: true)
+        pedantic: true,
+        // GitHub Flavored Markdown mode (default: true)
+        gfm: true,
+        // Plugins configs
+        plugins: [],
+      },
+    },
+    "gatsby-plugin-netlify-cms",
     {
       resolve: "gatsby-plugin-layout",
       options: {
         component: require.resolve(`./src/components/Layout/index.tsx`),
       },
     },
+
     {
       resolve: `gatsby-plugin-intl`,
       options: {

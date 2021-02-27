@@ -131,40 +131,48 @@ const AddTrip = ({ data }) => {
           </Heading>
           <Grid templateColumns="repeat(3, 1fr)" gap={8}>
             <ProductCard
-              productId="1"
-              price="1999"
-              productName="Ipad Air 10.9 inch"
-              store="apple.com"
-              img={data.ipad.childImageSharp.fixed}
+              productId={1}
+              price={data.products_vertical.edges?.[0].node.frontmatter.price}
+              productName={
+                data.products_vertical.edges?.[0].node.frontmatter.title
+              }
+              store={data.products_vertical.edges?.[0].node.frontmatter.store}
+              img={data.products_vertical.edges?.[0].node.frontmatter.image}
             />
             <ProductCard
               gridColumn="2 / span 2"
               productId="1"
-              price="1999"
-              productName="Ipad Air 10.9 inch"
-              store="apple.com"
-              img={data.ipad.childImageSharp.fixed}
+              price={data.products_horizontal.frontmatter.price}
+              productName={data.products_horizontal.frontmatter.title}
+              store={data.products_horizontal.frontmatter.store}
+              img={data.products_horizontal.frontmatter.image}
             />
             <ProductCard
-              productId="1"
-              price="1999"
-              productName="Ipad Air 10.9 inch"
-              store="apple.com"
-              img={data.ipad.childImageSharp.fixed}
+              productId={1}
+              price={data.products_vertical.edges?.[1].node.frontmatter.price}
+              productName={
+                data.products_vertical.edges?.[1].node.frontmatter.title
+              }
+              store={data.products_vertical.edges?.[1].node.frontmatter.store}
+              img={data.products_vertical.edges?.[1].node.frontmatter.image}
             />
             <ProductCard
-              productId="1"
-              price="1999"
-              productName="Ipad Air 10.9 inch"
-              store="apple.com"
-              img={data.ipad.childImageSharp.fixed}
+              productId={1}
+              price={data.products_vertical.edges?.[1].node.frontmatter.price}
+              productName={
+                data.products_vertical.edges?.[1].node.frontmatter.title
+              }
+              store={data.products_vertical.edges?.[1].node.frontmatter.store}
+              img={data.products_vertical.edges?.[1].node.frontmatter.image}
             />
             <ProductCard
-              productId="1"
-              price="1999"
-              productName="Ipad Air 10.9 inch"
-              store="apple.com"
-              img={data.ipad.childImageSharp.fixed}
+              productId={1}
+              price={data.products_vertical.edges?.[1].node.frontmatter.price}
+              productName={
+                data.products_vertical.edges?.[1].node.frontmatter.title
+              }
+              store={data.products_vertical.edges?.[1].node.frontmatter.store}
+              img={data.products_vertical.edges?.[1].node.frontmatter.image}
             />
           </Grid>
         </Container>
@@ -174,45 +182,28 @@ const AddTrip = ({ data }) => {
           Information for travelers
         </Heading>
         <BlogLinkCard
-          title={data.blogs.edges[0].node.childMarkdownRemark.frontmatter.title}
-          description={
-            data.blogs.edges[0].node.childMarkdownRemark.frontmatter.description
-          }
-          tags={data.blogs.edges[0].node.childMarkdownRemark.frontmatter.tag}
+          title={data.blogs.edges[0].node.frontmatter.title}
+          description={data.blogs.edges[0].node.frontmatter.description}
+          tags={data.blogs.edges[0].node.frontmatter.tag}
           orientation="horizontal"
         />
         <HStack spacing="8">
           <BlogLinkCard
-            title={
-              data.blogs.edges[0].node.childMarkdownRemark.frontmatter.title
-            }
-            description={
-              data.blogs.edges[0].node.childMarkdownRemark.frontmatter
-                .description
-            }
-            tags={data.blogs.edges[0].node.childMarkdownRemark.frontmatter.tag}
+            title={data.blogs.edges[0].node.frontmatter.title}
+            description={data.blogs.edges[0].node.frontmatter.description}
+            tags={data.blogs.edges[0].node.frontmatter.tag}
             orientation="vertical"
           />
           <BlogLinkCard
-            title={
-              data.blogs.edges[0].node.childMarkdownRemark.frontmatter.title
-            }
-            description={
-              data.blogs.edges[0].node.childMarkdownRemark.frontmatter
-                .description
-            }
-            tags={data.blogs.edges[0].node.childMarkdownRemark.frontmatter.tag}
+            title={data.blogs.edges[0].node.frontmatter.title}
+            description={data.blogs.edges[0].node.frontmatter.description}
+            tags={data.blogs.edges[0].node.frontmatter.tag}
             orientation="vertical"
           />
           <BlogLinkCard
-            title={
-              data.blogs.edges[0].node.childMarkdownRemark.frontmatter.title
-            }
-            description={
-              data.blogs.edges[0].node.childMarkdownRemark.frontmatter
-                .description
-            }
-            tags={data.blogs.edges[0].node.childMarkdownRemark.frontmatter.tag}
+            title={data.blogs.edges[0].node.frontmatter.title}
+            description={data.blogs.edges[0].node.frontmatter.description}
+            tags={data.blogs.edges[0].node.frontmatter.tag}
             orientation="vertical"
           />
         </HStack>
@@ -315,45 +306,67 @@ const AddTrip = ({ data }) => {
 }
 export const query = graphql`
   query {
-    products_horizontal: file(
-      sourceInstanceName: { eq: "products" }
-      childMarkdownRemark: { frontmatter: { vertical: { eq: false } } }
+    products_horizontal: markdownRemark(
+      fields: { sourceName: { eq: "products" } }
+      frontmatter: { vertical: { eq: false } }
     ) {
-      sourceInstanceName
-      childMarkdownRemark {
-        frontmatter {
-          title
-          date
-          store
-          vertical
-          price
-          image
-          templateKey
-          description
-          featuredpost
-          featuredimage
-          tag
-          color
+      frontmatter {
+        title
+        date
+        store
+        vertical
+        price
+        image
+        templateKey
+        description
+        featuredpost
+        featuredimage
+        tag
+        color
+      }
+    }
+    products_vertical: allMarkdownRemark(
+      filter: {
+        fields: { sourceName: { eq: "products" } }
+        frontmatter: { vertical: { eq: true } }
+      }
+      limit: 4
+    ) {
+      edges {
+        node {
+          frontmatter {
+            title
+            date
+            store
+            vertical
+            price
+            image
+            templateKey
+            description
+            featuredpost
+            featuredimage
+            tag
+            color
+          }
         }
       }
     }
 
-    blogs: allFile(
+    blogs: allMarkdownRemark(
       filter: {
-        sourceInstanceName: { eq: "blogs" }
-        childMarkdownRemark: { frontmatter: {} }
+        fields: { sourceName: { eq: "blogs" } }
+        frontmatter: { scoppe_tag: { eq: "Orderer" } }
       }
+      limit: 4
     ) {
       edges {
         node {
-          childMarkdownRemark {
-            frontmatter {
-              description
-              title
-              image
-              date
-              tag
-            }
+          frontmatter {
+            description
+            title
+            image
+            date
+            tag
           }
         }
       }
