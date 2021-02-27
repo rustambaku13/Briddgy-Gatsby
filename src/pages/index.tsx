@@ -25,7 +25,6 @@ import { SmileIcon } from "../icons/Smile"
 
 export const query = graphql`
   query {
-    # MarkDowns
     products_vertical: allFile(
       filter: {
         sourceInstanceName: { eq: "products" }
@@ -78,7 +77,6 @@ export const query = graphql`
       }
     }
 
-    # Images
     image1: file(relativePath: { eq: "traveling_man.png" }) {
       childImageSharp {
         fluid {
@@ -146,6 +144,7 @@ export const query = graphql`
 `
 
 const Home = ({ data, intl }: PageProps) => {
+  console.log(data)
   return (
     <>
       <Box w="100%" mb="100px" as="header">
@@ -397,7 +396,7 @@ const Home = ({ data, intl }: PageProps) => {
           </Text>
           <Flex pt="50px" w="100%">
             <SimpleGrid columns={4} h="100%" w="100%" spacing="32px">
-              <ProductCard
+              {/* <ProductCard
                 productId={1}
                 price={
                   data.products_vertical.edges?.[0].node.childMarkdownRemark
@@ -450,7 +449,7 @@ const Home = ({ data, intl }: PageProps) => {
                 img={
                   data.products_horizontal.childMarkdownRemark.frontmatter.image
                 }
-              />
+              /> */}
             </SimpleGrid>
           </Flex>
 
