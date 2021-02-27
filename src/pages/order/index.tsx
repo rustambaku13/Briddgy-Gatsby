@@ -18,7 +18,7 @@ import {
 } from "@chakra-ui/react"
 import Img from "gatsby-image"
 import { ChevronRightIcon } from "../../icons/ChevronRight"
-import { PageProps, graphql } from "gatsby"
+import { graphql } from "gatsby"
 import React from "react"
 import CheckIcon from "../../icons/Check"
 import { Link } from "gatsby-plugin-intl"
@@ -33,7 +33,7 @@ import card from "../../images/debit-cardicon.svg"
 import { OrderTypeButton } from "../../components/Cards/Order/OrderTypeButton"
 import { BlogLinkCard } from "../../components/Cards/Blog/BlogLinkCard"
 
-const AddTrip = ({ data }: PageProps) => {
+const AddTrip = ({ data }) => {
   return (
     <>
       <Box mb="50px" py="50px" bg="lightBlue.100" minW="100%" as="header">

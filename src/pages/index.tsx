@@ -9,7 +9,7 @@ import {
   SimpleGrid,
   Text,
 } from "@chakra-ui/react"
-import { graphql, PageProps } from "gatsby"
+import { graphql } from "gatsby"
 import Img from "gatsby-image"
 import { injectIntl, Link } from "gatsby-plugin-intl"
 import React from "react"
@@ -23,7 +23,7 @@ import { ClockIcon } from "../icons/Clock"
 import { HeartIcon } from "../icons/Heart"
 import { SmileIcon } from "../icons/Smile"
 
-const Home = ({ data }: PageProps) => {
+const Home = ({ data }) => {
   return (
     <>
       <Box w="100%" mb="100px" as="header">
