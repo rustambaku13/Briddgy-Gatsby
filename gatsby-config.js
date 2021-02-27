@@ -50,21 +50,7 @@ module.exports = {
         // GitHub Flavored Markdown mode (default: true)
         gfm: true,
         // Plugins configs
-        plugins: [
-          {
-            resolve: "gatsby-remark-relative-images",
-            options: {
-              staticFolderName: "static",
-              name: "uploads",
-            },
-          },
-          {
-            resolve: "gatsby-remark-images",
-            options: {
-              maxWidth: 2048,
-            },
-          },
-        ],
+        plugins: [],
       },
     },
     "gatsby-plugin-netlify-cms",
