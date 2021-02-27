@@ -8,16 +8,6 @@ module.exports = {
   plugins: [
     `gatsby-plugin-sass`,
     `gatsby-plugin-sharp`,
-    // {
-    //   resolve: `gatsby-transformer-remark`,
-    //   options: {
-    //     plugins: [
-    //       {
-    //         resolve: `gatsby-remark-images`,
-    //       },
-    //     ],
-    //   },
-    // },
     "gatsby-plugin-netlify-cms",
     `gatsby-transformer-sharp`,
     {
@@ -32,7 +22,7 @@ module.exports = {
         // GitHub Flavored Markdown mode (default: true)
         gfm: true,
         // Plugins configs
-        plugins: [],
+        plugins: [{ resolve: `gatsby-remark-images` }],
       },
     },
     {
