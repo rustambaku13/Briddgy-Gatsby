@@ -1,7 +1,7 @@
 backend:
   name: git-gateway
 
-media_folder: src/images/markdown
+media_folder: static/assets
 public_folder: /assets
 
 collections:
