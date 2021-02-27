@@ -18,22 +18,30 @@ import {
 } from "@chakra-ui/react"
 import Img from "gatsby-image"
 import { ChevronRightIcon } from "../../icons/ChevronRight"
-import { PageProps } from "gatsby"
+import { PageProps, graphql } from "gatsby"
 import React from "react"
 import CheckIcon from "../../icons/Check"
 import { Link } from "gatsby-plugin-intl"
 import BulletTriangleIcon from "../../icons/BulletTriangle"
-import { ProductCard } from "../../components/Cards/TravelDestination"
+import { ProductCard } from "../../components/Cards/"
 import { StepCircle } from "../../components/Misc/StepCircle"
 
 import earth from "../../images/earthicon.svg"
 import plane from "../../images/planeicon.svg"
 import note from "../../images/noteicon.svg"
 import card from "../../images/debit-cardicon.svg"
+import { OrderTypeButton } from "../../components/Cards/Order/OrderTypeButton"
 
 export const query = graphql`
   query {
     thrift_shop: file(relativePath: { eq: "thrift_shop.png" }) {
+      childImageSharp {
+        fixed(width: 250) {
+          ...GatsbyImageSharpFixed
+        }
+      }
+    }
+    delivery_bro: file(relativePath: { eq: "delivery_bro.png" }) {
       childImageSharp {
         fixed(width: 250) {
           ...GatsbyImageSharpFixed
@@ -75,7 +83,7 @@ const AddTrip = ({ data }: PageProps) => {
               mr={4}
               p={1}
               borderColor="blue.600"
-              color="gray.400"
+              color="blue.600"
               borderWidth="1px"
               borderRadius="50%"
             >
@@ -88,7 +96,7 @@ const AddTrip = ({ data }: PageProps) => {
               mr={4}
               p={1}
               borderColor="blue.600"
-              color="gray.400"
+              color="blue.600"
               borderWidth="1px"
               borderRadius="50%"
             >
@@ -117,12 +125,10 @@ const AddTrip = ({ data }: PageProps) => {
               h="50px"
               w="200px"
               p={0}
-              bg="red.400"
-              color="white"
+              variant="red_gradient"
               mt={"4px"}
               mr="8px"
               borderRadius="50px"
-              variant="solid"
             >
               Create Order
             </Button>
@@ -137,46 +143,14 @@ const AddTrip = ({ data }: PageProps) => {
             OR
           </Text>
           <Flex w="100%" justifyContent="space-between">
-            <Box
-              bg="white"
-              w="450px"
-              minH="300px"
-              pos="relative"
-              cursor="pointer"
-              px={5}
-              pt={8}
-              borderRadius="10px"
-              borderWidth="1px"
-              boxShadow="md"
-            >
-              <Heading w="190px" lineHeight="tall" fontSize="3xl">
-                Order from offline stores
-              </Heading>
-              <Img
-                style={{ position: "absolute", bottom: 0, right: 0 }}
-                fixed={data.thrift_shop.childImageSharp.fixed}
-              />
-            </Box>
-            <Box
-              bg="white"
-              w="450px"
-              minH="300px"
-              pos="relative"
-              cursor="pointer"
-              px={5}
-              pt={8}
-              borderRadius="10px"
-              borderWidth="1px"
-              boxShadow="md"
-            >
-              <Heading w="190px" lineHeight="tall" fontSize="3xl">
-                Order from offline stores
-              </Heading>
-              <Img
-                style={{ position: "absolute", bottom: 0, right: 0 }}
-                fixed={data.thrift_shop.childImageSharp.fixed}
-              />
-            </Box>
+            <OrderTypeButton
+              fixedImage={data.thrift_shop.childImageSharp.fixed}
+              title="Order from offline stores"
+            />
+            <OrderTypeButton
+              fixedImage={data.delivery_bro.childImageSharp.fixed}
+              title="Send your parcels"
+            />
           </Flex>
         </Container>
       </Box>

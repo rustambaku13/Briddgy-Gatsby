@@ -23,6 +23,14 @@ collections:
         }
       - { name: price, label: Price, required: true, widget: "number" }
       - { name: image, label: Image, required: true, widget: "image" }
+  - name: "tag"
+    label: "Tag"
+    folder: "tag"
+    create: true
+    delete: true
+    fields:
+      - { name: title, label: Tag Name, required: true, widget: "string" }
+      - { name: color, label: Tag Color, required: true, widget: "color" }
   - name: "blog"
     label: "Blog"
     folder: "blog"
@@ -42,4 +50,12 @@ collections:
       - { label: "Featured Post", name: "featuredpost", widget: "boolean" }
       - { label: "Featured Image", name: "featuredimage", widget: image }
       - { label: "Body", name: "body", widget: "markdown" }
-      - { label: "Tags", name: "tags", widget: "list" }
+      - {
+          label: "Tags",
+          name: "tags",
+          widget: "relation",
+          collection: "tag",
+          value_field: "title",
+          search_fields: "title",
+          display_fields: ["title", "color"],
+        }

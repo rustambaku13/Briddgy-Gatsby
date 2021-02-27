@@ -18,7 +18,13 @@ export default {
     },
   },
   // Styles for the visual style variations
+
   variants: {
+    red_gradient: {
+      bgGradient: "linear(to-b, red.400,red.600)",
+      color: "white",
+    },
+
     primary: {
       bg: "blue.400",
       color: "white",

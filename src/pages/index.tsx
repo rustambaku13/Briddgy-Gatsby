@@ -17,10 +17,7 @@ import React from "react"
 import { PageProps } from "gatsby"
 import { Swiper, SwiperSlide } from "swiper/react"
 import "swiper/swiper.scss"
-import {
-  ProductCard,
-  TravelDestinationCard,
-} from "../components/Cards/TravelDestination"
+import { ProductCard, TravelDestinationCard } from "../components/Cards/"
 import { TestimonialLanding } from "../components/Testimonials"
 import { CalendarIcon } from "../icons/Calendar"
 import { ChevronRightIcon } from "../icons/ChevronRight"
