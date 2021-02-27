@@ -28,6 +28,9 @@ import { HeartIcon } from "../icons/Heart"
 import { SmileIcon } from "../icons/Smile"
 export const query = graphql`
   query {
+    # Md
+
+    # Images
     image1: file(relativePath: { eq: "traveling_man.png" }) {
       childImageSharp {
         fluid {
@@ -190,12 +193,22 @@ const Home = ({ data, intl }: PageProps) => {
               </Link>
             </CLink>
           </Text>
-          <Flex pt="50px" w="100%">
+          <Box pt="50px" w="100%">
             <Swiper
               pagination={{ clickable: true }}
               scrollbar={{ draggable: true }}
-              spaceBetween={20}
-              width={270}
+              spaceBetween={40}
+              breakpoints={{
+                450: {
+                  slidesPerView: 2,
+                },
+                768: {
+                  slidesPerView: 3,
+                },
+                1024: {
+                  slidesPerView: 4,
+                },
+              }}
             >
               <SwiperSlide>
                 <TravelDestinationCard
@@ -238,7 +251,7 @@ const Home = ({ data, intl }: PageProps) => {
                 />
               </SwiperSlide>
             </Swiper>
-          </Flex>
+          </Box>
           <Text mt="40px" fontSize="2xl" textAlign="right">
             Check our{" "}
             <Link to="/advice">

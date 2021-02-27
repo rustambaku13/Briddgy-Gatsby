@@ -13,6 +13,14 @@ collections:
     slug: "{{slug}}"
     fields:
       - { name: title, label: Title, required: true }
+      - { name: date, label: Date Published, widget: "date", required: true }
+      - { name: store, label: Store, widget: "string", required: true }
+      - {
+          name: vertical,
+          label: Vertically Oriented,
+          widget: "boolean",
+          required: true,
+        }
       - { name: price, label: Price, required: true, widget: "number" }
       - { name: image, label: Image, required: true, widget: "image" }
   - name: blog
