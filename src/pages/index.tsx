@@ -274,7 +274,7 @@ const Home = ({ data }) => {
             </CLink>
           </Text>
           <Flex pt="50px" w="100%">
-            {/* <SimpleGrid columns={4} h="100%" w="100%" spacing="32px">
+            <SimpleGrid columns={4} h="100%" w="100%" spacing="32px">
               <ProductCard
                 productId={1}
                 price={
@@ -329,7 +329,7 @@ const Home = ({ data }) => {
                   data.products_horizontal.childMarkdownRemark.frontmatter.image
                 }
               />
-            </SimpleGrid> */}
+            </SimpleGrid>
           </Flex>
 
           <Heading fontSize="2xl" as="h2" fontWeight="normal" mb={3} mt="75px">
