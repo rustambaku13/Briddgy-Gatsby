@@ -315,11 +315,7 @@ const AddTrip = ({ data }) => {
 }
 export const query = graphql`
   query {
-    # Markdowns
-    products_horizontal: file(
-      sourceInstanceName: { eq: "products" }
-      childMarkdownRemark: { frontmatter: { vertical: { eq: false } } }
-    ) {
+    products_horizontal: file(sourceInstanceName: { eq: "products" }) {
       sourceInstanceName
       childMarkdownRemark {
         frontmatter {
