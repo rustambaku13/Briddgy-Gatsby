@@ -34,6 +34,7 @@ import { OrderTypeButton } from "../../components/Cards/Order/OrderTypeButton"
 import { BlogLinkCard } from "../../components/Cards/Blog/BlogLinkCard"
 
 const AddTrip = ({ data }: PageProps) => {
+  console.log(data)
   return (
     <>
       <Box mb="50px" py="50px" bg="lightBlue.100" minW="100%" as="header">
@@ -315,6 +316,29 @@ const AddTrip = ({ data }: PageProps) => {
 export const query = graphql`
   query {
     # Markdowns
+    products_horizontal: file(
+      sourceInstanceName: { eq: "products" }
+      childMarkdownRemark: { frontmatter: { vertical: { eq: false } } }
+    ) {
+      sourceInstanceName
+      childMarkdownRemark {
+        frontmatter {
+          title
+          date
+          store
+          vertical
+          price
+          image
+          templateKey
+          description
+          featuredpost
+          featuredimage
+          tag
+          color
+        }
+      }
+    }
+
     blogs: allFile(
       filter: {
         sourceInstanceName: { eq: "blogs" }
