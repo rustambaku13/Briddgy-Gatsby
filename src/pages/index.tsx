@@ -28,33 +28,55 @@ import { SmileIcon } from "../icons/Smile"
 export const query = graphql`
   query {
     # MarkDowns
-    products_vertical: allMarkdownRemark(
+    products_vertical: allFile(
+      filter: {
+        sourceInstanceName: { eq: "products" }
+        childMarkdownRemark: { frontmatter: { vertical: { eq: true } } }
+      }
       limit: 2
-      filter: { frontmatter: { vertical: { eq: true } } }
     ) {
       edges {
         node {
-          frontmatter {
-            image
-            price
-            title
-            store
-            date
-            vertical
+          sourceInstanceName
+          childMarkdownRemark {
+            frontmatter {
+              title
+              date
+              store
+              vertical
+              price
+              image
+              templateKey
+              description
+              featuredpost
+              featuredimage
+              tag
+              color
+            }
           }
         }
       }
     }
-    products_horizontal: markdownRemark(
-      frontmatter: { vertical: { eq: false } }
+    products_horizontal: file(
+      sourceInstanceName: { eq: "products" }
+      childMarkdownRemark: { frontmatter: { vertical: { eq: false } } }
     ) {
-      frontmatter {
-        image
-        price
-        title
-        store
-        date
-        vertical
+      sourceInstanceName
+      childMarkdownRemark {
+        frontmatter {
+          title
+          date
+          store
+          vertical
+          price
+          image
+          templateKey
+          description
+          featuredpost
+          featuredimage
+          tag
+          color
+        }
       }
     }
 
@@ -378,29 +400,57 @@ const Home = ({ data, intl }: PageProps) => {
             <SimpleGrid columns={4} h="100%" w="100%" spacing="32px">
               <ProductCard
                 productId={1}
-                price={data.products_vertical.edges[0].node.frontmatter.price}
-                productName={
-                  data.products_vertical.edges[0].node.frontmatter.title
+                price={
+                  data.products_vertical.edges[0].node.childMarkdownRemark
+                    .frontmatter.price
                 }
-                store={data.products_vertical.edges[0].node.frontmatter.store}
-                img={data.products_vertical.edges[0].node.frontmatter.image}
+                productName={
+                  data.products_vertical.edges[0].node.childMarkdownRemark
+                    .frontmatter.title
+                }
+                store={
+                  data.products_vertical.edges[0].node.childMarkdownRemark
+                    .frontmatter.store
+                }
+                img={
+                  data.products_vertical.edges[0].node.childMarkdownRemark
+                    .frontmatter.image
+                }
               />
               <ProductCard
                 productId="1"
-                price={data.products_vertical.edges[1].node.frontmatter.price}
-                productName={
-                  data.products_vertical.edges[1].node.frontmatter.title
+                price={
+                  data.products_vertical.edges[1].node.childMarkdownRemark
+                    .frontmatter.price
                 }
-                store={data.products_vertical.edges[1].node.frontmatter.store}
-                img={data.products_vertical.edges[1].node.frontmatter.image}
+                productName={
+                  data.products_vertical.edges[1].node.childMarkdownRemark
+                    .frontmatter.title
+                }
+                store={
+                  data.products_vertical.edges[1].node.childMarkdownRemark
+                    .frontmatter.store
+                }
+                img={
+                  data.products_vertical.edges[1].node.childMarkdownRemark
+                    .frontmatter.image
+                }
               />
               <ProductCard
                 gridColumn="3 / span 2"
                 productId="1"
-                price={data.products_horizontal.frontmatter.price}
-                productName={data.products_horizontal.frontmatter.title}
-                store={data.products_horizontal.frontmatter.store}
-                img={data.products_horizontal.frontmatter.image}
+                price={
+                  data.products_horizontal.childMarkdownRemark.frontmatter.price
+                }
+                productName={
+                  data.products_horizontal.childMarkdownRemark.frontmatter.title
+                }
+                store={
+                  data.products_horizontal.childMarkdownRemark.frontmatter.store
+                }
+                img={
+                  data.products_horizontal.childMarkdownRemark.frontmatter.image
+                }
               />
             </SimpleGrid>
           </Flex>

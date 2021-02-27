@@ -34,10 +34,23 @@ module.exports = {
     },
     {
       resolve: `gatsby-source-filesystem`,
-
       options: {
         name: "products",
         path: `${__dirname}/product`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: "blogs",
+        path: `${__dirname}/blog`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        name: "tags",
+        path: `${__dirname}/tag`,
       },
     },
 
