@@ -52,7 +52,7 @@ module.exports = {
         plugins: [],
       },
     },
-
+    "gatsby-plugin-netlify-cms",
     {
       resolve: "gatsby-plugin-layout",
       options: {
@@ -68,6 +68,5 @@ module.exports = {
         redirect: false,
       },
     },
-    "gatsby-plugin-netlify-cms",
   ],
 }
