@@ -23,17 +23,18 @@ collections:
         }
       - { name: price, label: Price, required: true, widget: "number" }
       - { name: image, label: Image, required: true, widget: "image" }
-  - name: "tag"
-    label: "Tag"
-    folder: "tag"
+  - name: tag
+    label: Tag
+    folder: tag
     create: true
     delete: true
     fields:
       - { name: title, label: Tag Name, required: true, widget: "string" }
       - { name: color, label: Tag Color, required: true, widget: "color" }
-  - name: "blog"
-    label: "Blog"
-    folder: "blog"
+
+  - name: blog
+    label: Blog
+    folder: blog
     create: true
     delete: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
@@ -52,10 +53,10 @@ collections:
       - { label: "Body", name: "body", widget: "markdown" }
       - {
           label: "Tags",
-          name: "tags",
+          name: "tag",
           widget: "relation",
           collection: "tag",
           value_field: "title",
-          search_fields: "title",
+          search_fields: ["title"],
           display_fields: ["title", "color"],
         }
