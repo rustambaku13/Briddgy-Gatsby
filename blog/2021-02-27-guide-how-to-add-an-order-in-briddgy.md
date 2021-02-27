@@ -6,6 +6,8 @@ description: Adding a trip in Briddgy is an essential step of earning. This post
   is going to guide you using Briddgy.
 featuredpost: false
 featuredimage: https://images.unsplash.com/photo-1589828994425-cee7c6e8dbf8?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=1386&q=80
-tag: New
+tag:
+  - New
+  - Orderer
 ---
 Salam Alexus
