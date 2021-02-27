@@ -280,38 +280,38 @@ const Home = ({ data, intl }: PageProps) => {
               <ProductCard
                 productId={1}
                 price={
-                  data.products_vertical.edges[0].node.childMarkdownRemark
+                  data.products_vertical.edges?.[0].node.childMarkdownRemark
                     .frontmatter.price
                 }
                 productName={
-                  data.products_vertical.edges[0].node.childMarkdownRemark
+                  data.products_vertical.edges?.[0].node.childMarkdownRemark
                     .frontmatter.title
                 }
                 store={
-                  data.products_vertical.edges[0].node.childMarkdownRemark
+                  data.products_vertical.edges?.[0].node.childMarkdownRemark
                     .frontmatter.store
                 }
                 img={
-                  data.products_vertical.edges[0].node.childMarkdownRemark
+                  data.products_vertical.edges?.[0].node.childMarkdownRemark
                     .frontmatter.image
                 }
               />
               <ProductCard
                 productId="1"
                 price={
-                  data.products_vertical.edges[1].node.childMarkdownRemark
+                  data.products_vertical.edges?.[1].node.childMarkdownRemark
                     .frontmatter.price
                 }
                 productName={
-                  data.products_vertical.edges[1].node.childMarkdownRemark
+                  data.products_vertical.edges?.[1].node.childMarkdownRemark
                     .frontmatter.title
                 }
                 store={
-                  data.products_vertical.edges[1].node.childMarkdownRemark
+                  data.products_vertical.edges?.[1].node.childMarkdownRemark
                     .frontmatter.store
                 }
                 img={
-                  data.products_vertical.edges[1].node.childMarkdownRemark
+                  data.products_vertical.edges?.[1].node.childMarkdownRemark
                     .frontmatter.image
                 }
               />
