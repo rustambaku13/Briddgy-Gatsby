@@ -61,3 +61,12 @@ collections:
           search_fields: ["title"],
           display_fields: ["title", "color"],
         }
+      - {
+          label: "Scope Tag",
+          name: "scoppe_tag",
+          widget: "relation",
+          collection: "tag",
+          value_field: "title",
+          search_fields: ["title"],
+          display_fields: ["title", "color"],
+        }
