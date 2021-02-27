@@ -5,16 +5,14 @@ import {
   Container,
   Flex,
   Heading,
-  HStack,
   Link as CLink,
   SimpleGrid,
   Text,
 } from "@chakra-ui/react"
-import { graphql } from "gatsby"
+import { graphql, PageProps } from "gatsby"
 import Img from "gatsby-image"
 import { injectIntl, Link } from "gatsby-plugin-intl"
 import React from "react"
-import { PageProps } from "gatsby"
 import { Swiper, SwiperSlide } from "swiper/react"
 import "swiper/swiper.scss"
 import { ProductCard, TravelDestinationCard } from "../components/Cards/"
@@ -24,6 +22,128 @@ import { ChevronRightIcon } from "../icons/ChevronRight"
 import { ClockIcon } from "../icons/Clock"
 import { HeartIcon } from "../icons/Heart"
 import { SmileIcon } from "../icons/Smile"
+
+export const query = graphql`
+  query {
+    # MarkDowns
+    products_vertical: allFile(
+      filter: {
+        sourceInstanceName: { eq: "products" }
+        childMarkdownRemark: { frontmatter: { vertical: { eq: true } } }
+      }
+      limit: 2
+    ) {
+      edges {
+        node {
+          sourceInstanceName
+          childMarkdownRemark {
+            frontmatter {
+              title
+              date
+              store
+              vertical
+              price
+              image
+              templateKey
+              description
+              featuredpost
+              featuredimage
+              tag
+              color
+            }
+          }
+        }
+      }
+    }
+    products_horizontal: file(
+      sourceInstanceName: { eq: "products" }
+      childMarkdownRemark: { frontmatter: { vertical: { eq: false } } }
+    ) {
+      sourceInstanceName
+      childMarkdownRemark {
+        frontmatter {
+          title
+          date
+          store
+          vertical
+          price
+          image
+          templateKey
+          description
+          featuredpost
+          featuredimage
+          tag
+          color
+        }
+      }
+    }
+
+    # Images
+    image1: file(relativePath: { eq: "traveling_man.png" }) {
+      childImageSharp {
+        fluid {
+          ...GatsbyImageSharpFluid
+        }
+      }
+    }
+    image2: file(relativePath: { eq: "shopping_woman.png" }) {
+      childImageSharp {
+        fluid {
+          ...GatsbyImageSharpFluid
+        }
+      }
+    }
+    app: file(relativePath: { eq: "application_in_hand.png" }) {
+      childImageSharp {
+        fluid {
+          ...GatsbyImageSharpFluid
+        }
+      }
+    }
+    az: file(relativePath: { eq: "azerbaijan.jpg" }) {
+      childImageSharp {
+        fluid {
+          ...GatsbyImageSharpFluid
+        }
+      }
+    }
+    ru: file(relativePath: { eq: "russia.jpg" }) {
+      childImageSharp {
+        fluid {
+          ...GatsbyImageSharpFluid
+        }
+      }
+    }
+    tr: file(relativePath: { eq: "turkey.jpg" }) {
+      childImageSharp {
+        fluid {
+          ...GatsbyImageSharpFluid
+        }
+      }
+    }
+    en: file(relativePath: { eq: "england.jpg" }) {
+      childImageSharp {
+        fluid {
+          ...GatsbyImageSharpFluid
+        }
+      }
+    }
+    ipad: file(relativePath: { eq: "ipad.png" }) {
+      childImageSharp {
+        fluid {
+          ...GatsbyImageSharpFluid
+        }
+      }
+    }
+    laptop: file(relativePath: { eq: "laptop.png" }) {
+      childImageSharp {
+        fluid {
+          ...GatsbyImageSharpFluid
+        }
+      }
+    }
+  }
+`
 
 const Home = ({ data, intl }: PageProps) => {
   return (
@@ -372,127 +492,5 @@ const Home = ({ data, intl }: PageProps) => {
     </>
   )
 }
-
-export const query = graphql`
-  query {
-    # MarkDowns
-    products_vertical: allFile(
-      filter: {
-        sourceInstanceName: { eq: "products" }
-        childMarkdownRemark: { frontmatter: { vertical: { eq: true } } }
-      }
-      limit: 2
-    ) {
-      edges {
-        node {
-          sourceInstanceName
-          childMarkdownRemark {
-            frontmatter {
-              title
-              date
-              store
-              vertical
-              price
-              image
-              templateKey
-              description
-              featuredpost
-              featuredimage
-              tag
-              color
-            }
-          }
-        }
-      }
-    }
-    products_horizontal: file(
-      sourceInstanceName: { eq: "products" }
-      childMarkdownRemark: { frontmatter: { vertical: { eq: false } } }
-    ) {
-      sourceInstanceName
-      childMarkdownRemark {
-        frontmatter {
-          title
-          date
-          store
-          vertical
-          price
-          image
-          templateKey
-          description
-          featuredpost
-          featuredimage
-          tag
-          color
-        }
-      }
-    }
-
-    # Images
-    image1: file(relativePath: { eq: "traveling_man.png" }) {
-      childImageSharp {
-        fluid {
-          ...GatsbyImageSharpFluid
-        }
-      }
-    }
-    image2: file(relativePath: { eq: "shopping_woman.png" }) {
-      childImageSharp {
-        fluid {
-          ...GatsbyImageSharpFluid
-        }
-      }
-    }
-    app: file(relativePath: { eq: "application_in_hand.png" }) {
-      childImageSharp {
-        fluid {
-          ...GatsbyImageSharpFluid
-        }
-      }
-    }
-    az: file(relativePath: { eq: "azerbaijan.jpg" }) {
-      childImageSharp {
-        fluid {
-          ...GatsbyImageSharpFluid
-        }
-      }
-    }
-    ru: file(relativePath: { eq: "russia.jpg" }) {
-      childImageSharp {
-        fluid {
-          ...GatsbyImageSharpFluid
-        }
-      }
-    }
-    tr: file(relativePath: { eq: "turkey.jpg" }) {
-      childImageSharp {
-        fluid {
-          ...GatsbyImageSharpFluid
-        }
-      }
-    }
-    en: file(relativePath: { eq: "england.jpg" }) {
-      childImageSharp {
-        fluid {
-          ...GatsbyImageSharpFluid
-        }
-      }
-    }
-    ipad: file(relativePath: { eq: "ipad.png" }) {
-      childImageSharp {
-        fluid {
-          ...GatsbyImageSharpFluid
-        }
-      }
-    }
-    laptop: file(relativePath: { eq: "laptop.png" }) {
-      childImageSharp {
-        fluid {
-          ...GatsbyImageSharpFluid
-        }
-      }
-    }
-  }
-`
 
 export default injectIntl(Home)
