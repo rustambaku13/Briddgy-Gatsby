@@ -276,7 +276,7 @@ const Home = ({ data }: PageProps) => {
           </Text>
           <Flex pt="50px" w="100%">
             <SimpleGrid columns={4} h="100%" w="100%" spacing="32px">
-              <ProductCard
+              {/* <ProductCard
                 productId={1}
                 price={
                   data.products_vertical.edges?.[0].node.childMarkdownRemark
@@ -329,7 +329,7 @@ const Home = ({ data }: PageProps) => {
                 img={
                   data.products_horizontal.childMarkdownRemark.frontmatter.image
                 }
-              />
+              /> */}
             </SimpleGrid>
           </Flex>
 
