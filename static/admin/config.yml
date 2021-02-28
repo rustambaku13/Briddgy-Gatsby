@@ -32,8 +32,7 @@ collections:
       - { name: title, label: Tag Name, required: true, widget: "string" }
       - { name: color, label: Tag Color, required: true, widget: "color" }
 
-
-   - name: testimonial
+  - name: testimonial
     label: Testimonial
     folder: testimonial
     create: true
@@ -70,7 +69,6 @@ collections:
           search_fields: ["title"],
           display_fields: ["title", "color"],
         }
-
 
   - name: blog
     label: Blog
