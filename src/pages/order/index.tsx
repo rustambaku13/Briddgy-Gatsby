@@ -32,6 +32,7 @@ import note from "../../images/noteicon.svg"
 import card from "../../images/debit-cardicon.svg"
 import { OrderTypeButton } from "../../components/Cards/Order/OrderTypeButton"
 import { BlogLinkCard } from "../../components/Cards/Blog/BlogLinkCard"
+import { TestimonialLinkCard } from "../../components/Cards/Testimonial/TestimonialLinkCard"
 
 const AddTrip = ({ data }) => {
   console.log(data)
@@ -301,6 +302,68 @@ const AddTrip = ({ data }) => {
           </Button>
         </Box>
       </Container>
+      <Container h="130px" bg="gray.100" my="80px" maxW="full" as="section">
+        <Center justifyContent="space-between" w="300px" mx="auto" h="100%">
+          <Img fixed={data.visa.childImageSharp.fixed} />
+
+          <Img fixed={data.mastercard.childImageSharp.fixed} />
+        </Center>
+      </Container>
+      <Container my="80px" pt={8} maxW="full" as="section">
+        <Heading textAlign="center" mb="80px">
+          Why our shoppers love Briddgy
+        </Heading>
+        <HStack spacing={25} mx="auto" maxW="container.xl">
+          <TestimonialLinkCard
+            title="Rustam Quliyev"
+            description="Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce "
+          />
+          <TestimonialLinkCard
+            title="Rustam Quliyev"
+            description="Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce "
+          />
+          <TestimonialLinkCard
+            title="Rustam Quliyev"
+            description="Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce "
+          />
+        </HStack>
+      </Container>
+      <Container py={8} bg="blueAlpha.100" as="section" maxW="full">
+        <Heading textAlign="center" mb="80px">
+          Frequently Asked Questions
+        </Heading>
+        <Container maxW="container.xl">
+          <HStack spacing={12}>
+            <Box>
+              <Heading mb={5} as="h4" fontSize="2xl">
+                How is payment guaranteed?
+              </Heading>
+              <Text variant="secondary">
+                Your payment is guaranteed and secured by Briddgy. Shoppers pay
+                upfront and cannot cancel once paid.
+              </Text>
+            </Box>
+            <Box>
+              <Heading as="h4" mb={5} fontSize="2xl">
+                Who is paying for product?
+              </Heading>
+              <Text variant="secondary">
+                You buy the product so that you own it and are aware of the
+                contents.
+              </Text>
+            </Box>
+            <Box>
+              <Heading as="h4" fontSize="2xl">
+                How are deliveries arranged?
+              </Heading>
+              <Text variant="secondary">
+                Arrange to meet in a public place with your shoppers via Grabr
+                messenger.
+              </Text>
+            </Box>
+          </HStack>
+        </Container>
+      </Container>
     </>
   )
 }
@@ -316,7 +379,13 @@ export const query = graphql`
         store
         vertical
         price
-        image
+        image {
+          childImageSharp {
+            fluid(maxWidth: 800) {
+              ...GatsbyImageSharpFluid
+            }
+          }
+        }
         templateKey
         description
         featuredpost
@@ -340,7 +409,13 @@ export const query = graphql`
             store
             vertical
             price
-            image
+            image {
+              childImageSharp {
+                fluid(maxWidth: 800) {
+                  ...GatsbyImageSharpFluid
+                }
+              }
+            }
             templateKey
             description
             featuredpost
@@ -364,7 +439,13 @@ export const query = graphql`
           frontmatter {
             description
             title
-            image
+            image {
+              childImageSharp {
+                fluid(maxWidth: 800) {
+                  ...GatsbyImageSharpFluid
+                }
+              }
+            }
             date
             tag
           }
@@ -372,6 +453,20 @@ export const query = graphql`
       }
     }
     # Images
+    visa: file(relativePath: { eq: "visa.png" }) {
+      childImageSharp {
+        fixed(width: 100) {
+          ...GatsbyImageSharpFixed
+        }
+      }
+    }
+    mastercard: file(relativePath: { eq: "mastercard.png" }) {
+      childImageSharp {
+        fixed(width: 100) {
+          ...GatsbyImageSharpFixed
+        }
+      }
+    }
     thrift_shop: file(relativePath: { eq: "thrift_shop.png" }) {
       childImageSharp {
         fixed(width: 250) {

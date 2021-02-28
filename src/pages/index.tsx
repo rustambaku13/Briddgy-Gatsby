@@ -360,7 +360,14 @@ export const query = graphql`
             store
             vertical
             price
-            image
+            image {
+              childImageSharp {
+                fluid(maxWidth: 800) {
+                  ...GatsbyImageSharpFluid
+                }
+              }
+            }
+
             templateKey
             description
             featuredpost
@@ -381,7 +388,14 @@ export const query = graphql`
         store
         vertical
         price
-        image
+        image {
+          childImageSharp {
+            fluid(maxWidth: 800) {
+              ...GatsbyImageSharpFluid
+            }
+          }
+        }
+
         templateKey
         description
         featuredpost

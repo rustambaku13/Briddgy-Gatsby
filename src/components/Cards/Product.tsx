@@ -1,9 +1,10 @@
-import { Box, Center, chakra, Flex, Heading, Text, Img } from "@chakra-ui/react"
-
+import { Box, Center, chakra, Flex, Heading, Text } from "@chakra-ui/react"
+import Img from "gatsby-image"
 import React from "react"
 
 const ProductCard = chakra(
   ({ img, productId, productName, store, price, className }) => {
+    console.log(img)
     return (
       <Flex
         className={className}
@@ -28,7 +29,9 @@ const ProductCard = chakra(
         </Box>
         <Box overflow="hidden" flexGrow={1}>
           <Center minH="300px" m="auto" w="60%">
-            <Img src={img} />
+            <Box w="100%">
+              <Img fluid={img?.childImageSharp?.fluid} />
+            </Box>
           </Center>
         </Box>
         <Box p={2}>

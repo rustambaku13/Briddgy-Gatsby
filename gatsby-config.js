@@ -18,6 +18,13 @@ module.exports = {
     {
       resolve: `gatsby-source-filesystem`,
       options: {
+        name: "uploads",
+        path: `${__dirname}/static/assets`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
         name: "products",
         path: `${__dirname}/product`,
       },
@@ -38,22 +45,33 @@ module.exports = {
     },
     `gatsby-plugin-sharp`,
     `gatsby-transformer-sharp`,
-    "gatsby-remark-source-name",
+
     {
       resolve: `gatsby-transformer-remark`,
       options: {
-        // CommonMark mode (default: true)
-        commonmark: true,
-        // Footnotes mode (default: true)
-        footnotes: true,
-        // Pedantic mode (default: true)
-        pedantic: true,
-        // GitHub Flavored Markdown mode (default: true)
-        gfm: true,
-        // Plugins configs
-        plugins: [],
+        plugins: [
+          {
+            resolve: `gatsby-remark-relative-images`,
+            options: {
+              name: "uploads",
+            },
+          },
+          {
+            resolve: `gatsby-remark-images`,
+            options: {
+              maxWidth: 590,
+            },
+          },
+          {
+            resolve: "gatsby-remark-copy-linked-files",
+            options: {
+              destinationDir: "static",
+            },
+          },
+        ],
       },
     },
+    "gatsby-remark-source-name",
     "gatsby-plugin-netlify-cms",
     {
       resolve: "gatsby-plugin-layout",
