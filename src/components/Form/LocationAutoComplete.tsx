@@ -17,18 +17,20 @@ export const LocationAutoComplete = chakra(
   ({
     className,
     parentRef,
+    placeholder = "Where to",
     name,
   }: {
     className?: string
+    placeholder?: string
     parentRef: any
     name: string
   }) => {
     const [searching, setSearching] = useState(false)
 
     const [results, setResults] = useState([])
-    const displayRef = useRef()
     const [hidden, setHidden] = useState(true)
     let inputRef = null
+    let nameRef = null
 
     const fetchData = value => {
       searchLocation(value).then(({ data }) => {
@@ -38,7 +40,10 @@ export const LocationAutoComplete = chakra(
     }
     const searchHandler = ({ target: { value } }) => {
       if (value.length && hidden) setHidden(false)
-      else if (value.length == 0 && !hidden) setHidden(true)
+      else if (value.length == 0 && !hidden) {
+        setHidden(true)
+        inputRef.value = null
+      }
       if (a) clearTimeout(a)
       a = setTimeout(fetchData, 300, value)
       setSearching(true)
@@ -48,8 +53,8 @@ export const LocationAutoComplete = chakra(
         e.currentTarget.getAttribute("value"),
         e.currentTarget.getAttribute("title"),
       ]
-      displayRef.current.value = title
       inputRef.value = id
+      nameRef.value = title
       document.activeElement.blur()
     }
     return (
@@ -63,10 +68,15 @@ export const LocationAutoComplete = chakra(
             aria-haspopup="listbox"
             autoComplete="off"
             onChange={searchHandler}
-            ref={displayRef}
+            // ref={displayRef}
+            name={name + "_name"}
+            ref={e => {
+              parentRef(e)
+              nameRef = e
+            }}
             fontSize="0.8em"
             border="none"
-            placeholder="Where to?"
+            placeholder={placeholder}
           />
           <input
             type="hidden"

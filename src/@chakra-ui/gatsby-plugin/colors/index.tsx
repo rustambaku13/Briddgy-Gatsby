@@ -24,5 +24,6 @@ export default {
   },
   lightBlue: {
     100: "#F7FBFD",
+    200: "#bdf0ffa3",
   },
 }

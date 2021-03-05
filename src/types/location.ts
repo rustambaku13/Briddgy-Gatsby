@@ -9,3 +9,9 @@ export interface Locations {
   previous: null | string
   results: Location[]
 }
+export const defaultLocations = {
+  count: 0,
+  next: null,
+  previous: null,
+  results: [],
+}
