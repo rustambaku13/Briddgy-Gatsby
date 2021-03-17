@@ -1,6 +1,7 @@
 import { chakra, Box, Heading } from "@chakra-ui/react"
 import Img from "gatsby-image"
-import React from "react"
+import React, { useEffect, useRef } from "react"
+import anime from "animejs/lib/anime.es.js"
 export const OrderTypeButton = chakra(
   ({
     fixedImage,
@@ -11,8 +12,23 @@ export const OrderTypeButton = chakra(
     title: string
     className?: any
   }) => {
+    const image = useRef(null)
+    const text = useRef(null)
+    useEffect(() => {
+      if (image.current && text.current) {
+        anime({
+          targets: [image.current, text.current],
+          translateX: [100, 0],
+          opacity: [0, 1],
+          duration: 1000,
+          delay: anime.stagger(100),
+          easing: "spring(1, 80, 10, 0)",
+        })
+      }
+    }, [image.current, text.current])
     return (
       <Box
+        overflow="hidden"
         bg="white"
         w="450px"
         minH="300px"
@@ -30,13 +46,12 @@ export const OrderTypeButton = chakra(
         borderWidth="1px"
         boxShadow="md"
       >
-        <Heading w="190px" lineHeight="tall" fontSize="3xl">
+        <Heading ref={text} w="190px" lineHeight="tall" fontSize="3xl">
           {title}
         </Heading>
-        <Img
-          style={{ position: "absolute", bottom: 0, right: 0 }}
-          fixed={fixedImage}
-        />
+        <Box pos="absolute" bottom="0" right="0" ref={image}>
+          <Img fixed={fixedImage} />
+        </Box>
       </Box>
     )
   }

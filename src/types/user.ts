@@ -14,4 +14,8 @@ export interface User {
   last_online: string
   phone: string
   ranking: number
+  my_promo: string
+  promo_balance: number
+  used_promo: boolean
+  unread_notifications: number
 }

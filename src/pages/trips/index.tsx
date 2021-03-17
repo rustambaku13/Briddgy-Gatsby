@@ -20,8 +20,10 @@ import React, { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { getTrips } from "../../api/trip"
 import { TestimonialLinkCard } from "../../components/Cards/Testimonial/TestimonialLinkCard"
-import PublicTripCard from "../../components/Cards/Trip/PublicTripCard"
+import PublicTripCard from "../../components/Cards/Trip/TripCard"
 import { LocationAutoComplete } from "../../components/Form/LocationAutoComplete"
+import { Empty } from "../../components/Misc/Empty"
+import { Loader } from "../../components/Misc/Loader"
 import { Paginator } from "../../components/Misc/Paginator"
 import { StepCircle } from "../../components/Misc/StepCircle"
 import { ChevronDownIcon } from "../../icons/ChevronDown"
@@ -32,11 +34,13 @@ import note from "../../images/noteicon.svg"
 import plane from "../../images/planeicon.svg"
 
 import { Trip, defaultTrips, Trips } from "../../types/trip"
+import { filterObject } from "../../utils/misc"
 
 const TripsPage = ({ data, location }) => {
   const { register, handleSubmit, setValue } = useForm()
   const [results, setResults]: [Trips, any] = useState(defaultTrips)
-  useEffect(() => {
+  const [loading, setLoading] = useState(true)
+  const updateFilters = () => {
     const a = new URLSearchParams(location.search)
     const b = {}
     for (const [key, value] of a.entries()) {
@@ -45,17 +49,23 @@ const TripsPage = ({ data, location }) => {
 
       b[key] = value
     }
-    getTrips(b).then(({ data }) => {
-      setResults(data)
-    })
-  }, [location])
+    getTrips(b)
+      .then(({ data }) => {
+        setResults(data)
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }
+  useEffect(updateFilters, [location])
   const onSubmit = data => {
-    const searchParams = new URLSearchParams(data)
+    const filteredData = filterObject(data)
+    const searchParams = new URLSearchParams(filteredData)
     navigate(`.?${searchParams.toString()}`)
   }
   return (
     <>
-      <Container pt="40px" as="section" minH="200px" minW="full">
+      <Container pt="40px" as="section" minW="full">
         <Box
           action="#"
           onSubmit={handleSubmit(onSubmit)}
@@ -107,58 +117,68 @@ const TripsPage = ({ data, location }) => {
               Find Trips
             </Button>
           </Flex>
-          <Flex justifyContent="space-between">
-            <Text variant="secondary">10 TRIPS</Text>
-            <Box>
-              <Menu>
-                <MenuButton mr={3} color="blue.400">
-                  Sort By <ChevronDownIcon />
-                </MenuButton>
-                <MenuList>
-                  <MenuOptionGroup
-                    onChange={value => {
-                      setValue("sort_by", value, { shouldDirty: true })
-                    }}
-                    type="radio"
-                  >
-                    <MenuItemOption value="asc">Earliest Date</MenuItemOption>
-                    <MenuItemOption value="desc">Highest Weight</MenuItemOption>
-                    <MenuItemOption value="ranking">
-                      User Ranking
-                    </MenuItemOption>
-                  </MenuOptionGroup>
-                  <input type="hidden" name="sort_by" ref={register()} />
-                </MenuList>
-              </Menu>
-              <Menu>
-                <MenuButton color="blue.400">
-                  Filters <ChevronDownIcon />
-                </MenuButton>
-                <MenuList>
-                  <MenuOptionGroup defaultValue="asc" type="radio">
-                    <MenuItemOption value="asc">Earliest Date</MenuItemOption>
-                    <MenuItemOption value="desc">Highest Weight</MenuItemOption>
-                    <MenuItemOption>User Ranking</MenuItemOption>
-                  </MenuOptionGroup>
-                </MenuList>
-              </Menu>
-            </Box>
-          </Flex>
         </Box>
       </Container>
-      <Container as="section" bg="gray.100" minH="800px" pt={"1px"} maxW="full">
-        <SimpleGrid maxW="container.xl" mx="auto" spacing={10} columns={3}>
-          {results.results.map((trip: Trip) => (
-            <PublicTripCard mx="auto" trip={trip} />
-          ))}
-        </SimpleGrid>
+      <Container as="section" bg="gray.100" minH="400px" pt="40px" maxW="full">
+        <Flex mx="auto" maxW="container.xl" justifyContent="space-between">
+          <Text variant="secondary">{results.count} TRIPS</Text>
+          <Box>
+            <Menu>
+              <MenuButton type="button" mr={3} color="blue.400">
+                Sort By <ChevronDownIcon />
+              </MenuButton>
+              <MenuList>
+                <MenuOptionGroup
+                  onChange={value => {
+                    setValue("sort_by", value)
 
-        <Paginator
-          maxW="container.xl"
-          mx="auto"
-          onSelect={console.log}
-          count={results.count}
-        />
+                    handleSubmit(onSubmit)()
+                  }}
+                  type="radio"
+                >
+                  <MenuItemOption value="asc">Earliest Date</MenuItemOption>
+                  <MenuItemOption value="desc">Highest Weight</MenuItemOption>
+                  <MenuItemOption value="ranking">User Ranking</MenuItemOption>
+                </MenuOptionGroup>
+              </MenuList>
+              <input
+                type="hidden"
+                name="sort_by"
+                ref={register({ required: false })}
+              />
+            </Menu>
+
+            <Menu>
+              <MenuButton color="blue.400">
+                Filters <ChevronDownIcon />
+              </MenuButton>
+              <MenuList>
+                <MenuOptionGroup defaultValue="asc" type="radio">
+                  <MenuItemOption value="asc">Earliest Date</MenuItemOption>
+                  <MenuItemOption value="desc">Highest Weight</MenuItemOption>
+                  <MenuItemOption>User Ranking</MenuItemOption>
+                </MenuOptionGroup>
+              </MenuList>
+            </Menu>
+          </Box>
+        </Flex>
+        {loading ? null : results.results.length ? (
+          <SimpleGrid maxW="container.xl" mx="auto" spacing={10} columns={2}>
+            {results.results.map((trip: Trip) => (
+              <PublicTripCard mx="auto" trip={trip} />
+            ))}
+          </SimpleGrid>
+        ) : (
+          <Empty mb="50px" />
+        )}
+        {loading ? <Loader mx="auto" /> : null}
+        {loading == false && results.next != null ? (
+          <Box w="200px" mx="auto">
+            <Button variant="outline" bg="white" w="200px">
+              Load More
+            </Button>
+          </Box>
+        ) : null}
       </Container>
       <Box bg="purple.300" h="320px" overflow="hidden" as="section">
         {/* <Img fixed={data.nature_travel.childImageSharp.fixed} /> */}

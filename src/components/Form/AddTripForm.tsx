@@ -1,23 +1,61 @@
 import { Button, Center, chakra, Divider, Flex, Text } from "@chakra-ui/react"
-import React, { useState } from "react"
+import { navigate } from "gatsby-plugin-intl"
+import { flowResult } from "mobx"
+import React, { useRef, useState } from "react"
 import { useForm } from "react-hook-form"
 import { CalendarIcon } from "../../icons/Calendar"
 import { LocationIcon } from "../../icons/Location"
 import RotateIcon from "../../icons/Rotate"
+import UserStore from "../../store/UserStore"
 import { DatePicker } from "../Inputs/DatePicker"
 import { AddTripDetailsModal } from "../Modals/AddTripDetailsModal"
 import { LocationAutoComplete } from "./LocationAutoComplete"
+import { LoginModalForm } from "./LoginModalForm"
 
 export const AddTripForm = chakra(({ className }: { className?: any }) => {
-  const { register, handleSubmit, watch, errors } = useForm()
+  const { register, getValues, handleSubmit, watch, errors } = useForm()
   const [modalOpen, setModalOpen] = useState(false)
-  const onSubmit = data => {
-    console.log(data)
-    setModalOpen(true)
+  const [loginModalOpen, setLoginModalOpen] = useState(false) // Modal controlling login add trip
+  const [loading, setLoading] = useState(false)
+  const addTrip = () => {
+    setLoading(true)
+    flowResult(UserStore.saveNewTrip())
+      .then(e => {
+        navigate("/profile?page=trips")
+      })
+      .finally(() => {
+        setLoading(false)
+      })
   }
+  const finalSub = data => {
+    UserStore.save_new_trip({ ...data, ...getValues() })
+    setModalOpen(false)
+    if (UserStore.isLoggedIn) {
+      addTrip()
+      // Add the trip and redirect
+      return
+    }
+    setLoginModalOpen(true)
+  }
+
   return (
-    <Flex as="form" onSubmit={handleSubmit(onSubmit)} className={className}>
-      <AddTripDetailsModal isOpen={modalOpen} setOpen={setModalOpen} />
+    <Flex
+      as="form"
+      onSubmit={handleSubmit(() => {
+        setModalOpen(true)
+      })}
+      className={className}
+    >
+      <LoginModalForm
+        isOpen={loginModalOpen}
+        setOpen={setLoginModalOpen}
+        callback={addTrip}
+      />
+      <AddTripDetailsModal
+        callback={finalSub}
+        isOpen={modalOpen}
+        setOpen={setModalOpen}
+      />
       <Flex alignItems="center" pl={4} flex={1}>
         <LocationIcon color="gray.500" />
         <LocationAutoComplete
@@ -45,7 +83,7 @@ export const AddTripForm = chakra(({ className }: { className?: any }) => {
       <Flex alignItems="center" pl={4} flex={1}>
         <LocationIcon color="gray.500" />
         <LocationAutoComplete
-          name="dest"
+          name="destination"
           parentRef={register({ required: true })}
         />
       </Flex>
@@ -62,6 +100,7 @@ export const AddTripForm = chakra(({ className }: { className?: any }) => {
         />
       </Flex>
       <Button
+        isLoading={loading}
         borderTopRightRadius="lg"
         borderBottomRightRadius="lg"
         h="100%"

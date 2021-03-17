@@ -23,6 +23,9 @@ export default {
     red_gradient: {
       bgGradient: "linear(to-b, red.400,red.600)",
       color: "white",
+      _hover: {
+        bgGradient: "linear(to-b, red.500,red.600)",
+      },
     },
 
     primary: {

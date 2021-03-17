@@ -2,40 +2,58 @@ import {
   Box,
   Button,
   Center,
-  Circle,
   Container,
   Flex,
   Grid,
   Heading,
   HStack,
-  Input,
   Img as CImg,
-  InputRightAddon,
-  SimpleGrid,
-  Tag,
-  TagRightIcon,
+  Input,
   Text,
+  Tooltip,
 } from "@chakra-ui/react"
-import Img from "gatsby-image"
-import { ChevronRightIcon } from "../../icons/ChevronRight"
 import { graphql } from "gatsby"
-import React from "react"
-import CheckIcon from "../../icons/Check"
-import { Link } from "gatsby-plugin-intl"
-import BulletTriangleIcon from "../../icons/BulletTriangle"
+import Img from "gatsby-image"
+import { Link, navigate } from "gatsby-plugin-intl"
+import React, { useEffect, useRef } from "react"
+import { useForm } from "react-hook-form"
 import { ProductCard } from "../../components/Cards/"
-import { StepCircle } from "../../components/Misc/StepCircle"
-
-import earth from "../../images/earthicon.svg"
-import plane from "../../images/planeicon.svg"
-import note from "../../images/noteicon.svg"
-import card from "../../images/debit-cardicon.svg"
-import { OrderTypeButton } from "../../components/Cards/Order/OrderTypeButton"
 import { BlogLinkCard } from "../../components/Cards/Blog/BlogLinkCard"
+import { OrderTypeButton } from "../../components/Cards/Order/OrderTypeButton"
 import { TestimonialLinkCard } from "../../components/Cards/Testimonial/TestimonialLinkCard"
+import { StepCircle } from "../../components/Misc/StepCircle"
+import BulletTriangleIcon from "../../icons/BulletTriangle"
 
-const AddTrip = ({ data }) => {
-  console.log(data)
+import CheckIcon from "../../icons/Check"
+import card from "../../images/debit-cardicon.svg"
+import earth from "../../images/earthicon.svg"
+import note from "../../images/noteicon.svg"
+import plane from "../../images/planeicon.svg"
+import anime from "animejs/lib/anime.es.js"
+import { ConfirmEmailModal } from "../../components/Modals/ConfirmEmailModal"
+const AddOrder = ({ data }) => {
+  const { register, handleSubmit, errors } = useForm()
+  const submitHandler = data => {
+    navigate(`add?url=${data.url}`)
+  }
+
+  useEffect(() => {
+    anime({
+      targets: ["#main_heading"],
+      translateY: [100, 0],
+      opacity: [0, 1],
+      duration: 1000,
+      easing: "spring(1, 80, 10, 0)",
+    })
+    anime({
+      targets: ["#features > div", "#features > p"],
+      translateX: [200, 0],
+      opacity: [0, 1],
+      duration: 1000,
+      delay: anime.stagger(100),
+      easing: "spring(1, 80, 10, 0)",
+    })
+  }, [])
   return (
     <>
       <Box mb="50px" py="50px" bg="lightBlue.100" minW="100%" as="header">
@@ -46,10 +64,11 @@ const AddTrip = ({ data }) => {
             mb="25px"
             fontWeight="bold"
             textAlign="center"
+            id="main_heading"
           >
             Shop Products from Around the World and save up to 40%
           </Heading>
-          <Flex mb={8}>
+          <Flex id="features" mb={8}>
             <Center
               mr={4}
               p={1}
@@ -60,9 +79,11 @@ const AddTrip = ({ data }) => {
             >
               <CheckIcon />
             </Center>
+
             <Text mr="60px" variant="secondary">
               Delivered by our verified users
             </Text>
+
             <Center
               mr={4}
               p={1}
@@ -78,7 +99,10 @@ const AddTrip = ({ data }) => {
             </Text>
           </Flex>
           <Flex
+            as="form"
+            onSubmit={handleSubmit(submitHandler)}
             mb={8}
+            autoComplete={"off"}
             h="60px"
             w="100%"
             bg="white"
@@ -90,8 +114,11 @@ const AddTrip = ({ data }) => {
               placeholder="Enter the URL of the item"
               height="inherit"
               border="none"
+              name="url"
+              ref={register({ required: true })}
               variant="unstyled"
             />
+
             <Button
               h="50px"
               w="200px"
@@ -99,11 +126,13 @@ const AddTrip = ({ data }) => {
               variant="red_gradient"
               mt={"4px"}
               mr="8px"
+              type="submit"
               borderRadius="50px"
             >
               Create Order
             </Button>
           </Flex>
+
           <Text>
             <Link color="blue.400" to="/">
               <BulletTriangleIcon fill="blue.400" /> How to shop abroad with
@@ -497,4 +526,4 @@ export const query = graphql`
     }
   }
 `
-export default AddTrip
+export default AddOrder

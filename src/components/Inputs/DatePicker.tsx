@@ -44,7 +44,7 @@ export const DatePicker = chakra(
             autoComplete="off"
             fontSize="0.8em"
             border="none"
-            value={(from || "") + (to || "")}
+            value={(from || "") + (to ? "-" : "") + (to || "")}
             placeholder="Departure - Arrival"
           />
           <input

@@ -11,18 +11,21 @@ import React, { useRef, useState } from "react"
 import { searchLocation } from "../../api/location"
 import { LocationIcon } from "../../icons/Location"
 import { Location } from "../../types/location"
+import { trimCityEmpty, tripCityAnywhere } from "../../utils/misc"
 
 let a = null
 export const LocationAutoComplete = chakra(
   ({
     className,
     parentRef,
+    size = "md",
     placeholder = "Where to",
     name,
   }: {
     className?: string
     placeholder?: string
     parentRef: any
+    size?: "lg" | "md"
     name: string
   }) => {
     const [searching, setSearching] = useState(false)
@@ -65,9 +68,11 @@ export const LocationAutoComplete = chakra(
       >
         <InputGroup>
           <Input
+            size={size}
             aria-haspopup="listbox"
             autoComplete="off"
             onChange={searchHandler}
+            type="search"
             // ref={displayRef}
             name={name + "_name"}
             ref={e => {
@@ -105,10 +110,11 @@ export const LocationAutoComplete = chakra(
             results.map((location: Location) => (
               <Box
                 as="button"
+                type="button"
                 onClick={selectHandler}
                 value={location.id}
                 key={location.id}
-                title={`${location.city}, ${location.country_en}`}
+                title={`${trimCityEmpty(location.city)}${location.country_en}`}
               >
                 <LocationIcon />
                 <Text as="h5">

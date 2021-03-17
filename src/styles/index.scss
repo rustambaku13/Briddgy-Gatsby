@@ -11,6 +11,7 @@
 }
 
 .autocomplete {
+  width: 100%;
   &:focus-within > div {
     display: block;
   }
@@ -56,3 +57,5 @@
     }
   }
 }
+
+// Telephone Input

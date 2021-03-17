@@ -4,7 +4,6 @@ import React from "react"
 
 const ProductCard = chakra(
   ({ img, productId, productName, store, price, className }) => {
-    console.log(img)
     return (
       <Flex
         className={className}

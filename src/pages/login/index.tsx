@@ -1,32 +1,32 @@
 import {
-  Box,
-  Center,
-  Text,
-  Container,
   Button,
+  Center,
+  Container,
   FormControl,
   FormLabel,
   Heading,
   Input,
-  FormErrorMessage,
-  FormErrorIcon,
+  Text,
 } from "@chakra-ui/react"
 import { PageProps } from "gatsby"
 import { flowResult } from "mobx"
-import React, { useState } from "react"
+import React, { useRef, useState } from "react"
 import { useForm } from "react-hook-form"
+import { useAuthHook } from "../../hooks/useAuthHook"
 import UserStore from "../../store/UserStore"
 const Login = ({ data }: PageProps) => {
   const [loading, setLoading] = useState(false)
-  const { register, handleSubmit, watch, errors, setError } = useForm()
+  const error_text = useRef(null)
+  const { register, handleSubmit, errors } = useForm()
+  useAuthHook(user => user == true, "/trips")
   const onSubmit = data => {
     setLoading(true)
     flowResult(UserStore.login(data.email, data.password))
       .then(e => {
-        console.log(e)
+        // Successfully Logged In
       })
       .catch(e => {
-        setError("global", { message: "Invalid Credentials" })
+        error_text.current.innerHTML = "Invalid Credentials"
       })
       .finally(() => {
         setLoading(false)
@@ -57,7 +57,7 @@ const Login = ({ data }: PageProps) => {
           <FormControl w="100%" mb={4}>
             <FormLabel>Email address</FormLabel>
             <Input
-              ref={register({ required: true })}
+              ref={register({ required: "Email is Required" })}
               size="md"
               placeholder="someone@email.com"
               type="email"
@@ -67,20 +67,22 @@ const Login = ({ data }: PageProps) => {
           <FormControl mb={4}>
             <FormLabel>Password</FormLabel>
             <Input
-              ref={register({ required: true, minLength: 6 })}
+              ref={register({
+                required: "Password is Required",
+                minLength: {
+                  value: 6,
+                  message: "Password should contain at least 6 characters",
+                },
+              })}
               placeholder="***"
               type="password"
               name="password"
             />
             <Text color="red.400" as="small">
-              {errors.password == null
-                ? null
-                : "Password should contain at least 6 characters"}
+              {errors.password?.message}
             </Text>
           </FormControl>
-          <Text color="red.400" as="small">
-            {errors.global?.message}
-          </Text>
+          <Text ref={error_text} color="red.400" as="small"></Text>
           <Button
             isLoading={loading}
             fontWeight="600"

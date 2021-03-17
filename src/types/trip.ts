@@ -12,8 +12,8 @@ export interface Trip {
 }
 export interface Trips {
   count: number
-  next: null | string
-  previous: null | string
+  next?: null | string
+  previous?: null | string
   results: Trip[]
   loading: undefined | boolean
 }

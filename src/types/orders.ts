@@ -25,8 +25,8 @@ export interface Order {
 }
 export interface Orders {
   count: number
-  next: null | string
-  previous: null | string
+  next?: null | string
+  previous?: null | string
   results: Order[]
   loading?: undefined | boolean
 }

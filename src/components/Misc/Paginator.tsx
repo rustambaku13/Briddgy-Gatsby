@@ -9,11 +9,13 @@ export const Paginator = chakra(
   ({
     className,
     onSelect,
-    itemsPerPage = 10,
+    itemsPerPage = 1,
     count,
+    parentRef,
   }: {
     className?: any
     onSelect: any
+    parentRef: any
     itemsPerPage?: number
     count: number
   }) => {
@@ -44,6 +46,7 @@ export const Paginator = chakra(
     if (indexAfter < pagesTotal) pages.push("...")
     return (
       <Box className={className}>
+        <input ref={parentRef} name="page" type="hidden" />
         <Button
           as="button"
           bg="white"
@@ -66,11 +69,12 @@ export const Paginator = chakra(
             alignItems="center"
             _hover={{ bg: "gray.200" }}
             bg="white"
-            as="option"
+            as="button"
             _selected={{
-              bg: "green.400",
+              bg: "blue.400",
+              color: "red.400",
             }}
-            selected={true}
+            selected={item == page}
             disabled={item == "..."}
             onClick={handleChange}
             textAlign="center"
