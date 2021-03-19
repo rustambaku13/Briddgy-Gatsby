@@ -1,7 +1,7 @@
 import { makeAutoObservable } from "mobx"
 class LayoutStore {
   emailConfirmModalVisible: boolean = false
-  phoneConfirmModalVisible: boolean = true
+  phoneConfirmModalVisible: boolean = false
   constructor() {
     makeAutoObservable(this)
   }

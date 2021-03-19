@@ -58,4 +58,122 @@
   }
 }
 
-// Telephone Input
+// Order Page top section Header
+.order-header {
+  .overlay {
+    right: -25vw;
+    position: absolute;
+    bottom: -25vw;
+    width: 50vw;
+    z-index: 0;
+
+    div {
+      border-radius: 50%;
+      padding-top: 100%;
+      width: 100%;
+      // filter: blur(1000px) opacity(56%);
+      background-color: white;
+    }
+  }
+}
+
+#travel-navbar {
+  position: sticky;
+  position: -webkit-sticky;
+  background-color: #5cb2cc;
+  top: -1px; /* required */
+  z-index: 39;
+  transition: 0.3s ease-in-out;
+  &.isSticky {
+    background-color: white;
+    height: 65px;
+    nav {
+      color: #333333;
+      #create_order {
+        color: #333333;
+      }
+      #navbar_search {
+        > button {
+          visibility: visible;
+          opacity: 1;
+        }
+        visibility: visible;
+        opacity: 1;
+      }
+    }
+  }
+  nav {
+    color: white;
+    border: none;
+    max-width: 1400px;
+    margin: 0 auto;
+    font-weight: 600;
+    .navbar-profile-menu span {
+      color: initial;
+    }
+    #navbar_search {
+      > button {
+        transition: visibility 0s, opacity 0.3s linear;
+        visibility: hidden;
+        opacity: 0;
+      }
+      transition: visibility 0s, opacity 0.3s linear;
+      visibility: hidden;
+      opacity: 0;
+    }
+    #create_order {
+      background: white;
+      color: #333333;
+    }
+    #create_trip {
+      display: none;
+    }
+  }
+}
+
+#order-navbar {
+  position: sticky;
+  position: -webkit-sticky;
+  background-color: #5cb2cc;
+  top: -1px; /* required */
+  z-index: 999;
+  transition: 0.3s ease-in-out;
+  &.isSticky {
+    background-color: white;
+    height: 65px;
+    nav {
+      color: #333333;
+      #navbar_search {
+        > button {
+          visibility: visible;
+          opacity: 1;
+        }
+        visibility: visible;
+        opacity: 1;
+      }
+    }
+  }
+  nav {
+    color: white;
+    border: none;
+    max-width: 1400px;
+    margin: 0 auto;
+    font-weight: 600;
+    .navbar-profile-menu span {
+      color: initial;
+    }
+    #navbar_search {
+      > button {
+        transition: visibility 0s, opacity 0.3s linear;
+        visibility: hidden;
+        opacity: 0;
+      }
+      transition: visibility 0s, opacity 0.3s linear;
+      visibility: hidden;
+      opacity: 0;
+    }
+    #create_order {
+      display: none;
+    }
+  }
+}

@@ -25,6 +25,7 @@ import { LocationAutoComplete } from "../../components/Form/LocationAutoComplete
 import { Empty } from "../../components/Misc/Empty"
 import { Loader } from "../../components/Misc/Loader"
 import { Paginator } from "../../components/Misc/Paginator"
+import NavbarDefault from "../../components/Navbar"
 import { StepCircle } from "../../components/Misc/StepCircle"
 import { ChevronDownIcon } from "../../icons/ChevronDown"
 import RotateIcon from "../../icons/Rotate"
@@ -65,6 +66,7 @@ const TripsPage = ({ data, location }) => {
   }
   return (
     <>
+      <NavbarDefault />
       <Container pt="40px" as="section" minW="full">
         <Box
           action="#"

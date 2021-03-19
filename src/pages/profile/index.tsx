@@ -47,6 +47,7 @@ import { usePopulateQueryHook } from "../../hooks/usePopulateQueryHook"
 import { navigate } from "gatsby-link"
 import { Link } from "gatsby-plugin-intl"
 import LayoutStore from "../../store/LayoutStore"
+import NavbarDefault from "../../components/Navbar"
 
 const PersonalDetailsSection = observer(() => {
   return (
@@ -497,46 +498,49 @@ const MyProfilePage = observer(({ location }) => {
   }, [data])
   if (UserStore.isLoggedIn == false) return null
   return (
-    <Container pt="50px" maxW="container.xl">
-      <Flex mb="30px" w="100%">
-        <Heading fontSize="5xl" as="h1">
-          Profile
-        </Heading>
-      </Flex>
-      <Tabs
-        onChange={index => {
-          navigate(`?page=${INDEX_PAGE_MAPPER[index]}`)
-        }}
-        index={openTab}
-        variant="line"
-        colorScheme="blue"
-      >
-        <TabList>
-          <Tab>Personal Details</Tab>
-          <Tab>My Trips</Tab>
-          <Tab>My Orders</Tab>
-          <Tab>Promo Code</Tab>
-          <Tab>Earn Free Deliveries</Tab>
-        </TabList>
-        <TabPanels>
-          <TabPanel pt="40px">
-            <PersonalDetailsSection />
-          </TabPanel>
-          <TabPanel>
-            <MyTripsSections />
-          </TabPanel>
-          <TabPanel>
-            <MyOrdersSection />
-          </TabPanel>
-          <TabPanel>
-            <RedeemCreditsSection />
-          </TabPanel>
-          <TabPanel>
-            <EarnCreditsSection />
-          </TabPanel>
-        </TabPanels>
-      </Tabs>
-    </Container>
+    <>
+      <NavbarDefault />
+      <Container pt="50px" maxW="container.xl">
+        <Flex mb="30px" w="100%">
+          <Heading fontSize="5xl" as="h1">
+            Profile
+          </Heading>
+        </Flex>
+        <Tabs
+          onChange={index => {
+            navigate(`?page=${INDEX_PAGE_MAPPER[index]}`)
+          }}
+          index={openTab}
+          variant="line"
+          colorScheme="blue"
+        >
+          <TabList>
+            <Tab>Personal Details</Tab>
+            <Tab>My Trips</Tab>
+            <Tab>My Orders</Tab>
+            <Tab>Promo Code</Tab>
+            <Tab>Earn Free Deliveries</Tab>
+          </TabList>
+          <TabPanels>
+            <TabPanel pt="40px">
+              <PersonalDetailsSection />
+            </TabPanel>
+            <TabPanel>
+              <MyTripsSections />
+            </TabPanel>
+            <TabPanel>
+              <MyOrdersSection />
+            </TabPanel>
+            <TabPanel>
+              <RedeemCreditsSection />
+            </TabPanel>
+            <TabPanel>
+              <EarnCreditsSection />
+            </TabPanel>
+          </TabPanels>
+        </Tabs>
+      </Container>
+    </>
   )
 })
 

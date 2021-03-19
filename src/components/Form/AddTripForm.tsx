@@ -100,9 +100,24 @@ export const AddTripForm = chakra(({ className }: { className?: any }) => {
         />
       </Flex>
       <Button
+        h="calc(100% - 10px)"
+        maxW="200px"
+        w="100%"
+        p={0}
+        variant="red_gradient"
+        mt={"5px"}
+        mr="10px"
+        type="submit"
+        borderRadius="50px"
+      >
+        Add Trip
+      </Button>
+      {/* <Button
+        borderTopRightRadius="50px"
+        borderBottomRightRadius="50px"
         isLoading={loading}
-        borderTopRightRadius="lg"
-        borderBottomRightRadius="lg"
+        // borderTopRightRadius="lg"
+        // borderBottomRightRadius="lg"
         h="100%"
         type="submit"
         border="none"
@@ -116,7 +131,7 @@ export const AddTripForm = chakra(({ className }: { className?: any }) => {
         flex={1}
       >
         <Text>Add Trip</Text>
-      </Button>
+      </Button> */}
     </Flex>
   )
 })

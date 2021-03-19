@@ -31,6 +31,7 @@ import { StepCircle } from "../../components/Misc/StepCircle"
 import { ChevronDownIcon } from "../../icons/ChevronDown"
 import RotateIcon from "../../icons/Rotate"
 import card from "../../images/debit-cardicon.svg"
+import NavbarDefault from "../../components/Navbar"
 import earth from "../../images/earthicon.svg"
 import note from "../../images/noteicon.svg"
 import plane from "../../images/planeicon.svg"
@@ -69,6 +70,7 @@ const OrdersPage = ({ data, location }) => {
 
   return (
     <>
+      <NavbarDefault />
       <Container pt="40px" as="section" minW="full">
         <Box
           action="#"

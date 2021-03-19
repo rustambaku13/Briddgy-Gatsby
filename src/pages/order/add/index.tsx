@@ -20,6 +20,7 @@ import { PageProps } from "gatsby"
 
 import { Link, navigate } from "gatsby-plugin-intl"
 import { flowResult } from "mobx"
+import NavbarDefault from "../../../components/Navbar"
 import React, { useEffect, useRef, useState } from "react"
 import { useForm } from "react-hook-form"
 import { LocationAutoComplete } from "../../../components/Form/LocationAutoComplete"
@@ -53,7 +54,6 @@ const AddOrderPage = ({ location }: PageProps) => {
     getValues,
     setValue,
   } = useForm()
-  console.log(errors)
   const item_price = watch("item_price")
   const price = watch("price")
   const title = watch("title")
@@ -111,6 +111,7 @@ const AddOrderPage = ({ location }: PageProps) => {
         isOpen={loginModal}
         setOpen={setloginModal}
       />
+      <NavbarDefault />
       <Container maxW="full" as="section">
         <Steps py={8} maxW="container.lg" mx="auto">
           <Step

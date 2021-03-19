@@ -15,6 +15,7 @@ import { injectIntl, Link } from "gatsby-plugin-intl"
 import React from "react"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { ProductCard, TravelDestinationCard } from "../components/Cards/"
+import Navbar from "../components/Navbar"
 import { TestimonialLanding } from "../components/Testimonials"
 import { CalendarIcon } from "../icons/Calendar"
 import { ChevronRightIcon } from "../icons/ChevronRight"
@@ -23,9 +24,9 @@ import { HeartIcon } from "../icons/Heart"
 import { SmileIcon } from "../icons/Smile"
 
 const Home = ({ data }) => {
-  console.log(data)
   return (
     <>
+      <Navbar />
       <Box w="100%" mb="100px" as="header">
         <Container
           display="flex"

@@ -8,151 +8,109 @@ import {
   Heading,
   HStack,
   Img as CImg,
-  Input,
   Text,
-  Tooltip,
 } from "@chakra-ui/react"
+import anime from "animejs/lib/anime.es.js"
 import { graphql } from "gatsby"
 import Img from "gatsby-image"
-import { Link, navigate } from "gatsby-plugin-intl"
-import React, { useEffect, useRef } from "react"
+import React, { useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { ProductCard } from "../../components/Cards/"
 import { BlogLinkCard } from "../../components/Cards/Blog/BlogLinkCard"
-import { OrderTypeButton } from "../../components/Cards/Order/OrderTypeButton"
 import { TestimonialLinkCard } from "../../components/Cards/Testimonial/TestimonialLinkCard"
+import { AddOrderForm } from "../../components/Form/AddOrderForm"
 import { StepCircle } from "../../components/Misc/StepCircle"
-import BulletTriangleIcon from "../../icons/BulletTriangle"
-
-import CheckIcon from "../../icons/Check"
+import { OrderNavbar } from "../../components/Navbar"
 import card from "../../images/debit-cardicon.svg"
 import earth from "../../images/earthicon.svg"
 import note from "../../images/noteicon.svg"
 import plane from "../../images/planeicon.svg"
-import anime from "animejs/lib/anime.es.js"
-import { ConfirmEmailModal } from "../../components/Modals/ConfirmEmailModal"
+
 const AddOrder = ({ data }) => {
   const { register, handleSubmit, errors } = useForm()
-  const submitHandler = data => {
-    navigate(`add?url=${data.url}`)
-  }
-
   useEffect(() => {
-    anime({
-      targets: ["#main_heading"],
-      translateY: [100, 0],
-      opacity: [0, 1],
-      duration: 1000,
-      easing: "spring(1, 80, 10, 0)",
+    const animationOrderMainInput = anime({
+      targets: "#add_order_form",
+      translateY: [0, -100],
+      width: 0,
+      opacity: 0,
+
+      elasticity: 200,
+      easing: "easeInOutSine",
+      autoplay: false,
     })
-    anime({
-      targets: ["#features > div", "#features > p"],
-      translateX: [200, 0],
-      opacity: [0, 1],
-      duration: 1000,
-      delay: anime.stagger(100),
-      easing: "spring(1, 80, 10, 0)",
-    })
-  }, [])
+    const functionReference = () => {
+      let scrollTop = window.scrollY
+      let docHeight = document.body.offsetHeight
+      let winHeight = window.innerHeight
+      let scrollPercent = scrollTop / (docHeight - winHeight)
+      // animation.seek(animation.duration * (scrollPercent / 0.06))
+      animationOrderMainInput.seek(
+        animationOrderMainInput.duration * (scrollPercent / 0.04)
+      )
+    }
+    window.addEventListener("scroll", functionReference, false)
+    return function () {
+      window.removeEventListener("scroll", functionReference)
+    }
+  })
   return (
     <>
-      <Box mb="50px" py="50px" bg="lightBlue.100" minW="100%" as="header">
-        <Container mx="auto" minW="container.lg">
-          <Heading
-            as="h1"
-            fontSize="4xl"
-            mb="25px"
-            fontWeight="bold"
-            textAlign="center"
-            id="main_heading"
-          >
-            Shop Products from Around the World and save up to 40%
-          </Heading>
-          <Flex id="features" mb={8}>
-            <Center
-              mr={4}
-              p={1}
-              borderColor="blue.600"
-              color="blue.600"
-              borderWidth="1px"
-              borderRadius="50%"
-            >
-              <CheckIcon />
-            </Center>
+      <OrderNavbar />
+      <Box
+        overflow="hidden"
+        bgGradient="linear(to-b,blue.400,blue.500)"
+        className="order-header"
+        mb="50px"
+        minW="100%"
+        pos="relative"
+        as="header"
+      >
+        <div className="overlay">
+          <div></div>
+        </div>
 
-            <Text mr="60px" variant="secondary">
-              Delivered by our verified users
-            </Text>
-
-            <Center
-              mr={4}
-              p={1}
-              borderColor="blue.600"
-              color="blue.600"
-              borderWidth="1px"
-              borderRadius="50%"
-            >
-              <CheckIcon />
-            </Center>
-            <Text variant="secondary">
-              Flexible & super fast delivery experience
-            </Text>
-          </Flex>
-          <Flex
-            as="form"
-            onSubmit={handleSubmit(submitHandler)}
-            mb={8}
-            autoComplete={"off"}
-            h="60px"
-            w="100%"
-            bg="white"
-            pl={5}
-            borderRadius="50px"
-            borderWidth="1px"
-          >
-            <Input
-              placeholder="Enter the URL of the item"
-              height="inherit"
-              border="none"
-              name="url"
-              ref={register({ required: true })}
-              variant="unstyled"
-            />
-
-            <Button
-              h="50px"
-              w="200px"
-              p={0}
-              variant="red_gradient"
-              mt={"4px"}
-              mr="8px"
-              type="submit"
-              borderRadius="50px"
-            >
-              Create Order
-            </Button>
-          </Flex>
-
-          <Text>
-            <Link color="blue.400" to="/">
-              <BulletTriangleIcon fill="blue.400" /> How to shop abroad with
-              Briddgy?
-            </Link>
-          </Text>
-          <Text my={8} fontSize="3xl" textAlign="center" fontWeight="600">
-            OR
-          </Text>
-          <Flex w="100%" justifyContent="space-between">
-            <OrderTypeButton
-              fixedImage={data.thrift_shop.childImageSharp.fixed}
-              title="Order from offline stores"
-            />
-            <OrderTypeButton
-              fixedImage={data.delivery_bro.childImageSharp.fixed}
-              title="Send your parcels"
-            />
-          </Flex>
+        <Container pt="60px" mx="auto" w="100%" maxW="container.lg">
+          <AddOrderForm mx="auto" />
         </Container>
+        <Flex
+          alignItems="center"
+          mx="auto"
+          mb="100px"
+          maxW="container.xxl"
+          mt="40px"
+        >
+          <Box flex={3}>
+            <Heading
+              mb={5}
+              fontSize="5xl"
+              color="white"
+              as="h2"
+              lineHeight="1.5"
+            >
+              Shop Product from Anywhere and save up to 40%
+            </Heading>
+            <Box
+              mb={3}
+              d="inline-block"
+              px={3}
+              py={1}
+              borderRadius="md"
+              bg="white"
+            >
+              <Text fontSize="lg"> Delivered by our verified users</Text>
+            </Box>
+            <br />
+            <Box px={3} py={1} d="inline-block" borderRadius="md" bg="white">
+              <Text fontSize="lg"> Flexible and super fast delivery</Text>
+            </Box>
+          </Box>
+          <Box flex={2}>
+            <Box maxW="500px" ml="auto">
+              <Img fluid={data.ecommerce.childImageSharp.fluid} />
+            </Box>
+          </Box>
+        </Flex>
       </Box>
       <Box mb="120px" as="section" minW="100%">
         <Container mx="auto" minW="container.xl">
@@ -496,17 +454,10 @@ export const query = graphql`
         }
       }
     }
-    thrift_shop: file(relativePath: { eq: "thrift_shop.png" }) {
+    ecommerce: file(relativePath: { eq: "orders_page_main.png" }) {
       childImageSharp {
-        fixed(width: 250) {
-          ...GatsbyImageSharpFixed
-        }
-      }
-    }
-    delivery_bro: file(relativePath: { eq: "delivery_bro.png" }) {
-      childImageSharp {
-        fixed(width: 250) {
-          ...GatsbyImageSharpFixed
+        fluid(maxWidth: 500) {
+          ...GatsbyImageSharpFluid
         }
       }
     }

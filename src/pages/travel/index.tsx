@@ -37,13 +37,14 @@ import plane from "../../images/planeicon.svg"
 import note from "../../images/noteicon.svg"
 import card from "../../images/debit-cardicon.svg"
 import { StepCircle } from "../../components/Misc/StepCircle"
+import { TravelNavbar } from "../../components/Navbar"
 
 export const query = graphql`
   query {
-    travel_girl: file(relativePath: { eq: "traveling_girl.png" }) {
+    globe: file(relativePath: { eq: "travel_page_main.png" }) {
       childImageSharp {
-        fixed(width: 400) {
-          ...GatsbyImageSharpFixed
+        fluid(maxWidth: 500) {
+          ...GatsbyImageSharpFluid
         }
       }
     }
@@ -81,37 +82,68 @@ export const query = graphql`
 const AddTrip = ({ data }: PageProps) => {
   return (
     <>
-      <Center px="6" minW="100%" h="350px" bg="blue.400" as="header">
-        <Flex w="100%" maxW="container.xl" alignItems="center" h="100%">
-          <Box mr="auto">
-            <Heading mb={6} as="h1" color="white">
+      <TravelNavbar />
+      <Box
+        overflow="hidden"
+        bgGradient="linear(to-b,blue.400,blue.500)"
+        className="order-header"
+        mb="50px"
+        minW="100%"
+        pos="relative"
+        as="header"
+      >
+        <div className="overlay">
+          <div></div>
+        </div>
+
+        <Container pt="60px" mx="auto" w="100%" maxW="container.xxl">
+          <AddTripForm
+            fontSize="2xl"
+            bg="white"
+            pos="relative"
+            top="-20px"
+            boxShadow="xl"
+            borderRadius="50px"
+            h="80px"
+            maxW="container.xxl"
+            w="100%"
+          />
+        </Container>
+        <Flex
+          alignItems="center"
+          mx="auto"
+          mb="100px"
+          maxW="container.xxl"
+          mt="40px"
+        >
+          <Box flex={3}>
+            <Heading
+              mb={5}
+              fontSize="5xl"
+              color="white"
+              as="h2"
+              lineHeight="1.5"
+            >
               Travel with minimum costs with Briddgy
             </Heading>
             <Text mb={6} color="whiteAlpha.800">
               Search for tickets, hotels and share your trip in Briddgy
               <br /> Make deliveries and earn money!{" "}
             </Text>
-
-            <Link to="/">
-              <BulletTriangleIcon /> How to earn with Briddgy?
-            </Link>
+            <Text color="white">
+              <Link to="/">
+                <BulletTriangleIcon /> How to earn with Briddgy?
+              </Link>
+            </Text>
           </Box>
-          <Img fixed={data.travel_girl.childImageSharp.fixed} />
+          <Box flex={2}>
+            <Box maxW="500px" ml="auto">
+              <Img fluid={data.globe.childImageSharp.fluid} />
+            </Box>
+          </Box>
         </Flex>
-      </Center>
-      <Container maxW="container.xl">
-        <AddTripForm
-          fontSize="2xl"
-          bg="white"
-          pos="relative"
-          top="-20px"
-          boxShadow="md"
-          borderRadius="xl"
-          h="80px"
-          maxW="container.xl"
-          w="100%"
-        />
-      </Container>
+      </Box>
+
       <Container my={8} as="section" maxW="container.xl">
         <Tabs variant="unstyled" isFitted={false}>
           <TabList color="gray.600">

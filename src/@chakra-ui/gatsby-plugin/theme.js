@@ -6,11 +6,14 @@ import FormLabel from "./components/formlabel"
 import Input from "./components/input"
 import global from "./global"
 import Colors from "./colors"
+import sizes from "./grid"
 const overrides = {
   fonts: {
     body: "Poppins",
     heading: "Poppins",
   },
+  sizes,
+
   colors: Colors,
   styles: {
     global,
