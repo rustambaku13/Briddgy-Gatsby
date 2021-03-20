@@ -1,8 +1,6 @@
-import Navbar from "../Navbar"
 import React, { useEffect } from "react"
 import { ConfirmEmailModal } from "../Modals/ConfirmEmailModal"
 import { PhoneNumberVerifyModal } from "../Modals/PhoneNumberVerifyModal"
-import anime from "animejs/lib/anime.es.js"
 export default ({ children }) => {
   useEffect(() => {
     // const animation = anime({

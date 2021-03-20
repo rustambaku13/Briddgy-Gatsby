@@ -17,18 +17,17 @@ import {
   Textarea,
 } from "@chakra-ui/react"
 import { PageProps } from "gatsby"
-
 import { Link, navigate } from "gatsby-plugin-intl"
 import { flowResult } from "mobx"
-import NavbarDefault from "../../../components/Navbar"
 import React, { useEffect, useRef, useState } from "react"
 import { useForm } from "react-hook-form"
-import { LocationAutoComplete } from "../../../components/Form/LocationAutoComplete"
 import { LoginModalForm } from "../../../components/Form/LoginModalForm"
 import { GroupImageUploader } from "../../../components/Inputs/ImageUploader"
+import { LocationAutoComplete } from "../../../components/Inputs/LocationAutoComplete"
 import ImageThumbnailViewer from "../../../components/Misc/ImageThumbnailViewer"
 import { PaymentDisplay } from "../../../components/Misc/Payment/PaymentDisplay"
 import { Step, Steps } from "../../../components/Misc/Steps"
+import NavbarDefault from "../../../components/Navbar"
 import { usePopulateQueryHook } from "../../../hooks/usePopulateQueryHook"
 import { useQuoteGetterHook } from "../../../hooks/useQuoteGetterHook"
 import { ChevronLeftIcon } from "../../../icons/ChevronLeft"
@@ -36,6 +35,7 @@ import { LightBulbIcon } from "../../../icons/LightBulb"
 import { PlaneIcon } from "../../../icons/Plane"
 import { RefreshIcon } from "../../../icons/Refresh"
 import UserStore from "../../../store/UserStore"
+
 const pageFields = {
   0: ["url", "title", "description", "price", "item_price", "weight"],
 }

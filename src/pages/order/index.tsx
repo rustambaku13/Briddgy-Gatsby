@@ -15,10 +15,9 @@ import { graphql } from "gatsby"
 import Img from "gatsby-image"
 import React, { useEffect } from "react"
 import { useForm } from "react-hook-form"
-import { ProductCard } from "../../components/Cards/"
 import { BlogLinkCard } from "../../components/Cards/Blog/BlogLinkCard"
+import { ProductCard } from "../../components/Cards/Order/Product"
 import { TestimonialLinkCard } from "../../components/Cards/Testimonial/TestimonialLinkCard"
-import { AddOrderForm } from "../../components/Form/AddOrderForm"
 import { StepCircle } from "../../components/Misc/StepCircle"
 import { OrderNavbar } from "../../components/Navbar"
 import card from "../../images/debit-cardicon.svg"
@@ -29,6 +28,7 @@ import plane from "../../images/planeicon.svg"
 const AddOrder = ({ data }) => {
   const { register, handleSubmit, errors } = useForm()
   useEffect(() => {
+    return
     const animationOrderMainInput = anime({
       targets: "#add_order_form",
       translateY: [0, -100],
@@ -70,15 +70,15 @@ const AddOrder = ({ data }) => {
           <div></div>
         </div>
 
-        <Container pt="60px" mx="auto" w="100%" maxW="container.lg">
+        {/* <Container pt="60px" mx="auto" w="100%" maxW="container.lg">
           <AddOrderForm mx="auto" />
-        </Container>
+        </Container> */}
         <Flex
           alignItems="center"
           mx="auto"
           mb="100px"
           maxW="container.xxl"
-          mt="40px"
+          mt="100px"
         >
           <Box flex={3}>
             <Heading

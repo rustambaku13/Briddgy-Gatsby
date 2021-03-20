@@ -1,43 +1,33 @@
 import {
+  Box,
+  Button,
+  Flex,
+  Heading,
+  HStack,
   Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
-  Image,
-  Text,
-  Button,
-  Center,
-  Textarea,
-  Heading,
-  Box,
-  Flex,
-  Tabs,
-  TabList,
-  TabPanel,
-  TabPanels,
-  HStack,
+  ModalContent,
+  ModalOverlay,
   PinInput,
   PinInputField,
+  TabPanel,
+  TabPanels,
+  Tabs,
+  Text,
 } from "@chakra-ui/react"
+import anime from "animejs/lib/anime.es.js"
+import { flowResult } from "mobx"
+import { observer } from "mobx-react-lite"
+import React, { useEffect, useState } from "react"
+import { useForm } from "react-hook-form"
 import PhoneInput from "react-phone-input-2"
 import "react-phone-input-2/lib/bootstrap.css"
-
-import Img from "gatsby-image"
-import { graphql, StaticQuery } from "gatsby"
-import React, { useEffect, useState } from "react"
-import { IncrementalNumberSelector } from "../Inputs/IncrementalNumberSelector"
-import { observer } from "mobx-react-lite"
-import LayoutStore from "../../store/LayoutStore"
-import anime from "animejs/lib/anime.es.js"
-import { FriendsInvite } from "../Animations/VerifyPhone"
 import { PREFERRED_COUNTRIES } from "../../api"
-import { useForm } from "react-hook-form"
-import { askForPhoneCode, verifyPhoneNumber } from "../../api/user"
-import { flowResult } from "mobx"
+import { askForPhoneCode } from "../../api/user"
+import LayoutStore from "../../store/LayoutStore"
 import UserStore from "../../store/UserStore"
+import { FriendsInvite } from "../Animations/VerifyPhone"
 
 let phone_number = null
 

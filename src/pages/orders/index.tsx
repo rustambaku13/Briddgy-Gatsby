@@ -3,7 +3,6 @@ import {
   Button,
   Container,
   Flex,
-  FormLabel,
   Heading,
   HStack,
   Img as CImg,
@@ -13,25 +12,23 @@ import {
   MenuList,
   MenuOptionGroup,
   SimpleGrid,
-  Spinner,
   Text,
 } from "@chakra-ui/react"
 import { graphql } from "gatsby"
 import { navigate } from "gatsby-plugin-intl"
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { getOrders } from "../../api/order"
 import PublicOrderCard from "../../components/Cards/Order/PublicOrderCard"
 import { TestimonialLinkCard } from "../../components/Cards/Testimonial/TestimonialLinkCard"
-import { LocationAutoComplete } from "../../components/Form/LocationAutoComplete"
+import { LocationAutoComplete } from "../../components/Inputs/LocationAutoComplete"
 import { Empty } from "../../components/Misc/Empty"
 import { Loader } from "../../components/Misc/Loader"
-import { Paginator } from "../../components/Misc/Paginator"
 import { StepCircle } from "../../components/Misc/StepCircle"
+import NavbarDefault from "../../components/Navbar"
 import { ChevronDownIcon } from "../../icons/ChevronDown"
 import RotateIcon from "../../icons/Rotate"
 import card from "../../images/debit-cardicon.svg"
-import NavbarDefault from "../../components/Navbar"
 import earth from "../../images/earthicon.svg"
 import note from "../../images/noteicon.svg"
 import plane from "../../images/planeicon.svg"

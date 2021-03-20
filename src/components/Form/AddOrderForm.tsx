@@ -1,61 +1,40 @@
-import {
-  Button,
-  Center,
-  chakra,
-  Divider,
-  Flex,
-  IconButton,
-  Input,
-  Text,
-} from "@chakra-ui/react"
+import { Box, Button, chakra, Flex, Text, IconButton } from "@chakra-ui/react"
 import { navigate } from "gatsby-plugin-intl"
-import { flowResult } from "mobx"
-import React, { useRef, useState } from "react"
-import { useForm } from "react-hook-form"
-import { CalendarIcon } from "../../icons/Calendar"
-import { LocationIcon } from "../../icons/Location"
+import React from "react"
+import { FormProvider, useForm, useFormContext } from "react-hook-form"
 import OrderIcon from "../../icons/Order"
-import RotateIcon from "../../icons/Rotate"
-import UserStore from "../../store/UserStore"
-import { DatePicker } from "../Inputs/DatePicker"
-import { AddTripDetailsModal } from "../Modals/AddTripDetailsModal"
-import { LocationAutoComplete } from "./LocationAutoComplete"
-import { LoginModalForm } from "./LoginModalForm"
+import { OrderAutoComplete } from "../Inputs/OrderAutocomplete"
 
-export const AddOrderTopSearch = chakra(
-  ({ className }: { className?: any }) => {
-    const { register, getValues, handleSubmit, watch, errors } = useForm()
-    const submitHandler = data => {
-      navigate(`add?url=${data.url}`)
-    }
-
+const TopSearchButton = chakra(
+  ({ className, expand }: { className?: any; expand: any }) => {
     return (
       <Flex
+        onClick={expand}
+        role="button"
+        _hover={{ boxShadow: "md" }}
         className={className}
-        id="navbar_search"
+        id="navbar_search_order"
         borderRadius="50px"
-        h="70px"
-        as="form"
-        onSubmit={handleSubmit(submitHandler)}
-        autoComplete={"off"}
         w="100%"
+        maxW="350px"
+        mx="auto"
+        mt="15px"
+        h="50px"
         bg="white"
         pl={5}
+        alignItems="center"
         borderWidth="1px"
       >
-        <Input
-          placeholder="Enter the name or URL of the item"
-          height="inherit"
-          border="none"
-          name="url"
-          ref={register({ required: true })}
-          variant="unstyled"
-        />
+        <Text fontSize="sm" flexGrow={1}>
+          Add Order
+        </Text>
 
         <IconButton
-          h="calc(100% - 10px)"
-          mt="5px"
-          mr="10px"
+          flexShrink={0}
+          h="40px"
+          mr="5px"
+          d="block"
+          w="40px"
           borderRadius="50%"
           variant="red_gradient"
           type="submit"
@@ -67,12 +46,7 @@ export const AddOrderTopSearch = chakra(
   }
 )
 
-export const AddOrderForm = chakra(({ className }: { className?: any }) => {
-  const { register, getValues, handleSubmit, watch, errors } = useForm()
-  const submitHandler = data => {
-    navigate(`add?url=${data.url}`)
-  }
-
+const AddOrderForm = chakra(({ className }: { className?: any }) => {
   return (
     <Flex
       className={className}
@@ -80,21 +54,16 @@ export const AddOrderForm = chakra(({ className }: { className?: any }) => {
       boxShadow="md"
       borderRadius="50px"
       h="70px"
-      as="form"
-      onSubmit={handleSubmit(submitHandler)}
       autoComplete={"off"}
       w="100%"
       bg="white"
       pl={5}
       borderWidth="1px"
     >
-      <Input
-        placeholder="Enter the name or URL of the item"
+      <OrderAutoComplete
+        placeholder="Enter the URL or the Name of the product"
         height="inherit"
-        border="none"
         name="url"
-        ref={register({ required: true })}
-        variant="unstyled"
       />
 
       <Button
@@ -113,3 +82,31 @@ export const AddOrderForm = chakra(({ className }: { className?: any }) => {
     </Flex>
   )
 })
+
+export const AddOrderNavigationMenu = ({ expand }) => {
+  const formObject = useForm()
+
+  const submitHandler = data => {
+    navigate(`add?url=${data.url_name}`)
+  }
+  return (
+    <>
+      <FormProvider {...formObject}>
+        <Box
+          className="form"
+          id="order_navigation"
+          as="form"
+          onSubmit={formObject.handleSubmit(submitHandler)}
+          w="100%"
+          h="100%"
+          mx="auto"
+        >
+          <TopSearchButton expand={expand} />
+          <Box className="overlay">
+            <AddOrderForm />
+          </Box>
+        </Box>
+      </FormProvider>
+    </>
+  )
+}

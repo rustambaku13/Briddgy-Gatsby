@@ -1,11 +1,7 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react"
-import Upload from "rc-upload"
-import { Box, Center, HStack } from "@chakra-ui/layout"
-import ChatIcon from "../../icons/Chat"
-import { Button, IconButton } from "@chakra-ui/button"
 import { Img } from "@chakra-ui/image"
-import { AlertIcon } from "@chakra-ui/alert"
-import { MenuIcon } from "@chakra-ui/menu"
+import { Center, HStack } from "@chakra-ui/layout"
+import Upload from "rc-upload"
+import React, { useEffect, useState } from "react"
 import { CrossIcon } from "../../icons/Cross"
 
 const ImageUploader = ({ setFiles, file }) => {

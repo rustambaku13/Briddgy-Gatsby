@@ -4,7 +4,6 @@ import {
   Center,
   Checkbox,
   Divider,
-  Flex,
   FormControl,
   FormLabel,
   Heading,
@@ -15,14 +14,13 @@ import {
 import { PageProps } from "gatsby"
 import { Link } from "gatsby-plugin-intl"
 import { flowResult } from "mobx"
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { useForm } from "react-hook-form"
-import { ConfirmEmailModal } from "../../components/Modals/ConfirmEmailModal"
+import NavbarDefault from "../../components/Navbar"
+import { useAuthHook } from "../../hooks/useAuthHook"
 import { useDidUpdateEffect } from "../../hooks/useDidUpdateEffect"
 import GoogleIcon from "../../icons/Google"
-import { navigate } from "gatsby-plugin-intl"
 import UserStore from "../../store/UserStore"
-import { useAuthHook } from "../../hooks/useAuthHook"
 const SignUp = ({ data }: PageProps) => {
   const {
     register,
@@ -66,6 +64,7 @@ const SignUp = ({ data }: PageProps) => {
   }, [modalOpen])
   return (
     <>
+      <NavbarDefault />
       <Center
         alignItems="flex-start"
         pt="100px"
@@ -76,7 +75,6 @@ const SignUp = ({ data }: PageProps) => {
         <Box
           w="100%"
           maxW="container.xl"
-          boxShadow="md"
           d="flex"
           borderRadius="lg"
           borderColor="gray.200"

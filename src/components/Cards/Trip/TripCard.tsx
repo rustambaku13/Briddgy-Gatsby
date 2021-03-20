@@ -1,22 +1,19 @@
-import React from "react"
 import {
-  Avatar,
   Badge,
   Box,
   Button,
-  Center,
   chakra,
   Divider,
   Flex,
   Text,
 } from "@chakra-ui/react"
-import { PlaneIcon } from "../../../icons/Plane"
-import { ChatIcon } from "../../../icons/Chat"
-import { Trip } from "../../../types/trip"
-import { bmify } from "../../../api"
-import { ChevronRightIcon } from "../../../icons/ChevronRight"
 import { Link } from "gatsby-plugin-intl"
+import React from "react"
+import { ChevronRightIcon } from "../../../icons/ChevronRight"
+import { PlaneIcon } from "../../../icons/Plane"
+import { Trip } from "../../../types/trip"
 import { tripCityAnywhere } from "../../../utils/misc"
+import { Avatar } from "../../Avatar/Avatar"
 
 export const MyTripCard = chakra(
   ({ className, trip }: { className?: any; trip: Trip }) => {
@@ -105,16 +102,16 @@ const PublicTripCard = chakra(
         >
           <Flex h="40px">
             <Box h="40px" lineHeight="40px">
-              <Avatar src={bmify(trip.owner.avatarpic)} h="40px" w="40px" />
+              <Avatar user={trip.owner} h="40px" w="40px" />
               <Text ml="3" d="inline-block">
                 {trip.owner.first_name + " " + trip.owner.last_name}
               </Text>
             </Box>
-            <Box ml="auto" h="40px" lineHeight="40px">
+            {/* <Box ml="auto" h="40px" lineHeight="40px">
               <Text ml="3" d="inline-block">
                 Message <ChatIcon />
               </Text>
-            </Box>
+            </Box> */}
           </Flex>
           <Divider my={3} />
           <Flex
@@ -154,6 +151,9 @@ const PublicTripCard = chakra(
             <strong>Details: </strong>
             {trip.description ? trip.description : "No Description"}
           </Text>
+          <Button mt={3} w="100%" variant="primary">
+            Make Offer
+          </Button>
         </Box>
       </Box>
     )

@@ -31,7 +31,7 @@ import { AddTripForm } from "../../components/Form/AddTripForm"
 import BulletTriangleIcon from "../../icons/BulletTriangle"
 import { ChevronLeftIcon } from "../../icons/ChevronLeft"
 import { ChevronRightIcon } from "../../icons/ChevronRight"
-import { TravelDestinationCard } from "../../components/Cards/TravelDestination"
+import { TravelDestinationCard } from "../../components/Cards/Trip/TravelDestination"
 import earth from "../../images/earthicon.svg"
 import plane from "../../images/planeicon.svg"
 import note from "../../images/noteicon.svg"
@@ -95,20 +95,6 @@ const AddTrip = ({ data }: PageProps) => {
         <div className="overlay">
           <div></div>
         </div>
-
-        <Container pt="60px" mx="auto" w="100%" maxW="container.xxl">
-          <AddTripForm
-            fontSize="2xl"
-            bg="white"
-            pos="relative"
-            top="-20px"
-            boxShadow="xl"
-            borderRadius="50px"
-            h="80px"
-            maxW="container.xxl"
-            w="100%"
-          />
-        </Container>
         <Flex
           alignItems="center"
           mx="auto"

@@ -76,50 +76,64 @@
     }
   }
 }
+nav {
+  .form {
+    display: none;
+  }
+}
+
+$transition_navbar: -ms-transform 150ms ease 0s, -webkit-transform 150ms ease 0s,
+  transform 150ms ease 0s, opacity 50ms ease 20ms, visibility 0ms ease 150ms,
+  top ease 150ms !important;
 
 #travel-navbar {
   position: sticky;
   position: -webkit-sticky;
   background-color: #5cb2cc;
   top: -1px; /* required */
-  z-index: 39;
-  transition: 0.3s ease-in-out;
-  &.isSticky {
-    background-color: white;
-    height: 65px;
-    nav {
-      color: #333333;
-      #create_order {
-        color: #333333;
-      }
-      #navbar_search {
-        > button {
-          visibility: visible;
-          opacity: 1;
-        }
-        visibility: visible;
-        opacity: 1;
-      }
-    }
+  transition: $transition_navbar;
+  #add_order_form {
+    display: none;
+  }
+  z-index: 3;
+  .overlay {
+    left: 0px;
+    position: absolute;
+    text-align: left;
+    top: 100px;
+    width: 100%;
+    z-index: 2;
+    transition: $transition_navbar;
+  }
+  #navbar_search_order {
+    visibility: hidden;
+    opacity: 0;
+    transition: $transition_navbar;
+  }
+  #add_travel_form {
+    margin: 0px auto;
+    max-width: 1024px;
+    color: #333333;
   }
   nav {
+    transition: all ease 150ms 0s;
     color: white;
     border: none;
     max-width: 1400px;
+    height: 200px;
+    max-height: 80px;
     margin: 0 auto;
+    z-index: 2;
     font-weight: 600;
+    #order_navigation {
+      display: none;
+    }
+    .form {
+      display: block;
+    }
+
     .navbar-profile-menu span {
       color: initial;
-    }
-    #navbar_search {
-      > button {
-        transition: visibility 0s, opacity 0.3s linear;
-        visibility: hidden;
-        opacity: 0;
-      }
-      transition: visibility 0s, opacity 0.3s linear;
-      visibility: hidden;
-      opacity: 0;
     }
     #create_order {
       background: white;
@@ -129,6 +143,42 @@
       display: none;
     }
   }
+
+  // If Sticky
+
+  &.isSticky {
+    background-color: white;
+    #navbar_search_order {
+      visibility: visible;
+      opacity: 1;
+    }
+    .overlay {
+      opacity: 0;
+      transform-origin: 50% 0%;
+      transform: scale(0.35, 0.727273) translateY(-58px);
+    }
+    #expanded {
+      max-height: 200px;
+      > div {
+        height: 80px;
+      }
+      #create_order {
+        background: initial;
+        color: #333333;
+      }
+      #navbar_search_order {
+        visibility: hidden;
+        opacity: 0;
+      }
+      .overlay {
+        opacity: 1;
+        transform: none;
+      }
+    }
+    nav {
+      color: #333333;
+    }
+  }
 }
 
 #order-navbar {
@@ -136,44 +186,85 @@
   position: -webkit-sticky;
   background-color: #5cb2cc;
   top: -1px; /* required */
-  z-index: 999;
-  transition: 0.3s ease-in-out;
-  &.isSticky {
-    background-color: white;
-    height: 65px;
-    nav {
-      color: #333333;
-      #navbar_search {
-        > button {
-          visibility: visible;
-          opacity: 1;
-        }
-        visibility: visible;
-        opacity: 1;
-      }
-    }
+  transition: $transition_navbar;
+
+  z-index: 100;
+  .overlay {
+    left: 0px;
+    position: absolute;
+    text-align: left;
+    top: 100px;
+    width: 100%;
+    z-index: 2;
+    transition: $transition_navbar;
+  }
+  #navbar_search_order {
+    visibility: hidden;
+    opacity: 0;
+    transition: $transition_navbar;
+  }
+  #add_order_form {
+    margin: 0px auto;
+    max-width: 1024px;
+    color: #333333;
   }
   nav {
+    transition: all ease 150ms 0s;
     color: white;
     border: none;
     max-width: 1400px;
+    height: 200px;
+    max-height: 80px;
     margin: 0 auto;
+    z-index: 2;
     font-weight: 600;
+    #trip_navigation {
+      display: none;
+    }
+    form {
+      display: block;
+    }
+
     .navbar-profile-menu span {
       color: initial;
     }
-    #navbar_search {
-      > button {
-        transition: visibility 0s, opacity 0.3s linear;
+
+    #create_order {
+      display: none;
+    }
+  }
+
+  // If Sticky
+
+  &.isSticky {
+    background-color: white;
+    #navbar_search_order {
+      visibility: visible;
+      opacity: 1;
+    }
+    .overlay {
+      opacity: 0;
+      transform-origin: 50% 0%;
+      transform: scale(0.35, 0.727273) translateY(-58px);
+    }
+    #expanded {
+      max-height: 200px;
+      > div {
+        height: 80px;
+      }
+      #add_order_form {
+      }
+      #navbar_search_order {
         visibility: hidden;
         opacity: 0;
       }
-      transition: visibility 0s, opacity 0.3s linear;
-      visibility: hidden;
-      opacity: 0;
+      .overlay {
+        opacity: 1;
+        transform: none;
+      }
     }
-    #create_order {
-      display: none;
+    nav {
+      color: #333333;
     }
   }
 }

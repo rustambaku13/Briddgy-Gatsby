@@ -1,5 +1,4 @@
 import {
-  Avatar,
   Badge,
   Box,
   Button,
@@ -14,8 +13,8 @@ import moment from "moment"
 import React from "react"
 import { bmify } from "../../../api"
 import { Order } from "../../../types/orders"
-import { Trip } from "../../../types/trip"
 import { trimCityEmpty } from "../../../utils/misc"
+import { Avatar } from "../../Avatar/Avatar"
 
 const OrderStatus = chakra(
   ({ orderData, className }: { orderData: Order; className?: any }) => {
@@ -54,7 +53,8 @@ export const MyOrderCard = chakra(
       >
         <Box mb={5} h="60px">
           <Avatar
-            src={bmify(orderData.owner.avatarpic)}
+            user={orderData.owner}
+            // src={bmify(orderData.owner.avatarpic)}
             display="inline-flex"
             h="55px"
             w="55px"
@@ -151,7 +151,7 @@ const PublicOrderCard = chakra(
       >
         <Box mb={5} h="60px">
           <Avatar
-            src={bmify(orderData.owner.avatarpic)}
+            user={orderData.owner}
             display="inline-flex"
             h="55px"
             w="55px"

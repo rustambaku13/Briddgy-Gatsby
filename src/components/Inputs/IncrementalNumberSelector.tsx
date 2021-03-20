@@ -1,4 +1,4 @@
-import { Box, Center, chakra, Flex, Modal, Text } from "@chakra-ui/react"
+import { Center, chakra, Flex, Text } from "@chakra-ui/react"
 import React, { useState } from "react"
 import { ChevronLeftIcon } from "../../icons/ChevronLeft"
 import { ChevronRightIcon } from "../../icons/ChevronRight"

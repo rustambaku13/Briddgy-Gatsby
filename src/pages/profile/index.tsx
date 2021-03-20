@@ -9,45 +9,41 @@ import {
   HStack,
   SimpleGrid,
 } from "@chakra-ui/layout"
-import React, { useEffect, useRef, useState } from "react"
-import { observer } from "mobx-react-lite"
 import {
-  Tabs,
-  TabList,
-  TabPanels,
-  Tab,
-  Text,
-  TabPanel,
   Avatar,
   Button,
-  Tag,
-  Spinner,
   Input,
+  Spinner,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+  Text,
 } from "@chakra-ui/react"
-import { bmify } from "../../api"
-import UserStore from "../../store/UserStore"
-import { CheckIcon } from "../../icons/Check"
-import { useAuthHook } from "../../hooks/useAuthHook"
-import { Order } from "../../types/orders"
-import PublicOrderCard, {
-  MyOrderCard,
-} from "../../components/Cards/Order/PublicOrderCard"
-import { Trip } from "../../types/trip"
-import { MyTripCard } from "../../components/Cards/Trip/TripCard"
-import { Loader } from "../../components/Misc/Loader"
-import { Empty } from "../../components/Misc/Empty"
-import { FriendsInvite } from "../../components/Animations/FriendsInvite"
-import ClipboardIcon from "../../icons/Clipboard"
-import { OrderIcon } from "../../icons/Order"
-import { TripIcon } from "../../icons/Trip"
-import { Discount } from "../../components/Animations/Discount"
-import { useForm } from "react-hook-form"
-import { VerificationStatus } from "../../components/Misc/VerificationStatus"
-import { usePopulateQueryHook } from "../../hooks/usePopulateQueryHook"
 import { navigate } from "gatsby-link"
 import { Link } from "gatsby-plugin-intl"
-import LayoutStore from "../../store/LayoutStore"
+import { observer } from "mobx-react-lite"
+import React, { useEffect, useRef, useState } from "react"
+import { useForm } from "react-hook-form"
+import { bmify } from "../../api"
+import { Discount } from "../../components/Animations/Discount"
+import { FriendsInvite } from "../../components/Animations/FriendsInvite"
+import { MyOrderCard } from "../../components/Cards/Order/PublicOrderCard"
+import { MyTripCard } from "../../components/Cards/Trip/TripCard"
+import { Empty } from "../../components/Misc/Empty"
+import { Loader } from "../../components/Misc/Loader"
+import { VerificationStatus } from "../../components/Misc/VerificationStatus"
 import NavbarDefault from "../../components/Navbar"
+import { useAuthHook } from "../../hooks/useAuthHook"
+import { usePopulateQueryHook } from "../../hooks/usePopulateQueryHook"
+import { CheckIcon } from "../../icons/Check"
+import ClipboardIcon from "../../icons/Clipboard"
+import { TripIcon } from "../../icons/Trip"
+import LayoutStore from "../../store/LayoutStore"
+import UserStore from "../../store/UserStore"
+import { Order } from "../../types/orders"
+import { Trip } from "../../types/trip"
 
 const PersonalDetailsSection = observer(() => {
   return (

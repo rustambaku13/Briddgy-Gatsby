@@ -7,11 +7,11 @@ import {
   Spinner,
   Text,
 } from "@chakra-ui/react"
-import React, { useRef, useState } from "react"
+import React, { useState } from "react"
 import { searchLocation } from "../../api/location"
 import { LocationIcon } from "../../icons/Location"
 import { Location } from "../../types/location"
-import { trimCityEmpty, tripCityAnywhere } from "../../utils/misc"
+import { trimCityEmpty } from "../../utils/misc"
 
 let a = null
 export const LocationAutoComplete = chakra(
@@ -61,12 +61,8 @@ export const LocationAutoComplete = chakra(
       document.activeElement.blur()
     }
     return (
-      <Box
-        pos="relative"
-        fontSize="1em"
-        className={className + " autocomplete"}
-      >
-        <InputGroup>
+      <Box pos="relative" className={className + " autocomplete"}>
+        <InputGroup fontSize="inherit">
           <Input
             size={size}
             aria-haspopup="listbox"
@@ -79,7 +75,6 @@ export const LocationAutoComplete = chakra(
               parentRef(e)
               nameRef = e
             }}
-            fontSize="0.8em"
             border="none"
             placeholder={placeholder}
           />
@@ -96,7 +91,6 @@ export const LocationAutoComplete = chakra(
           hidden={hidden}
           tabIndex={0}
           className="options-autocomplete"
-          fontSize="md"
           aria-autocomplete="list"
           bg="white"
           borderWidth="1px"
@@ -110,6 +104,7 @@ export const LocationAutoComplete = chakra(
             results.map((location: Location) => (
               <Box
                 as="button"
+                fontSize="1em"
                 type="button"
                 onClick={selectHandler}
                 value={location.id}

@@ -8,7 +8,7 @@ import {
 } from "@chakra-ui/react"
 import React, { useState } from "react"
 import { StarIcon } from "../../icons/Star"
-import { MiniTestimonialCard } from "../Cards"
+import { MiniTestimonialCard } from "../Cards/Testimonial/MiniTestimonial"
 import { Rating } from "../Misc/Rating"
 export const TestimonialLanding = ({}) => {
   const [selectedTab, setSelectedTab] = useState("0")

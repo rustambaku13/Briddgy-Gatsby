@@ -1,23 +1,17 @@
 import {
+  Box,
+  Heading,
   Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
+  ModalContent,
+  ModalOverlay,
   Text,
-  Button,
-  Center,
-  Textarea,
-  Heading,
-  Box,
 } from "@chakra-ui/react"
-import Img from "gatsby-image"
 import { graphql, StaticQuery } from "gatsby"
-import React from "react"
-import { IncrementalNumberSelector } from "../Inputs/IncrementalNumberSelector"
+import Img from "gatsby-image"
 import { observer } from "mobx-react-lite"
+import React from "react"
 import LayoutStore from "../../store/LayoutStore"
 export const ConfirmEmailModal = observer(() => {
   let isOpen = LayoutStore.emailConfirmModalVisible
@@ -69,22 +63,6 @@ export const ConfirmEmailModal = observer(() => {
                   request!
                 </Text>
               </ModalBody>
-
-              {/* <ModalFooter>
-            <Button
-              variant="solid"
-              _hover={{
-                bgGradient: "linear(to-b, red.400,red.600)",
-                boxShadow: "lg",
-              }}
-              color="white"
-              mr="auto"
-              px={10}
-            >
-              Add Trip
-            </Button>
-            <Button variant="link">Skip & Check Tickets</Button>
-          </ModalFooter> */}
             </ModalContent>
           </Modal>
         )
