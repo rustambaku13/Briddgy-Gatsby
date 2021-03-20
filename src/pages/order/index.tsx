@@ -27,33 +27,6 @@ import plane from "../../images/planeicon.svg"
 
 const AddOrder = ({ data }) => {
   const { register, handleSubmit, errors } = useForm()
-  useEffect(() => {
-    return
-    const animationOrderMainInput = anime({
-      targets: "#add_order_form",
-      translateY: [0, -100],
-      width: 0,
-      opacity: 0,
-
-      elasticity: 200,
-      easing: "easeInOutSine",
-      autoplay: false,
-    })
-    const functionReference = () => {
-      let scrollTop = window.scrollY
-      let docHeight = document.body.offsetHeight
-      let winHeight = window.innerHeight
-      let scrollPercent = scrollTop / (docHeight - winHeight)
-      // animation.seek(animation.duration * (scrollPercent / 0.06))
-      animationOrderMainInput.seek(
-        animationOrderMainInput.duration * (scrollPercent / 0.04)
-      )
-    }
-    window.addEventListener("scroll", functionReference, false)
-    return function () {
-      window.removeEventListener("scroll", functionReference)
-    }
-  })
   return (
     <>
       <OrderNavbar />
@@ -70,9 +43,6 @@ const AddOrder = ({ data }) => {
           <div></div>
         </div>
 
-        {/* <Container pt="60px" mx="auto" w="100%" maxW="container.lg">
-          <AddOrderForm mx="auto" />
-        </Container> */}
         <Flex
           alignItems="center"
           mx="auto"
@@ -112,7 +82,7 @@ const AddOrder = ({ data }) => {
           </Box>
         </Flex>
       </Box>
-      <Box mb="120px" as="section" minW="100%">
+      <Box mb="150px" as="section" minW="100%">
         <Container mx="auto" minW="container.xl">
           <Heading mb="60px" as="h1" textAlign="center">
             Trending Products in Briddgy
@@ -165,7 +135,7 @@ const AddOrder = ({ data }) => {
           </Grid>
         </Container>
       </Box>
-      <Container my="60px" as="section" maxW="container.lg">
+      <Container my="150px" as="section" maxW="container.lg">
         <Heading mb="50px" textAlign="center">
           Information for travelers
         </Heading>
@@ -289,14 +259,14 @@ const AddOrder = ({ data }) => {
           </Button>
         </Box>
       </Container>
-      <Container h="130px" bg="gray.100" my="80px" maxW="full" as="section">
+      <Container h="130px" bg="gray.100" my="100px" maxW="full" as="section">
         <Center justifyContent="space-between" w="300px" mx="auto" h="100%">
           <Img fixed={data.visa.childImageSharp.fixed} />
 
           <Img fixed={data.mastercard.childImageSharp.fixed} />
         </Center>
       </Container>
-      <Container my="80px" pt={8} maxW="full" as="section">
+      <Container my="100px" pt={8} maxW="full" as="section">
         <Heading textAlign="center" mb="80px">
           Why our shoppers love Briddgy
         </Heading>

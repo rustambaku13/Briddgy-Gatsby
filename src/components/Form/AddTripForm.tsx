@@ -15,11 +15,11 @@ import { useForm } from "react-hook-form"
 import { CalendarIcon } from "../../icons/Calendar"
 import { LocationIcon } from "../../icons/Location"
 import RotateIcon from "../../icons/Rotate"
+import { TripIcon } from "../../icons/Trip"
 import UserStore from "../../store/UserStore"
 import { DatePicker } from "../Inputs/DatePicker"
-import { AddTripDetailsModal } from "../Modals/AddTripDetailsModal"
 import { LocationAutoComplete } from "../Inputs/LocationAutoComplete"
-import { TripIcon } from "../../icons/Trip"
+import { AddTripDetailsModal } from "../Modals/AddTripDetailsModal"
 import { LoginModalForm } from "./LoginModalForm"
 
 const TopSearchButton = chakra(
@@ -115,6 +115,7 @@ export const AddTripForm = chakra(({ className }: { className?: any }) => {
       <Flex alignItems="center" pl={4} flex={1}>
         <LocationIcon color="gray.500" />
         <LocationAutoComplete
+          fontSize="md"
           name="source"
           parentRef={register({ required: true })}
         />
@@ -139,6 +140,7 @@ export const AddTripForm = chakra(({ className }: { className?: any }) => {
       <Flex alignItems="center" pl={4} flex={1}>
         <LocationIcon color="gray.500" />
         <LocationAutoComplete
+          fontSize="md"
           name="destination"
           parentRef={register({ required: true })}
         />

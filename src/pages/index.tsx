@@ -4,6 +4,7 @@ import {
   Center,
   Container,
   Flex,
+  Grid,
   Heading,
   Link as CLink,
   SimpleGrid,
@@ -29,19 +30,28 @@ const Home = ({ data }) => {
   return (
     <>
       <Navbar />
-      <Box w="100%" mb="100px" as="header">
+      <Box w="100%" mb="150px" as="header">
+        <Box d={["block", "block", "none"]} w="100%">
+          <Img fluid={data.image1.childImageSharp.fluid} />
+        </Box>
         <Container
           display="flex"
           pr={0}
+          pl={0}
           mr={0}
           pt="50px"
-          justifyContent="space-between"
+          justifyContent={["center", "center", "space-between"]}
           alignItems="center"
           h="100%"
           maxW="1500px"
         >
-          <Box maxW="550px">
-            <Heading as="h1" fontSize="5xl" lineHeight="1.3" mb={7}>
+          <Box
+            ml={[3, 3, 5]}
+            mr={[3, 3, 0]}
+            flex={3}
+            maxW={["unset", "unset", "550px"]}
+          >
+            <Heading as="h1" fontSize={["4xl", "5xl"]} lineHeight="1.3" mb={7}>
               Your first{" "}
               <Box color="blue.400" as="span">
                 postless
@@ -56,27 +66,49 @@ const Home = ({ data }) => {
               <Link to="/how_it_works">How Briddgy works?</Link>
             </Text>
             <Box mt={5} w="100%">
-              <Button variant="primary" size="lg" mr={3}>
+              <Button
+                w={["100%", "100%", "auto"]}
+                mb={3}
+                variant="primary"
+                size="lg"
+                mr={3}
+              >
                 Order with Briddgy
               </Button>
-              <Button bg="white" size="lg" variant="outline">
+              <Button
+                w={["100%", "100%", "auto"]}
+                mb={3}
+                bg="white"
+                size="lg"
+                variant="outline"
+              >
                 Travel with Briddgy
               </Button>
             </Box>
           </Box>
-          <Box bg="red.200" h="400px" maxW="800px" w="100%"></Box>
+          <Box
+            d={["none", "none", "block"]}
+            flex={2}
+            bg="red.200"
+            h="400px"
+            maxW="800px"
+            w="100%"
+          ></Box>
         </Container>
       </Box>
-      <Box w="100%" mb="100px" as="section">
+      <Box w="100%" mb="150px" as="section">
         <Container h="100%" maxW="1200px">
           <Heading mb={10} fontSize="5xl" fontWeight="600" textAlign="center">
             Travelers
           </Heading>
+          <Box mb={7} d={["block", "block", "none"]} w="100%">
+            <Img fluid={data.image1.childImageSharp.fluid} />
+          </Box>
           <Flex justifyContent="space-between" h="100%" w="100%">
-            <Box flex="1" maxW="600px">
+            <Box d={["none", "none", "block"]} flex="1" maxW="600px">
               <Img fluid={data.image1.childImageSharp.fluid} />
             </Box>
-            <Box maxW="480px" flex="1">
+            <Box ml="auto" w="100%" maxW="480px" flex="1">
               <Flex flexDir="column" justifyContent="center" h="100%">
                 <Text mb={7} fontSize="2xl" w="100%" textAlign="right" as="h2">
                   Travel cheaper by discounting travel expences with Briddgy
@@ -112,7 +144,7 @@ const Home = ({ data }) => {
           <Heading fontSize="2xl" as="h2" fontWeight="normal" mb={3} mt="75px">
             Top travel destinations
           </Heading>
-          <Text variant="secondary">
+          <Text mb={5} variant="secondary">
             Pick a travel destination with most orders and travel with{" "}
             <strong>minimum</strong> costs
           </Text>
@@ -198,11 +230,14 @@ const Home = ({ data }) => {
           </Text>
         </Container>
       </Box>
-      <Box w="100%" mb="100px" as="section">
+      <Box w="100%" mb="150px" as="section">
         <Container h="100%" maxW="1200px">
           <Heading mb={10} fontSize="5xl" fontWeight="600" textAlign="center">
             Orderers
           </Heading>
+          <Box mb={7} d={["block", "block", "none"]} w="100%">
+            <Img fluid={data.image2.childImageSharp.fluid} />
+          </Box>
           <Flex justifyContent="space-between" h="100%" w="100%">
             <Box maxW="480px" flex="1">
               <Flex flexDir="column" justifyContent="center" h="100%">
@@ -258,14 +293,14 @@ const Home = ({ data }) => {
                 </Text>
               </Flex>
             </Box>
-            <Box flex="1" maxW="600px">
+            <Box d={["none", "none", "block"]} flex="1" maxW="600px">
               <Img fluid={data.image2.childImageSharp.fluid} />
             </Box>
           </Flex>
           <Heading fontSize="2xl" as="h2" fontWeight="normal" mb={3} mt="75px">
             Items to purchase
           </Heading>
-          <Text variant="secondary">
+          <Text mb={5} variant="secondary">
             Purchase the most <strong>interesting</strong> and
             <strong> exclusive</strong> items from any point in the world
           </Text>
@@ -277,7 +312,16 @@ const Home = ({ data }) => {
             </CLink>
           </Text>
           <Flex pt="50px" w="100%">
-            <SimpleGrid columns={4} h="100%" w="100%" spacing="32px">
+            <Grid
+              gridTemplateColumns={[
+                "repeat(1, 1fr)",
+                "repeat(2, 1fr)",
+                "repeat(4, 1fr)",
+                "repeat(4, 1fr)",
+              ]}
+              gap="32px"
+              w="100%"
+            >
               <ProductCard
                 productId={1}
                 price={data.products_vertical.edges?.[0].node.frontmatter.price}
@@ -297,23 +341,16 @@ const Home = ({ data }) => {
                 img={data.products_vertical.edges?.[1].node.frontmatter.image}
               />
               <ProductCard
-                gridColumn="3 / span 2"
+                gridColumn={["1 / span 1", "1 / span 2", "3 / span 2"]}
                 productId="1"
                 price={data.products_horizontal.frontmatter.price}
                 productName={data.products_horizontal.frontmatter.title}
                 store={data.products_horizontal.frontmatter.store}
                 img={data.products_horizontal.frontmatter.image}
               />
-            </SimpleGrid>
+            </Grid>
           </Flex>
 
-          <Heading fontSize="2xl" as="h2" fontWeight="normal" mb={3} mt="75px">
-            Or
-          </Heading>
-          <Text variant="secondary">
-            Send your <strong>personal parcels</strong> through travelers right
-            now
-          </Text>
           <Text mt="40px" fontSize="2xl" textAlign="right">
             Check our{" "}
             <Link to="/advice">
@@ -330,9 +367,14 @@ const Home = ({ data }) => {
           </Text>
         </Container>
       </Box>
-      <Box w="100%" mb="100px" as="section">
+      <Box w="100%" mb="150px" as="section">
         <Container h="100%" maxW="1200px">
-          <Heading mb="80px" fontSize="5xl" fontWeight="600" textAlign="center">
+          <Heading
+            mb="80px"
+            fontSize={["4xl", "4xl", "5xl"]}
+            fontWeight="600"
+            textAlign="center"
+          >
             Why people love Briddgy
             <HeartIcon display="inline-block" color="red.400" />
           </Heading>

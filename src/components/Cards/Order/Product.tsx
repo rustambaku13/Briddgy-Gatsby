@@ -9,7 +9,6 @@ const ProductCard = chakra(
         className={className}
         border="1px solid"
         borderRadius="lg"
-        minW="280px"
         borderColor="gray.200"
         transition=".2s ease-in-out"
         _hover={{ bg: "gray.100" }}

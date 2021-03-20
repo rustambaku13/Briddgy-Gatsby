@@ -25,7 +25,7 @@ const TopSearchButton = chakra(
         alignItems="center"
         borderWidth="1px"
       >
-        <Text fontSize="sm" flexGrow={1}>
+        <Text d={["none", "block", "block"]} fontSize="sm" flexGrow={1}>
           Add Order
         </Text>
 

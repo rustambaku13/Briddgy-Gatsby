@@ -92,7 +92,7 @@ const OrdersPage = ({ data, location }) => {
               <LocationAutoComplete
                 name="origin"
                 placeholder="City or Country"
-                fontSize="xl"
+                fontSize="md"
                 parentRef={register()}
               />
             </Flex>
@@ -112,7 +112,7 @@ const OrdersPage = ({ data, location }) => {
               <LocationAutoComplete
                 name="dest"
                 placeholder="City or Country"
-                fontSize="xl"
+                fontSize="md"
                 parentRef={register()}
               />
             </Flex>

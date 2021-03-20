@@ -100,7 +100,7 @@ const AddTrip = ({ data }: PageProps) => {
           mx="auto"
           mb="100px"
           maxW="container.xxl"
-          mt="40px"
+          mt="100px"
         >
           <Box flex={3}>
             <Heading
@@ -130,7 +130,7 @@ const AddTrip = ({ data }: PageProps) => {
         </Flex>
       </Box>
 
-      <Container my={8} as="section" maxW="container.xl">
+      <Container mb="150px" as="section" maxW="container.xl">
         <Tabs variant="unstyled" isFitted={false}>
           <TabList color="gray.600">
             <Tab
@@ -242,7 +242,7 @@ const AddTrip = ({ data }: PageProps) => {
           </TabPanels>
         </Tabs>
       </Container>
-      <Container my="60px" as="section" maxW="container.lg">
+      <Container mb="150px" as="section" maxW="container.lg">
         <Heading mb="50px" textAlign="center">
           Information for travelers
         </Heading>
@@ -304,7 +304,7 @@ const AddTrip = ({ data }: PageProps) => {
         </HStack>
       </Container>
       <Divider />
-      <Container my="60px" pt={8} maxW="full" as="section">
+      <Container mb="150px" pt={8} maxW="full" as="section">
         <Heading textAlign="center" mb="80px">
           How to Earn Money Traveling
         </Heading>

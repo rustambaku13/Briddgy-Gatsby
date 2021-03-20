@@ -94,6 +94,7 @@ export const LocationAutoComplete = chakra(
           aria-autocomplete="list"
           bg="white"
           borderWidth="1px"
+          fontSize="1em"
           borderRadius="md"
         >
           {searching ? (
