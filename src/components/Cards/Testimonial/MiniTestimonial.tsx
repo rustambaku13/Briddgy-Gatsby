@@ -4,6 +4,7 @@ import { chakra } from "@chakra-ui/react"
 
 export const MiniTestimonialCard = chakra(
   ({ firstName, lastName, img, memberSince, className, ...props }) => {
+    // Testimonial Card used in home page for testimonials
     const { getInputProps, getCheckboxProps } = useRadio(props)
     const input = getInputProps()
     const checkbox = getCheckboxProps()
@@ -19,10 +20,10 @@ export const MiniTestimonialCard = chakra(
           w="100%"
           className={className}
         >
-          <Box h="70px" w="70px" borderRadius="50%">
+          <Box borderRadius="50%">
             <Image
-              width="70"
-              height="70"
+              width="5em"
+              height="5em"
               srcSet={
                 "https://cdn0.iconfinder.com/data/icons/avatar-78/128/12-512.png"
               }

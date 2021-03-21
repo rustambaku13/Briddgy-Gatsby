@@ -72,20 +72,19 @@ const AuthorizedNavbar = () => {
           >
             <Image h="45" w="45" src={logo} />
             <Link to="/">
-              <Text
-                d={["none", "none", "block"]}
-                ml={1}
-                fontSize="lg"
-                fontWeight="600"
-              >
+              <Text d={["none", "block"]} ml={1} fontSize="lg" fontWeight="600">
                 Briddgy
               </Text>
             </Link>
           </Box>
-          <Text mr={[3, 3, 7]} display="inline-block">
+          <Text
+            d={["none", "none", "block"]}
+            mr={[3, 3, 7]}
+            display="inline-block"
+          >
             <Link to="/trips">Trips</Link>
           </Text>
-          <Text display="inline-block">
+          <Text d={["none", "none", "block"]} display="inline-block">
             <Link to="/orders">Orders</Link>
           </Text>
         </Flex>
@@ -114,10 +113,13 @@ const AuthorizedNavbar = () => {
                 </Text>
 
                 <IconButton
+                  variant="outline"
                   color="black"
+                  bg="white"
+                  w="40px"
                   d={{ md: "block", lg: "none" }}
                   aria-label="Create Order"
-                  icon={<TripIcon />}
+                  icon={<TripIcon fontSize="20px" />}
                   mr={3}
                 ></IconButton>
               </Link>
@@ -138,8 +140,9 @@ const AuthorizedNavbar = () => {
                 <IconButton
                   d={{ md: "block", lg: "none" }}
                   variant="primary_gradient"
+                  w="40px"
                   aria-label="Create Order"
-                  icon={<OrderIcon />}
+                  icon={<OrderIcon fontSize="20px" />}
                   mr={3}
                 ></IconButton>
               </Link>

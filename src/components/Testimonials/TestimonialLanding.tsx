@@ -1,5 +1,6 @@
 import {
   Box,
+  Divider,
   TabPanel,
   TabPanels,
   Tabs,
@@ -7,9 +8,12 @@ import {
   useRadioGroup,
 } from "@chakra-ui/react"
 import React, { useState } from "react"
-import { StarIcon } from "../../icons/Star"
+import SwiperCore, { Autoplay } from "swiper"
+
+import { Swiper, SwiperSlide } from "swiper/react"
 import { MiniTestimonialCard } from "../Cards/Testimonial/MiniTestimonial"
 import { Rating } from "../Misc/Rating"
+SwiperCore.use([Autoplay])
 export const TestimonialLanding = ({}) => {
   const [selectedTab, setSelectedTab] = useState("0")
   const count = ["0", "1", "2"]
@@ -28,8 +32,43 @@ export const TestimonialLanding = ({}) => {
       justifyContent="space-between"
       h="100%"
       w="100%"
+      flexWrap={["wrap", "wrap", "nowrap"]}
     >
-      <Box maxW="380px" flex="1">
+      <Box d={["block", "block", "none"]} w="100%">
+        <Swiper
+          autoplay={{ delay: 2000 }}
+          pagination={{ clickable: true }}
+          scrollbar={{ draggable: true }}
+          spaceBetween={40}
+          slidesPerView={1}
+          onSlideChangeTransitionEnd={e => {
+            setSelectedTab(e.activeIndex)
+          }}
+        >
+          {count.map(value => {
+            const radio = getRadioProps({ value, enterKeyHint: "Enter" })
+
+            return (
+              <SwiperSlide>
+                <MiniTestimonialCard
+                  key={value}
+                  {...radio}
+                  firstName="Rustam"
+                  lastName="Quliyev"
+                  memberSince="2019"
+                  cursor="pointer"
+                  img="salam"
+                  p={5}
+                  transition=".2s ease-in"
+                  mb={5}
+                />
+              </SwiperSlide>
+            )
+          })}
+        </Swiper>
+        <Divider />
+      </Box>
+      <Box display={["none", "none", "block"]} maxW="450px" w="100%">
         {count.map(value => {
           const radio = getRadioProps({ value, enterKeyHint: "Enter" })
 
@@ -40,19 +79,19 @@ export const TestimonialLanding = ({}) => {
               firstName="Rustam"
               lastName="Quliyev"
               memberSince="2019"
+              boxShadow="md"
+              _hover={{ boxShadow: "lg" }}
+              _checked={{ boxShadow: "2xl" }}
               cursor="pointer"
               img="salam"
               p={5}
               transition=".2s ease-in"
               mb={5}
-              _hover={{ boxShadow: "xl" }}
-              _checked={{ boxShadow: "2xl" }}
-              boxShadow="md"
             />
           )
         })}
       </Box>
-      <TabPanels as="article" flex="1" maxW="600px">
+      <TabPanels w="100%" as="article" maxW="600px">
         <TabPanel>
           <Text as="h3" fontSize="2xl" fontWeight="600">
             Not bad

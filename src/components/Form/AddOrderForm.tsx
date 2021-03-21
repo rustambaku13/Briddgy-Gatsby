@@ -68,10 +68,12 @@ const AddOrderForm = chakra(({ className }: { className?: any }) => {
 
       <Button
         h="calc(100% - 10px)"
-        maxW="200px"
-        w="100%"
         p={0}
-        variant="red_gradient"
+        maxW="150px"
+        w="100%"
+        bg="tomato"
+        color="white
+        "
         mt={"5px"}
         mr="10px"
         type="submit"

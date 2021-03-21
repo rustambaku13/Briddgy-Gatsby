@@ -5,16 +5,16 @@ import React from "react"
 export const TestimonialLinkCard = chakra(
   ({
     title,
-    
+
     description,
     className,
     orientation = "vertical",
   }: {
     title: string
-    
+
     description: string
     className?: any
-    orientation: "horizontal" | "vertical"
+    orientation?: "horizontal" | "vertical"
   }) => {
     if (orientation == "horizontal") {
       return (

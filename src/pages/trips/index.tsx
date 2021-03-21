@@ -4,8 +4,9 @@ import {
   Container,
   Flex,
   Heading,
-  HStack,
+  IconButton,
   Img as CImg,
+  LinkBox,
   Menu,
   MenuButton,
   MenuItemOption,
@@ -14,28 +15,27 @@ import {
   SimpleGrid,
   Text,
 } from "@chakra-ui/react"
-import { graphql } from "gatsby"
-import { navigate } from "gatsby-plugin-intl"
+import { Link, navigate } from "gatsby-plugin-intl"
 import React, { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
+import SwiperCore, { Autoplay } from "swiper"
 import { getTrips } from "../../api/trip"
 import { TestimonialLinkCard } from "../../components/Cards/Testimonial/TestimonialLinkCard"
 import PublicTripCard from "../../components/Cards/Trip/TripCard"
 import { LocationAutoComplete } from "../../components/Inputs/LocationAutoComplete"
 import { Empty } from "../../components/Misc/Empty"
 import { Loader } from "../../components/Misc/Loader"
-import { Paginator } from "../../components/Misc/Paginator"
-import NavbarDefault from "../../components/Navbar"
 import { StepCircle } from "../../components/Misc/StepCircle"
+import NavbarDefault from "../../components/Navbar"
 import { ChevronDownIcon } from "../../icons/ChevronDown"
 import RotateIcon from "../../icons/Rotate"
 import card from "../../images/debit-cardicon.svg"
 import earth from "../../images/earthicon.svg"
 import note from "../../images/noteicon.svg"
 import plane from "../../images/planeicon.svg"
-
-import { Trip, defaultTrips, Trips } from "../../types/trip"
+import { defaultTrips, Trip, Trips } from "../../types/trip"
 import { filterObject } from "../../utils/misc"
+SwiperCore.use([Autoplay])
 
 const TripsPage = ({ data, location }) => {
   const { register, handleSubmit, setValue } = useForm()
@@ -69,16 +69,19 @@ const TripsPage = ({ data, location }) => {
       <NavbarDefault />
       <Container pt="40px" as="section" minW="full">
         <Box
-          action="#"
           onSubmit={handleSubmit(onSubmit)}
           as="form"
           maxW="container.xl"
           mx="auto"
         >
-          <Flex mb="40px" alignItems="center" h="60px">
+          <Flex
+            flexWrap={["wrap", "wrap", "nowrap"]}
+            mb="40px"
+            alignItems="center"
+          >
             <Flex
-              mr={5}
-              flex="1"
+              mb={5}
+              w="100%"
               bg="gray.100"
               alignItems="center"
               px={3}
@@ -95,10 +98,21 @@ const TripsPage = ({ data, location }) => {
                 parentRef={register()}
               />
             </Flex>
-            <RotateIcon mr={5} />
+            <IconButton
+              variant="link"
+              mx={["auto", "auto", 5]}
+              mb={5}
+              aria-label="Swap Button"
+              icon={
+                <RotateIcon
+                  transform={["rotate(90deg)", "rotate(90deg)", "none"]}
+                />
+              }
+            />
+
             <Flex
-              mr={5}
-              flex="1"
+              mb={5}
+              w="100%"
               bg="gray.100"
               alignItems="center"
               px={3}
@@ -115,7 +129,16 @@ const TripsPage = ({ data, location }) => {
                 parentRef={register()}
               />
             </Flex>
-            <Button type="submit" h="100%" size="lg" variant="primary_gradient">
+
+            <Button
+              mb={5}
+              ml={[0, 0, 5]}
+              w={["100%", "100%", "auto"]}
+              h="60px"
+              type="submit"
+              size="lg"
+              variant="primary_gradient"
+            >
               Find Trips
             </Button>
           </Flex>
@@ -165,9 +188,15 @@ const TripsPage = ({ data, location }) => {
           </Box>
         </Flex>
         {loading ? null : results.results.length ? (
-          <SimpleGrid maxW="container.xl" mx="auto" spacing={10} columns={2}>
+          <SimpleGrid
+            maxW="container.xl"
+            mx="auto"
+            py={9}
+            spacing={10}
+            columns={[1, 1, 2]}
+          >
             {results.results.map((trip: Trip) => (
-              <PublicTripCard mx="auto" trip={trip} />
+              <PublicTripCard my={[3, 3, 10]} mx="auto" trip={trip} />
             ))}
           </SimpleGrid>
         ) : (
@@ -189,7 +218,12 @@ const TripsPage = ({ data, location }) => {
         <Heading textAlign="center" mb="80px">
           How to shop from Abroad using Briddgy
         </Heading>
-        <HStack spacing={25} mx="auto" maxW="container.xl">
+        <SimpleGrid
+          spacing={25}
+          columns={[1, 2, 4]}
+          mx="auto"
+          maxW="container.xl"
+        >
           <Box>
             <StepCircle
               mb={5}
@@ -264,25 +298,33 @@ const TripsPage = ({ data, location }) => {
               Meet with your traveler in a public place and get your item.
             </Text>
           </Box>
-        </HStack>
-
-        <Box w="300px" mt="80px" mx="auto">
-          <Button
-            variant="solid"
-            color="white"
-            bg="blue.500"
-            _hover={{ bg: "blue.600" }}
-            w="inherit"
-          >
-            Add Order
-          </Button>
-        </Box>
+        </SimpleGrid>
+        <LinkBox mt={16} mx="auto" w="300px">
+          <Link to="/order">
+            <Button
+              mx="auto"
+              variant="solid"
+              color="white"
+              bg="blue.500"
+              _hover={{ bg: "blue.600" }}
+              w="100%"
+            >
+              Add Order
+            </Button>
+          </Link>
+        </LinkBox>
       </Container>
       <Container my="80px" pt={8} maxW="full" as="section">
         <Heading textAlign="center" mb="80px">
           Why our shoppers love Briddgy
         </Heading>
-        <HStack spacing={25} mx="auto" maxW="container.xl">
+        <SimpleGrid
+          spacing={7}
+          columns={[1, 1, 3]}
+          mx="auto"
+          className="even-right-align"
+          maxW="container.xl"
+        >
           <TestimonialLinkCard
             title="Rustam Quliyev"
             description="Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce "
@@ -295,7 +337,7 @@ const TripsPage = ({ data, location }) => {
             title="Rustam Quliyev"
             description="Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce "
           />
-        </HStack>
+        </SimpleGrid>
       </Container>
     </>
   )

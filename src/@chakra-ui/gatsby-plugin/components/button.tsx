@@ -27,7 +27,6 @@ export default {
         bgGradient: "linear(to-b, red.500,red.600)",
       },
     },
-
     primary: {
       bg: "blue.400",
       color: "white",

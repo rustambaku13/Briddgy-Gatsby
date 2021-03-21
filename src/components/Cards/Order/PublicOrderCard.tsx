@@ -146,7 +146,6 @@ const PublicOrderCard = chakra(
         borderRadius="md"
         padding="4"
         my={"40px"}
-        maxW="container.md"
         className={className}
       >
         <Box mb={5} h="60px">

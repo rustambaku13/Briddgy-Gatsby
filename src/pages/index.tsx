@@ -7,15 +7,13 @@ import {
   Grid,
   Heading,
   Link as CLink,
-  SimpleGrid,
   Text,
 } from "@chakra-ui/react"
 import { graphql } from "gatsby"
 import Img from "gatsby-image"
-import { injectIntl, Link } from "gatsby-plugin-intl"
+import { Link } from "gatsby-plugin-intl"
 import React from "react"
 import { Swiper, SwiperSlide } from "swiper/react"
-
 import { ProductCard } from "../components/Cards/Order/Product"
 import { TravelDestinationCard } from "../components/Cards/Trip/TravelDestination"
 import Navbar from "../components/Navbar"
@@ -30,7 +28,7 @@ const Home = ({ data }) => {
   return (
     <>
       <Navbar />
-      <Box w="100%" mb="150px" as="header">
+      <Box w="100%" mb={[20, 20, "150px"]} as="header">
         <Box d={["block", "block", "none"]} w="100%">
           <Img fluid={data.image1.childImageSharp.fluid} />
         </Box>
@@ -96,7 +94,7 @@ const Home = ({ data }) => {
           ></Box>
         </Container>
       </Box>
-      <Box w="100%" mb="150px" as="section">
+      <Box w="100%" mb={[20, 20, "150px"]} as="section">
         <Container h="100%" maxW="1200px">
           <Heading mb={10} fontSize="5xl" fontWeight="600" textAlign="center">
             Travelers
@@ -230,7 +228,7 @@ const Home = ({ data }) => {
           </Text>
         </Container>
       </Box>
-      <Box w="100%" mb="150px" as="section">
+      <Box w="100%" mb={[20, 20, "150px"]} as="section">
         <Container h="100%" maxW="1200px">
           <Heading mb={10} fontSize="5xl" fontWeight="600" textAlign="center">
             Orderers
@@ -367,7 +365,7 @@ const Home = ({ data }) => {
           </Text>
         </Container>
       </Box>
-      <Box w="100%" mb="150px" as="section">
+      <Box w="100%" mb={[20, 20, "150px"]} as="section">
         <Container h="100%" maxW="1200px">
           <Heading
             mb="80px"
@@ -375,7 +373,7 @@ const Home = ({ data }) => {
             fontWeight="600"
             textAlign="center"
           >
-            Why people love Briddgy
+            Why people love Briddgy &nbsp;
             <HeartIcon display="inline-block" color="red.400" />
           </Heading>
           <TestimonialLanding />

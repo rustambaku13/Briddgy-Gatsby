@@ -101,7 +101,7 @@ export const MyTripCard = chakra(
 const PublicTripCard = chakra(
   ({ className, trip }: { className?: any; trip: Trip }) => {
     return (
-      <Box my={"40px"} w="100%" maxW="container.md" className={className}>
+      <Box w="100%" maxW="container.md" className={className}>
         <Box
           _hover={{ boxShadow: "lg" }}
           transition=".2s ease-in-out"
