@@ -38,18 +38,18 @@ const TopSearchButton = chakra(
         mt="15px"
         h="50px"
         bg="white"
+        px="5px"
         pl={5}
         alignItems="center"
         borderWidth="1px"
       >
-        <Text fontSize="sm" flexGrow={1}>
+        <Text pl={3} fontSize={["xs", "sm"]} flexGrow={1}>
           Add Trip
         </Text>
 
         <IconButton
           flexShrink={0}
           h="40px"
-          mr="5px"
           d="block"
           w="40px"
           borderRadius="50%"
@@ -92,11 +92,15 @@ export const AddTripForm = chakra(({ className }: { className?: any }) => {
     <Flex
       as="form"
       borderWidth={1}
+      flexDir={["column", "column", "row"]}
       bg="white"
+      h={["auto", "auto", "70px"]}
       mx="auto"
       id="add_travel_form"
       fontSize="lg"
-      borderRadius="50px"
+      borderRadius={["md", "md", "50px"]}
+      px="10px"
+      py="5px"
       onSubmit={handleSubmit(() => {
         setModalOpen(true)
       })}
@@ -112,7 +116,7 @@ export const AddTripForm = chakra(({ className }: { className?: any }) => {
         isOpen={modalOpen}
         setOpen={setModalOpen}
       />
-      <Flex alignItems="center" pl={4} flex={1}>
+      <Flex pl={4} py={3} alignItems="center" flex={1}>
         <LocationIcon color="gray.500" />
         <LocationAutoComplete
           fontSize="md"
@@ -120,7 +124,8 @@ export const AddTripForm = chakra(({ className }: { className?: any }) => {
           parentRef={register({ required: true })}
         />
       </Flex>
-      <Center pos="relative" h="100%" w="5px">
+      <Divider d={["block", "block", "none"]} />
+      <Center d={["none", "none", "flex"]} pos="relative" h="100%" w="5px">
         <Center
           pos="absolute"
           bg="white"
@@ -137,7 +142,7 @@ export const AddTripForm = chakra(({ className }: { className?: any }) => {
         </Center>
         <Divider orientation="vertical" />
       </Center>
-      <Flex alignItems="center" pl={4} flex={1}>
+      <Flex py={3} alignItems="center" pl={4} flex={1}>
         <LocationIcon color="gray.500" />
         <LocationAutoComplete
           fontSize="md"
@@ -145,10 +150,11 @@ export const AddTripForm = chakra(({ className }: { className?: any }) => {
           parentRef={register({ required: true })}
         />
       </Flex>
+      <Divider d={["block", "block", "none"]} />
       <Center pos="relative" h="100%" w="5px">
         <Divider orientation="vertical" />
       </Center>
-      <Flex alignItems="center" pl={4} flex={1}>
+      <Flex py={3} alignItems="center" pl={4} flex={1}>
         <CalendarIcon color="gray.500" />
         <DatePicker
           refDeparture={register({ required: true })}
@@ -157,16 +163,16 @@ export const AddTripForm = chakra(({ className }: { className?: any }) => {
           nameArrival="date2"
         />
       </Flex>
+      <Divider mb={3} d={["block", "block", "none"]} />
       <Button
-        h="calc(100% - 10px)"
-        maxW="200px"
+        isLoading={loading}
+        h="60px"
+        maxW={["unset", "unset", "150px"]}
         w="100%"
         p={0}
         variant="red_gradient"
-        mt={"5px"}
-        mr="10px"
         type="submit"
-        borderRadius="50px"
+        borderRadius={["md", "md", "50px"]}
       >
         Add Trip
       </Button>
@@ -179,8 +185,8 @@ export const AddTripFormNavigationMenu = ({ expand }) => {
     <>
       <Box id="trip_navigation" className="form" w="100%" h="100%" mx="auto">
         <TopSearchButton expand={expand} />
-        <Box className="overlay">
-          <AddTripForm h="70px" />
+        <Box px={3} className="overlay">
+          <AddTripForm />
         </Box>
       </Box>
     </>

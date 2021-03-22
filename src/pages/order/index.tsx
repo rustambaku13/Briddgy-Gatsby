@@ -8,11 +8,15 @@ import {
   Heading,
   HStack,
   Img as CImg,
+  LinkBox,
+  SimpleGrid,
+  Stack,
   Text,
 } from "@chakra-ui/react"
 import anime from "animejs/lib/anime.es.js"
 import { graphql } from "gatsby"
 import Img from "gatsby-image"
+import { Link } from "gatsby-plugin-intl"
 import React, { useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { BlogLinkCard } from "../../components/Cards/Blog/BlogLinkCard"
@@ -20,6 +24,7 @@ import { ProductCard } from "../../components/Cards/Order/Product"
 import { TestimonialLinkCard } from "../../components/Cards/Testimonial/TestimonialLinkCard"
 import { StepCircle } from "../../components/Misc/StepCircle"
 import { OrderNavbar } from "../../components/Navbar"
+import SupportIcon from "../../icons/Support"
 import card from "../../images/debit-cardicon.svg"
 import earth from "../../images/earthicon.svg"
 import note from "../../images/noteicon.svg"
@@ -43,12 +48,13 @@ const AddOrder = ({ data }) => {
           <div></div>
         </div>
 
-        <Flex
+        <Container
+          d="flex"
           alignItems="center"
           mx="auto"
           mb="100px"
           maxW="container.xxl"
-          mt="100px"
+          mt="130px"
         >
           <Box flex={3}>
             <Heading
@@ -75,67 +81,75 @@ const AddOrder = ({ data }) => {
               <Text fontSize="lg"> Flexible and super fast delivery</Text>
             </Box>
           </Box>
-          <Box flex={2}>
+          <Box d={["none", "none", "block"]} flex={2}>
             <Box maxW="500px" ml="auto">
               <Img fluid={data.ecommerce.childImageSharp.fluid} />
             </Box>
           </Box>
-        </Flex>
-      </Box>
-      <Box mb="150px" as="section" minW="100%">
-        <Container mx="auto" minW="container.xl">
-          <Heading mb="60px" as="h1" textAlign="center">
-            Trending Products in Briddgy
-          </Heading>
-          <Grid templateColumns="repeat(3, 1fr)" gap={8}>
-            <ProductCard
-              productId={1}
-              price={data.products_vertical.edges?.[0].node.frontmatter.price}
-              productName={
-                data.products_vertical.edges?.[0].node.frontmatter.title
-              }
-              store={data.products_vertical.edges?.[0].node.frontmatter.store}
-              img={data.products_vertical.edges?.[0].node.frontmatter.image}
-            />
-            <ProductCard
-              gridColumn="2 / span 2"
-              productId="1"
-              price={data.products_horizontal.frontmatter.price}
-              productName={data.products_horizontal.frontmatter.title}
-              store={data.products_horizontal.frontmatter.store}
-              img={data.products_horizontal.frontmatter.image}
-            />
-            <ProductCard
-              productId={1}
-              price={data.products_vertical.edges?.[1].node.frontmatter.price}
-              productName={
-                data.products_vertical.edges?.[1].node.frontmatter.title
-              }
-              store={data.products_vertical.edges?.[1].node.frontmatter.store}
-              img={data.products_vertical.edges?.[1].node.frontmatter.image}
-            />
-            <ProductCard
-              productId={1}
-              price={data.products_vertical.edges?.[1].node.frontmatter.price}
-              productName={
-                data.products_vertical.edges?.[1].node.frontmatter.title
-              }
-              store={data.products_vertical.edges?.[1].node.frontmatter.store}
-              img={data.products_vertical.edges?.[1].node.frontmatter.image}
-            />
-            <ProductCard
-              productId={1}
-              price={data.products_vertical.edges?.[1].node.frontmatter.price}
-              productName={
-                data.products_vertical.edges?.[1].node.frontmatter.title
-              }
-              store={data.products_vertical.edges?.[1].node.frontmatter.store}
-              img={data.products_vertical.edges?.[1].node.frontmatter.image}
-            />
-          </Grid>
         </Container>
       </Box>
-      <Container my="150px" as="section" maxW="container.lg">
+      <Container
+        mb={[20, 20, "150px"]}
+        as="section"
+        mx="auto"
+        maxW="container.xl"
+      >
+        <Heading mb="60px" as="h1" textAlign="center">
+          Trending Products in Briddgy
+        </Heading>
+        <Grid templateColumns="repeat(6, 1fr)" gap={[3, 5, 8]}>
+          <ProductCard
+            gridColumn={["1 / span 3", "1 / span 2"]}
+            productId={1}
+            price={data.products_vertical.edges?.[0].node.frontmatter.price}
+            productName={
+              data.products_vertical.edges?.[0].node.frontmatter.title
+            }
+            store={data.products_vertical.edges?.[0].node.frontmatter.store}
+            img={data.products_vertical.edges?.[0].node.frontmatter.image}
+          />
+          <ProductCard
+            gridColumn={["1 / span 6", "3 / span 4"]}
+            productId="1"
+            price={data.products_horizontal.frontmatter.price}
+            productName={data.products_horizontal.frontmatter.title}
+            store={data.products_horizontal.frontmatter.store}
+            img={data.products_horizontal.frontmatter.image}
+          />
+          <ProductCard
+            gridColumn={["1 / span 3", "1 / span 2"]}
+            productId={1}
+            price={data.products_vertical.edges?.[1].node.frontmatter.price}
+            productName={
+              data.products_vertical.edges?.[1].node.frontmatter.title
+            }
+            store={data.products_vertical.edges?.[1].node.frontmatter.store}
+            img={data.products_vertical.edges?.[1].node.frontmatter.image}
+          />
+          <ProductCard
+            gridColumn={["4 / span 3", "3 / span 2"]}
+            productId={1}
+            price={data.products_vertical.edges?.[1].node.frontmatter.price}
+            productName={
+              data.products_vertical.edges?.[1].node.frontmatter.title
+            }
+            store={data.products_vertical.edges?.[1].node.frontmatter.store}
+            img={data.products_vertical.edges?.[1].node.frontmatter.image}
+          />
+          <ProductCard
+            gridRow={["1", "2"]}
+            gridColumn={["4 / span 3", "5 / span 2"]}
+            productId={1}
+            price={data.products_vertical.edges?.[1].node.frontmatter.price}
+            productName={
+              data.products_vertical.edges?.[1].node.frontmatter.title
+            }
+            store={data.products_vertical.edges?.[1].node.frontmatter.store}
+            img={data.products_vertical.edges?.[1].node.frontmatter.image}
+          />
+        </Grid>
+      </Container>
+      <Container mb={[20, 20, "150px"]} as="section" maxW="container.lg">
         <Heading mb="50px" textAlign="center">
           Information for travelers
         </Heading>
@@ -145,7 +159,7 @@ const AddOrder = ({ data }) => {
           tags={data.blogs.edges[0].node.frontmatter.tag}
           orientation="horizontal"
         />
-        <HStack spacing="8">
+        <SimpleGrid columns={[1, 2, 3]} spacing="8">
           <BlogLinkCard
             title={data.blogs.edges[0].node.frontmatter.title}
             description={data.blogs.edges[0].node.frontmatter.description}
@@ -164,13 +178,18 @@ const AddOrder = ({ data }) => {
             tags={data.blogs.edges[0].node.frontmatter.tag}
             orientation="vertical"
           />
-        </HStack>
+        </SimpleGrid>
       </Container>
-      <Container my="80px" pt={8} maxW="full" as="section">
+      <Container mb={[20, 20, "150px"]} pt={8} maxW="full" as="section">
         <Heading textAlign="center" mb="80px">
           How to shop from Abroad using Briddgy
         </Heading>
-        <HStack spacing={25} mx="auto" maxW="container.xl">
+        <SimpleGrid
+          spacing={25}
+          columns={[1, 2, 4]}
+          mx="auto"
+          maxW="container.xl"
+        >
           <Box>
             <StepCircle
               mb={5}
@@ -245,32 +264,46 @@ const AddOrder = ({ data }) => {
               Meet with your traveler in a public place and get your item.
             </Text>
           </Box>
-        </HStack>
-
-        <Box w="300px" mt="80px" mx="auto">
-          <Button
-            variant="solid"
-            color="white"
-            bg="blue.500"
-            _hover={{ bg: "blue.600" }}
-            w="inherit"
-          >
-            Add Order
-          </Button>
-        </Box>
+        </SimpleGrid>
+        <LinkBox mt={16} mx="auto" w="300px">
+          <Link to="/order">
+            <Button
+              mx="auto"
+              variant="solid"
+              color="white"
+              bg="blue.500"
+              _hover={{ bg: "blue.600" }}
+              w="100%"
+            >
+              Add Order
+            </Button>
+          </Link>
+        </LinkBox>
       </Container>
-      <Container h="130px" bg="gray.100" my="100px" maxW="full" as="section">
+      <Container
+        h="130px"
+        bg="gray.100"
+        mb={[20, 20, "150px"]}
+        maxW="full"
+        as="section"
+      >
         <Center justifyContent="space-between" w="300px" mx="auto" h="100%">
           <Img fixed={data.visa.childImageSharp.fixed} />
 
           <Img fixed={data.mastercard.childImageSharp.fixed} />
         </Center>
       </Container>
-      <Container my="100px" pt={8} maxW="full" as="section">
+      <Container mb={[20, 20, "150px"]} pt={8} maxW="full" as="section">
         <Heading textAlign="center" mb="80px">
           Why our shoppers love Briddgy
         </Heading>
-        <HStack spacing={25} mx="auto" maxW="container.xl">
+        <SimpleGrid
+          spacing={7}
+          columns={[1, 1, 3]}
+          mx="auto"
+          className="even-right-align"
+          maxW="container.xl"
+        >
           <TestimonialLinkCard
             title="Rustam Quliyev"
             description="Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce "
@@ -283,14 +316,28 @@ const AddOrder = ({ data }) => {
             title="Rustam Quliyev"
             description="Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce "
           />
-        </HStack>
+        </SimpleGrid>
+        <LinkBox mt={16} mx="auto" w="300px">
+          <Link to="/order">
+            <Button
+              mx="auto"
+              variant="solid"
+              color="white"
+              bg="blue.500"
+              _hover={{ bg: "blue.600" }}
+              w="100%"
+            >
+              More of our stories
+            </Button>
+          </Link>
+        </LinkBox>
       </Container>
       <Container py={8} bg="blueAlpha.100" as="section" maxW="full">
         <Heading textAlign="center" mb="80px">
           Frequently Asked Questions
         </Heading>
         <Container maxW="container.xl">
-          <HStack spacing={12}>
+          <Stack direction={["column", "row"]} spacing={12}>
             <Box>
               <Heading mb={5} as="h4" fontSize="2xl">
                 How is payment guaranteed?
@@ -318,7 +365,20 @@ const AddOrder = ({ data }) => {
                 messenger.
               </Text>
             </Box>
-          </HStack>
+          </Stack>
+          <LinkBox mt={16} mx="auto" w="300px">
+            <Link to="/order">
+              <Button
+                leftIcon={<SupportIcon />}
+                mx="auto"
+                variant="outline"
+                bg="white"
+                w="100%"
+              >
+                Help Center
+              </Button>
+            </Link>
+          </LinkBox>
         </Container>
       </Container>
     </>

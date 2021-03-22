@@ -1,43 +1,40 @@
 import {
   Box,
-  Center,
-  Container,
   Button,
-  FormControl,
-  FormLabel,
-  Heading,
-  Text,
-  Input,
-  Img as CImg,
-  Flex,
-  Tabs,
-  Tab,
-  TabPanel,
-  TabList,
-  IconButton,
-  TabPanels,
-  Tag,
-  SimpleGrid,
-  HStack,
+  Container,
   Divider,
+  Heading,
+  IconButton,
+  Img as CImg,
+  LinkBox,
+  SimpleGrid,
+  Stack,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+  Tag,
+  Text,
 } from "@chakra-ui/react"
 import { graphql, PageProps } from "gatsby"
-import { Swiper, SwiperSlide } from "swiper/react"
 import Img from "gatsby-image"
 import { injectIntl, Link } from "gatsby-plugin-intl"
 import React from "react"
-
-import { AddTripForm } from "../../components/Form/AddTripForm"
+import { Swiper, SwiperSlide } from "swiper/react"
+import { BlogLinkCard } from "../../components/Cards/Blog/BlogLinkCard"
+import { TestimonialLinkCard } from "../../components/Cards/Testimonial/TestimonialLinkCard"
+import { TravelDestinationCard } from "../../components/Cards/Trip/TravelDestination"
+import { StepCircle } from "../../components/Misc/StepCircle"
+import { TravelNavbar } from "../../components/Navbar"
 import BulletTriangleIcon from "../../icons/BulletTriangle"
 import { ChevronLeftIcon } from "../../icons/ChevronLeft"
 import { ChevronRightIcon } from "../../icons/ChevronRight"
-import { TravelDestinationCard } from "../../components/Cards/Trip/TravelDestination"
-import earth from "../../images/earthicon.svg"
-import plane from "../../images/planeicon.svg"
-import note from "../../images/noteicon.svg"
+import SupportIcon from "../../icons/Support"
 import card from "../../images/debit-cardicon.svg"
-import { StepCircle } from "../../components/Misc/StepCircle"
-import { TravelNavbar } from "../../components/Navbar"
+import earth from "../../images/earthicon.svg"
+import note from "../../images/noteicon.svg"
+import plane from "../../images/planeicon.svg"
 
 export const query = graphql`
   query {
@@ -76,6 +73,32 @@ export const query = graphql`
         }
       }
     }
+    # Blogs
+    blogs: allMarkdownRemark(
+      filter: {
+        fields: { sourceName: { eq: "blogs" } }
+        frontmatter: { scoppe_tag: { eq: "Orderer" } }
+      }
+      limit: 4
+    ) {
+      edges {
+        node {
+          frontmatter {
+            description
+            title
+            image {
+              childImageSharp {
+                fluid(maxWidth: 800) {
+                  ...GatsbyImageSharpFluid
+                }
+              }
+            }
+            date
+            tag
+          }
+        }
+      }
+    }
   }
 `
 
@@ -95,12 +118,13 @@ const AddTrip = ({ data }: PageProps) => {
         <div className="overlay">
           <div></div>
         </div>
-        <Flex
+        <Container
+          d="flex"
           alignItems="center"
           mx="auto"
           mb="100px"
           maxW="container.xxl"
-          mt="100px"
+          mt={["300px", "300px", "130px"]}
         >
           <Box flex={3}>
             <Heading
@@ -122,15 +146,15 @@ const AddTrip = ({ data }: PageProps) => {
               </Link>
             </Text>
           </Box>
-          <Box flex={2}>
+          <Box d={["none", "none", "block"]} flex={2}>
             <Box maxW="500px" ml="auto">
               <Img fluid={data.globe.childImageSharp.fluid} />
             </Box>
           </Box>
-        </Flex>
+        </Container>
       </Box>
 
-      <Container mb="150px" as="section" maxW="container.xl">
+      <Container mb={[20, 20, "150px"]} as="section" maxW="container.xl">
         <Tabs variant="unstyled" isFitted={false}>
           <TabList color="gray.600">
             <Tab
@@ -242,73 +266,48 @@ const AddTrip = ({ data }: PageProps) => {
           </TabPanels>
         </Tabs>
       </Container>
-      <Container mb="150px" as="section" maxW="container.lg">
+      <Container mb={[20, 20, "150px"]} as="section" maxW="container.lg">
         <Heading mb="50px" textAlign="center">
           Information for travelers
         </Heading>
-        <Flex mb={8} minH="300px" maxW="800px" w="100%">
-          <Box mr={6} flex="3" bg="purple.200" borderRadius="xl"></Box>
-          <Box flex="2">
-            <Tag colorScheme="purple" mb={5}>
-              New
-            </Tag>
-            <Heading mb={5} fontSize="3xl" as="h3">
-              How to add trip in Briddgy
-            </Heading>
-            <Text variant="secondary">
-              Adding a trip in Briddgy is an essential step of earning. This
-              post is going to guide you using Briddgy.
-            </Text>
-          </Box>
-        </Flex>
-        <HStack spacing="8">
-          <Box>
-            <Box mb={5} h="200px" bg="blue.200" borderRadius="xl"></Box>
-            <Tag mb={5} colorScheme="blue">
-              New
-            </Tag>
-            <Heading mb={5} fontSize="2xl" as="h3">
-              Using your baggage space to the most
-            </Heading>
-            <Text variant="secondary">
-              Adding a trip in Briddgy is an essential step of earning. This
-              post is going to guide you using Briddgy.
-            </Text>
-          </Box>
-          <Box>
-            <Box mb={5} h="200px" bg="blue.200" borderRadius="xl"></Box>
-            <Tag mb={5} colorScheme="blue">
-              New
-            </Tag>
-            <Heading mb={5} fontSize="2xl" as="h3">
-              Using your baggage space to the most
-            </Heading>
-            <Text variant="secondary">
-              Adding a trip in Briddgy is an essential step of earning. This
-              post is going to guide you using Briddgy.
-            </Text>
-          </Box>
-          <Box>
-            <Box mb={5} h="200px" bg="blue.200" borderRadius="xl"></Box>
-            <Tag mb={5} colorScheme="blue">
-              New
-            </Tag>
-            <Heading mb={5} fontSize="2xl" as="h3">
-              Using your baggage space to the most
-            </Heading>
-            <Text variant="secondary">
-              Adding a trip in Briddgy is an essential step of earning. This
-              post is going to guide you using Briddgy.
-            </Text>
-          </Box>
-        </HStack>
+        <BlogLinkCard
+          title={data.blogs.edges[0].node.frontmatter.title}
+          description={data.blogs.edges[0].node.frontmatter.description}
+          tags={data.blogs.edges[0].node.frontmatter.tag}
+          orientation="horizontal"
+        />
+        <SimpleGrid columns={[1, 2, 3]} spacing="8">
+          <BlogLinkCard
+            title={data.blogs.edges[0].node.frontmatter.title}
+            description={data.blogs.edges[0].node.frontmatter.description}
+            tags={data.blogs.edges[0].node.frontmatter.tag}
+            orientation="vertical"
+          />
+          <BlogLinkCard
+            title={data.blogs.edges[0].node.frontmatter.title}
+            description={data.blogs.edges[0].node.frontmatter.description}
+            tags={data.blogs.edges[0].node.frontmatter.tag}
+            orientation="vertical"
+          />
+          <BlogLinkCard
+            title={data.blogs.edges[0].node.frontmatter.title}
+            description={data.blogs.edges[0].node.frontmatter.description}
+            tags={data.blogs.edges[0].node.frontmatter.tag}
+            orientation="vertical"
+          />
+        </SimpleGrid>
       </Container>
       <Divider />
-      <Container mb="150px" pt={8} maxW="full" as="section">
+      <Container mb={[20, 20, "150px"]} pt={8} maxW="full" as="section">
         <Heading textAlign="center" mb="80px">
           How to Earn Money Traveling
         </Heading>
-        <HStack spacing={25} mx="auto" maxW="container.xl">
+        <SimpleGrid
+          spacing={25}
+          columns={[1, 2, 4]}
+          mx="auto"
+          maxW="container.xl"
+        >
           <Box>
             <StepCircle
               mb={5}
@@ -384,26 +383,68 @@ const AddTrip = ({ data }: PageProps) => {
               payment.
             </Text>
           </Box>
-        </HStack>
+        </SimpleGrid>
 
-        <Box w="300px" mt="80px" mx="auto">
-          <Button
-            variant="solid"
-            color="white"
-            bg="blue.500"
-            _hover={{ bg: "blue.600" }}
-            w="inherit"
-          >
-            Add Trip
-          </Button>
-        </Box>
+        <LinkBox mt={16} mx="auto" w="300px">
+          <Link to="/travel">
+            <Button
+              mx="auto"
+              variant="solid"
+              color="white"
+              bg="blue.500"
+              _hover={{ bg: "blue.600" }}
+              w="100%"
+            >
+              Add Trip
+            </Button>
+          </Link>
+        </LinkBox>
+      </Container>
+      <Container mb={[20, 20, "150px"]} pt={8} maxW="full" as="section">
+        <Heading textAlign="center" mb="80px">
+          Why our shoppers love Briddgy
+        </Heading>
+        <SimpleGrid
+          spacing={7}
+          columns={[1, 1, 3]}
+          mx="auto"
+          className="even-right-align"
+          maxW="container.xl"
+        >
+          <TestimonialLinkCard
+            title="Rustam Quliyev"
+            description="Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce "
+          />
+          <TestimonialLinkCard
+            title="Rustam Quliyev"
+            description="Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce "
+          />
+          <TestimonialLinkCard
+            title="Rustam Quliyev"
+            description="Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce "
+          />
+        </SimpleGrid>
+        <LinkBox mt={16} mx="auto" w="300px">
+          <Link to="/order">
+            <Button
+              mx="auto"
+              variant="solid"
+              color="white"
+              bg="blue.500"
+              _hover={{ bg: "blue.600" }}
+              w="100%"
+            >
+              More of our stories
+            </Button>
+          </Link>
+        </LinkBox>
       </Container>
       <Container py={8} bg="blueAlpha.100" as="section" maxW="full">
         <Heading textAlign="center" mb="80px">
           Frequently Asked Questions
         </Heading>
         <Container maxW="container.xl">
-          <HStack spacing={12}>
+          <Stack direction={["column", "row"]} spacing={12}>
             <Box>
               <Heading mb={5} as="h4" fontSize="2xl">
                 How is payment guaranteed?
@@ -431,7 +472,20 @@ const AddTrip = ({ data }: PageProps) => {
                 messenger.
               </Text>
             </Box>
-          </HStack>
+          </Stack>
+          <LinkBox mt={16} mx="auto" w="300px">
+            <Link to="/order">
+              <Button
+                leftIcon={<SupportIcon />}
+                mx="auto"
+                variant="outline"
+                bg="white"
+                w="100%"
+              >
+                Help Center
+              </Button>
+            </Link>
+          </LinkBox>
         </Container>
       </Container>
     </>

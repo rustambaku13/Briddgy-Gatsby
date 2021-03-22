@@ -109,6 +109,7 @@ $transition_navbar: -ms-transform 150ms ease 0s, -webkit-transform 150ms ease 0s
   background-color: #5cb2cc;
   top: -1px; /* required */
   transition: $transition_navbar;
+  width: 100%;
   #add_order_form {
     display: none;
   }
@@ -137,7 +138,7 @@ $transition_navbar: -ms-transform 150ms ease 0s, -webkit-transform 150ms ease 0s
     color: white;
     border: none;
     max-width: 1400px;
-    height: 200px;
+    height: 400px;
     max-height: 80px;
     margin: 0 auto;
     z-index: 2;
@@ -164,6 +165,7 @@ $transition_navbar: -ms-transform 150ms ease 0s, -webkit-transform 150ms ease 0s
   // If Sticky
 
   &.isSticky {
+    transform: translate3d(0px, 0px, 0px);
     background-color: white;
     #navbar_search_order {
       visibility: visible;
@@ -175,6 +177,9 @@ $transition_navbar: -ms-transform 150ms ease 0s, -webkit-transform 150ms ease 0s
       transform: scale(0.35, 0.727273) translateY(-58px);
     }
     #expanded {
+      @media screen and (max-width: 768px) {
+        max-height: 380px;
+      }
       max-height: 200px;
       > div {
         height: 80px;
@@ -204,7 +209,7 @@ $transition_navbar: -ms-transform 150ms ease 0s, -webkit-transform 150ms ease 0s
   background-color: #5cb2cc;
   top: -1px; /* required */
   transition: $transition_navbar;
-
+  width: 100%;
   z-index: 100;
   .overlay {
     left: 0px;
@@ -255,6 +260,7 @@ $transition_navbar: -ms-transform 150ms ease 0s, -webkit-transform 150ms ease 0s
 
   &.isSticky {
     background-color: white;
+    transform: translate3d(0px, 0px, 0px);
     #navbar_search_order {
       visibility: visible;
       opacity: 1;

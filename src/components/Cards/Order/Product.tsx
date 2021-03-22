@@ -26,7 +26,7 @@ const ProductCard = chakra(
           </Text>
         </Box>
         <Box overflow="hidden" flexGrow={1}>
-          <Center minH="300px" m="auto" w="60%">
+          <Center minH="300px" h="100%" m="auto" w="60%">
             <Box w="100%">
               <Img fluid={img?.childImageSharp?.fluid} />
             </Box>

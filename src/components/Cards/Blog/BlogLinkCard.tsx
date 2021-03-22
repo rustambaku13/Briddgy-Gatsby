@@ -18,15 +18,15 @@ export const BlogLinkCard = chakra(
   }) => {
     if (orientation == "horizontal") {
       return (
-        <Flex mb={8} minH="300px" maxW="800px" w="100%">
-          <Box mr={6} flex="3" bg="purple.200" borderRadius="xl"></Box>
+        <Flex className={className} mb={8} maxW="800px" w="100%">
+          <Box mr={[2, 4, 6]} flex="3" bg="purple.200" borderRadius="xl"></Box>
           <Box flex="2">
             {tags.map(item => (
               <Tag mb={5} colorScheme="blue">
                 {item}
               </Tag>
             ))}
-            <Heading mb={5} fontSize="3xl" as="h3">
+            <Heading mb={5} fontSize="2xl" as="h3">
               {title}
             </Heading>
             <Text variant="secondary">{description}</Text>

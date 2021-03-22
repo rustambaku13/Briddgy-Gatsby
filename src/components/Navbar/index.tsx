@@ -63,28 +63,19 @@ const AuthorizedNavbar = () => {
         borderBottom="1px solid"
         borderBottomColor="gray.200"
       >
-        <Flex h="100%" mr={3} alignItems="center" flexShrink={0}>
-          <Box
-            display="inline-flex"
-            alignItems="center"
-            mr={[3, 3, 10]}
-            as="h1"
-          >
-            <Image h="45" w="45" src={logo} />
+        <Flex h="100%" alignItems="center" flexShrink={0}>
+          <Box h="100%" mr={[3, 10]} display="inline-flex" alignItems="center">
+            <Image h="45" src={logo} />
             <Link to="/">
               <Text d={["none", "block"]} ml={1} fontSize="lg" fontWeight="600">
                 Briddgy
               </Text>
             </Link>
           </Box>
-          <Text
-            d={["none", "none", "block"]}
-            mr={[3, 3, 7]}
-            display="inline-block"
-          >
+          <Text d={["none", "none", "inline-block"]} mr={[3, 3, 7]}>
             <Link to="/trips">Trips</Link>
           </Text>
-          <Text d={["none", "none", "block"]} display="inline-block">
+          <Text mr={[3, 3, 7]} d={["none", "none", "inline-block"]}>
             <Link to="/orders">Orders</Link>
           </Text>
         </Flex>

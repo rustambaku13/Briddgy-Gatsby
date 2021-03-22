@@ -21,18 +21,19 @@ const TopSearchButton = chakra(
         mt="15px"
         h="50px"
         bg="white"
-        pl={5}
+        px="5px"
         alignItems="center"
-        borderWidth="1px"
+        borderWidth={1}
+        // borderWidth={["none", "1px"]}
       >
-        <Text d={["none", "block", "block"]} fontSize="sm" flexGrow={1}>
+        <Text pl={3} fontSize={["xs", "sm"]} flexGrow={1}>
           Add Order
         </Text>
 
         <IconButton
           flexShrink={0}
           h="40px"
-          mr="5px"
+          // mx={["auto", "unset"]}
           d="block"
           w="40px"
           borderRadius="50%"
@@ -65,19 +66,34 @@ const AddOrderForm = chakra(({ className }: { className?: any }) => {
         height="inherit"
         name="url"
       />
+      <IconButton
+        aria-label="Add Order"
+        h="60px"
+        flex="0 0 60px"
+        fontSize="2xl"
+        icon={<OrderIcon />}
+        p={0}
+        variant="red_gradient"
+        color="white"
+        mt={"5px"}
+        mr="10px"
+        type="submit"
+        borderRadius="60px"
+        d={["block", "none"]}
+      />
 
       <Button
         h="calc(100% - 10px)"
         p={0}
         maxW="150px"
         w="100%"
-        bg="tomato"
-        color="white
-        "
+        variant="red_gradient"
+        color="white"
         mt={"5px"}
         mr="10px"
         type="submit"
         borderRadius="50px"
+        d={["none", "block"]}
       >
         Create Order
       </Button>
@@ -104,7 +120,7 @@ export const AddOrderNavigationMenu = ({ expand }) => {
           mx="auto"
         >
           <TopSearchButton expand={expand} />
-          <Box className="overlay">
+          <Box px={3} className="overlay">
             <AddOrderForm />
           </Box>
         </Box>
