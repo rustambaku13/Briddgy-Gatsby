@@ -93,7 +93,7 @@ html {
     }
   }
 }
-nav {
+.nav-top {
   .form {
     display: none;
   }
@@ -133,7 +133,7 @@ $transition_navbar: -ms-transform 150ms ease 0s, -webkit-transform 150ms ease 0s
     max-width: 1024px;
     color: #333333;
   }
-  nav {
+  .nav-top {
     transition: all ease 150ms 0s;
     color: white;
     border: none;
@@ -197,7 +197,7 @@ $transition_navbar: -ms-transform 150ms ease 0s, -webkit-transform 150ms ease 0s
         transform: none;
       }
     }
-    nav {
+    .nav-top {
       color: #333333;
     }
   }
@@ -230,7 +230,7 @@ $transition_navbar: -ms-transform 150ms ease 0s, -webkit-transform 150ms ease 0s
     max-width: 1024px;
     color: #333333;
   }
-  nav {
+  .nav-top {
     transition: all ease 150ms 0s;
     color: white;
     border: none;
@@ -286,7 +286,7 @@ $transition_navbar: -ms-transform 150ms ease 0s, -webkit-transform 150ms ease 0s
         transform: none;
       }
     }
-    nav {
+    .nav-top {
       color: #333333;
     }
   }

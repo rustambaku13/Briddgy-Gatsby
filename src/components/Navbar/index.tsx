@@ -13,22 +13,137 @@ import {
   MenuItem,
   MenuList,
   Text,
+  useRadioGroup,
 } from "@chakra-ui/react"
 import { Link, navigate } from "gatsby-plugin-intl"
 import { observer } from "mobx-react-lite"
 import React, { useEffect, useRef, useState } from "react"
 import { bmify } from "../../api"
 import { ChevronDownIcon } from "../../icons/ChevronDown"
+import LoginIcon from "../../icons/Login"
 import LogoutIcon from "../../icons/Logout"
 import OrderIcon from "../../icons/Order"
 import ProfileIcon from "../../icons/Profile"
+import { HomeIcon } from "../../icons/Home"
 import SupportIcon from "../../icons/Support"
 import TripIcon from "../../icons/Trip"
 import logo from "../../images/icon_opaque.png"
 import UserStore from "../../store/UserStore"
 import { AddOrderNavigationMenu } from "../Form/AddOrderForm"
 import { AddTripFormNavigationMenu } from "../Form/AddTripForm"
+import { BottomNavigationItem } from "./BottomNavigationItem"
 let mouseListener = null
+
+const AuthorizedBottomNavbar = () => {
+  const { getRootProps, getRadioProps } = useRadioGroup({
+    name: "bottom_nav",
+    defaultValue: "/",
+    onChange: e => {
+      navigate(e)
+    },
+  })
+  const group = getRootProps()
+
+  return (
+    <Box
+      as="nav"
+      borderTopRadius="50px"
+      alignItems="center"
+      px="30px"
+      zIndex={50}
+      bottom="0px"
+      d={["flex", "flex", "none"]}
+      h="65px"
+      justifyContent="space-evenly"
+      pos="fixed"
+      bg="blue.1000"
+      {...group}
+      w="100%"
+    >
+      <BottomNavigationItem
+        key="/"
+        {...getRadioProps({ value: "/" })}
+        icon={<HomeIcon />}
+        text="Home"
+      />
+      <BottomNavigationItem
+        key="/trips"
+        {...getRadioProps({ value: "/trips" })}
+        icon={<TripIcon />}
+        text="Trips"
+      />
+      <BottomNavigationItem
+        key="/orders"
+        {...getRadioProps({ value: "/orders" })}
+        icon={<OrderIcon />}
+        text="Orders"
+      />
+      <BottomNavigationItem
+        key="/profile"
+        {...getRadioProps({ value: "/profile" })}
+        icon={<ProfileIcon />}
+        text="Profile"
+      />
+    </Box>
+  )
+}
+
+const DefaultBottomNavbar = () => {
+  const { getRootProps, getRadioProps } = useRadioGroup({
+    name: "bottom_nav",
+    defaultValue: "/",
+    onChange: e => {
+      navigate(e)
+    },
+  })
+  const group = getRootProps()
+
+  return (
+    <Box
+      as="nav"
+      alignItems="center"
+      px="30px"
+      zIndex={50}
+      bottom="0px"
+      d={["flex", "flex", "none"]}
+      h="65px"
+      justifyContent="space-evenly"
+      pos="fixed"
+      bg="blue.1000"
+      {...group}
+      w="100%"
+    >
+      <BottomNavigationItem
+        key="/"
+        {...getRadioProps({ value: "/" })}
+        to="/"
+        icon={<HomeIcon />}
+        text="Home"
+      />
+      <BottomNavigationItem
+        key="/trips"
+        {...getRadioProps({ value: "/trips" })}
+        to="/trips"
+        icon={<TripIcon />}
+        text="Trips"
+      />
+      <BottomNavigationItem
+        key="/orders"
+        {...getRadioProps({ value: "/orders" })}
+        to="/orders"
+        icon={<OrderIcon />}
+        text="Orders"
+      />
+      <BottomNavigationItem
+        key="/login"
+        {...getRadioProps({ value: "/login" })}
+        to="/login"
+        icon={<LoginIcon />}
+        text="Login"
+      />
+    </Box>
+  )
+}
 
 const AuthorizedNavbar = () => {
   const [open, setOpen] = useState(false)
@@ -57,6 +172,7 @@ const AuthorizedNavbar = () => {
         as="nav"
         id={expanded ? "expanded" : ""}
         px={3}
+        className="nav-top"
         pos="relative"
         h="65px"
         w="100%"
@@ -238,6 +354,7 @@ const DefaultNavbar = () => {
     <>
       <Flex
         as="nav"
+        className="nav-top"
         id={expanded ? "expanded" : ""}
         px={3}
         pos="relative"
@@ -275,19 +392,10 @@ const DefaultNavbar = () => {
           />
         </Box>
         <Flex ml={3} alignItems="center" flexShrink={0} h="100%">
-          <Text
-            d={["none", "none", "none", "block"]}
-            ml="auto"
-            mr={7}
-            display="inline-block"
-          >
+          <Text d={["none", "none", "none", "inline-block"]} ml="auto" mr={7}>
             <Link to="/login">Login</Link>
           </Text>
-          <Text
-            d={["none", "none", "none", "block"]}
-            display="inline-block"
-            mr={7}
-          >
+          <Text d={["none", "none", "none", "inline-block"]} mr={7}>
             <Link to="/signup">Sign Up</Link>
           </Text>
           <LinkBox>
@@ -357,6 +465,13 @@ const DefaultNavbar = () => {
     </>
   )
 }
+
+export const BottomNavbarDefault = observer(() => {
+  if (UserStore.isLoggedIn) {
+    return <AuthorizedBottomNavbar />
+  }
+  return <DefaultBottomNavbar />
+})
 
 const NavbarDefault = observer(() => {
   if (UserStore.isLoggedIn) {

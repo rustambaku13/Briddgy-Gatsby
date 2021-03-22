@@ -1,6 +1,7 @@
 import React, { useEffect } from "react"
 import { ConfirmEmailModal } from "../Modals/ConfirmEmailModal"
 import { PhoneNumberVerifyModal } from "../Modals/PhoneNumberVerifyModal"
+import { BottomNavbarDefault } from "../Navbar"
 export default ({ children }) => {
   useEffect(() => {
     // const animation = anime({
@@ -20,6 +21,8 @@ export default ({ children }) => {
       <PhoneNumberVerifyModal />
 
       {children}
+
+      <BottomNavbarDefault />
     </>
   )
 }

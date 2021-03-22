@@ -39,7 +39,6 @@ const TopSearchButton = chakra(
         h="50px"
         bg="white"
         px="5px"
-        pl={5}
         alignItems="center"
         borderWidth="1px"
       >
