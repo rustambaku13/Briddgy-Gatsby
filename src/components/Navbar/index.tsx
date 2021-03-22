@@ -246,19 +246,19 @@ const DefaultNavbar = () => {
         borderBottom="1px solid"
         borderBottomColor="gray.200"
       >
-        <Flex h="100%" mr={3} alignItems="center" flexShrink={0}>
-          <Box display="inline-flex" alignItems="center" mr={10} as="h1">
-            <Image h="45" w="45" src={logo} />
+        <Flex h="100%" alignItems="center" flexShrink={0}>
+          <Box h="100%" mr={[3, 10]} display="inline-flex" alignItems="center">
+            <Image h="45" src={logo} />
             <Link to="/">
-              <Text ml={1} fontSize="lg" fontWeight="600">
+              <Text d={["none", "block"]} ml={1} fontSize="lg" fontWeight="600">
                 Briddgy
               </Text>
             </Link>
           </Box>
-          <Text mr={7} display="inline-block">
+          <Text d={["none", "none", "inline-block"]} mr={[3, 3, 7]}>
             <Link to="/trips">Trips</Link>
           </Text>
-          <Text display="inline-block">
+          <Text mr={[3, 3, 7]} d={["none", "none", "inline-block"]}>
             <Link to="/orders">Orders</Link>
           </Text>
         </Flex>
@@ -275,30 +275,64 @@ const DefaultNavbar = () => {
           />
         </Box>
         <Flex ml={3} alignItems="center" flexShrink={0} h="100%">
-          <Text ml="auto" mr={7} display="inline-block">
+          <Text
+            d={["none", "none", "none", "block"]}
+            ml="auto"
+            mr={7}
+            display="inline-block"
+          >
             <Link to="/login">Login</Link>
           </Text>
-          <Text display="inline-block" mr={7}>
+          <Text
+            d={["none", "none", "none", "block"]}
+            display="inline-block"
+            mr={7}
+          >
             <Link to="/signup">Sign Up</Link>
           </Text>
-          <Text id="create_trip" display="inline-block" mr={7}>
-            <Link to="/travel">Travel & Earn</Link>
-          </Text>
+          <LinkBox>
+            <LinkOverlay>
+              <Link to="/travel">
+                <Text
+                  id="create_trip"
+                  d={["none", "none", "none", "block"]}
+                  mr={7}
+                >
+                  Travel & Earn
+                </Text>
+
+                <IconButton
+                  variant="outline"
+                  color="black"
+                  bg="white"
+                  w="40px"
+                  d={{ md: "block", lg: "none" }}
+                  aria-label="Create Order"
+                  icon={<TripIcon fontSize="20px" />}
+                  mr={3}
+                ></IconButton>
+              </Link>
+            </LinkOverlay>
+          </LinkBox>
           <LinkBox>
             <LinkOverlay>
               <Link to="/order">
                 <Button
                   id="create_order"
                   mr={7}
+                  d={["none", "none", "none", "block"]}
                   variant="primary_gradient"
                   color="white"
                 >
                   Create Order
                 </Button>
                 <IconButton
+                  d={{ md: "block", lg: "none" }}
+                  variant="primary_gradient"
+                  w="40px"
                   aria-label="Create Order"
-                  icon={<OrderIcon />}
-                  mr={7}
+                  icon={<OrderIcon fontSize="20px" />}
+                  mr={3}
                 ></IconButton>
               </Link>
             </LinkOverlay>

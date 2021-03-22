@@ -90,6 +90,7 @@ export const AddTripForm = chakra(({ className }: { className?: any }) => {
 
   return (
     <Flex
+      boxShadow="md"
       as="form"
       borderWidth={1}
       flexDir={["column", "column", "row"]}
