@@ -1,3 +1,4 @@
+import { Box } from "@chakra-ui/layout"
 import React, { useEffect } from "react"
 import { ConfirmEmailModal } from "../Modals/ConfirmEmailModal"
 import { PhoneNumberVerifyModal } from "../Modals/PhoneNumberVerifyModal"
@@ -20,7 +21,9 @@ export default ({ children }) => {
       <ConfirmEmailModal />
       <PhoneNumberVerifyModal />
 
-      {children}
+      <Box mb={["70px", "70px", 0]} w="100%" h="100%">
+        {children}
+      </Box>
 
       <BottomNavbarDefault />
     </>

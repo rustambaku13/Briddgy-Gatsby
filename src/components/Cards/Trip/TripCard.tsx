@@ -25,6 +25,7 @@ export const MyTripCard = chakra(
           <Link to={`/trips/${trip.id}`}>
             <Box w="100%" className={className}>
               <Box
+                fontSize={["xs", "sm", "md"]}
                 _hover={{ boxShadow: "lg" }}
                 transition=".2s ease-in-out"
                 cursor="pointer"
@@ -34,7 +35,7 @@ export const MyTripCard = chakra(
                 padding="3"
               >
                 <Flex h="40px">
-                  <Box h="40px" lineHeight="40px">
+                  <Box mt="5px" h="30px" lineHeight="30px">
                     <Badge py={0} borderRadius="lg" px={3} colorScheme="green">
                       <Text as="small" fontSize="x-small">
                         {trip.number_of_contracts} DEALS
@@ -106,6 +107,7 @@ const PublicTripCard = chakra(
           _hover={{ boxShadow: "lg" }}
           transition=".2s ease-in-out"
           cursor="pointer"
+          fontSize={["xs", "sm", "md"]}
           borderWidth="1px"
           bg="white"
           borderRadius="md"

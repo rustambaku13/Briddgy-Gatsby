@@ -140,69 +140,23 @@ const AddOrderPage = ({ location }: PageProps) => {
         bg="gray.100"
         maxW="full"
       >
-        <Container
+        <Box
+          mx="auto"
           onSubmit={handleSubmit(pageChange)}
           as="form"
           maxW="container.lg"
         >
           <Tabs index={page}>
             <TabPanels>
-              <TabPanel>
+              <TabPanel px={0} display="flex" flexWrap="wrap">
                 <Box
-                  float="right"
-                  w="300px"
-                  borderRadius="md"
-                  p={3}
-                  bg="white"
-                  borderWidth="1px"
-                >
-                  {title ? (
-                    <>
-                      <Text fontSize="xl" fontWeight="600" mb={5}>
-                        {title}
-                      </Text>{" "}
-                      <Divider orientation="horizontal" my={5} />
-                    </>
-                  ) : null}
-
-                  {item_price ? (
-                    <>
-                      {" "}
-                      <Text mb={5}>
-                        Product price{" "}
-                        <Text
-                          mt="-7px"
-                          fontSize="2xl"
-                          fontWeight="600"
-                          float="right"
-                          as="span"
-                        >
-                          ${item_price}
-                        </Text>
-                      </Text>{" "}
-                      <Divider orientation="horizontal" my={5} />
-                    </>
-                  ) : null}
-                  <Text variant="secondary">
-                    Please fill in the details of your order
-                  </Text>
-                  <Divider orientation="horizontal" my={5} />
-                  <Button
-                    onClick={pageChange}
-                    w="100%"
-                    size="lg"
-                    variant="primary"
-                  >
-                    Next
-                  </Button>
-                </Box>
-                <Box
-                  mr={8}
+                  mb={5}
+                  mr={[0, 0, 8]}
                   borderRadius="md"
                   p={5}
-                  marginRight="310px"
                   bg="white"
                   borderWidth="1px"
+                  flex={1}
                 >
                   <Heading mb={8} fontSize="3xl">
                     1. Product Details
@@ -340,56 +294,66 @@ const AddOrderPage = ({ location }: PageProps) => {
                     </Text>
                   </FormControl>
                 </Box>
-              </TabPanel>
-              <TabPanel>
-                <Box
-                  float="right"
-                  w="300px"
-                  borderRadius="md"
-                  p={3}
-                  bg="white"
-                  borderWidth="1px"
-                >
-                  <Text fontSize="xl" fontWeight="600" mb={5}>
-                    {title}
-                  </Text>{" "}
-                  <Divider orientation="horizontal" my={5} />{" "}
-                  <Text mb={5}>
-                    Product price{" "}
-                    <Text
-                      mt="-7px"
-                      fontSize="2xl"
-                      fontWeight="600"
-                      float="right"
-                      as="span"
-                    >
-                      ${item_price}
-                    </Text>
-                  </Text>{" "}
-                  <Divider orientation="horizontal" my={5} />
-                  <Text variant="secondary">
-                    Please fill in the details of your order
-                  </Text>
-                  <Divider orientation="horizontal" my={5} />
-                  <Button
-                    onClick={pageChange}
+
+                <Box flex={["0 0 100%", "0 0 100%", "0 0 300px"]}>
+                  <Box
                     w="100%"
-                    size="lg"
-                    variant="primary"
+                    borderRadius="md"
+                    p={3}
+                    bg="white"
+                    borderWidth="1px"
                   >
-                    Next
-                  </Button>
-                  <Button mt={5} onClick={back} size="lg" variant="link">
-                    <ChevronLeftIcon /> Back
-                  </Button>
+                    {title ? (
+                      <>
+                        <Text fontSize="xl" fontWeight="600" mb={5}>
+                          {title}
+                        </Text>{" "}
+                        <Divider orientation="horizontal" my={5} />
+                      </>
+                    ) : null}
+
+                    {item_price ? (
+                      <>
+                        {" "}
+                        <Text mb={5}>
+                          Product price{" "}
+                          <Text
+                            mt="-7px"
+                            fontSize="2xl"
+                            fontWeight="600"
+                            float="right"
+                            as="span"
+                          >
+                            ${item_price}
+                          </Text>
+                        </Text>{" "}
+                        <Divider orientation="horizontal" my={5} />
+                      </>
+                    ) : null}
+                    <Text variant="secondary">
+                      Please fill in the details of your order
+                    </Text>
+                    <Divider orientation="horizontal" my={5} />
+                    <Button
+                      onClick={pageChange}
+                      w="100%"
+                      size="lg"
+                      variant="primary"
+                    >
+                      Next
+                    </Button>
+                  </Box>
                 </Box>
+              </TabPanel>
+              <TabPanel px={0} display="flex" flexWrap="wrap">
                 <Box
-                  mr={8}
+                  mb={5}
+                  mr={[0, 0, 8]}
                   borderRadius="md"
                   p={5}
-                  marginRight="310px"
                   bg="white"
                   borderWidth="1px"
+                  flex={1}
                 >
                   <Heading mb={8} fontSize="3xl">
                     2. Delivery Details
@@ -443,24 +407,7 @@ const AddOrderPage = ({ location }: PageProps) => {
                     </Text>
                   </FormControl>
                 </Box>
-              </TabPanel>
-              <TabPanel>
-                <Box float="right" w="300px">
-                  <Box
-                    borderRadius="md"
-                    mb={3}
-                    p={3}
-                    bg="white"
-                    borderWidth="1px"
-                    as="aside"
-                  >
-                    <LightBulbIcon float="right" fontSize="xl" />
-                    <Text variant="secondary">
-                      We do not charge money untill you have a settled deal with
-                      a traveler. Publish your order and starting contacting
-                      travelers
-                    </Text>
-                  </Box>
+                <Box flex={["0 0 100%", "0 0 100%", "0 0 300px"]}>
                   <Box
                     w="100%"
                     borderRadius="md"
@@ -471,7 +418,7 @@ const AddOrderPage = ({ location }: PageProps) => {
                     <Text fontSize="xl" fontWeight="600" mb={5}>
                       {title}
                     </Text>{" "}
-                    <Divider orientation="horizontal" my={5} />
+                    <Divider orientation="horizontal" my={5} />{" "}
                     <Text mb={5}>
                       Product price{" "}
                       <Text
@@ -485,41 +432,33 @@ const AddOrderPage = ({ location }: PageProps) => {
                       </Text>
                     </Text>{" "}
                     <Divider orientation="horizontal" my={5} />
-                    <Text mb={5}>
-                      Deliver From
-                      <Text float="right" as="span">
-                        {getValues(["source_name"].toString())}
-                      </Text>
-                    </Text>{" "}
-                    <Text mb={5}>
-                      Deliver To
-                      <Text float="right" as="span">
-                        {getValues(["destination_name"].toString())}
-                      </Text>
-                    </Text>{" "}
+                    <Text variant="secondary">
+                      Please fill in the details of your order
+                    </Text>
                     <Divider orientation="horizontal" my={5} />
                     <Button
-                      isLoading={adding}
+                      onClick={pageChange}
                       w="100%"
                       size="lg"
-                      type="submit"
                       variant="primary"
                     >
-                      Connect with travelers
+                      Next
                     </Button>
                     <Button mt={5} onClick={back} size="lg" variant="link">
                       <ChevronLeftIcon /> Back
                     </Button>
                   </Box>
-                </Box>
-
+                </Box>{" "}
+              </TabPanel>
+              <TabPanel px={0} display="flex" flexWrap="wrap">
                 <Box
-                  mr={8}
+                  mb={5}
+                  mr={[0, 0, 8]}
                   borderRadius="md"
                   p={5}
-                  marginRight="310px"
                   bg="white"
                   borderWidth="1px"
+                  flex={1}
                 >
                   <Heading mb={8} fontSize="3xl">
                     3. Order Summary
@@ -554,10 +493,80 @@ const AddOrderPage = ({ location }: PageProps) => {
                     order may be canceled.
                   </Text>
                 </Box>
+
+                <Box flex={["0 0 100%", "0 0 100%", "0 0 300px"]}>
+                  <Box w="100%">
+                    <Box
+                      borderRadius="md"
+                      mb={3}
+                      p={3}
+                      bg="white"
+                      borderWidth="1px"
+                      as="aside"
+                    >
+                      <LightBulbIcon float="right" fontSize="xl" />
+                      <Text variant="secondary">
+                        We do not charge money untill you have a settled deal
+                        with a traveler. Publish your order and starting
+                        contacting travelers
+                      </Text>
+                    </Box>
+                    <Box
+                      w="100%"
+                      borderRadius="md"
+                      p={3}
+                      bg="white"
+                      borderWidth="1px"
+                    >
+                      <Text fontSize="xl" fontWeight="600" mb={5}>
+                        {title}
+                      </Text>{" "}
+                      <Divider orientation="horizontal" my={5} />
+                      <Text mb={5}>
+                        Product price{" "}
+                        <Text
+                          mt="-7px"
+                          fontSize="2xl"
+                          fontWeight="600"
+                          float="right"
+                          as="span"
+                        >
+                          ${item_price}
+                        </Text>
+                      </Text>{" "}
+                      <Divider orientation="horizontal" my={5} />
+                      <Text mb={5}>
+                        Deliver From
+                        <Text float="right" as="span">
+                          {getValues(["source_name"].toString())}
+                        </Text>
+                      </Text>{" "}
+                      <Text mb={5}>
+                        Deliver To
+                        <Text float="right" as="span">
+                          {getValues(["destination_name"].toString())}
+                        </Text>
+                      </Text>{" "}
+                      <Divider orientation="horizontal" my={5} />
+                      <Button
+                        isLoading={adding}
+                        w="100%"
+                        size="lg"
+                        type="submit"
+                        variant="primary"
+                      >
+                        Connect with travelers
+                      </Button>
+                      <Button mt={5} onClick={back} size="lg" variant="link">
+                        <ChevronLeftIcon /> Back
+                      </Button>
+                    </Box>
+                  </Box>
+                </Box>
               </TabPanel>
             </TabPanels>
           </Tabs>
-        </Container>
+        </Box>
       </Container>
     </>
   )

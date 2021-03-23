@@ -7,7 +7,7 @@ module.exports = {
   plugins: [
     `gatsby-plugin-sass`,
     `@chakra-ui/gatsby-plugin`,
-
+    // `gatsby-plugin-react-helmet`,
     {
       resolve: `gatsby-source-filesystem`,
       options: {

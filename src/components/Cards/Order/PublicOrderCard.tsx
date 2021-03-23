@@ -74,7 +74,7 @@ export const MyOrderCard = chakra(
           <OrderStatus float="right" orderData={orderData} />
         </Box>
         <Flex flexGrow={1}>
-          <Box mr={4} flex={["0 0 150px", "0 0 150px", "0 0 220px"]}>
+          <Box mr={4} flex={["0 0 120px", "0 0 150px", "0 0 220px"]}>
             <Center width="100%" h="100%" p={3} bg="gray.50">
               <Img float="left" src={bmify(orderData.orderimage)} />
             </Center>
@@ -169,7 +169,7 @@ const PublicOrderCard = chakra(
           </Flex>
         </Box>
         <Flex flexGrow={1}>
-          <Box mr={4} flex={["0 0 150px", "0 0 150px", "0 0 220px"]}>
+          <Box mr={4} flex={["0 0 120px", "0 0 150px", "0 0 220px"]}>
             <Center width="100%" h="100%" p={3} bg="gray.50">
               <Img float="left" src={bmify(orderData.orderimage)} />
             </Center>

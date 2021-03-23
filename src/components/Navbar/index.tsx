@@ -152,8 +152,7 @@ const AuthorizedNavbar = () => {
   useEffect(() => {
     if (expanded) {
       mouseListener = event => {
-        console.info(event.deltaY)
-        setExpanded(false)
+        if (expanded) setExpanded(false)
       }
       window.addEventListener("wheel", mouseListener, false)
     }
@@ -336,7 +335,7 @@ const DefaultNavbar = () => {
   useEffect(() => {
     if (expanded) {
       mouseListener = event => {
-        console.info(event.deltaY)
+        if (expanded) setExpanded(false)
         setExpanded(false)
       }
       window.addEventListener("wheel", mouseListener, false)

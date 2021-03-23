@@ -65,12 +65,18 @@ const PersonalDetailsSection = observer(() => {
             Change
           </Button>
         </Flex>
-        <Flex alignItems="center" flex={1} flexWrap="wrap" flexDirection="row">
+        <Flex
+          alignItems="center"
+          flex={1}
+          flexWrap="wrap"
+          flexDirection={["row"]}
+        >
           <Heading
+            mb={[3, 0]}
             flex="0 0 100%"
             fontSize="3xl"
           >{`${UserStore.me.first_name} ${UserStore.me.last_name}`}</Heading>
-          <Box mr={14}>
+          <Box mb={[3, 0]} mr={14}>
             <Text fontWeight="600" as="label">
               E-Mail
               <VerificationStatus isVerified={UserStore.me.is_email_verified} />
@@ -102,7 +108,7 @@ const PersonalDetailsSection = observer(() => {
           </Box>
         </Flex>
       </Flex>
-      <HStack spacing={22} my="50px">
+      <SimpleGrid columns={[1, 2]} spacing={22} my="50px">
         <Flex
           bg="white"
           minH="180px"
@@ -152,7 +158,7 @@ const PersonalDetailsSection = observer(() => {
             </Text>
           </Box>
         </Flex>
-      </HStack>
+      </SimpleGrid>
       <Divider my={5} />
       <Heading as="h2" fontSize="2xl">
         My Reviews{" "}
@@ -281,7 +287,7 @@ const RedeemCreditsSection = () => {
     <Box py={3} maxW="container.lg" mx="auto">
       <Box mx="auto" maxW="500px" p={0}>
         <Flex mt="40px" w="100%" flexWrap="nowrap">
-          <Heading fontSize="5xl" flex="0 0 auto">
+          <Heading fontSize={["4xl", "5xl"]} flex="0 0 auto">
             Enter your <br />{" "}
             <Text color="blue.400">
               Promo <br />
@@ -325,7 +331,7 @@ const RedeemCreditsSection = () => {
                 message: "Promo Code should be 5 characters",
               },
             })}
-            fontSize="2xl"
+            fontSize={["xl", "2xl"]}
             name="code"
             h="70px"
             border="none"
@@ -511,26 +517,26 @@ const MyProfilePage = observer(({ location }) => {
           colorScheme="blue"
         >
           <TabList>
-            <Tab>Personal Details</Tab>
-            <Tab>My Trips</Tab>
-            <Tab>My Orders</Tab>
-            <Tab>Promo Code</Tab>
-            <Tab>Earn Free Deliveries</Tab>
+            <Tab fontSize={["sm", "md"]}>Personal Details</Tab>
+            <Tab fontSize={["sm", "md"]}>My Trips</Tab>
+            <Tab fontSize={["sm", "md"]}>My Orders</Tab>
+            <Tab fontSize={["sm", "md"]}>Promo Code</Tab>
+            <Tab fontSize={["sm", "md"]}>Earn Free Deliveries</Tab>
           </TabList>
           <TabPanels>
-            <TabPanel pt="40px">
+            <TabPanel px={0} pt="40px">
               <PersonalDetailsSection />
             </TabPanel>
-            <TabPanel>
+            <TabPanel px={0}>
               <MyTripsSections />
             </TabPanel>
-            <TabPanel>
+            <TabPanel px={0}>
               <MyOrdersSection />
             </TabPanel>
-            <TabPanel>
+            <TabPanel px={0}>
               <RedeemCreditsSection />
             </TabPanel>
-            <TabPanel>
+            <TabPanel px={0}>
               <EarnCreditsSection />
             </TabPanel>
           </TabPanels>
