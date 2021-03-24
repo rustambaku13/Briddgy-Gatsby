@@ -18,7 +18,6 @@ import {
 import { Link, navigate } from "gatsby-plugin-intl"
 import React, { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
-import SwiperCore, { Autoplay } from "swiper"
 import { getTrips } from "../../api/trip"
 import { TestimonialLinkCard } from "../../components/Cards/Testimonial/TestimonialLinkCard"
 import PublicTripCard from "../../components/Cards/Trip/TripCard"
@@ -35,7 +34,7 @@ import note from "../../images/noteicon.svg"
 import plane from "../../images/planeicon.svg"
 import { defaultTrips, Trip, Trips } from "../../types/trip"
 import { filterObject } from "../../utils/misc"
-SwiperCore.use([Autoplay])
+import { Helmet } from "react-helmet"
 
 const TripsPage = ({ data, location }) => {
   const { register, handleSubmit, setValue } = useForm()
@@ -66,6 +65,12 @@ const TripsPage = ({ data, location }) => {
   }
   return (
     <>
+      <Helmet title="Briddgy | Available Travelers" defer={false}>
+        <meta
+          name="description"
+          content="List available travelers who are ready to deliver. Briddgy postless, peer-to-peer delivery platform. Worldwide shopping with fastest and cheapest delivery. Travel with minimum costs and earn money."
+        />
+      </Helmet>
       <NavbarDefault />
       <Container pt="40px" as="section" minW="full">
         <Box
@@ -211,10 +216,16 @@ const TripsPage = ({ data, location }) => {
           </Box>
         ) : null}
       </Container>
-      <Box bg="purple.300" h="320px" overflow="hidden" as="section">
+      <Box
+        mb={[20, 20, "150px"]}
+        bg="purple.300"
+        h="320px"
+        overflow="hidden"
+        as="section"
+      >
         {/* <Img fixed={data.nature_travel.childImageSharp.fixed} /> */}
       </Box>
-      <Container my="80px" pt={8} maxW="full" as="section">
+      <Container mb={[20, 20, "150px"]} maxW="full" as="section">
         <Heading textAlign="center" mb="80px">
           How to shop from Abroad using Briddgy
         </Heading>
@@ -233,9 +244,9 @@ const TripsPage = ({ data, location }) => {
               w="120px"
               step={1}
             >
-              <CImg height="60px" width="60px" src={earth} />
+              <CImg alt="Create Order" height="60px" width="60px" src={earth} />
             </StepCircle>
-            <Heading mb={5} textAlign="center" fontSize="2xl" as="h4">
+            <Heading mb={5} textAlign="center" fontSize="2xl" as="h3">
               Create your Order
             </Heading>
             <Text variant="secondary" textAlign="center">
@@ -252,9 +263,9 @@ const TripsPage = ({ data, location }) => {
               h="120px"
               w="120px"
             >
-              <CImg height="60px" width="60px" src={note} />
+              <CImg alt="Make Offers" height="60px" width="60px" src={note} />
             </StepCircle>
-            <Heading mb={5} textAlign="center" fontSize="2xl" as="h4">
+            <Heading mb={5} textAlign="center" fontSize="2xl" as="h3">
               Make/receive offers
             </Heading>
             <Text variant="secondary" textAlign="center">
@@ -271,9 +282,9 @@ const TripsPage = ({ data, location }) => {
               h="120px"
               w="120px"
             >
-              <CImg height="60px" width="60px" src={plane} />
+              <CImg alt="Security" height="60px" width="60px" src={plane} />
             </StepCircle>
-            <Heading mb={5} textAlign="center" fontSize="2xl" as="h4">
+            <Heading mb={5} textAlign="center" fontSize="2xl" as="h3">
               Secure payment
             </Heading>
             <Text variant="secondary" textAlign="center">
@@ -289,9 +300,9 @@ const TripsPage = ({ data, location }) => {
               h="120px"
               w="120px"
             >
-              <CImg height="60px" width="60px" src={card} />
+              <CImg alt="Receive Item" height="60px" width="60px" src={card} />
             </StepCircle>
-            <Heading mb={5} textAlign="center" fontSize="2xl" as="h4">
+            <Heading mb={5} textAlign="center" fontSize="2xl" as="h3">
               Get your item
             </Heading>
             <Text variant="secondary" textAlign="center">

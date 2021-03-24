@@ -35,7 +35,7 @@ import card from "../../images/debit-cardicon.svg"
 import earth from "../../images/earthicon.svg"
 import note from "../../images/noteicon.svg"
 import plane from "../../images/planeicon.svg"
-
+import { Helmet } from "react-helmet"
 export const query = graphql`
   query {
     globe: file(relativePath: { eq: "travel_page_main.png" }) {
@@ -105,6 +105,12 @@ export const query = graphql`
 const AddTrip = ({ data }: PageProps) => {
   return (
     <>
+      <Helmet title="Briddgy | Add Trip" defer={false}>
+        <meta
+          name="description"
+          content="Travel with minimum costs and earn money. Briddgy postless, peer-to-peer delivery platform. Shop Worldwide with fastest and cheapest delivery."
+        />
+      </Helmet>
       <TravelNavbar />
       <Box
         overflow="hidden"
@@ -131,12 +137,12 @@ const AddTrip = ({ data }: PageProps) => {
               mb={5}
               fontSize="5xl"
               color="white"
-              as="h2"
+              as="h1"
               lineHeight="1.5"
             >
               Travel with minimum costs with Briddgy
             </Heading>
-            <Text mb={6} color="whiteAlpha.800">
+            <Text as="h2" mb={6} color="whiteAlpha.800">
               Search for tickets, hotels and share your trip in Briddgy
               <br /> Make deliveries and earn money!{" "}
             </Text>
@@ -148,7 +154,7 @@ const AddTrip = ({ data }: PageProps) => {
           </Box>
           <Box d={["none", "none", "block"]} flex={2}>
             <Box maxW="500px" ml="auto">
-              <Img fluid={data.globe.childImageSharp.fluid} />
+              <Img alt="Worldwide " fluid={data.globe.childImageSharp.fluid} />
             </Box>
           </Box>
         </Container>
@@ -317,7 +323,7 @@ const AddTrip = ({ data }: PageProps) => {
               w="120px"
               step={1}
             >
-              <CImg height="60px" width="60px" src={earth} />
+              <CImg alt="Add Trip" height="60px" width="60px" src={earth} />
             </StepCircle>
             <Heading mb={5} textAlign="center" fontSize="2xl" as="h4">
               Add Trip
@@ -336,7 +342,7 @@ const AddTrip = ({ data }: PageProps) => {
               h="120px"
               w="120px"
             >
-              <CImg height="60px" width="60px" src={note} />
+              <CImg alt="Make Offers" height="60px" width="60px" src={note} />
             </StepCircle>
             <Heading mb={5} textAlign="center" fontSize="2xl" as="h4">
               Make offers
@@ -354,10 +360,15 @@ const AddTrip = ({ data }: PageProps) => {
               h="120px"
               w="120px"
             >
-              <CImg height="60px" width="60px" src={plane} />
+              <CImg
+                alt="Buy and deliver"
+                height="60px"
+                width="60px"
+                src={plane}
+              />
             </StepCircle>
             <Heading mb={5} textAlign="center" fontSize="2xl" as="h4">
-              Buy and/or deliver
+              Buy and deliver
             </Heading>
             <Text variant="secondary" textAlign="center">
               Depending on the order type you might need to buy & deliver or
@@ -373,10 +384,10 @@ const AddTrip = ({ data }: PageProps) => {
               h="120px"
               w="120px"
             >
-              <CImg height="60px" width="60px" src={card} />
+              <CImg alt="Earn money" height="60px" width="60px" src={card} />
             </StepCircle>
             <Heading mb={5} textAlign="center" fontSize="2xl" as="h4">
-              Get Paid
+              Earn money
             </Heading>
             <Text variant="secondary" textAlign="center">
               After you have delivered the item you are going to receive the
@@ -446,7 +457,7 @@ const AddTrip = ({ data }: PageProps) => {
         <Container maxW="container.xl">
           <Stack direction={["column", "row"]} spacing={12}>
             <Box>
-              <Heading mb={5} as="h4" fontSize="2xl">
+              <Heading mb={5} as="h3" fontSize="2xl">
                 How is payment guaranteed?
               </Heading>
               <Text variant="secondary">
@@ -455,7 +466,7 @@ const AddTrip = ({ data }: PageProps) => {
               </Text>
             </Box>
             <Box>
-              <Heading as="h4" mb={5} fontSize="2xl">
+              <Heading as="h3" mb={5} fontSize="2xl">
                 Who is paying for product?
               </Heading>
               <Text variant="secondary">
@@ -464,7 +475,7 @@ const AddTrip = ({ data }: PageProps) => {
               </Text>
             </Box>
             <Box>
-              <Heading as="h4" fontSize="2xl">
+              <Heading as="h3" fontSize="2xl">
                 How are deliveries arranged?
               </Heading>
               <Text variant="secondary">

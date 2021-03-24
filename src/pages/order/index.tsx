@@ -29,11 +29,17 @@ import card from "../../images/debit-cardicon.svg"
 import earth from "../../images/earthicon.svg"
 import note from "../../images/noteicon.svg"
 import plane from "../../images/planeicon.svg"
-
+import { Helmet } from "react-helmet"
 const AddOrder = ({ data }) => {
   const { register, handleSubmit, errors } = useForm()
   return (
     <>
+      <Helmet title="Briddgy | Create Order" defer={false}>
+        <meta
+          name="description"
+          content="Shop Worldwide with fastest and cheapest delivery. Briddgy postless, peer-to-peer delivery platform.Travel with minimum costs and earn money."
+        />
+      </Helmet>
       <OrderNavbar />
       <Box
         overflow="hidden"
@@ -61,7 +67,7 @@ const AddOrder = ({ data }) => {
               mb={5}
               fontSize="5xl"
               color="white"
-              as="h2"
+              as="h1"
               lineHeight="1.5"
             >
               Shop Product from Anywhere and save up to 40%
@@ -74,16 +80,25 @@ const AddOrder = ({ data }) => {
               borderRadius="md"
               bg="white"
             >
-              <Text fontSize="lg"> Delivered by our verified users</Text>
+              <Text as="h2" fontSize="lg">
+                {" "}
+                Delivered by our verified users
+              </Text>
             </Box>
             <br />
             <Box px={3} py={1} d="inline-block" borderRadius="md" bg="white">
-              <Text fontSize="lg"> Flexible and super fast delivery</Text>
+              <Text as="h2" fontSize="lg">
+                {" "}
+                Flexible and super fast delivery
+              </Text>
             </Box>
           </Box>
           <Box d={["none", "none", "block"]} flex={2}>
             <Box maxW="500px" ml="auto">
-              <Img fluid={data.ecommerce.childImageSharp.fluid} />
+              <Img
+                alt="E-Commerce"
+                fluid={data.ecommerce.childImageSharp.fluid}
+              />
             </Box>
           </Box>
         </Container>
@@ -94,7 +109,7 @@ const AddOrder = ({ data }) => {
         mx="auto"
         maxW="container.xl"
       >
-        <Heading mb="60px" as="h1" textAlign="center">
+        <Heading mb="60px" textAlign="center">
           Trending Products in Briddgy
         </Heading>
         <Grid templateColumns="repeat(6, 1fr)" gap={[3, 5, 8]}>
@@ -199,9 +214,9 @@ const AddOrder = ({ data }) => {
               w="120px"
               step={1}
             >
-              <CImg height="60px" width="60px" src={earth} />
+              <CImg alt="Create Order" height="60px" width="60px" src={earth} />
             </StepCircle>
-            <Heading mb={5} textAlign="center" fontSize="2xl" as="h4">
+            <Heading mb={5} textAlign="center" fontSize="2xl" as="h3">
               Create your Order
             </Heading>
             <Text variant="secondary" textAlign="center">
@@ -218,9 +233,9 @@ const AddOrder = ({ data }) => {
               h="120px"
               w="120px"
             >
-              <CImg height="60px" width="60px" src={note} />
+              <CImg alt="Make Offers" height="60px" width="60px" src={note} />
             </StepCircle>
-            <Heading mb={5} textAlign="center" fontSize="2xl" as="h4">
+            <Heading mb={5} textAlign="center" fontSize="2xl" as="h3">
               Make/receive offers
             </Heading>
             <Text variant="secondary" textAlign="center">
@@ -237,9 +252,9 @@ const AddOrder = ({ data }) => {
               h="120px"
               w="120px"
             >
-              <CImg height="60px" width="60px" src={plane} />
+              <CImg alt="Security" height="60px" width="60px" src={plane} />
             </StepCircle>
-            <Heading mb={5} textAlign="center" fontSize="2xl" as="h4">
+            <Heading mb={5} textAlign="center" fontSize="2xl" as="h3">
               Secure payment
             </Heading>
             <Text variant="secondary" textAlign="center">
@@ -255,9 +270,9 @@ const AddOrder = ({ data }) => {
               h="120px"
               w="120px"
             >
-              <CImg height="60px" width="60px" src={card} />
+              <CImg alt="Receive Item" height="60px" width="60px" src={card} />
             </StepCircle>
-            <Heading mb={5} textAlign="center" fontSize="2xl" as="h4">
+            <Heading mb={5} textAlign="center" fontSize="2xl" as="h3">
               Get your item
             </Heading>
             <Text variant="secondary" textAlign="center">
@@ -288,9 +303,9 @@ const AddOrder = ({ data }) => {
         as="section"
       >
         <Center justifyContent="space-between" w="300px" mx="auto" h="100%">
-          <Img fixed={data.visa.childImageSharp.fixed} />
+          <Img alt="Visa" fixed={data.visa.childImageSharp.fixed} />
 
-          <Img fixed={data.mastercard.childImageSharp.fixed} />
+          <Img alt="Mastercard" fixed={data.mastercard.childImageSharp.fixed} />
         </Center>
       </Container>
       <Container mb={[20, 20, "150px"]} pt={8} maxW="full" as="section">
@@ -339,7 +354,7 @@ const AddOrder = ({ data }) => {
         <Container maxW="container.xl">
           <Stack direction={["column", "row"]} spacing={12}>
             <Box>
-              <Heading mb={5} as="h4" fontSize="2xl">
+              <Heading mb={5} as="h3" fontSize="2xl">
                 How is payment guaranteed?
               </Heading>
               <Text variant="secondary">
@@ -348,7 +363,7 @@ const AddOrder = ({ data }) => {
               </Text>
             </Box>
             <Box>
-              <Heading as="h4" mb={5} fontSize="2xl">
+              <Heading as="h3" mb={5} fontSize="2xl">
                 Who is paying for product?
               </Heading>
               <Text variant="secondary">
@@ -357,7 +372,7 @@ const AddOrder = ({ data }) => {
               </Text>
             </Box>
             <Box>
-              <Heading as="h4" fontSize="2xl">
+              <Heading as="h3" fontSize="2xl">
                 How are deliveries arranged?
               </Heading>
               <Text variant="secondary">

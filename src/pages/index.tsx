@@ -6,13 +6,13 @@ import {
   Flex,
   Grid,
   Heading,
-  Link as CLink,
   Text,
 } from "@chakra-ui/react"
 import { graphql } from "gatsby"
 import Img from "gatsby-image"
 import { Link } from "gatsby-plugin-intl"
 import React from "react"
+import { Helmet } from "react-helmet"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { ProductCard } from "../components/Cards/Order/Product"
 import { TravelDestinationCard } from "../components/Cards/Trip/TravelDestination"
@@ -23,14 +23,26 @@ import { ChevronRightIcon } from "../icons/ChevronRight"
 import { ClockIcon } from "../icons/Clock"
 import { HeartIcon } from "../icons/Heart"
 import { SmileIcon } from "../icons/Smile"
-
 const Home = ({ data }) => {
   return (
     <>
+      <Helmet
+        title="Briddgy | Your first postless delivery platform"
+        defer={false}
+      >
+        <meta
+          name="description"
+          content="Briddgy postless, peer-to-peer delivery platform. Worldwide shopping with fastest and cheapest delivery. Travel with minimum costs and earn money."
+        />
+      </Helmet>
       <Navbar />
+
       <Box w="100%" mb={[20, 20, "150px"]} as="header">
         <Box d={["block", "block", "none"]} w="100%">
-          <Img fluid={data.landing_image.childImageSharp.fluid} />
+          <Img
+            alt="Briddgy postless delivery platform"
+            fluid={data.landing_image.childImageSharp.fluid}
+          />
         </Box>
         <Container
           display="flex"
@@ -91,7 +103,10 @@ const Home = ({ data }) => {
             maxW="800px"
             w="100%"
           >
-            <Img fluid={data.landing_image.childImageSharp.fluid} />
+            <Img
+              alt="Briddgy postless delivery platform"
+              fluid={data.landing_image.childImageSharp.fluid}
+            />
           </Box>
         </Container>
       </Box>
@@ -101,11 +116,17 @@ const Home = ({ data }) => {
             Travelers
           </Heading>
           <Box mb={7} d={["block", "block", "none"]} w="100%">
-            <Img fluid={data.image1.childImageSharp.fluid} />
+            <Img
+              alt="Travel and Earn"
+              fluid={data.image1.childImageSharp.fluid}
+            />
           </Box>
           <Flex justifyContent="space-between" h="100%" w="100%">
             <Box d={["none", "none", "block"]} flex="1" maxW="600px">
-              <Img fluid={data.image1.childImageSharp.fluid} />
+              <Img
+                alt="Travel and Earn"
+                fluid={data.image1.childImageSharp.fluid}
+              />
             </Box>
             <Box ml="auto" w="100%" maxW="480px" flex="1">
               <Flex flexDir="column" justifyContent="center" h="100%">
@@ -148,11 +169,11 @@ const Home = ({ data }) => {
             <strong>minimum</strong> costs
           </Text>
           <Text textAlign="right">
-            <CLink as="span">
+            <Text _hover={{ textDecor: "underline" }} as="span">
               <Link to="#">
                 more destinations <ChevronRightIcon />
               </Link>
-            </CLink>
+            </Text>
           </Text>
           <Box pt="50px" w="100%">
             <Swiper
@@ -235,7 +256,10 @@ const Home = ({ data }) => {
             Orderers
           </Heading>
           <Box mb={7} d={["block", "block", "none"]} w="100%">
-            <Img fluid={data.image2.childImageSharp.fluid} />
+            <Img
+              alt="Order with minimum costs"
+              fluid={data.image2.childImageSharp.fluid}
+            />
           </Box>
           <Flex justifyContent="space-between" h="100%" w="100%">
             <Box maxW="480px" flex="1">
@@ -293,7 +317,10 @@ const Home = ({ data }) => {
               </Flex>
             </Box>
             <Box d={["none", "none", "block"]} flex="1" maxW="600px">
-              <Img fluid={data.image2.childImageSharp.fluid} />
+              <Img
+                alt="Order with minimum costs"
+                fluid={data.image2.childImageSharp.fluid}
+              />
             </Box>
           </Flex>
           <Heading fontSize="2xl" as="h2" fontWeight="normal" mb={3} mt="75px">
@@ -304,11 +331,11 @@ const Home = ({ data }) => {
             <strong> exclusive</strong> items from any point in the world
           </Text>
           <Text textAlign="right">
-            <CLink as="span">
+            <Text _hover={{ textDecor: "underline" }} as="span">
               <Link to="#">
                 more products <ChevronRightIcon />
               </Link>
-            </CLink>
+            </Text>
           </Text>
           <Flex pt="50px" w="100%">
             <Grid
@@ -381,7 +408,7 @@ const Home = ({ data }) => {
         </Container>
       </Box>
       <Box w="100%">
-        <Img fluid={data.app.childImageSharp.fluid} />
+        <Img alt="Mobile Application" fluid={data.app.childImageSharp.fluid} />
       </Box>
     </>
   )

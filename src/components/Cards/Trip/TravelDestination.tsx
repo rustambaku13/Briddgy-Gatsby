@@ -36,7 +36,7 @@ const TravelDestinationCard = chakra(function ({
           </Text>
         </Box>
         <Box overflow="hidden" flexGrow={1}>
-          <Img fluid={img} />
+          <Img alt="Travel Destination" fluid={img} />
         </Box>
         <Box p={2}>
           <Text variant="secondary">Rewards available</Text>

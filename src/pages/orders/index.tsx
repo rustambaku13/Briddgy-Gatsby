@@ -4,7 +4,6 @@ import {
   Container,
   Flex,
   Heading,
-  HStack,
   IconButton,
   Img as CImg,
   LinkBox,
@@ -35,8 +34,8 @@ import earth from "../../images/earthicon.svg"
 import note from "../../images/noteicon.svg"
 import plane from "../../images/planeicon.svg"
 import { defaultOrders, Order, Orders } from "../../types/orders"
+import { Helmet } from "react-helmet"
 import { filterObject } from "../../utils/misc"
-
 const OrdersPage = ({ data, location }) => {
   const { register, handleSubmit, setValue } = useForm()
 
@@ -69,6 +68,12 @@ const OrdersPage = ({ data, location }) => {
 
   return (
     <>
+      <Helmet title="Briddgy | Available Orders" defer={false}>
+        <meta
+          name="description"
+          content="List orders that are to be delivered. Briddgy postless, peer-to-peer delivery platform. Worldwide shopping with fastest and cheapest delivery. Travel with minimum costs and earn money."
+        />
+      </Helmet>
       <NavbarDefault />
       <Container pt="40px" as="section" minW="full">
         <Box
@@ -213,12 +218,18 @@ const OrdersPage = ({ data, location }) => {
         ) : null}
       </Container>
 
-      <Box bg="purple.300" h="320px" overflow="hidden" as="section">
+      <Box
+        mb={[20, 20, "150px"]}
+        bg="purple.300"
+        h="320px"
+        overflow="hidden"
+        as="section"
+      >
         {/* <Img fixed={data.nature_travel.childImageSharp.fixed} /> */}
       </Box>
-      <Container my="80px" pt={8} maxW="full" as="section">
+      <Container mb={[20, 20, "150px"]} maxW="full" as="section">
         <Heading textAlign="center" mb="80px">
-          How to shop from Abroad using Briddgy
+          How to Earn Money Traveling
         </Heading>
         <SimpleGrid
           spacing={25}
@@ -235,17 +246,17 @@ const OrdersPage = ({ data, location }) => {
               w="120px"
               step={1}
             >
-              <CImg height="60px" width="60px" src={earth} />
+              <CImg alt="Add Trip" height="60px" width="60px" src={earth} />
             </StepCircle>
             <Heading mb={5} textAlign="center" fontSize="2xl" as="h4">
-              Create your Order
+              Add Trip
             </Heading>
             <Text variant="secondary" textAlign="center">
-              Go to any online store and copy and paste the URL of the product
-              you would like from abroad.
+              Start by adding your trip information to see requested orders. It
+              only takes 1 minute
             </Text>
           </Box>
-          <Box>
+          <Box maxW="400px">
             <StepCircle
               mb={5}
               mx="auto"
@@ -254,17 +265,16 @@ const OrdersPage = ({ data, location }) => {
               h="120px"
               w="120px"
             >
-              <CImg height="60px" width="60px" src={note} />
+              <CImg alt="Make Offers" height="60px" width="60px" src={note} />
             </StepCircle>
             <Heading mb={5} textAlign="center" fontSize="2xl" as="h4">
-              Make/receive offers
+              Make offers
             </Heading>
             <Text variant="secondary" textAlign="center">
-              Make offers to travelers or wait for travelers to contact you to
-              bring your order.
+              Offer delivery offers to the orderers, contact and chat with them.
             </Text>
           </Box>
-          <Box>
+          <Box maxW="400px">
             <StepCircle
               mb={5}
               mx="auto"
@@ -273,16 +283,22 @@ const OrdersPage = ({ data, location }) => {
               h="120px"
               w="120px"
             >
-              <CImg height="60px" width="60px" src={plane} />
+              <CImg
+                alt="Buy and deliver"
+                height="60px"
+                width="60px"
+                src={plane}
+              />
             </StepCircle>
             <Heading mb={5} textAlign="center" fontSize="2xl" as="h4">
-              Secure payment
+              Buy and deliver
             </Heading>
             <Text variant="secondary" textAlign="center">
-              Secure the payment for the product price and travelers reward
+              Depending on the order type you might need to buy & deliver or
+              simply grab & deliver the porduct.
             </Text>
           </Box>
-          <Box>
+          <Box maxW="400px">
             <StepCircle
               mb={5}
               mx="auto"
@@ -291,19 +307,20 @@ const OrdersPage = ({ data, location }) => {
               h="120px"
               w="120px"
             >
-              <CImg height="60px" width="60px" src={card} />
+              <CImg alt="Earn money" height="60px" width="60px" src={card} />
             </StepCircle>
             <Heading mb={5} textAlign="center" fontSize="2xl" as="h4">
-              Get your item
+              Earn money
             </Heading>
             <Text variant="secondary" textAlign="center">
-              Meet with your traveler in a public place and get your item.
+              After you have delivered the item you are going to receive the
+              payment.
             </Text>
           </Box>
         </SimpleGrid>
 
         <LinkBox mt={16} mx="auto" w="300px">
-          <Link to="/trip">
+          <Link to="/travel">
             <Button
               mx="auto"
               variant="solid"

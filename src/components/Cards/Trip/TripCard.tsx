@@ -120,11 +120,6 @@ const PublicTripCard = chakra(
                 {trip.owner.first_name + " " + trip.owner.last_name}
               </Text>
             </Box>
-            {/* <Box ml="auto" h="40px" lineHeight="40px">
-              <Text ml="3" d="inline-block">
-                Message <ChatIcon />
-              </Text>
-            </Box> */}
           </Flex>
           <Divider my={3} />
           <Flex

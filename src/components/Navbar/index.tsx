@@ -47,7 +47,6 @@ const AuthorizedBottomNavbar = () => {
   return (
     <Box
       as="nav"
-      borderTopRadius="50px"
       alignItems="center"
       px="30px"
       zIndex={50}
@@ -101,7 +100,6 @@ const DefaultBottomNavbar = () => {
   return (
     <Box
       as="nav"
-      borderTopRadius="50px"
       alignItems="center"
       px="30px"
       zIndex={50}
@@ -181,9 +179,15 @@ const AuthorizedNavbar = () => {
       >
         <Flex h="100%" alignItems="center" flexShrink={0}>
           <Box h="100%" mr={[3, 10]} display="inline-flex" alignItems="center">
-            <Image h="45" src={logo} />
             <Link to="/">
-              <Text d={["none", "block"]} ml={1} fontSize="lg" fontWeight="600">
+              <Image h="45" alt="Logo" src={logo} />
+
+              <Text
+                d={["none", "block", "block"]}
+                ml={1}
+                fontSize="lg"
+                fontWeight="600"
+              >
                 Briddgy
               </Text>
             </Link>
@@ -209,51 +213,47 @@ const AuthorizedNavbar = () => {
         </Box>
         <Flex ml={3} alignItems="center" flexShrink={0} h="100%">
           <LinkBox>
-            <LinkOverlay>
-              <Link to="/travel">
-                <Text
-                  id="create_trip"
-                  d={["none", "none", "none", "block"]}
-                  mr={7}
-                >
-                  Travel & Earn
-                </Text>
+            <Link to="/travel">
+              <Text
+                id="create_trip"
+                d={["none", "none", "none", "block"]}
+                mr={7}
+              >
+                Travel & Earn
+              </Text>
 
-                <IconButton
-                  variant="outline"
-                  color="black"
-                  bg="white"
-                  w="40px"
-                  d={{ md: "block", lg: "none" }}
-                  aria-label="Create Order"
-                  icon={<TripIcon fontSize="20px" />}
-                  mr={3}
-                ></IconButton>
-              </Link>
-            </LinkOverlay>
+              <IconButton
+                variant="outline"
+                color="black"
+                bg="white"
+                w="40px"
+                d={{ md: "block", lg: "none" }}
+                aria-label="Create Order"
+                icon={<TripIcon fontSize="20px" />}
+                mr={3}
+              ></IconButton>
+            </Link>
           </LinkBox>
           <LinkBox>
-            <LinkOverlay>
-              <Link to="/order">
-                <Button
-                  id="create_order"
-                  mr={7}
-                  d={["none", "none", "none", "block"]}
-                  variant="primary_gradient"
-                  color="white"
-                >
-                  Create Order
-                </Button>
-                <IconButton
-                  d={{ md: "block", lg: "none" }}
-                  variant="primary_gradient"
-                  w="40px"
-                  aria-label="Create Order"
-                  icon={<OrderIcon fontSize="20px" />}
-                  mr={3}
-                ></IconButton>
-              </Link>
-            </LinkOverlay>
+            <Link to="/order">
+              <Button
+                id="create_order"
+                mr={7}
+                d={["none", "none", "none", "block"]}
+                variant="primary_gradient"
+                color="white"
+              >
+                Create Order
+              </Button>
+              <IconButton
+                d={{ md: "block", lg: "none" }}
+                variant="primary_gradient"
+                w="40px"
+                aria-label="Create Order"
+                icon={<OrderIcon fontSize="20px" />}
+                mr={3}
+              ></IconButton>
+            </Link>
           </LinkBox>
 
           <Menu
@@ -365,9 +365,10 @@ const DefaultNavbar = () => {
       >
         <Flex h="100%" alignItems="center" flexShrink={0}>
           <Box h="100%" mr={[3, 10]} display="inline-flex" alignItems="center">
-            <Image h="45" src={logo} />
             <Link to="/">
-              <Text d={["none", "block"]} ml={1} fontSize="lg" fontWeight="600">
+              {" "}
+              <Image alt="Logo" h="45" src={logo} />
+              <Text ml={1} fontSize="lg" fontWeight="600">
                 Briddgy
               </Text>
             </Link>
@@ -399,51 +400,47 @@ const DefaultNavbar = () => {
             <Link to="/signup">Sign Up</Link>
           </Text>
           <LinkBox>
-            <LinkOverlay>
-              <Link to="/travel">
-                <Text
-                  id="create_trip"
-                  d={["none", "none", "none", "block"]}
-                  mr={7}
-                >
-                  Travel & Earn
-                </Text>
+            <Link to="/travel">
+              <Text
+                id="create_trip"
+                d={["none", "none", "none", "block"]}
+                mr={7}
+              >
+                Travel & Earn
+              </Text>
 
-                <IconButton
-                  variant="outline"
-                  color="black"
-                  bg="white"
-                  w="40px"
-                  d={{ md: "block", lg: "none" }}
-                  aria-label="Create Order"
-                  icon={<TripIcon fontSize="20px" />}
-                  mr={3}
-                ></IconButton>
-              </Link>
-            </LinkOverlay>
+              <IconButton
+                variant="outline"
+                color="black"
+                bg="white"
+                w="40px"
+                d={{ md: "block", lg: "none" }}
+                aria-label="Create Order"
+                icon={<TripIcon fontSize="20px" />}
+                mr={3}
+              ></IconButton>
+            </Link>
           </LinkBox>
           <LinkBox>
-            <LinkOverlay>
-              <Link to="/order">
-                <Button
-                  id="create_order"
-                  mr={7}
-                  d={["none", "none", "none", "block"]}
-                  variant="primary_gradient"
-                  color="white"
-                >
-                  Create Order
-                </Button>
-                <IconButton
-                  d={{ md: "block", lg: "none" }}
-                  variant="primary_gradient"
-                  w="40px"
-                  aria-label="Create Order"
-                  icon={<OrderIcon fontSize="20px" />}
-                  mr={3}
-                ></IconButton>
-              </Link>
-            </LinkOverlay>
+            <Link to="/order">
+              <Button
+                id="create_order"
+                mr={7}
+                d={["none", "none", "none", "block"]}
+                variant="primary_gradient"
+                color="white"
+              >
+                Create Order
+              </Button>
+              <IconButton
+                d={{ md: "block", lg: "none" }}
+                variant="primary_gradient"
+                w="40px"
+                aria-label="Create Order"
+                icon={<OrderIcon fontSize="20px" />}
+                mr={3}
+              ></IconButton>
+            </Link>
           </LinkBox>
         </Flex>
       </Flex>

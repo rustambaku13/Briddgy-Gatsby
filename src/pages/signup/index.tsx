@@ -21,6 +21,7 @@ import { useAuthHook } from "../../hooks/useAuthHook"
 import { useDidUpdateEffect } from "../../hooks/useDidUpdateEffect"
 import GoogleIcon from "../../icons/Google"
 import UserStore from "../../store/UserStore"
+import { Helmet } from "react-helmet"
 const SignUp = ({ data }: PageProps) => {
   const {
     register,
@@ -64,6 +65,12 @@ const SignUp = ({ data }: PageProps) => {
   }, [modalOpen])
   return (
     <>
+      <Helmet title="Briddgy | Create account" defer={false}>
+        <meta
+          name="description"
+          content="Create account in Briddgy. Briddgy postless, peer-to-peer delivery platform. Worldwide shopping with fastest and cheapest delivery. Travel with minimum costs and earn money."
+        />
+      </Helmet>
       <NavbarDefault />
       <Center
         alignItems="flex-start"
@@ -88,11 +95,11 @@ const SignUp = ({ data }: PageProps) => {
                 <Link to="/login">Login</Link>
               </Text>
             </Text>
-            <Heading fontSize="3xl" my={8}>
+            <Heading as="h1" fontSize="3xl" my={8}>
               Create account
             </Heading>
             <SimpleGrid
-              spacing={{ sm: "0 20px", md: "0 50px" }}
+              spacing={{ sm: "0 10px", md: "0 50px" }}
               columns={2}
               as="form"
               onSubmit={handleSubmit(formSubmit)}
@@ -161,27 +168,12 @@ const SignUp = ({ data }: PageProps) => {
                   mr="2"
                 />
                 <FormLabel display="inline-flex">
-                  I have read and accepted the{" "}
+                  I have read and accepted the &nbsp;
                   <Text as="span" color="blue.500">
                     Terms & Conditions
                   </Text>
                 </FormLabel>
               </FormControl>
-              {/* <Flex alignItems="center" gridColumn="span 2" mb={7}>
-              <Checkbox
-                onChange={e => {
-                  setChecked(e.target.checked)
-                }}
-                name="checked"
-                mr="2"
-              />
-              <Text variant="secondary">
-                I have read and accepted the{" "}
-                <Text as="span" color="blue.500">
-                  Terms & Conditions
-                </Text>
-              </Text>
-            </Flex> */}
               <Button
                 size="lg"
                 isLoading={loading}

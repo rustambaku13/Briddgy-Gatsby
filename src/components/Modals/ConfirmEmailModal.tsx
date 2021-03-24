@@ -42,7 +42,10 @@ export const ConfirmEmailModal = observer(() => {
               <ModalCloseButton />
               <ModalBody>
                 <Box w="80%" mx="auto" mb="8">
-                  <Img fluid={email_confirm.childImageSharp.fluid} />
+                  <Img
+                    alt="Confirm Email"
+                    fluid={email_confirm.childImageSharp.fluid}
+                  />
                 </Box>
                 <Heading
                   color="blue.400"

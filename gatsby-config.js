@@ -71,6 +71,7 @@ module.exports = {
         ],
       },
     },
+    `gatsby-plugin-react-helmet`,
     "gatsby-remark-source-name",
     "gatsby-plugin-netlify-cms",
     {

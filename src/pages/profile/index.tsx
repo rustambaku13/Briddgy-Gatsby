@@ -6,7 +6,6 @@ import {
   Divider,
   Flex,
   Heading,
-  HStack,
   SimpleGrid,
 } from "@chakra-ui/layout"
 import {
@@ -44,7 +43,7 @@ import LayoutStore from "../../store/LayoutStore"
 import UserStore from "../../store/UserStore"
 import { Order } from "../../types/orders"
 import { Trip } from "../../types/trip"
-
+import { Helmet } from "react-helmet"
 const PersonalDetailsSection = observer(() => {
   return (
     <Box py={3} maxW="container.lg" mx="auto">
@@ -501,6 +500,12 @@ const MyProfilePage = observer(({ location }) => {
   if (UserStore.isLoggedIn == false) return null
   return (
     <>
+      <Helmet title="Briddgy | My Profile" defer={false}>
+        <meta
+          name="description"
+          content="Briddgy postless, peer-to-peer delivery platform. Worldwide shopping with fastest and cheapest delivery. Travel with minimum costs and earn money."
+        />
+      </Helmet>
       <NavbarDefault />
       <Container pt="50px" maxW="container.xl">
         <Flex mb="30px" w="100%">
