@@ -101,6 +101,7 @@ const DefaultBottomNavbar = () => {
   return (
     <Box
       as="nav"
+      borderTopRadius="50px"
       alignItems="center"
       px="30px"
       zIndex={50}

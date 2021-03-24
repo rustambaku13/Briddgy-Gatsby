@@ -59,6 +59,7 @@ const AddOrderPage = ({ location }: PageProps) => {
   const title = watch("title")
   const data = usePopulateQueryHook(location)
   const quote = useQuoteGetterHook(item_price, price, page == 2)
+
   useEffect(() => {
     // When the query params change so we populate fields accordingly
     for (const [key, value] of Object.entries(data)) {
