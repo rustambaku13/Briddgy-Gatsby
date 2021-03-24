@@ -181,7 +181,9 @@ const AuthorizedNavbar = () => {
           <Box h="100%" mr={[3, 10]} display="inline-flex" alignItems="center">
             <Link to="/">
               <Image h="45" alt="Logo" src={logo} />
+            </Link>
 
+            <Link to="/">
               <Text
                 d={["none", "block", "block"]}
                 ml={1}
@@ -366,8 +368,10 @@ const DefaultNavbar = () => {
         <Flex h="100%" alignItems="center" flexShrink={0}>
           <Box h="100%" mr={[3, 10]} display="inline-flex" alignItems="center">
             <Link to="/">
-              {" "}
-              <Image alt="Logo" h="45" src={logo} />
+              <Image h="45" alt="Logo" src={logo} />
+            </Link>
+
+            <Link to="/">
               <Text ml={1} fontSize="lg" fontWeight="600">
                 Briddgy
               </Text>
