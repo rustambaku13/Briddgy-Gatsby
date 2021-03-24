@@ -37,7 +37,7 @@ import { RefreshIcon } from "../../../icons/Refresh"
 import UserStore from "../../../store/UserStore"
 
 const pageFields = {
-  0: ["url", "title", "description", "price", "item_price", "weight"],
+  0: ["url", "title", "description", "price", "item_price", "weight", "files"],
 }
 const AddOrderPage = ({ location }: PageProps) => {
   const [page, setPage] = useState(0)

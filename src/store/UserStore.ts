@@ -96,7 +96,7 @@ class UserStore {
       this.new_order = null
       // Append if not loaded orders
       if (this.orders.loading == false) {
-        this.orders.results.push(data)
+        this.orders.results.unshift(data)
         this.orders.count++
       }
 

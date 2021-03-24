@@ -91,6 +91,14 @@ export const GroupImageUploader = ({ maxCount = 4, files, register }) => {
   return (
     <>
       <HStack>
+        <input
+          type="hidden"
+          value={innerfiles.length}
+          name="files"
+          ref={register({
+            min: { value: 1, message: "Please upload at least 1 image" },
+          })}
+        />
         {innerfiles.map(file => (
           <ImageUploader setFiles={setFiles} file={file} />
         ))}
