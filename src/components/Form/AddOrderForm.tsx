@@ -107,9 +107,9 @@ export const AddOrderNavigationMenu = ({ expand }) => {
   const submitHandler = data => {
     try {
       new URL(data.url_name)
-      navigate(`add/online?url=${data.url_name}`)
+      navigate(`/order/add/online?url=${data.url_name}/`)
     } catch (e) {
-      navigate(`add/offline?host=${data.url_name}`)
+      navigate(`/order/add/offline?title=${data.url_name}`)
     }
   }
   return (

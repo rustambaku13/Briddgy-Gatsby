@@ -75,7 +75,9 @@ const AddOrderPage = ({ location }: PageProps) => {
     try {
       setAdding(true)
       flowResult(UserStore.saveNewOrder())
-        .then(e => {})
+        .then(e => {
+          navigate("/profile?page=orders")
+        })
         .finally(() => {
           setAdding(false)
         })

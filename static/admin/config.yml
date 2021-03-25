@@ -12,9 +12,18 @@ collections:
     delete: true
     slug: "{{slug}}"
     fields:
+      - {
+          label: "Template Key",
+          name: "templateKey",
+          widget: "hidden",
+          default: "product",
+        }
       - { name: title, label: Title, required: true }
       - { name: date, label: Date Published, widget: "date", required: true }
       - { name: store, label: Store, widget: "string", required: true }
+      - { name: url, label: URL if exists, widget: "string", required: false }
+      - { name: description, label: Details, required: true, widget: "string" }
+      - { name: weight, label: Weight, required: true, widget: "number" }
       - {
           name: vertical,
           label: Vertically Oriented,
@@ -29,6 +38,12 @@ collections:
     create: true
     delete: true
     fields:
+      - {
+          label: "Template Key",
+          name: "templateKey",
+          widget: "hidden",
+          default: "tag",
+        }
       - { name: title, label: Tag Name, required: true, widget: "string" }
       - { name: color, label: Tag Color, required: true, widget: "color" }
 
@@ -45,7 +60,13 @@ collections:
           widget: "hidden",
           default: "testimonial",
         }
-      - { label: "Title", name: "title", widget: "string" }
+      - {
+          label: "Language(ISO 639-1 format)",
+          name: "language",
+          widget: "string",
+          default: "en",
+        }
+      - { label: "Title(Name Surname)", name: "title", widget: "string" }
       - { label: "Publish Date", name: "date", widget: "datetime" }
       - { label: "Short Description", name: "description", widget: "text" }
       - { label: "Featured Image", name: "featuredimage", widget: image }
@@ -81,7 +102,13 @@ collections:
           label: "Template Key",
           name: "templateKey",
           widget: "hidden",
-          default: "blog-post",
+          default: "blog",
+        }
+      - {
+          label: "Language(ISO 639-1 format)",
+          name: "language",
+          widget: "string",
+          default: "en",
         }
       - { label: "Title", name: "title", widget: "string" }
       - { label: "Publish Date", name: "date", widget: "datetime" }

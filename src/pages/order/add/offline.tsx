@@ -73,10 +73,13 @@ const AddOrderPage = ({ location }: PageProps) => {
     setPage(page - 1)
   }
   const addOrder = () => {
+    // Real add Order part
     try {
       setAdding(true)
       flowResult(UserStore.saveNewOrder())
-        .then(e => {})
+        .then(e => {
+          navigate("/profile?page=orders")
+        })
         .finally(() => {
           setAdding(false)
         })
