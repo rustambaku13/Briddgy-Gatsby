@@ -9,6 +9,7 @@ featuredpost: true
 featuredimage: /assets/pexels-andrea-piacquadio-3769138.jpg
 tag:
   - New
-scoppe_tag: Orderer
+  - Traveler
+scoppe_tag: Traveler
 ---
 This is the content of our blog
