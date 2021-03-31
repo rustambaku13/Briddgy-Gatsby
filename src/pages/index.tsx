@@ -16,6 +16,7 @@ import { Helmet } from "react-helmet"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { ProductCard } from "../components/Cards/Order/Product"
 import { TravelDestinationCard } from "../components/Cards/Trip/TravelDestination"
+import Footer from "../components/Footer"
 import Navbar from "../components/Navbar"
 import { TestimonialLanding } from "../components/Testimonials"
 import { CalendarIcon } from "../icons/Calendar"
@@ -407,9 +408,11 @@ const Home = ({ data }) => {
           <TestimonialLanding />
         </Container>
       </Box>
-      <Box w="100%">
+      {/* <Box w="100%">
         <Img alt="Mobile Application" fluid={data.app.childImageSharp.fluid} />
-      </Box>
+      </Box> */}
+
+      <Footer />
     </>
   )
 }

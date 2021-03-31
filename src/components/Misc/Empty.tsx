@@ -2,7 +2,7 @@ import { Box, Center, chakra, Text } from "@chakra-ui/react"
 import React from "react"
 import { graphql, StaticQuery } from "gatsby"
 import Img from "gatsby-image"
-export const Empty = chakra(({ className }) => {
+export const Empty = chakra(({ className, text }) => {
   return (
     <StaticQuery
       query={graphql`
@@ -22,7 +22,7 @@ export const Empty = chakra(({ className }) => {
           <Img fixed={data.empty.childImageSharp.fixed} />
 
           <Text textAlign="center" w="100%" fontSize="xl">
-            No Trips found
+            {text}
           </Text>
         </Center>
       )}

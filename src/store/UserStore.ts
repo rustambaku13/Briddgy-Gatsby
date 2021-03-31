@@ -25,7 +25,7 @@ import LayoutStore from "./LayoutStore"
 
 class UserStore {
   me: null | User = null
-  complete: false | boolean
+  complete: false | boolean = false
   token: null | string = null
   new_order: any = null
   new_trip: any = null
@@ -47,6 +47,7 @@ class UserStore {
   }
   constructor() {
     makeAutoObservable(this)
+
     const token = Cookies.get("token")
     if (token) {
       flowResult(this.login_cookie(token)).then(() => {
@@ -218,5 +219,6 @@ class UserStore {
     }
   }
 }
-
-export default new UserStore()
+const a = new UserStore()
+console.log(a.complete, "SALAM")
+export default a

@@ -5,6 +5,117 @@ import anime from "animejs/lib/anime.es.js"
 
 export const Loader = chakra(({ className }) => {
   const box = useRef(null)
+  const box1 = useRef(null)
+  const box2 = useRef(null)
+  const box3 = useRef(null)
+  const box4 = useRef(null)
+  useEffect(() => {
+    if (
+      box.current &&
+      box1.current &&
+      box2.current &&
+      box3.current &&
+      box4.current
+    ) {
+      anime({
+        targets: [box.current],
+        keyframes: [{ rotate: "90deg" }],
+        duration: 750,
+
+        easing: "spring(1, 80, 10, 0)",
+
+        loop: true,
+      })
+      anime({
+        targets: [box2.current],
+        keyframes: [{ translateX: -27 }, { translateX: 0 }],
+        duration: 1500,
+        easing: "spring(1, 80, 10, 0)",
+        delay: 750,
+        loop: true,
+      })
+      anime({
+        targets: [box1.current],
+        keyframes: [{ translateX: 27 }, { translateX: 0 }],
+        duration: 1500,
+        easing: "spring(1, 80, 10, 0)",
+        delay: 750,
+        loop: true,
+      })
+
+      anime({
+        targets: [box3.current],
+        keyframes: [{ translateY: 27 }, { translateY: 0 }],
+        duration: 1500,
+        easing: "spring(1, 80, 10, 0)",
+        delay: 750,
+        loop: true,
+      })
+      anime({
+        targets: [box4.current],
+        keyframes: [{ translateY: -27 }, { translateY: 0 }],
+        duration: 1500,
+        easing: "spring(1, 80, 10, 0)",
+        delay: 750,
+        loop: true,
+      })
+    }
+  }, [box, box1, box2, box3, box4])
+  return (
+    <Box
+      ref={box}
+      pos="relative"
+      w="80px"
+      h="80px"
+      borderRadius="80px"
+      className={className}
+    >
+      <Box
+        ref={box1}
+        pos="absolute"
+        top="32px"
+        left="5px"
+        h="16px"
+        w="16px"
+        bg="blue.400"
+        borderRadius="16px"
+      ></Box>
+      <Box
+        h="16px"
+        ref={box2}
+        pos="absolute"
+        w="16px"
+        top="32px"
+        right="5px"
+        bg="blue.400"
+        borderRadius="16px"
+      ></Box>
+      <Box
+        h="16px"
+        ref={box3}
+        pos="absolute"
+        w="16px"
+        top="5px"
+        right="32px"
+        bg="blue.400"
+        borderRadius="16px"
+      ></Box>
+      <Box
+        h="16px"
+        ref={box4}
+        pos="absolute"
+        w="16px"
+        bottom="5px"
+        left="32px"
+        bg="blue.400"
+        borderRadius="16px"
+      ></Box>
+    </Box>
+  )
+})
+
+export const OldLoader = chakra(({ className }) => {
+  const box = useRef(null)
   useEffect(() => {
     if (box.current) {
       anime({

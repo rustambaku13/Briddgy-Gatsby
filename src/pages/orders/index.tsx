@@ -18,6 +18,7 @@ import {
 import { graphql } from "gatsby"
 import { Link, navigate } from "gatsby-plugin-intl"
 import React, { useEffect, useState } from "react"
+import { Helmet } from "react-helmet"
 import { useForm } from "react-hook-form"
 import { getOrders } from "../../api/order"
 import PublicOrderCard from "../../components/Cards/Order/PublicOrderCard"
@@ -34,7 +35,6 @@ import earth from "../../images/earthicon.svg"
 import note from "../../images/noteicon.svg"
 import plane from "../../images/planeicon.svg"
 import { defaultOrders, Order, Orders } from "../../types/orders"
-import { Helmet } from "react-helmet"
 import { filterObject } from "../../utils/misc"
 const OrdersPage = ({ data, location }) => {
   const { register, handleSubmit, setValue } = useForm()

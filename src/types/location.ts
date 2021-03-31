@@ -2,6 +2,7 @@ export interface Location {
   city: string
   country_en: string
   id: number
+  full_ids: number[]
 }
 export interface Locations {
   count: number

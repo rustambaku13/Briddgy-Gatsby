@@ -13,7 +13,7 @@ export default {
   },
 
   blueAlpha: {
-    100: "rgba(140,211,255,0.14)",
+    100: "#F7FBFD",
   },
   gray: {
     100: "#f9f9f9",

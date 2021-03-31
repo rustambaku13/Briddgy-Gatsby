@@ -3,28 +3,26 @@ import React, { useEffect } from "react"
 import { ConfirmEmailModal } from "../Modals/ConfirmEmailModal"
 import { PhoneNumberVerifyModal } from "../Modals/PhoneNumberVerifyModal"
 import { BottomNavbarDefault } from "../Navbar"
+import { Router } from "@reach/router"
+import MyTripPage from "../../dynamic/Trip"
+import "../../store/UserStore"
+import { MakeProposalOrderModal } from "../Modals/MakeProposaltoOrderModal"
+
 export default ({ children }) => {
-  useEffect(() => {
-    // const animation = anime({
-    //   targets: "#navbar_search",
-    //   opacity: [0, 1],
-    //   delay: function (el, i) {
-    //     return i * 100
-    //   },
-    //   elasticity: 200,
-    //   easing: "easeInOutSine",
-    //   autoplay: false,
-    // })
-  }, [])
   return (
     <>
       <ConfirmEmailModal />
       <PhoneNumberVerifyModal />
-
-      <Box mb={["70px", "70px", 0]} w="100%" h="100%">
+      <MakeProposalOrderModal />
+      <Router>
+        <MyTripPage path="/trips/:tripId" />
+        <Box path="*" mb={["70px", "70px", 0]} w="100%" h="100%">
+          {children}
+        </Box>
+      </Router>
+      {/* <Box path="salam" mb={["70px", "70px", 0]} w="100%" h="100%">
         {children}
-      </Box>
-
+      </Box> */}
       <BottomNavbarDefault />
     </>
   )

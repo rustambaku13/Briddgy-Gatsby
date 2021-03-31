@@ -12,6 +12,7 @@ import {
 import moment from "moment"
 import React from "react"
 import { bmify } from "../../../api"
+import LayoutStore from "../../../store/LayoutStore"
 import { Order } from "../../../types/orders"
 import { trimCityEmpty } from "../../../utils/misc"
 import { Avatar } from "../../Avatar/Avatar"
@@ -218,9 +219,20 @@ const PublicOrderCard = chakra(
             </Box>
             <Divider />
             <Text my={4} verticalAlign="baseline">
-              Traveler's reward{" "}
+              Traveler's reward
+              <Text as="strong" float="right" mt="-8px" fontSize="2xl">
+                ${orderData.price}
+              </Text>
             </Text>
-            <Button mt="auto" variant="primary" w="100%">
+            <Button
+              onClick={() => {
+                LayoutStore.savetoOrderProposalContext({ order: orderData })
+                LayoutStore.toggleProposaltoOrderModal()
+              }}
+              mt="auto"
+              variant="primary"
+              w="100%"
+            >
               Make Offer
             </Button>
           </Box>
