@@ -1,5 +1,4 @@
-import { Box, Divider, Heading, Text } from "@chakra-ui/layout"
-import { chakra } from "@chakra-ui/system"
+import { Box, Divider, Heading, Text, chakra } from "@chakra-ui/react"
 import moment from "moment"
 import React from "react"
 import { BACKEND_DATE_FORMAT, bmify, FRONTEND_DATE_FORMAT } from "../../../api"

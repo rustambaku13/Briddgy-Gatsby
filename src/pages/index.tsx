@@ -444,7 +444,6 @@ export const query = graphql`
             templateKey
             description
             featuredpost
-            featuredimage
             tag
             color
           }
@@ -471,7 +470,6 @@ export const query = graphql`
         templateKey
         description
         featuredpost
-        featuredimage
         tag
         color
       }

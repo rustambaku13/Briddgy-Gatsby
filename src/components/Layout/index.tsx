@@ -7,6 +7,7 @@ import { Router } from "@reach/router"
 import MyTripPage from "../../dynamic/Trip"
 import "../../store/UserStore"
 import { MakeProposalOrderModal } from "../Modals/MakeProposaltoOrderModal"
+import MyOrderPage from "../../dynamic/Order"
 
 export default ({ children }) => {
   return (
@@ -16,6 +17,7 @@ export default ({ children }) => {
       <MakeProposalOrderModal />
       <Router>
         <MyTripPage path="/trips/:tripId" />
+        <MyOrderPage path="/orders/:orderId" />
         <Box path="*" mb={["70px", "70px", 0]} w="100%" h="100%">
           {children}
         </Box>

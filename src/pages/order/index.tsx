@@ -30,6 +30,7 @@ import earth from "../../images/earthicon.svg"
 import note from "../../images/noteicon.svg"
 import plane from "../../images/planeicon.svg"
 import { Helmet } from "react-helmet"
+import Footer from "../../components/Footer"
 const AddOrder = ({ data }) => {
   const { register, handleSubmit, errors } = useForm()
   return (
@@ -396,6 +397,7 @@ const AddOrder = ({ data }) => {
           </LinkBox>
         </Container>
       </Container>
+      <Footer />
     </>
   )
 }
@@ -421,7 +423,6 @@ export const query = graphql`
         templateKey
         description
         featuredpost
-        featuredimage
         tag
         color
       }
@@ -451,7 +452,6 @@ export const query = graphql`
             templateKey
             description
             featuredpost
-            featuredimage
             tag
             color
           }
@@ -462,7 +462,7 @@ export const query = graphql`
     blogs: allMarkdownRemark(
       filter: {
         fields: { sourceName: { eq: "blogs" } }
-        frontmatter: { scoppe_tag: { eq: "Orderer" } }
+        frontmatter: { scoppe_tag: { eq: "Traveler" } }
       }
       limit: 4
     ) {
@@ -471,7 +471,7 @@ export const query = graphql`
           frontmatter {
             description
             title
-            image {
+            featuredimage {
               childImageSharp {
                 fluid(maxWidth: 800) {
                   ...GatsbyImageSharpFluid

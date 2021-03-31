@@ -1,3 +1,4 @@
+import { Order } from "./../types/orders"
 import { Trips } from "./../types/trip"
 import { AxiosResponse } from "axios"
 import { Orders } from "../types/orders"
@@ -5,7 +6,9 @@ import { axios_normal } from "./index"
 export async function getOrders(params = {}): Promise<AxiosResponse<Orders>> {
   return axios_normal.get(`/orders/`, { params })
 }
-
+export async function getOrder(id): Promise<AxiosResponse<Order>> {
+  return await axios_normal.get(`/orders/${id}/`)
+}
 export async function getMyOrders(page = 1): Promise<AxiosResponse<Orders>> {
   return await axios_normal.get(`/my/orders/`, { params: { page } })
 }
@@ -22,6 +25,12 @@ export async function getSuggestedTrips(
       owner,
     },
   })
+}
+export async function getOrderPorposals(id) {
+  return await axios_normal.get(`/proposals/orders/${id}/`)
+}
+export async function getTripContracts(id) {
+  return await axios_normal.get(`/contracts/trips/${id}/`)
 }
 
 export async function addOrder({

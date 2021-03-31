@@ -35,6 +35,7 @@ import plane from "../../images/planeicon.svg"
 import { defaultTrips, Trip, Trips } from "../../types/trip"
 import { filterObject } from "../../utils/misc"
 import { Helmet } from "react-helmet"
+import Footer from "../../components/Footer"
 
 const TripsPage = ({ data, location }) => {
   const { register, handleSubmit, setValue } = useForm()
@@ -350,6 +351,8 @@ const TripsPage = ({ data, location }) => {
           />
         </SimpleGrid>
       </Container>
+
+      <Footer />
     </>
   )
 }

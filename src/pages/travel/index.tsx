@@ -21,6 +21,7 @@ import { graphql, PageProps } from "gatsby"
 import Img from "gatsby-image"
 import { injectIntl, Link } from "gatsby-plugin-intl"
 import React from "react"
+import { Helmet } from "react-helmet"
 import { Swiper, SwiperSlide } from "swiper/react"
 import { BlogLinkCard } from "../../components/Cards/Blog/BlogLinkCard"
 import { TestimonialLinkCard } from "../../components/Cards/Testimonial/TestimonialLinkCard"
@@ -35,7 +36,7 @@ import card from "../../images/debit-cardicon.svg"
 import earth from "../../images/earthicon.svg"
 import note from "../../images/noteicon.svg"
 import plane from "../../images/planeicon.svg"
-import { Helmet } from "react-helmet"
+import Footer from "../../components/Footer"
 export const query = graphql`
   query {
     globe: file(relativePath: { eq: "travel_page_main.png" }) {
@@ -77,7 +78,7 @@ export const query = graphql`
     blogs: allMarkdownRemark(
       filter: {
         fields: { sourceName: { eq: "blogs" } }
-        frontmatter: { scoppe_tag: { eq: "Orderer" } }
+        frontmatter: { scoppe_tag: { eq: "Traveler" } }
       }
       limit: 4
     ) {
@@ -86,7 +87,7 @@ export const query = graphql`
           frontmatter {
             description
             title
-            image {
+            featuredimage {
               childImageSharp {
                 fluid(maxWidth: 800) {
                   ...GatsbyImageSharpFluid
@@ -499,6 +500,7 @@ const AddTrip = ({ data }: PageProps) => {
           </LinkBox>
         </Container>
       </Container>
+      <Footer />
     </>
   )
 }
