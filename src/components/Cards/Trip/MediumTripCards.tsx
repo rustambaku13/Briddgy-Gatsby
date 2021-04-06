@@ -17,7 +17,7 @@ import { Trip } from "../../../types/trip"
 import { tripCityAnywhere } from "../../../utils/misc"
 import { Avatar } from "../../Avatar/Avatar"
 
-export const MyTripCard = chakra(
+const TripCard = chakra(
   ({ className, trip }: { className?: any; trip: Trip }) => {
     return (
       <LinkBox>
@@ -99,6 +99,14 @@ export const MyTripCard = chakra(
   }
 )
 
+export const MyMediumTripCard = props => {
+  return <TripCard {...props}></TripCard>
+}
+
+export const PublicMediumTripCard = props => {
+  return <TripCard {...props}></TripCard>
+}
+
 const PublicTripCard = chakra(
   ({ className, trip }: { className?: any; trip: Trip }) => {
     return (
@@ -167,5 +175,3 @@ const PublicTripCard = chakra(
     )
   }
 )
-
-export default PublicTripCard

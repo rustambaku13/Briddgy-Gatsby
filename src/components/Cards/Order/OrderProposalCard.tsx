@@ -2,15 +2,38 @@ import { Box, Flex, IconButton, Text, VStack } from "@chakra-ui/react"
 import { Avatar } from "../../Avatar/Avatar"
 import moment from "moment"
 import { chakra } from "@chakra-ui/system"
-import React from "react"
+import React, { useState } from "react"
 import { bmify, FRONTEND_DATE_FORMAT } from "../../../api"
 import { Contract } from "../../../types/contract"
 import { CheckIcon } from "../../../icons/Check"
 import { CrossIcon } from "../../../icons/Cross"
 import { tripCityAnywhere } from "../../../utils/misc"
-
+import { removeContract } from "../../../api/contract"
+//Proposal Card for Order Page
 export const OrderProposalCard = chakra(
-  ({ className, contract }: { className?: any; contract: Contract }) => {
+  ({
+    className,
+    contract,
+    rejectCallback,
+    acceptCallback,
+  }: {
+    className?: any
+    contract: Contract
+    rejectCallback?: any
+    acceptCallback?: any
+  }) => {
+    const [loading, setLoading] = useState(false)
+
+    const rejectHandler = () => {
+      setLoading(true)
+      removeContract(contract.id)
+        .then(() => {
+          rejectCallback ? rejectCallback(contract) : null
+        })
+        .finally(() => {
+          setLoading(false)
+        })
+    }
     return (
       <VStack spacing={3} w="100%" p={3} className={className}>
         <Flex w="100%" alignItems="center">
@@ -21,7 +44,9 @@ export const OrderProposalCard = chakra(
           <Box ml="auto">
             <IconButton
               mr={1}
-              aria-label="Accept"
+              aria-label="Reject"
+              onClick={rejectHandler}
+              isLoading={loading}
               variant="outline"
               icon={<CrossIcon color="tomato" />}
             />

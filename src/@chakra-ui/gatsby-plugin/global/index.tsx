@@ -1,6 +1,6 @@
 export default {
   body: {
-    color: "#333333",
+    color: "text.dark",
   },
   strong: {
     fontWeight: 600,

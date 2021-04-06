@@ -3,7 +3,7 @@ import { Link } from "gatsby"
 import React from "react"
 import Img from "gatsby-image"
 import { chakra } from "@chakra-ui/react"
-
+// This Component is the destination in the landing page.
 const TravelDestinationCard = chakra(function ({
   img,
   destinationId,

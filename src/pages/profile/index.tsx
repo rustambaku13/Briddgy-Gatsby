@@ -28,8 +28,6 @@ import { useForm } from "react-hook-form"
 import { bmify } from "../../api"
 import { Discount } from "../../components/Animations/Discount"
 import { FriendsInvite } from "../../components/Animations/FriendsInvite"
-import { MyOrderCard } from "../../components/Cards/Order/PublicOrderCard"
-import { MyTripCard } from "../../components/Cards/Trip/TripCard"
 import { Empty } from "../../components/Misc/Empty"
 import { Loader } from "../../components/Misc/Loader"
 import { VerificationStatus } from "../../components/Misc/VerificationStatus"
@@ -44,6 +42,8 @@ import UserStore from "../../store/UserStore"
 import { Order } from "../../types/orders"
 import { Trip } from "../../types/trip"
 import { Helmet } from "react-helmet"
+import { MyMediumOrderCard } from "../../components/Cards/Order/MediumOrderCards"
+import { MyMediumTripCard } from "../../components/Cards/Trip/MediumTripCards"
 const PersonalDetailsSection = observer(() => {
   return (
     <Box py={3} maxW="container.lg" mx="auto">
@@ -381,7 +381,7 @@ const MyOrdersSection = observer(() => {
           <Spinner />
         ) : (
           UserStore.orders.results.map((order: Order) => (
-            <MyOrderCard mx="auto" orderData={order} />
+            <MyMediumOrderCard mx="auto" orderData={order} />
           ))
         )}
       </SimpleGrid>
@@ -420,7 +420,7 @@ const MyTripsSections = observer(() => {
         <SimpleGrid pt="20px" w="100%" spacing={5} columns={1}>
           {UserStore.upcomingTrips.length ? (
             UserStore.upcomingTrips.map((trip: Trip) => (
-              <MyTripCard my="20px" mx="auto" trip={trip} />
+              <MyMediumTripCard my="20px" mx="auto" trip={trip} />
             ))
           ) : (
             <Empty />
@@ -433,7 +433,7 @@ const MyTripsSections = observer(() => {
         <SimpleGrid pt="20px" w="100%" spacing={5} columns={1}>
           {UserStore.passedTrips.length ? (
             UserStore.passedTrips.map((trip: Trip) => (
-              <MyTripCard my="20px" mx="auto" trip={trip} />
+              <MyMediumTripCard my="20px" mx="auto" trip={trip} />
             ))
           ) : (
             <Empty />

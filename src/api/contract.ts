@@ -17,3 +17,19 @@ export async function addContract({
     price_bid,
   })
 }
+export async function removeContract(id) {
+  return await axios_normal.delete(`/delete/contracts/${id}/`)
+}
+export async function getTripProposals(id) {
+  return await axios_normal.get(`/proposals/trips/${id}/`)
+}
+export async function getTripContracts(id) {
+  return await axios_normal.get(`/contracts/trips/${id}/`)
+}
+export async function getOrderProposals(id) {
+  return await axios_normal.get(`/proposals/orders/${id}/`)
+}
+
+export async function getOrderContracts(order: number) {
+  await axios_normal.get(`/contracts/orders/${order}/`)
+}

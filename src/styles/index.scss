@@ -1,7 +1,11 @@
 // Variabels
 
 // Default Stuff
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+// @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
+
+// ***********------GLOBAL STYLES------************
+
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200;300;400;600;700;800;900&display=swap");
 
 html {
   font-size: 14px;
@@ -18,65 +22,35 @@ html {
   }
 }
 
-// Specific Components
-.travel-destination-card {
-  img {
-    transition: all 500ms ease 0s !important;
-  }
-  &:hover img {
-    transform: scale(1.1);
-  }
-}
+// ***********------PAGE LEVEL STYLES------************
 
-.autocomplete {
-  width: 100%;
-  &:focus-within > div {
-    display: block;
-  }
-}
-.datepicker {
-}
-.options-autocomplete {
-  position: absolute;
-  min-width: 200px;
-  min-height: 50px;
-  top: 100%;
-  transition: 0.2s ease-in-out;
-  display: none;
-  max-height: 400px;
-  overflow-y: auto;
+// >>>LANDING PAGE
+.landing-header {
+  position: relative;
   overflow-x: hidden;
-  z-index: 9999;
-  left: 0;
-  outline: none;
+  overflow-y: visible;
+  .overlay:nth-child(2) {
+    right: 0px;
+    position: absolute !important;
 
-  > button {
-    outline: none;
-    min-height: 60px;
-    line-height: 60px;
-    width: 100%;
-    text-align: left;
-    padding: 0 8px;
-    cursor: pointer;
-    width: 100%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    &:hover {
-      background-color: #f9f9f9;
-    }
-    svg {
-      color: #7b7b7b;
-      display: inline-block;
-      margin-right: 0.75rem;
-    }
-    h5 {
-      display: inline-block;
-    }
+    bottom: 0;
+    width: 500px;
+    height: 500px;
+    z-index: 0;
+  }
+  .overlay:first-child {
+    top: 0px;
+    position: absolute !important;
+
+    border-radius: 250px;
+    left: 0;
+    width: 500px;
+    height: 500px;
+    z-index: 0;
   }
 }
 
-// Order Page top section Header
+// >>>> Order Page top section Header
 .order-header {
   .overlay {
     right: -25vw;
@@ -291,4 +265,65 @@ $transition_navbar: -ms-transform 150ms ease 0s, -webkit-transform 150ms ease 0s
       color: #333333;
     }
   }
+}
+
+// ***********------COMPONENT LEVEL STYLES------************
+.travel-destination-card {
+  img {
+    transition: all 500ms ease 0s !important;
+  }
+  &:hover img {
+    transform: scale(1.1);
+  }
+}
+
+.autocomplete {
+  width: 100%;
+  &:focus-within > div {
+    display: block;
+  }
+}
+.datepicker {
+}
+.options-autocomplete {
+  position: absolute;
+  min-width: 200px;
+  min-height: 50px;
+  top: 100%;
+  transition: 0.2s ease-in-out;
+  display: none;
+  max-height: 400px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  z-index: 9999;
+  left: 0;
+  outline: none;
+
+  > button {
+    outline: none;
+    min-height: 60px;
+    line-height: 60px;
+    width: 100%;
+    text-align: left;
+    padding: 0 8px;
+    cursor: pointer;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    &:hover {
+      background-color: #f9f9f9;
+    }
+    svg {
+      color: #7b7b7b;
+      display: inline-block;
+      margin-right: 0.75rem;
+    }
+    h5 {
+      display: inline-block;
+    }
+  }
+}
+
+.medium-order-card {
 }

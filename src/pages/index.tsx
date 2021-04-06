@@ -37,83 +37,52 @@ const Home = ({ data }) => {
         />
       </Helmet>
       <Navbar />
+      <Center
+        minH="700px"
+        py="60px"
+        w="100%"
+        mb={"120px"}
+        as="main"
+        className="landing-header"
+      >
+        <Img
+          className="overlay"
+          alt="Travel and Earn"
+          fixed={data.overlay.childImageSharp.fixed}
+        />
+        <Img
+          alt="Travel and Earn"
+          className="overlay"
+          fixed={data.overlay.childImageSharp.fixed}
+        />
 
-      <Box w="100%" mb={[20, 20, "150px"]} as="header">
-        <Box d={["block", "block", "none"]} w="100%">
-          <Img
-            alt="Briddgy postless delivery platform"
-            fluid={data.landing_image.childImageSharp.fluid}
-          />
-        </Box>
-        <Container
-          display="flex"
-          pr={0}
-          pl={0}
-          mr={0}
-          pt="50px"
-          justifyContent={["center", "center", "space-between"]}
-          alignItems="center"
-          h="100%"
-          maxW="1500px"
-        >
-          <Box
-            ml={[3, 3, 5]}
-            mr={[3, 3, 0]}
-            flex={3}
-            maxW={["unset", "unset", "550px"]}
-          >
-            <Heading as="h1" fontSize={["4xl", "5xl"]} lineHeight="1.3" mb={7}>
-              Your first{" "}
-              <Box color="blue.400" as="span">
-                postless
-              </Box>{" "}
-              delivery platform
-            </Heading>
-            <Text w="100%" lineHeight="1.5" as="h2" mb={7} variant="secondary">
-              Briddgy connects travelers and orderers, making delivery more
-              accessible
-            </Text>
-            <Text w="100%" as="h3" fontSize="md" color="blue.400">
-              <Link to="/how_it_works">How Briddgy works?</Link>
-            </Text>
-            <Box mt={5} w="100%">
-              <Button
-                w={["100%", "100%", "auto"]}
-                mb={3}
-                variant="primary"
-                size="lg"
-                mr={3}
-              >
+        <Box>
+          <Heading mb={12} textAlign="center" fontWeight="700" fontSize="96px">
+            Your first{" "}
+            <Text variant="fullUnderline" as="span" color="tealBlue.light">
+              postless
+            </Text>{" "}
+            <br />
+            delivery platform
+          </Heading>
+          <Text mb={12} fontSize="600" textAlign="center" color="text.light">
+            We connect travelers and orderers, making delivery more accessible
+          </Text>
+          <Flex>
+            <Box mx="auto">
+              <Button bg="tealBlue.base" mr={4} variant="primary" size="lg">
                 Order with Briddgy
               </Button>
-              <Button
-                w={["100%", "100%", "auto"]}
-                mb={3}
-                bg="white"
-                size="lg"
-                variant="outline"
-              >
+              <Button variant="outline" size="lg">
                 Travel with Briddgy
               </Button>
             </Box>
-          </Box>
-          <Box
-            d={["none", "none", "block"]}
-            flex={2}
-            h="500px"
-            maxW="800px"
-            w="100%"
-          >
-            <Img
-              alt="Briddgy postless delivery platform"
-              fluid={data.landing_image.childImageSharp.fluid}
-            />
-          </Box>
-        </Container>
-      </Box>
+          </Flex>
+        </Box>
+      </Center>
       <Box w="100%" mb={[20, 20, "150px"]} as="section">
         <Container h="100%" maxW="1200px">
-          <Heading mb={10} fontSize="5xl" fontWeight="600" textAlign="center">
+          <Heading mb={10} fontSize="hb3" fontWeight="700" textAlign="center">
             Travelers
           </Heading>
           <Box mb={7} d={["block", "block", "none"]} w="100%">
@@ -131,16 +100,11 @@ const Home = ({ data }) => {
             </Box>
             <Box ml="auto" w="100%" maxW="480px" flex="1">
               <Flex flexDir="column" justifyContent="center" h="100%">
-                <Text mb={7} fontSize="2xl" w="100%" textAlign="right" as="h2">
+                <Text mb={7} fontSize="hb1" w="100%" textAlign="right" as="h2">
                   Travel cheaper by discounting travel expences with Briddgy
                 </Text>
                 <Box mb={7} ml="auto" display="flex" alignItems="center">
-                  <Text
-                    variant="secondary"
-                    fontSize="lg"
-                    display="inline-block"
-                    as="h4"
-                  >
+                  <Text variant="secondary" display="inline-block" as="h4">
                     Average earning per trip
                   </Text>
                   <Center
@@ -149,20 +113,21 @@ const Home = ({ data }) => {
                     w="100px"
                     h="100px"
                     border="6px solid"
-                    fontWeight={600}
-                    fontSize="2xl"
-                    borderColor="blue.500"
+                    fontWeight="bold"
+                    fontSize="700"
+                    color="text.medium"
+                    borderColor="crayolaGreen.base"
                   >
                     120 $
                   </Center>
                 </Box>
-                <Text color="blue.500" textAlign="right">
+                <Text color="oxfordBlue.base" textAlign="right">
                   <Link to="how_to">How to start earning with Briddgy?</Link>
                 </Text>
               </Flex>
             </Box>
           </Flex>
-          <Heading fontSize="2xl" as="h2" fontWeight="normal" mb={3} mt="75px">
+          <Heading fontSize="hb1" as="h2" fontWeight="normal" mb={3} mt="80px">
             Top travel destinations
           </Heading>
           <Text mb={5} variant="secondary">
@@ -235,13 +200,13 @@ const Home = ({ data }) => {
               </SwiperSlide>
             </Swiper>
           </Box>
-          <Text mt="40px" fontSize="2xl" textAlign="right">
+          <Text mt="50px" fontSize="hb1" textAlign="right">
             Check our{" "}
             <Link to="/advice">
               <Text
-                color="blue.400"
+                color="tealBlue.base"
                 variant="halfUnderline"
-                fontWeight={600}
+                fontWeight={700}
                 as="span"
               >
                 advice
@@ -253,7 +218,7 @@ const Home = ({ data }) => {
       </Box>
       <Box w="100%" mb={[20, 20, "150px"]} as="section">
         <Container h="100%" maxW="1200px">
-          <Heading mb={10} fontSize="5xl" fontWeight="600" textAlign="center">
+          <Heading mb={10} fontSize="hb3" fontWeight="700" textAlign="center">
             Orderers
           </Heading>
           <Box mb={7} d={["block", "block", "none"]} w="100%">
@@ -265,7 +230,7 @@ const Home = ({ data }) => {
           <Flex justifyContent="space-between" h="100%" w="100%">
             <Box maxW="480px" flex="1">
               <Flex flexDir="column" justifyContent="center" h="100%">
-                <Text mb={7} fontSize="2xl" w="100%" as="h2">
+                <Text mb={7} fontSize="hb1" w="100%" as="h2">
                   Order and get your items delivered through travelers
                 </Text>
                 <Flex mt="-20px" wrap="wrap">
@@ -273,46 +238,46 @@ const Home = ({ data }) => {
                     <Box mr="5px" d="inline-block">
                       <Center
                         h="42px"
-                        fontSize="xl"
+                        fontSize="600"
                         w="42px"
                         borderRadius="50%"
-                        bg="blue.400"
+                        bg="tealBlue.light"
                       >
                         <ClockIcon stroke="white" />
                       </Center>
                     </Box>
-                    <Text fontSize="xl">Faster</Text>
+                    <Text fontSize="600">Faster</Text>
                   </Center>
                   <Center mt="20px" mr={14}>
                     <Box mr="5px" d="inline-block">
                       <Center
                         h="42px"
-                        fontSize="xl"
+                        fontSize="600"
                         w="42px"
                         borderRadius="50%"
-                        bg="blue.400"
+                        bg="tealBlue.light"
                       >
                         <CalendarIcon stroke="white" />
                       </Center>
                     </Box>
-                    <Text fontSize="xl">Flexible</Text>
+                    <Text fontSize="600">Flexible</Text>
                   </Center>
                   <Center mt="20px">
                     <Box mr="5px" d="inline-block">
                       <Center
                         h="42px"
-                        fontSize="xl"
+                        fontSize="600"
                         w="42px"
                         borderRadius="50%"
-                        bg="blue.400"
+                        bg="tealBlue.light"
                       >
                         <SmileIcon stroke="white" />
                       </Center>
                     </Box>
-                    <Text fontSize="xl">Cheaper</Text>
+                    <Text fontSize="600">Cheaper</Text>
                   </Center>
                 </Flex>
-                <Text mt={8} color="blue.500">
+                <Text mt={8} color="oxfordBlue.base">
                   <Link to="how_to">How to order with Briddgy?</Link>
                 </Text>
               </Flex>
@@ -324,7 +289,7 @@ const Home = ({ data }) => {
               />
             </Box>
           </Flex>
-          <Heading fontSize="2xl" as="h2" fontWeight="normal" mb={3} mt="75px">
+          <Heading fontSize="hb1" as="h2" fontWeight="normal" mb={3} mt="75px">
             Items to purchase
           </Heading>
           <Text mb={5} variant="secondary">
@@ -396,22 +361,13 @@ const Home = ({ data }) => {
       </Box>
       <Box w="100%" mb={[20, 20, "150px"]} as="section">
         <Container h="100%" maxW="1200px">
-          <Heading
-            mb="80px"
-            fontSize={["4xl", "4xl", "5xl"]}
-            fontWeight="600"
-            textAlign="center"
-          >
+          <Heading mb="10" fontSize="hb3" fontWeight="700" textAlign="center">
             Why people love Briddgy &nbsp;
             <HeartIcon display="inline-block" color="red.400" />
           </Heading>
           <TestimonialLanding />
         </Container>
       </Box>
-      {/* <Box w="100%">
-        <Img alt="Mobile Application" fluid={data.app.childImageSharp.fluid} />
-      </Box> */}
-
       <Footer />
     </>
   )
@@ -478,6 +434,13 @@ export const query = graphql`
       childImageSharp {
         fluid {
           ...GatsbyImageSharpFluid
+        }
+      }
+    }
+    overlay: file(relativePath: { eq: "landing-overlay.png" }) {
+      childImageSharp {
+        fixed(width: 500) {
+          ...GatsbyImageSharpFixed
         }
       }
     }

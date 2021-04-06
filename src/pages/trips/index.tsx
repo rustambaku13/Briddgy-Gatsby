@@ -16,11 +16,14 @@ import {
   Text,
 } from "@chakra-ui/react"
 import { Link, navigate } from "gatsby-plugin-intl"
+import { graphql } from "gatsby"
 import React, { useEffect, useState } from "react"
+import { Helmet } from "react-helmet"
 import { useForm } from "react-hook-form"
 import { getTrips } from "../../api/trip"
 import { TestimonialLinkCard } from "../../components/Cards/Testimonial/TestimonialLinkCard"
-import PublicTripCard from "../../components/Cards/Trip/TripCard"
+import { PublicMediumTripCard } from "../../components/Cards/Trip/MediumTripCards"
+import Footer from "../../components/Footer"
 import { LocationAutoComplete } from "../../components/Inputs/LocationAutoComplete"
 import { Empty } from "../../components/Misc/Empty"
 import { Loader } from "../../components/Misc/Loader"
@@ -34,8 +37,6 @@ import note from "../../images/noteicon.svg"
 import plane from "../../images/planeicon.svg"
 import { defaultTrips, Trip, Trips } from "../../types/trip"
 import { filterObject } from "../../utils/misc"
-import { Helmet } from "react-helmet"
-import Footer from "../../components/Footer"
 
 const TripsPage = ({ data, location }) => {
   const { register, handleSubmit, setValue } = useForm()
@@ -202,7 +203,7 @@ const TripsPage = ({ data, location }) => {
             columns={[1, 1, 2]}
           >
             {results.results.map((trip: Trip) => (
-              <PublicTripCard my={[3, 3, 10]} mx="auto" trip={trip} />
+              <PublicMediumTripCard my={[3, 3, 10]} mx="auto" trip={trip} />
             ))}
           </SimpleGrid>
         ) : (

@@ -4,8 +4,10 @@ export default {
 
   variants: {
     secondary: {
-      color: "gray.500",
-      fontWeight: 300,
+      color: "text.medium",
+    },
+    light: {
+      color: "text.light",
     },
     halfUnderline: {
       d: "inline-block",
@@ -14,7 +16,21 @@ export default {
         w: "65%",
         content: '" "',
         h: "4px",
-        bg: "blue.400",
+        bg: "tealBlue.base",
+      },
+    },
+    fullUnderline: {
+      d: "inline-block",
+      _after: {
+        float: "right",
+        w: "100%",
+        content: '" "',
+        h: "30px",
+        pos: "relative",
+        top: "-30px",
+        zIndex: -1,
+        bg: "tealBlue.light",
+        opacity: 0.3,
       },
     },
   },

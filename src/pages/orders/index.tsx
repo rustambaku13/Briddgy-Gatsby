@@ -14,6 +14,7 @@ import {
   MenuOptionGroup,
   SimpleGrid,
   Text,
+  VStack,
 } from "@chakra-ui/react"
 import { graphql } from "gatsby"
 import { Link, navigate } from "gatsby-plugin-intl"
@@ -21,9 +22,10 @@ import React, { useEffect, useState } from "react"
 import { Helmet } from "react-helmet"
 import { useForm } from "react-hook-form"
 import { getOrders } from "../../api/order"
-import PublicOrderCard from "../../components/Cards/Order/PublicOrderCard"
+import { PublicMediumOrderCard } from "../../components/Cards/Order/MediumOrderCards"
 import { TestimonialLinkCard } from "../../components/Cards/Testimonial/TestimonialLinkCard"
 import { LocationAutoComplete } from "../../components/Inputs/LocationAutoComplete"
+import { HowToEarnMoney } from "../../components/Layout/HowToEarnMoney"
 import { Empty } from "../../components/Misc/Empty"
 import { Loader } from "../../components/Misc/Loader"
 import { StepCircle } from "../../components/Misc/StepCircle"
@@ -79,7 +81,7 @@ const OrdersPage = ({ data, location }) => {
         <Box
           onSubmit={handleSubmit(onSubmit)}
           as="form"
-          maxW="container.xl"
+          maxW="container.lg"
           mx="auto"
         >
           <Flex
@@ -90,13 +92,13 @@ const OrdersPage = ({ data, location }) => {
             <Flex
               mb={5}
               w="100%"
-              bg="gray.100"
+              bg="outline.light"
               alignItems="center"
               px={3}
               borderRadius="md"
               h="60px"
             >
-              <Text as="label" fontSize="xl">
+              <Text color="text.medium" as="label">
                 From
               </Text>
               <LocationAutoComplete
@@ -120,13 +122,13 @@ const OrdersPage = ({ data, location }) => {
             <Flex
               mb={5}
               w="100%"
-              bg="gray.100"
+              bg="outline.light"
               alignItems="center"
               px={3}
               borderRadius="md"
               h="60px"
             >
-              <Text as="label" fontSize="xl">
+              <Text as="label" color="text.medium">
                 To
               </Text>
               <LocationAutoComplete
@@ -143,16 +145,16 @@ const OrdersPage = ({ data, location }) => {
               h="60px"
               type="submit"
               size="lg"
-              variant="primary_gradient"
+              variant="primary"
             >
-              Find Trips
+              Find Orders
             </Button>
           </Flex>
         </Box>
       </Container>
       <Container minH="400px" pt="40px" as="section" maxW="full" bg="gray.100">
-        <Flex mx="auto" maxW="container.xl" justifyContent="space-between">
-          <Text variant="secondary">{results.count} ORDERS</Text>
+        <Flex mx="auto" maxW="container.md" justifyContent="space-between">
+          <Text color="text.medium">{results.count} ORDERS</Text>
           <Box>
             <Menu>
               <MenuButton type="button" mr={3} color="blue.400">
@@ -194,17 +196,11 @@ const OrdersPage = ({ data, location }) => {
           </Box>
         </Flex>
         {loading ? null : results.results.length ? (
-          <SimpleGrid
-            maxW="container.xl"
-            mx="auto"
-            py={9}
-            spacing={10}
-            columns={[1, 1, 1, 2]}
-          >
+          <VStack maxW="container.md" w="100%" mx="auto" py={9} spacing={10}>
             {results.results.map((order: Order) => (
-              <PublicOrderCard my={[3, 3, 10]} mx="auto" orderData={order} />
+              <PublicMediumOrderCard mx="auto" orderData={order} />
             ))}
-          </SimpleGrid>
+          </VStack>
         ) : (
           <Empty mb="50px" />
         )}
@@ -218,122 +214,7 @@ const OrdersPage = ({ data, location }) => {
         ) : null}
       </Container>
 
-      <Box
-        mb={[20, 20, "150px"]}
-        bg="purple.300"
-        h="320px"
-        overflow="hidden"
-        as="section"
-      >
-        {/* <Img fixed={data.nature_travel.childImageSharp.fixed} /> */}
-      </Box>
-      <Container mb={[20, 20, "150px"]} maxW="full" as="section">
-        <Heading textAlign="center" mb="80px">
-          How to Earn Money Traveling
-        </Heading>
-        <SimpleGrid
-          spacing={25}
-          columns={[1, 2, 4]}
-          mx="auto"
-          maxW="container.xl"
-        >
-          <Box>
-            <StepCircle
-              mb={5}
-              mx="auto"
-              bg="blue.400"
-              h="120px"
-              w="120px"
-              step={1}
-            >
-              <CImg alt="Add Trip" height="60px" width="60px" src={earth} />
-            </StepCircle>
-            <Heading mb={5} textAlign="center" fontSize="2xl" as="h4">
-              Add Trip
-            </Heading>
-            <Text variant="secondary" textAlign="center">
-              Start by adding your trip information to see requested orders. It
-              only takes 1 minute
-            </Text>
-          </Box>
-          <Box maxW="400px">
-            <StepCircle
-              mb={5}
-              mx="auto"
-              bg="blue.400"
-              step={2}
-              h="120px"
-              w="120px"
-            >
-              <CImg alt="Make Offers" height="60px" width="60px" src={note} />
-            </StepCircle>
-            <Heading mb={5} textAlign="center" fontSize="2xl" as="h4">
-              Make offers
-            </Heading>
-            <Text variant="secondary" textAlign="center">
-              Offer delivery offers to the orderers, contact and chat with them.
-            </Text>
-          </Box>
-          <Box maxW="400px">
-            <StepCircle
-              mb={5}
-              mx="auto"
-              bg="blue.400"
-              step={3}
-              h="120px"
-              w="120px"
-            >
-              <CImg
-                alt="Buy and deliver"
-                height="60px"
-                width="60px"
-                src={plane}
-              />
-            </StepCircle>
-            <Heading mb={5} textAlign="center" fontSize="2xl" as="h4">
-              Buy and deliver
-            </Heading>
-            <Text variant="secondary" textAlign="center">
-              Depending on the order type you might need to buy & deliver or
-              simply grab & deliver the porduct.
-            </Text>
-          </Box>
-          <Box maxW="400px">
-            <StepCircle
-              mb={5}
-              mx="auto"
-              bg="blue.400"
-              step={4}
-              h="120px"
-              w="120px"
-            >
-              <CImg alt="Earn money" height="60px" width="60px" src={card} />
-            </StepCircle>
-            <Heading mb={5} textAlign="center" fontSize="2xl" as="h4">
-              Earn money
-            </Heading>
-            <Text variant="secondary" textAlign="center">
-              After you have delivered the item you are going to receive the
-              payment.
-            </Text>
-          </Box>
-        </SimpleGrid>
-
-        <LinkBox mt={16} mx="auto" w="300px">
-          <Link to="/travel">
-            <Button
-              mx="auto"
-              variant="solid"
-              color="white"
-              bg="blue.500"
-              _hover={{ bg: "blue.600" }}
-              w="100%"
-            >
-              Add Trip
-            </Button>
-          </Link>
-        </LinkBox>
-      </Container>
+      <HowToEarnMoney />
       <Container my="80px" pt={8} maxW="full" as="section">
         <Heading textAlign="center" mb="80px">
           Why our shoppers love Briddgy

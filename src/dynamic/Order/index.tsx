@@ -2,7 +2,9 @@ import { Box, Container, Divider, Flex, Heading } from "@chakra-ui/layout"
 import { navigate } from "gatsby-link"
 import { observer } from "mobx-react-lite"
 import React, { useEffect, useState } from "react"
-import { getOrder, getOrderPorposals } from "../../api/order"
+import { getOrderProposals } from "../../api/contract"
+import { getOrder, getSuggestedTrips } from "../../api/order"
+import { PublicMediumTripCard } from "../../components/Cards/Trip/MediumTripCards"
 import { BigOrderCard } from "../../components/Cards/Order/BigOrderCard"
 import { OrderProposalCard } from "../../components/Cards/Order/OrderProposalCard"
 import { Loader } from "../../components/Misc/Loader"
@@ -18,9 +20,7 @@ const MyOrderPage = observer(({ orderId }) => {
     ...defaultTrips,
     loading: true,
   })
-
   const [proposals, setProposals]: [Contracts, any] = useState(defaultContracts)
-  const [contracts, setContracts]: [Contracts, any] = useState(defaultContracts)
 
   useEffect(() => {
     if (UserStore.complete && !order) {
@@ -32,17 +32,20 @@ const MyOrderPage = observer(({ orderId }) => {
           navigate("/404")
         })
         .finally(() => {})
-      //   getSuggestedOrders(tripId).then(e => {
-      //     setSuggested(e.data)
-      //   })
-      getOrderPorposals(orderId).then(e => {
+      getOrderProposals(orderId).then(e => {
         setProposals(e.data)
       })
-      //   getTripContracts(tripId).then(e => {
-      //     setContracts(e.data)
-      //   })
+      getSuggestedTrips(orderId).then(e => {
+        setSuggested(e.data)
+      })
     }
   }, [UserStore.complete])
+
+  const proposalRejectCallback = contract => {
+    proposals.results = proposals.results.filter(item => item != contract)
+    setProposals({ ...proposals })
+  }
+  const proposalAcceptCallback = contract => {}
   if (!order) {
     return <Loader />
   }
@@ -67,7 +70,7 @@ const MyOrderPage = observer(({ orderId }) => {
               px={8}
               py={12}
               borderWidth="1px"
-              borderRadius="3xl"
+              borderRadius="xl"
             >
               <Heading px={3} mb={8} fontSize="2xl">
                 Proposals
@@ -75,8 +78,24 @@ const MyOrderPage = observer(({ orderId }) => {
               {proposals.results.map((contract, index) => {
                 return (
                   <>
-                    <OrderProposalCard contract={contract} />
-                    {index < contracts.results.length - 1 ? <Divider /> : null}
+                    <OrderProposalCard
+                      rejectCallback={proposalRejectCallback}
+                      contract={contract}
+                    />
+                    {index < proposals.results.length - 1 ? <Divider /> : null}
+                  </>
+                )
+              })}
+            </Box>
+            <Box overflow="hidden" mb="30px">
+              <Heading px={3} mb={8} fontSize="2xl">
+                Suggested
+              </Heading>
+              {suggested.results.map((trip, index) => {
+                return (
+                  <>
+                    <PublicMediumTripCard trip={trip} />
+                    {index < suggested.results.length - 1 ? <Divider /> : null}
                   </>
                 )
               })}

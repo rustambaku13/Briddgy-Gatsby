@@ -136,7 +136,7 @@ const Footer = () => {
           </Flex>
         </SimpleGrid>
       </Flex>
-      <Box w="100%">
+      <Box maxW="container.xxl" mx="auto" w="100%">
         <Text variant="secondary" mt="auto" fontSize="md" as="small">
           @2021 Briddgy LLC
         </Text>

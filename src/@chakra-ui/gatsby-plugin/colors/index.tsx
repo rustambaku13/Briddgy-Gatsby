@@ -1,31 +1,59 @@
 export default {
-  blue: {
-    100: "#98E0F6",
-    200: "#84D5EE",
-    300: "#6DC2DD",
-    400: "#5CB2CD", // Primary
-    500: "#4A95AC",
-    600: "#397F95",
-    700: "#317287",
-    800: "#286274",
-    900: "#1D4653",
-    1000: "#043848  ", // Used for Bottom Navbar
+  tealBlue: {
+    light: "#32A9D7",
+    base: "#238BB3",
+    dark: "#1B6A88",
   },
-
-  blueAlpha: {
-    100: "#F7FBFD",
+  crayolaGreen: {
+    light: "#D2F9FF",
+    base: "#6ECEDC",
+    dark: "#228796",
   },
-  gray: {
-    100: "#f9f9f9",
-    500: "#7B7B7B",
+  oxfordBlue: {
+    light: "#8AB5CB",
+    base: "#2C556B",
+    dark: "#102E3F",
   },
-  red: {
-    400: "#FE7A7A",
-    500: "#F8655B",
-    600: "#F04D43",
+  cherryRed: {
+    light: "#FFC9D5",
+    base: "#F64C72",
+    dark: "#922C43",
   },
-  lightBlue: {
-    100: "#F7FBFD",
-    200: "#bdf0ffa3",
+  lilaPurple: {
+    light: "#E1E5FF",
+    base: "#9DAAF2",
+    dark: "#566FF9",
+  },
+  azure: {
+    light: "#80CAFF",
+    base: "#0589E7",
+    darK: "#046AB2",
+  },
+  danger: {
+    light: "#FCECEE",
+    base: "#CF403A",
+    dark: "#B32320",
+  },
+  success: {
+    light: "#E5F3EC",
+    base: "#54B085",
+    dark: "#409160",
+  },
+  warning: {
+    dark: "#F08E38",
+    base: "#F4B248",
+    light: "#FFFAEE",
+  },
+  text: {
+    dark: "#02090B",
+    medium: "#3A4139",
+    light: "#8B9AA0",
+    disabled: "#9998B2",
+  },
+  outline: {
+    dark: "#B0B7C3",
+    base: "#C9CED6",
+    medium: "#E1E4E8",
+    light: "#F3F6F6",
   },
 }

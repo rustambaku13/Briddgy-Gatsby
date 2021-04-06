@@ -172,7 +172,7 @@ const AuthorizedNavbar = () => {
         px={3}
         className="nav-top"
         pos="relative"
-        h="65px"
+        h="68px"
         w="100%"
         borderBottom="1px solid"
         borderBottomColor="gray.200"
@@ -360,7 +360,7 @@ const DefaultNavbar = () => {
         id={expanded ? "expanded" : ""}
         px={3}
         pos="relative"
-        h="65px"
+        h="68px"
         w="100%"
         borderBottom="1px solid"
         borderBottomColor="gray.200"
@@ -429,9 +429,8 @@ const DefaultNavbar = () => {
             <Link to="/order">
               <Button
                 id="create_order"
-                mr={7}
-                d={["none", "none", "none", "block"]}
-                variant="primary_gradient"
+                d={["none", "none", "none", "inline-flex"]}
+                variant="primary"
                 color="white"
               >
                 Create Order

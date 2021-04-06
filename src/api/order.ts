@@ -26,12 +26,6 @@ export async function getSuggestedTrips(
     },
   })
 }
-export async function getOrderPorposals(id) {
-  return await axios_normal.get(`/proposals/orders/${id}/`)
-}
-export async function getTripContracts(id) {
-  return await axios_normal.get(`/contracts/trips/${id}/`)
-}
 
 export async function addOrder({
   price,

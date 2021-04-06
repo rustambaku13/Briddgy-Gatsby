@@ -14,13 +14,6 @@ export async function getTrip(id): Promise<AxiosResponse<Trip>> {
   return await axios_normal.get(`/trips/${id}/`)
 }
 
-export async function getTripProposals(id) {
-  return await axios_normal.get(`/proposals/trips/${id}/`)
-}
-export async function getTripContracts(id) {
-  return await axios_normal.get(`/contracts/trips/${id}/`)
-}
-
 export async function emailSuggestedOrderers(source_id, dest_id) {
   return await axios_normal.get(`/emailorderers/${source_id}/${dest_id}/`)
 }

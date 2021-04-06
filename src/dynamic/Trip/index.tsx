@@ -10,13 +10,9 @@ import {
 import { navigate } from "gatsby-link"
 import { observer } from "mobx-react-lite"
 import React, { useEffect, useState } from "react"
-import {
-  getTrip,
-  getSuggestedOrders,
-  getTripProposals,
-  getTripContracts,
-} from "../../api/trip"
-import PublicOrderCard from "../../components/Cards/Order/PublicOrderCard"
+import { getTripContracts, getTripProposals } from "../../api/contract"
+import { getTrip, getSuggestedOrders } from "../../api/trip"
+import { PublicMediumOrderCard } from "../../components/Cards/Order/MediumOrderCards"
 import { TripStatsCard } from "../../components/Cards/Stats/TripStats"
 import { BigTripCard } from "../../components/Cards/Trip/BigTripCard"
 import { TripContractsStateCard } from "../../components/Cards/Trip/TripContractsStateCard"
@@ -94,7 +90,7 @@ const MyTripPage = observer(({ tripId }) => {
               Suggested Orders
             </Heading>
             {suggested.results.map(order => {
-              return <PublicOrderCard orderData={order} />
+              return <PublicMediumOrderCard orderData={order} />
             })}
             {suggested.loading ? <Loader /> : null}
             {!suggested.loading && suggested.count == 0 ? (

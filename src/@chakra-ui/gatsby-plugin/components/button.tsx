@@ -2,8 +2,7 @@ export default {
   // Styles for the base style
   baseStyle: {
     fontWeight: 400,
-    borderRadius: 5,
-    h: "40px",
+    borderRadius: "base",
   },
   // Styles for the size variations
   sizes: {
@@ -27,11 +26,21 @@ export default {
         bgGradient: "linear(to-b, red.500,red.500)",
       },
     },
+    outline: {
+      bg: "white",
+    },
     primary: {
-      bg: "blue.400",
+      bg: "tealBlue.light",
       color: "white",
       _hover: {
-        bg: "blue.500",
+        bg: "tealBlue.base",
+      },
+    },
+    primary_dark: {
+      bg: "tealBlue.base",
+      color: "white",
+      _hover: {
+        bg: "tealBlue.dark",
       },
     },
     primary_gradient: {

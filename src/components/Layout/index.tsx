@@ -18,7 +18,7 @@ export default ({ children }) => {
       <Router>
         <MyTripPage path="/trips/:tripId" />
         <MyOrderPage path="/orders/:orderId" />
-        <Box path="*" mb={["70px", "70px", 0]} w="100%" h="100%">
+        <Box default mb={["70px", "70px", 0]} w="100%" h="100%">
           {children}
         </Box>
       </Router>
