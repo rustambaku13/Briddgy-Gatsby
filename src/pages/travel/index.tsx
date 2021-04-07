@@ -37,6 +37,7 @@ import earth from "../../images/earthicon.svg"
 import note from "../../images/noteicon.svg"
 import plane from "../../images/planeicon.svg"
 import Footer from "../../components/Footer"
+import { HowToEarnMoney } from "../../components/Layout/HowToEarnMoney"
 export const query = graphql`
   query {
     globe: file(relativePath: { eq: "travel_page_main.png" }) {
@@ -115,7 +116,7 @@ const AddTrip = ({ data }: PageProps) => {
       <TravelNavbar />
       <Box
         overflow="hidden"
-        bgGradient="linear(to-b,blue.400,blue.500)"
+        bgGradient="linear(to-b,tealBlue.light,tealBlue.dark)"
         className="order-header"
         mb="50px"
         minW="100%"
@@ -136,14 +137,15 @@ const AddTrip = ({ data }: PageProps) => {
           <Box flex={3}>
             <Heading
               mb={5}
-              fontSize="5xl"
+              fontSize="hb4"
               color="white"
               as="h1"
+              fontWeight="700"
               lineHeight="1.5"
             >
               Travel with minimum costs with Briddgy
             </Heading>
-            <Text as="h2" mb={6} color="whiteAlpha.800">
+            <Text as="h2" mb={6} color="white">
               Search for tickets, hotels and share your trip in Briddgy
               <br /> Make deliveries and earn money!{" "}
             </Text>
@@ -274,9 +276,10 @@ const AddTrip = ({ data }: PageProps) => {
         </Tabs>
       </Container>
       <Container mb={[20, 20, "150px"]} as="section" maxW="container.lg">
-        <Heading mb="50px" textAlign="center">
-          Information for travelers
+        <Heading mb={10} fontSize="hb3" fontWeight="700" textAlign="center">
+          Information for orderers
         </Heading>
+
         <BlogLinkCard
           title={data.blogs.edges[0].node.frontmatter.title}
           description={data.blogs.edges[0].node.frontmatter.description}
@@ -305,115 +308,9 @@ const AddTrip = ({ data }: PageProps) => {
         </SimpleGrid>
       </Container>
       <Divider />
+      <HowToEarnMoney />
       <Container mb={[20, 20, "150px"]} pt={8} maxW="full" as="section">
-        <Heading textAlign="center" mb="80px">
-          How to Earn Money Traveling
-        </Heading>
-        <SimpleGrid
-          spacing={25}
-          columns={[1, 2, 4]}
-          mx="auto"
-          maxW="container.xl"
-        >
-          <Box>
-            <StepCircle
-              mb={5}
-              mx="auto"
-              bg="blue.400"
-              h="120px"
-              w="120px"
-              step={1}
-            >
-              <CImg alt="Add Trip" height="60px" width="60px" src={earth} />
-            </StepCircle>
-            <Heading mb={5} textAlign="center" fontSize="2xl" as="h4">
-              Add Trip
-            </Heading>
-            <Text variant="secondary" textAlign="center">
-              Start by adding your trip information to see requested orders. It
-              only takes 1 minute
-            </Text>
-          </Box>
-          <Box maxW="400px">
-            <StepCircle
-              mb={5}
-              mx="auto"
-              bg="blue.400"
-              step={2}
-              h="120px"
-              w="120px"
-            >
-              <CImg alt="Make Offers" height="60px" width="60px" src={note} />
-            </StepCircle>
-            <Heading mb={5} textAlign="center" fontSize="2xl" as="h4">
-              Make offers
-            </Heading>
-            <Text variant="secondary" textAlign="center">
-              Offer delivery offers to the orderers, contact and chat with them.
-            </Text>
-          </Box>
-          <Box maxW="400px">
-            <StepCircle
-              mb={5}
-              mx="auto"
-              bg="blue.400"
-              step={3}
-              h="120px"
-              w="120px"
-            >
-              <CImg
-                alt="Buy and deliver"
-                height="60px"
-                width="60px"
-                src={plane}
-              />
-            </StepCircle>
-            <Heading mb={5} textAlign="center" fontSize="2xl" as="h4">
-              Buy and deliver
-            </Heading>
-            <Text variant="secondary" textAlign="center">
-              Depending on the order type you might need to buy & deliver or
-              simply grab & deliver the porduct.
-            </Text>
-          </Box>
-          <Box maxW="400px">
-            <StepCircle
-              mb={5}
-              mx="auto"
-              bg="blue.400"
-              step={4}
-              h="120px"
-              w="120px"
-            >
-              <CImg alt="Earn money" height="60px" width="60px" src={card} />
-            </StepCircle>
-            <Heading mb={5} textAlign="center" fontSize="2xl" as="h4">
-              Earn money
-            </Heading>
-            <Text variant="secondary" textAlign="center">
-              After you have delivered the item you are going to receive the
-              payment.
-            </Text>
-          </Box>
-        </SimpleGrid>
-
-        <LinkBox mt={16} mx="auto" w="300px">
-          <Link to="/travel">
-            <Button
-              mx="auto"
-              variant="solid"
-              color="white"
-              bg="blue.500"
-              _hover={{ bg: "blue.600" }}
-              w="100%"
-            >
-              Add Trip
-            </Button>
-          </Link>
-        </LinkBox>
-      </Container>
-      <Container mb={[20, 20, "150px"]} pt={8} maxW="full" as="section">
-        <Heading textAlign="center" mb="80px">
+        <Heading mb={10} fontSize="hb3" fontWeight="700" textAlign="center">
           Why our shoppers love Briddgy
         </Heading>
         <SimpleGrid
@@ -436,29 +333,15 @@ const AddTrip = ({ data }: PageProps) => {
             description="Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce "
           />
         </SimpleGrid>
-        <LinkBox mt={16} mx="auto" w="300px">
-          <Link to="/order">
-            <Button
-              mx="auto"
-              variant="solid"
-              color="white"
-              bg="blue.500"
-              _hover={{ bg: "blue.600" }}
-              w="100%"
-            >
-              More of our stories
-            </Button>
-          </Link>
-        </LinkBox>
       </Container>
-      <Container py={8} bg="blueAlpha.100" as="section" maxW="full">
-        <Heading textAlign="center" mb="80px">
+      <Container bg="blue.50" py={8} as="section" maxW="full">
+        <Heading mb={10} fontSize="hb3" fontWeight="700" textAlign="center">
           Frequently Asked Questions
         </Heading>
         <Container maxW="container.xl">
-          <Stack direction={["column", "row"]} spacing={12}>
-            <Box>
-              <Heading mb={5} as="h3" fontSize="2xl">
+          <Stack textAlign="center" direction={["column", "row"]} spacing={12}>
+            <Box flex={1}>
+              <Heading mb={5} as="h3" fontSize="700" fontWeight="700">
                 How is payment guaranteed?
               </Heading>
               <Text variant="secondary">
@@ -466,8 +349,8 @@ const AddTrip = ({ data }: PageProps) => {
                 upfront and cannot cancel once paid.
               </Text>
             </Box>
-            <Box>
-              <Heading as="h3" mb={5} fontSize="2xl">
+            <Box flex={1}>
+              <Heading mb={5} as="h3" fontSize="700" fontWeight="700">
                 Who is paying for product?
               </Heading>
               <Text variant="secondary">
@@ -475,8 +358,8 @@ const AddTrip = ({ data }: PageProps) => {
                 contents.
               </Text>
             </Box>
-            <Box>
-              <Heading as="h3" fontSize="2xl">
+            <Box flex={1}>
+              <Heading mb={5} as="h3" fontSize="700" fontWeight="700">
                 How are deliveries arranged?
               </Heading>
               <Text variant="secondary">

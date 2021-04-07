@@ -20,15 +20,17 @@ export default {
 
   variants: {
     red_gradient: {
-      bgGradient: "linear(to-b, red.300,red.500)",
+      bgGradient: "linear(to-r,warning.base 0%,cherryRed.base 40%)",
+
       color: "white",
       _hover: {
-        bgGradient: "linear(to-b, red.500,red.500)",
+        bgGradient: "linear(to-r,warning.base 00%,cherryRed.base 60%)",
       },
     },
     outline: {
       bg: "white",
     },
+
     primary: {
       bg: "tealBlue.light",
       color: "white",

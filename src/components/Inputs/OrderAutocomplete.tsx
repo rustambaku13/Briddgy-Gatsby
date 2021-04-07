@@ -56,6 +56,7 @@ export const OrderAutoComplete = chakra(
           autoComplete="off"
           onChange={searchHandler}
           type="search"
+          px={0}
           h="100%"
           name={name + "_name"}
           ref={methods?.register({

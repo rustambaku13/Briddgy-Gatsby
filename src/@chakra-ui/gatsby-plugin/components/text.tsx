@@ -3,6 +3,16 @@ export default {
   // Styles for the visual style variations
 
   variants: {
+    transparentOutline: {
+      backgroundColor: "rgba(255,255,255,0.1)",
+      color: "white",
+      fontWeight: 700,
+      px: 2,
+      py: 1,
+      borderRadius: "md",
+      borderWidth: "1px",
+      borderColor: "white",
+    },
     secondary: {
       color: "text.medium",
     },

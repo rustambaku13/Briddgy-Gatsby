@@ -81,14 +81,15 @@ $transition_navbar: -ms-transform 150ms ease 0s, -webkit-transform 150ms ease 0s
 #travel-navbar {
   position: sticky;
   position: -webkit-sticky;
-  background-color: #5cb2cc;
+  background-color: #32a9d7;
   top: -1px; /* required */
   transition: $transition_navbar;
   width: 100%;
+  z-index: 2;
   #add_order_form {
     display: none;
   }
-  z-index: 3;
+
   .overlay {
     left: 0px;
     position: absolute;
@@ -106,7 +107,7 @@ $transition_navbar: -ms-transform 150ms ease 0s, -webkit-transform 150ms ease 0s
   #add_travel_form {
     margin: 0px auto;
     max-width: 1024px;
-    color: #333333;
+    color: #3a4139;
   }
   .nav-top {
     transition: all ease 150ms 0s;
@@ -117,7 +118,10 @@ $transition_navbar: -ms-transform 150ms ease 0s, -webkit-transform 150ms ease 0s
     max-height: 80px;
     margin: 0 auto;
     z-index: 2;
-    font-weight: 600;
+    font-weight: 700;
+    > div {
+      height: 80px;
+    }
     #order_navigation {
       display: none;
     }
@@ -129,8 +133,10 @@ $transition_navbar: -ms-transform 150ms ease 0s, -webkit-transform 150ms ease 0s
       color: initial;
     }
     #create_order {
-      background: white;
-      color: #333333;
+      button {
+        background: white;
+        color: #02090b;
+      }
     }
     #create_trip {
       display: none;
@@ -142,6 +148,12 @@ $transition_navbar: -ms-transform 150ms ease 0s, -webkit-transform 150ms ease 0s
   &.isSticky {
     transform: translate3d(0px, 0px, 0px);
     background-color: white;
+    #create_order {
+      button {
+        background: #238bb3;
+        color: white;
+      }
+    }
     #navbar_search_order {
       visibility: visible;
       opacity: 1;
@@ -181,7 +193,7 @@ $transition_navbar: -ms-transform 150ms ease 0s, -webkit-transform 150ms ease 0s
 #order-navbar {
   position: sticky;
   position: -webkit-sticky;
-  background-color: #5cb2cc;
+  background: #32a9d7;
   top: -1px; /* required */
   transition: $transition_navbar;
   width: 100%;
@@ -203,7 +215,7 @@ $transition_navbar: -ms-transform 150ms ease 0s, -webkit-transform 150ms ease 0s
   #add_order_form {
     margin: 0px auto;
     max-width: 1024px;
-    color: #333333;
+    color: #3a4139;
   }
   .nav-top {
     transition: all ease 150ms 0s;
@@ -212,9 +224,12 @@ $transition_navbar: -ms-transform 150ms ease 0s, -webkit-transform 150ms ease 0s
     max-width: 1400px;
     height: 200px;
     max-height: 80px;
+    > div {
+      height: 80px;
+    }
     margin: 0 auto;
     z-index: 2;
-    font-weight: 600;
+    font-weight: 700;
     #trip_navigation {
       display: none;
     }
@@ -229,6 +244,17 @@ $transition_navbar: -ms-transform 150ms ease 0s, -webkit-transform 150ms ease 0s
     #create_order {
       display: none;
     }
+    #create_trip {
+      p {
+        svg {
+          color: white;
+        }
+        span {
+          background-color: white;
+          background-image: unset;
+        }
+      }
+    }
   }
 
   // If Sticky
@@ -240,6 +266,20 @@ $transition_navbar: -ms-transform 150ms ease 0s, -webkit-transform 150ms ease 0s
       visibility: visible;
       opacity: 1;
     }
+    #create_trip {
+      button {
+        background: #238bb3;
+        color: white;
+      }
+      p {
+        svg {
+          color: #f64c72;
+        }
+        span {
+          background-image: linear-gradient(to right, #f64c72, #f08e38);
+        }
+      }
+    }
     .overlay {
       opacity: 0;
       transform-origin: 50% 0%;
@@ -247,11 +287,7 @@ $transition_navbar: -ms-transform 150ms ease 0s, -webkit-transform 150ms ease 0s
     }
     #expanded {
       max-height: 200px;
-      > div {
-        height: 80px;
-      }
-      #add_order_form {
-      }
+
       #navbar_search_order {
         visibility: hidden;
         opacity: 0;
@@ -262,7 +298,7 @@ $transition_navbar: -ms-transform 150ms ease 0s, -webkit-transform 150ms ease 0s
       }
     }
     .nav-top {
-      color: #333333;
+      color: #02090b;
     }
   }
 }

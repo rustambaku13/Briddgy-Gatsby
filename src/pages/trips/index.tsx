@@ -14,6 +14,7 @@ import {
   MenuOptionGroup,
   SimpleGrid,
   Text,
+  VStack,
 } from "@chakra-ui/react"
 import { Link, navigate } from "gatsby-plugin-intl"
 import { graphql } from "gatsby"
@@ -37,6 +38,7 @@ import note from "../../images/noteicon.svg"
 import plane from "../../images/planeicon.svg"
 import { defaultTrips, Trip, Trips } from "../../types/trip"
 import { filterObject } from "../../utils/misc"
+import { HowToEarnMoney } from "../../components/Layout/HowToEarnMoney"
 
 const TripsPage = ({ data, location }) => {
   const { register, handleSubmit, setValue } = useForm()
@@ -78,7 +80,7 @@ const TripsPage = ({ data, location }) => {
         <Box
           onSubmit={handleSubmit(onSubmit)}
           as="form"
-          maxW="container.xl"
+          maxW="container.lg"
           mx="auto"
         >
           <Flex
@@ -89,13 +91,13 @@ const TripsPage = ({ data, location }) => {
             <Flex
               mb={5}
               w="100%"
-              bg="gray.100"
+              bg="outline.light"
               alignItems="center"
               px={3}
               borderRadius="md"
               h="60px"
             >
-              <Text as="label" fontSize="xl">
+              <Text color="text.medium" as="label">
                 From
               </Text>
               <LocationAutoComplete
@@ -116,17 +118,16 @@ const TripsPage = ({ data, location }) => {
                 />
               }
             />
-
             <Flex
               mb={5}
               w="100%"
-              bg="gray.100"
+              bg="outline.light"
               alignItems="center"
               px={3}
               borderRadius="md"
               h="60px"
             >
-              <Text as="label" fontSize="xl">
+              <Text as="label" color="text.medium">
                 To
               </Text>
               <LocationAutoComplete
@@ -136,7 +137,6 @@ const TripsPage = ({ data, location }) => {
                 parentRef={register()}
               />
             </Flex>
-
             <Button
               mb={5}
               ml={[0, 0, 5]}
@@ -144,15 +144,15 @@ const TripsPage = ({ data, location }) => {
               h="60px"
               type="submit"
               size="lg"
-              variant="primary_gradient"
+              variant="primary"
             >
               Find Trips
             </Button>
           </Flex>
         </Box>
       </Container>
-      <Container as="section" bg="gray.100" minH="400px" pt="40px" maxW="full">
-        <Flex mx="auto" maxW="container.xl" justifyContent="space-between">
+      <Container minH="400px" pt="40px" as="section" maxW="full" bg="gray.100">
+        <Flex mx="auto" maxW="container.md" justifyContent="space-between">
           <Text variant="secondary">{results.count} TRIPS</Text>
           <Box>
             <Menu>
@@ -195,17 +195,11 @@ const TripsPage = ({ data, location }) => {
           </Box>
         </Flex>
         {loading ? null : results.results.length ? (
-          <SimpleGrid
-            maxW="container.xl"
-            mx="auto"
-            py={9}
-            spacing={10}
-            columns={[1, 1, 2]}
-          >
+          <VStack maxW="container.md" w="100%" mx="auto" py={9} spacing={10}>
             {results.results.map((trip: Trip) => (
-              <PublicMediumTripCard my={[3, 3, 10]} mx="auto" trip={trip} />
+              <PublicMediumTripCard mx="auto" trip={trip} />
             ))}
-          </SimpleGrid>
+          </VStack>
         ) : (
           <Empty mb="50px" />
         )}
@@ -218,115 +212,8 @@ const TripsPage = ({ data, location }) => {
           </Box>
         ) : null}
       </Container>
-      <Box
-        mb={[20, 20, "150px"]}
-        bg="purple.300"
-        h="320px"
-        overflow="hidden"
-        as="section"
-      >
-        {/* <Img fixed={data.nature_travel.childImageSharp.fixed} /> */}
-      </Box>
-      <Container mb={[20, 20, "150px"]} maxW="full" as="section">
-        <Heading textAlign="center" mb="80px">
-          How to shop from Abroad using Briddgy
-        </Heading>
-        <SimpleGrid
-          spacing={25}
-          columns={[1, 2, 4]}
-          mx="auto"
-          maxW="container.xl"
-        >
-          <Box>
-            <StepCircle
-              mb={5}
-              mx="auto"
-              bg="blue.400"
-              h="120px"
-              w="120px"
-              step={1}
-            >
-              <CImg alt="Create Order" height="60px" width="60px" src={earth} />
-            </StepCircle>
-            <Heading mb={5} textAlign="center" fontSize="2xl" as="h3">
-              Create your Order
-            </Heading>
-            <Text variant="secondary" textAlign="center">
-              Go to any online store and copy and paste the URL of the product
-              you would like from abroad.
-            </Text>
-          </Box>
-          <Box>
-            <StepCircle
-              mb={5}
-              mx="auto"
-              bg="blue.400"
-              step={2}
-              h="120px"
-              w="120px"
-            >
-              <CImg alt="Make Offers" height="60px" width="60px" src={note} />
-            </StepCircle>
-            <Heading mb={5} textAlign="center" fontSize="2xl" as="h3">
-              Make/receive offers
-            </Heading>
-            <Text variant="secondary" textAlign="center">
-              Make offers to travelers or wait for travelers to contact you to
-              bring your order.
-            </Text>
-          </Box>
-          <Box>
-            <StepCircle
-              mb={5}
-              mx="auto"
-              bg="blue.400"
-              step={3}
-              h="120px"
-              w="120px"
-            >
-              <CImg alt="Security" height="60px" width="60px" src={plane} />
-            </StepCircle>
-            <Heading mb={5} textAlign="center" fontSize="2xl" as="h3">
-              Secure payment
-            </Heading>
-            <Text variant="secondary" textAlign="center">
-              Secure the payment for the product price and travelers reward
-            </Text>
-          </Box>
-          <Box>
-            <StepCircle
-              mb={5}
-              mx="auto"
-              bg="blue.400"
-              step={4}
-              h="120px"
-              w="120px"
-            >
-              <CImg alt="Receive Item" height="60px" width="60px" src={card} />
-            </StepCircle>
-            <Heading mb={5} textAlign="center" fontSize="2xl" as="h3">
-              Get your item
-            </Heading>
-            <Text variant="secondary" textAlign="center">
-              Meet with your traveler in a public place and get your item.
-            </Text>
-          </Box>
-        </SimpleGrid>
-        <LinkBox mt={16} mx="auto" w="300px">
-          <Link to="/order">
-            <Button
-              mx="auto"
-              variant="solid"
-              color="white"
-              bg="blue.500"
-              _hover={{ bg: "blue.600" }}
-              w="100%"
-            >
-              Add Order
-            </Button>
-          </Link>
-        </LinkBox>
-      </Container>
+
+      <HowToEarnMoney />
       <Container my="80px" pt={8} maxW="full" as="section">
         <Heading textAlign="center" mb="80px">
           Why our shoppers love Briddgy

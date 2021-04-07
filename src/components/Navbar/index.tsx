@@ -32,6 +32,7 @@ import UserStore from "../../store/UserStore"
 import { AddOrderNavigationMenu } from "../Form/AddOrderForm"
 import { AddTripFormNavigationMenu } from "../Form/AddTripForm"
 import { BottomNavigationItem } from "./BottomNavigationItem"
+import { PlaneIcon } from "../../icons/Plane"
 let mouseListener = null
 
 const AuthorizedBottomNavbar = () => {
@@ -175,29 +176,24 @@ const AuthorizedNavbar = () => {
         h="68px"
         w="100%"
         borderBottom="1px solid"
-        borderBottomColor="gray.200"
+        borderBottomColor="outline.medium"
       >
         <Flex h="100%" alignItems="center" flexShrink={0}>
-          <Box h="100%" mr={[3, 10]} display="inline-flex" alignItems="center">
+          <Box h="100%" mr={[3, 7]} display="inline-flex" alignItems="center">
             <Link to="/">
-              <Image h="45" alt="Logo" src={logo} />
+              <Image h={[30, 45]} alt="Logo" src={logo} />
             </Link>
 
             <Link to="/">
-              <Text
-                d={["none", "block", "block"]}
-                ml={1}
-                fontSize="lg"
-                fontWeight="600"
-              >
+              <Text fontSize={[500, 700]} ml={1} fontWeight="700">
                 Briddgy
               </Text>
             </Link>
           </Box>
-          <Text d={["none", "none", "inline-block"]} mr={[3, 3, 7]}>
+          <Text d={["none", "none", "inline-block"]} mr={[2, 2, 4]}>
             <Link to="/trips">Trips</Link>
           </Text>
-          <Text mr={[3, 3, 7]} d={["none", "none", "inline-block"]}>
+          <Text mr={[2, 2, 4]} d={["none", "none", "inline-block"]}>
             <Link to="/orders">Orders</Link>
           </Text>
         </Flex>
@@ -215,13 +211,20 @@ const AuthorizedNavbar = () => {
         </Box>
         <Flex ml={3} alignItems="center" flexShrink={0} h="100%">
           <LinkBox>
-            <Link to="/travel">
+            <Link id="create_trip" to="/travel">
               <Text
-                id="create_trip"
                 d={["none", "none", "none", "block"]}
-                mr={7}
+                mr={4}
+                fontWeight="600"
               >
-                Travel & Earn
+                <PlaneIcon mt="-2px" fontSize="600" color="cherryRed.base" />{" "}
+                <Text
+                  as="span"
+                  bgGradient="linear(to-r,cherryRed.base,warning.dark)"
+                  backgroundClip="text"
+                >
+                  Travel & Earn
+                </Text>
               </Text>
 
               <IconButton
@@ -236,13 +239,12 @@ const AuthorizedNavbar = () => {
               ></IconButton>
             </Link>
           </LinkBox>
-          <LinkBox>
-            <Link to="/order">
+          <LinkBox mr={[2, 2, 4]}>
+            <Link id="create_order" to="/order">
               <Button
-                id="create_order"
-                mr={7}
-                d={["none", "none", "none", "block"]}
-                variant="primary_gradient"
+                fontWeight="600"
+                d={["none", "none", "none", "inline-flex"]}
+                variant="primary"
                 color="white"
               >
                 Create Order
@@ -363,24 +365,24 @@ const DefaultNavbar = () => {
         h="68px"
         w="100%"
         borderBottom="1px solid"
-        borderBottomColor="gray.200"
+        borderBottomColor="outline.medium"
       >
         <Flex h="100%" alignItems="center" flexShrink={0}>
-          <Box h="100%" mr={[3, 10]} display="inline-flex" alignItems="center">
+          <Box h="100%" mr={[3, 7]} display="inline-flex" alignItems="center">
             <Link to="/">
               <Image h="45" alt="Logo" src={logo} />
             </Link>
 
             <Link to="/">
-              <Text ml={1} fontSize="lg" fontWeight="600">
+              <Text ml={1} fontSize="700" fontWeight="700">
                 Briddgy
               </Text>
             </Link>
           </Box>
-          <Text d={["none", "none", "inline-block"]} mr={[3, 3, 7]}>
+          <Text d={["none", "none", "inline-block"]} mr={[2, 2, 4]}>
             <Link to="/trips">Trips</Link>
           </Text>
-          <Text mr={[3, 3, 7]} d={["none", "none", "inline-block"]}>
+          <Text mr={[2, 2, 4]} d={["none", "none", "inline-block"]}>
             <Link to="/orders">Orders</Link>
           </Text>
         </Flex>
@@ -397,20 +399,27 @@ const DefaultNavbar = () => {
           />
         </Box>
         <Flex ml={3} alignItems="center" flexShrink={0} h="100%">
-          <Text d={["none", "none", "none", "inline-block"]} ml="auto" mr={7}>
+          <Text d={["none", "none", "none", "inline-block"]} ml="auto" mr={4}>
             <Link to="/login">Login</Link>
           </Text>
-          <Text d={["none", "none", "none", "inline-block"]} mr={7}>
+          <Text d={["none", "none", "none", "inline-block"]} mr={4}>
             <Link to="/signup">Sign Up</Link>
           </Text>
           <LinkBox>
-            <Link to="/travel">
+            <Link id="create_trip" to="/travel">
               <Text
-                id="create_trip"
                 d={["none", "none", "none", "block"]}
-                mr={7}
+                mr={4}
+                fontWeight="600"
               >
-                Travel & Earn
+                <PlaneIcon mt="-2px" fontSize="600" color="cherryRed.base" />{" "}
+                <Text
+                  as="span"
+                  bgGradient="linear(to-r,cherryRed.base,warning.dark)"
+                  backgroundClip="text"
+                >
+                  Travel & Earn
+                </Text>
               </Text>
 
               <IconButton
@@ -426,9 +435,9 @@ const DefaultNavbar = () => {
             </Link>
           </LinkBox>
           <LinkBox>
-            <Link to="/order">
+            <Link id="create_order" to="/order">
               <Button
-                id="create_order"
+                fontWeight="600"
                 d={["none", "none", "none", "inline-flex"]}
                 variant="primary"
                 color="white"
@@ -518,14 +527,14 @@ export const TravelNavbar = () => {
     }
   }, [])
   return (
-    <div ref={ref} className={isSticky ? " isSticky" : ""} id="travel-navbar">
+    <header
+      ref={ref}
+      className={isSticky ? " isSticky" : ""}
+      id="travel-navbar"
+    >
       <NavbarDefault />
-    </div>
+    </header>
   )
 }
 
-export default () => (
-  <Box>
-    <NavbarDefault />
-  </Box>
-)
+export default () => <NavbarDefault />

@@ -94,13 +94,12 @@ export const AddTripForm = chakra(({ className }: { className?: any }) => {
       borderWidth={1}
       flexDir={["column", "column", "row"]}
       bg="white"
-      h={["auto", "auto", "70px"]}
+      h={["auto", "auto", "80px"]}
       mx="auto"
       id="add_travel_form"
       fontSize="lg"
-      borderRadius={["md", "md", "50px"]}
-      px="10px"
-      py="5px"
+      borderRadius={["md", "md", "lg"]}
+      p={3}
       onSubmit={handleSubmit(() => {
         setModalOpen(true)
       })}
@@ -166,13 +165,13 @@ export const AddTripForm = chakra(({ className }: { className?: any }) => {
       <Divider mb={3} d={["block", "block", "none"]} />
       <Button
         isLoading={loading}
-        h="60px"
-        maxW={["unset", "unset", "150px"]}
-        w="100%"
-        p={0}
+        h="auto"
+        minH="40px"
+        fontWeight="700"
+        px={[1, 5, 8]}
         variant="red_gradient"
         type="submit"
-        borderRadius={["md", "md", "50px"]}
+        borderRadius={"lg"}
       >
         Add Trip
       </Button>

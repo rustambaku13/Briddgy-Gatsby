@@ -31,6 +31,7 @@ import note from "../../images/noteicon.svg"
 import plane from "../../images/planeicon.svg"
 import { Helmet } from "react-helmet"
 import Footer from "../../components/Footer"
+import { HowToEarnMoney } from "../../components/Layout/HowToEarnMoney"
 const AddOrder = ({ data }) => {
   const { register, handleSubmit, errors } = useForm()
   return (
@@ -44,7 +45,7 @@ const AddOrder = ({ data }) => {
       <OrderNavbar />
       <Box
         overflow="hidden"
-        bgGradient="linear(to-b,blue.400,blue.500)"
+        bgGradient="linear(to-b,tealBlue.light,tealBlue.dark)"
         className="order-header"
         mb="50px"
         minW="100%"
@@ -66,33 +67,20 @@ const AddOrder = ({ data }) => {
           <Box flex={3}>
             <Heading
               mb={5}
-              fontSize="5xl"
+              fontSize="hb4"
               color="white"
               as="h1"
+              fontWeight="700"
               lineHeight="1.5"
             >
               Shop Product from Anywhere and save up to 40%
             </Heading>
-            <Box
-              mb={3}
-              d="inline-block"
-              px={3}
-              py={1}
-              borderRadius="md"
-              bg="white"
-            >
-              <Text as="h2" fontSize="lg">
-                {" "}
-                Delivered by our verified users
-              </Text>
-            </Box>
-            <br />
-            <Box px={3} py={1} d="inline-block" borderRadius="md" bg="white">
-              <Text as="h2" fontSize="lg">
-                {" "}
-                Flexible and super fast delivery
-              </Text>
-            </Box>
+            <Text mr={4} d="inline-block" variant="transparentOutline">
+              Delivered by our verified users
+            </Text>
+            <Text d="inline-block" variant="transparentOutline">
+              Flexible and super fast delivery
+            </Text>
           </Box>
           <Box d={["none", "none", "block"]} flex={2}>
             <Box maxW="500px" ml="auto">
@@ -110,9 +98,10 @@ const AddOrder = ({ data }) => {
         mx="auto"
         maxW="container.xl"
       >
-        <Heading mb="60px" textAlign="center">
+        <Heading mb={10} fontSize="hb3" fontWeight="700" textAlign="center">
           Trending Products in Briddgy
         </Heading>
+
         <Grid templateColumns="repeat(6, 1fr)" gap={[3, 5, 8]}>
           <ProductCard
             gridColumn={["1 / span 3", "1 / span 2"]}
@@ -166,9 +155,10 @@ const AddOrder = ({ data }) => {
         </Grid>
       </Container>
       <Container mb={[20, 20, "150px"]} as="section" maxW="container.lg">
-        <Heading mb="50px" textAlign="center">
-          Information for travelers
+        <Heading mb={10} fontSize="hb3" fontWeight="700" textAlign="center">
+          Information for orderers
         </Heading>
+
         <BlogLinkCard
           title={data.blogs.edges[0].node.frontmatter.title}
           description={data.blogs.edges[0].node.frontmatter.description}
@@ -196,121 +186,9 @@ const AddOrder = ({ data }) => {
           />
         </SimpleGrid>
       </Container>
+      <HowToEarnMoney />
       <Container mb={[20, 20, "150px"]} pt={8} maxW="full" as="section">
-        <Heading textAlign="center" mb="80px">
-          How to shop from Abroad using Briddgy
-        </Heading>
-        <SimpleGrid
-          spacing={25}
-          columns={[1, 2, 4]}
-          mx="auto"
-          maxW="container.xl"
-        >
-          <Box>
-            <StepCircle
-              mb={5}
-              mx="auto"
-              bg="blue.400"
-              h="120px"
-              w="120px"
-              step={1}
-            >
-              <CImg alt="Create Order" height="60px" width="60px" src={earth} />
-            </StepCircle>
-            <Heading mb={5} textAlign="center" fontSize="2xl" as="h3">
-              Create your Order
-            </Heading>
-            <Text variant="secondary" textAlign="center">
-              Go to any online store and copy and paste the URL of the product
-              you would like from abroad.
-            </Text>
-          </Box>
-          <Box>
-            <StepCircle
-              mb={5}
-              mx="auto"
-              bg="blue.400"
-              step={2}
-              h="120px"
-              w="120px"
-            >
-              <CImg alt="Make Offers" height="60px" width="60px" src={note} />
-            </StepCircle>
-            <Heading mb={5} textAlign="center" fontSize="2xl" as="h3">
-              Make/receive offers
-            </Heading>
-            <Text variant="secondary" textAlign="center">
-              Make offers to travelers or wait for travelers to contact you to
-              bring your order.
-            </Text>
-          </Box>
-          <Box>
-            <StepCircle
-              mb={5}
-              mx="auto"
-              bg="blue.400"
-              step={3}
-              h="120px"
-              w="120px"
-            >
-              <CImg alt="Security" height="60px" width="60px" src={plane} />
-            </StepCircle>
-            <Heading mb={5} textAlign="center" fontSize="2xl" as="h3">
-              Secure payment
-            </Heading>
-            <Text variant="secondary" textAlign="center">
-              Secure the payment for the product price and travelers reward
-            </Text>
-          </Box>
-          <Box>
-            <StepCircle
-              mb={5}
-              mx="auto"
-              bg="blue.400"
-              step={4}
-              h="120px"
-              w="120px"
-            >
-              <CImg alt="Receive Item" height="60px" width="60px" src={card} />
-            </StepCircle>
-            <Heading mb={5} textAlign="center" fontSize="2xl" as="h3">
-              Get your item
-            </Heading>
-            <Text variant="secondary" textAlign="center">
-              Meet with your traveler in a public place and get your item.
-            </Text>
-          </Box>
-        </SimpleGrid>
-        <LinkBox mt={16} mx="auto" w="300px">
-          <Link to="/order">
-            <Button
-              mx="auto"
-              variant="solid"
-              color="white"
-              bg="blue.500"
-              _hover={{ bg: "blue.600" }}
-              w="100%"
-            >
-              Add Order
-            </Button>
-          </Link>
-        </LinkBox>
-      </Container>
-      <Container
-        h="130px"
-        bg="gray.100"
-        mb={[20, 20, "150px"]}
-        maxW="full"
-        as="section"
-      >
-        <Center justifyContent="space-between" w="300px" mx="auto" h="100%">
-          <Img alt="Visa" fixed={data.visa.childImageSharp.fixed} />
-
-          <Img alt="Mastercard" fixed={data.mastercard.childImageSharp.fixed} />
-        </Center>
-      </Container>
-      <Container mb={[20, 20, "150px"]} pt={8} maxW="full" as="section">
-        <Heading textAlign="center" mb="80px">
+        <Heading mb={10} fontSize="hb3" fontWeight="700" textAlign="center">
           Why our shoppers love Briddgy
         </Heading>
         <SimpleGrid
@@ -333,29 +211,15 @@ const AddOrder = ({ data }) => {
             description="Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce "
           />
         </SimpleGrid>
-        <LinkBox mt={16} mx="auto" w="300px">
-          <Link to="/order">
-            <Button
-              mx="auto"
-              variant="solid"
-              color="white"
-              bg="blue.500"
-              _hover={{ bg: "blue.600" }}
-              w="100%"
-            >
-              More of our stories
-            </Button>
-          </Link>
-        </LinkBox>
       </Container>
-      <Container py={8} bg="blueAlpha.100" as="section" maxW="full">
-        <Heading textAlign="center" mb="80px">
+      <Container bg="blue.50" py={8} as="section" maxW="full">
+        <Heading mb={10} fontSize="hb3" fontWeight="700" textAlign="center">
           Frequently Asked Questions
         </Heading>
         <Container maxW="container.xl">
-          <Stack direction={["column", "row"]} spacing={12}>
-            <Box>
-              <Heading mb={5} as="h3" fontSize="2xl">
+          <Stack textAlign="center" direction={["column", "row"]} spacing={12}>
+            <Box flex={1}>
+              <Heading mb={5} as="h3" fontSize="700" fontWeight="700">
                 How is payment guaranteed?
               </Heading>
               <Text variant="secondary">
@@ -363,8 +227,8 @@ const AddOrder = ({ data }) => {
                 upfront and cannot cancel once paid.
               </Text>
             </Box>
-            <Box>
-              <Heading as="h3" mb={5} fontSize="2xl">
+            <Box flex={1}>
+              <Heading mb={5} as="h3" fontSize="700" fontWeight="700">
                 Who is paying for product?
               </Heading>
               <Text variant="secondary">
@@ -372,8 +236,8 @@ const AddOrder = ({ data }) => {
                 contents.
               </Text>
             </Box>
-            <Box>
-              <Heading as="h3" fontSize="2xl">
+            <Box flex={1}>
+              <Heading mb={5} as="h3" fontSize="700" fontWeight="700">
                 How are deliveries arranged?
               </Heading>
               <Text variant="secondary">

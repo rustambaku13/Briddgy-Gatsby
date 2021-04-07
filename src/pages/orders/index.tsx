@@ -24,6 +24,7 @@ import { useForm } from "react-hook-form"
 import { getOrders } from "../../api/order"
 import { PublicMediumOrderCard } from "../../components/Cards/Order/MediumOrderCards"
 import { TestimonialLinkCard } from "../../components/Cards/Testimonial/TestimonialLinkCard"
+import Footer from "../../components/Footer"
 import { LocationAutoComplete } from "../../components/Inputs/LocationAutoComplete"
 import { HowToEarnMoney } from "../../components/Layout/HowToEarnMoney"
 import { Empty } from "../../components/Misc/Empty"
@@ -216,7 +217,7 @@ const OrdersPage = ({ data, location }) => {
 
       <HowToEarnMoney />
       <Container my="80px" pt={8} maxW="full" as="section">
-        <Heading textAlign="center" mb="80px">
+        <Heading mb={10} fontSize="hb3" fontWeight="700" textAlign="center">
           Why our shoppers love Briddgy
         </Heading>
         <SimpleGrid
@@ -240,6 +241,7 @@ const OrdersPage = ({ data, location }) => {
           />
         </SimpleGrid>
       </Container>
+      <Footer />
     </>
   )
 }

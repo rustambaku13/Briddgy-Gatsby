@@ -47,53 +47,42 @@ const TopSearchButton = chakra(
   }
 )
 
-const AddOrderForm = chakra(({ className }: { className?: any }) => {
+const AddOrderFormN = chakra(({ className }: { className?: any }) => {
   return (
     <Flex
-      className={className}
+      p={3}
+      bg="white"
+      borderRadius="lg"
+      borderColor="outline.medium"
+      borderWidth="1px"
       id="add_order_form"
-      boxShadow="md"
-      borderRadius="50px"
-      h="70px"
       autoComplete={"off"}
       w="100%"
-      bg="white"
-      pl={5}
-      borderWidth="1px"
     >
-      <OrderAutoComplete
-        placeholder="Enter the URL or the Name of the product"
-        height="inherit"
-        name="url"
-      />
-      <IconButton
-        aria-label="Add Order"
-        h="60px"
-        flex="0 0 60px"
-        fontSize="2xl"
-        icon={<OrderIcon />}
-        p={0}
-        variant="red_gradient"
-        color="white"
-        mt={"5px"}
-        mr="10px"
-        type="submit"
-        borderRadius="60px"
-        d={["block", "none"]}
-      />
-
+      <Box flex={1}>
+        <Text
+          as="label"
+          fontWeight="700"
+          fontSize={["500", "600"]}
+          color="oxfordBlue.dark"
+        >
+          URL or Name of product
+        </Text>
+        <OrderAutoComplete
+          placeholder="https://amazon.com/"
+          height="inherit"
+          name="url"
+        />
+      </Box>
       <Button
-        h="calc(100% - 10px)"
-        p={0}
-        maxW="150px"
-        w="100%"
-        variant="red_gradient"
+        h="auto"
         color="white"
-        mt={"5px"}
-        mr="10px"
         type="submit"
-        borderRadius="50px"
-        d={["none", "block"]}
+        borderRadius="lg"
+        size={"md"}
+        px={[2, 5, 8]}
+        variant="red_gradient"
+        fontWeight="700"
       >
         Create Order
       </Button>
@@ -126,7 +115,7 @@ export const AddOrderNavigationMenu = ({ expand }) => {
         >
           <TopSearchButton expand={expand} />
           <Box px={3} className="overlay">
-            <AddOrderForm />
+            <AddOrderFormN />
           </Box>
         </Box>
       </FormProvider>
