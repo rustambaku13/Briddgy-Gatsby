@@ -38,6 +38,8 @@ import note from "../../images/noteicon.svg"
 import plane from "../../images/planeicon.svg"
 import Footer from "../../components/Footer"
 import { HowToEarnMoney } from "../../components/Layout/HowToEarnMoney"
+import { BottomNavbar } from "../../components/Navbar/BottomNavbar"
+import { NavigationContext } from "../../providers/navPage"
 export const query = graphql`
   query {
     globe: file(relativePath: { eq: "travel_page_main.png" }) {
@@ -113,7 +115,10 @@ const AddTrip = ({ data }: PageProps) => {
           content="Travel with minimum costs and earn money. Briddgy postless, peer-to-peer delivery platform. Shop Worldwide with fastest and cheapest delivery."
         />
       </Helmet>
-      <TravelNavbar />
+      <NavigationContext.Provider value={{ page: "travel" }}>
+        <TravelNavbar />
+        <BottomNavbar />
+      </NavigationContext.Provider>
       <Box
         overflow="hidden"
         bgGradient="linear(to-b,tealBlue.light,tealBlue.dark)"
@@ -137,7 +142,7 @@ const AddTrip = ({ data }: PageProps) => {
           <Box flex={3}>
             <Heading
               mb={5}
-              fontSize="hb4"
+              fontSize={["hb2", "hb4"]}
               color="white"
               as="h1"
               fontWeight="700"

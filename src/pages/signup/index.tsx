@@ -22,6 +22,8 @@ import { useDidUpdateEffect } from "../../hooks/useDidUpdateEffect"
 import GoogleIcon from "../../icons/Google"
 import UserStore from "../../store/UserStore"
 import { Helmet } from "react-helmet"
+import { NavigationContext } from "../../providers/navPage"
+import { BottomNavbar } from "../../components/Navbar/BottomNavbar"
 const SignUp = ({ data }: PageProps) => {
   const {
     register,
@@ -71,7 +73,10 @@ const SignUp = ({ data }: PageProps) => {
           content="Create account in Briddgy. Briddgy postless, peer-to-peer delivery platform. Worldwide shopping with fastest and cheapest delivery. Travel with minimum costs and earn money."
         />
       </Helmet>
-      <NavbarDefault />
+      <NavigationContext.Provider value={{ page: "signup" }}>
+        <NavbarDefault />
+        <BottomNavbar />
+      </NavigationContext.Provider>
       <Center
         alignItems="flex-start"
         pt="100px"

@@ -13,13 +13,13 @@ export const IncrementalNumberSelector = chakra(
           }}
           role="button"
           cursor="pointer"
-          color="gray.400"
-          fontSize="3xl"
+          color="outline.base"
+          fontSize="hb2"
         />
         <Center
           borderRadius="20px"
           bg="red.400"
-          bgGradient="linear(to-b, red.400,red.600)"
+          bgGradient="linear(-40deg,warning.base ,cherryRed.base )"
           boxShadow="lg"
           color="white"
           flexDir="column"
@@ -40,8 +40,8 @@ export const IncrementalNumberSelector = chakra(
           onClick={() => {
             setValue(value => value + 1)
           }}
-          color="gray.400"
-          fontSize="3xl"
+          color="outline.base"
+          fontSize="hb2"
         />
       </Flex>
     )

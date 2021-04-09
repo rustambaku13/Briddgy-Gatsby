@@ -15,16 +15,10 @@ import React, { useRef, useState } from "react"
 import { useForm } from "react-hook-form"
 import UserStore from "../../store/UserStore"
 import { Link } from "gatsby-plugin-intl"
+import { observer } from "mobx-react-lite"
+import LayoutStore from "../../store/LayoutStore"
 
-export const LoginModalForm = ({
-  isOpen,
-  setOpen,
-  callback,
-}: {
-  isOpen: boolean
-  setOpen: any
-  callback: any
-}) => {
+export const LoginModalForm = observer(({}: {}) => {
   const { register, handleSubmit, errors } = useForm()
   const [loading, setLoading] = useState(false)
   const error_text = useRef(null)
@@ -33,8 +27,8 @@ export const LoginModalForm = ({
     flowResult(UserStore.login(data.email, data.password))
       .then(e => {
         // Successfully Logged In
-        setOpen(false)
-        callback ? callback() : null
+        LayoutStore?.loginModalFormCallback() //optional chaining
+        LayoutStore.loginModalFormClose()
       })
       .catch(e => {
         error_text.current.innerHTML = "Invalid Credentials"
@@ -45,9 +39,9 @@ export const LoginModalForm = ({
   }
   return (
     <Modal
-      isOpen={isOpen}
+      isOpen={LayoutStore.loginModalFormVisible} //true
       onClose={() => {
-        setOpen(false)
+        LayoutStore.loginModalFormClose()
       }}
     >
       <ModalOverlay></ModalOverlay>
@@ -110,4 +104,4 @@ export const LoginModalForm = ({
       </ModalContent>
     </Modal>
   )
-}
+})

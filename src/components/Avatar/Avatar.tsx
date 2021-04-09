@@ -10,7 +10,8 @@ export const Avatar = chakra(
       <Link to={`/profile/${user.id}`}>
         <Cavatar
           transition=".4s border ease"
-          _hover={{ borderWidth: "1px", borderColor: "blue.600" }}
+          borderWidth="1px"
+          _hover={{ borderColor: "blue.600" }}
           className={className}
           src={bmify(user.avatarpic)}
         />

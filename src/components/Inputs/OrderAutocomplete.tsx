@@ -19,15 +19,15 @@ export const OrderAutoComplete = chakra(
     const [searching, setSearching] = useState(false)
     const [results, setResults] = useState([])
     const [hidden, setHidden] = useState(true)
-
+    const methods = useFormContext()
     const fetchData = value => {
       // Fetch Data here
+      setSearching(false)
     }
     const searchHandler = ({ target: { value } }) => {
       if (value.length && hidden) setHidden(false)
       else if (value.length == 0 && !hidden) {
         setHidden(true)
-        // inputRef.value = null
       }
       if (a) clearTimeout(a)
       a = setTimeout(fetchData, 300, value)
@@ -42,7 +42,6 @@ export const OrderAutoComplete = chakra(
       // nameRef.value = title
       document.activeElement.blur()
     }
-    const methods = useFormContext()
 
     return (
       <Box
@@ -55,7 +54,7 @@ export const OrderAutoComplete = chakra(
           aria-haspopup="listbox"
           autoComplete="off"
           onChange={searchHandler}
-          type="search"
+          // type="search"
           px={0}
           h="100%"
           name={name + "_name"}

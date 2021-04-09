@@ -1,8 +1,13 @@
-import { Box, Container, Divider, Heading, Text } from "@chakra-ui/layout"
 import {
+  Box,
   Button,
+  Center,
+  Container,
+  Divider,
+  Flex,
   FormControl,
   FormLabel,
+  Heading,
   IconButton,
   Input,
   InputGroup,
@@ -14,6 +19,7 @@ import {
   TabPanel,
   TabPanels,
   Tabs,
+  Text,
   Textarea,
 } from "@chakra-ui/react"
 import { PageProps } from "gatsby"
@@ -21,10 +27,9 @@ import { Link, navigate } from "gatsby-plugin-intl"
 import { flowResult } from "mobx"
 import React, { useEffect, useRef, useState } from "react"
 import { useForm } from "react-hook-form"
-import { LoginModalForm } from "../../../components/Form/LoginModalForm"
 import { GroupImageUploader } from "../../../components/Inputs/ImageUploader"
 import { LocationAutoComplete } from "../../../components/Inputs/LocationAutoComplete"
-import ImageThumbnailViewer from "../../../components/Misc/ImageThumbnailViewer"
+import { ImageViewer } from "../../../components/Misc/ImageThumbnailViewer"
 import { PaymentDisplay } from "../../../components/Misc/Payment/PaymentDisplay"
 import { Step, Steps } from "../../../components/Misc/Steps"
 import NavbarDefault from "../../../components/Navbar"
@@ -35,7 +40,9 @@ import { LightBulbIcon } from "../../../icons/LightBulb"
 import { PlaneIcon } from "../../../icons/Plane"
 import { RefreshIcon } from "../../../icons/Refresh"
 import UserStore from "../../../store/UserStore"
-
+import { NavigationContext } from "../../../providers/navPage"
+import { BottomNavbar } from "../../../components/Navbar/BottomNavbar"
+import Footer from "../../../components/Footer"
 const pageFields = {
   0: ["url", "title", "description", "price", "item_price", "weight", "files"],
 }
@@ -57,6 +64,7 @@ const AddOrderPage = ({ location }: PageProps) => {
   const item_price = watch("item_price")
   const price = watch("price")
   const title = watch("title")
+  const weight = watch("weight")
   const data = usePopulateQueryHook(location)
   const quote = useQuoteGetterHook(item_price, price, page == 2)
   useEffect(() => {
@@ -108,12 +116,10 @@ const AddOrderPage = ({ location }: PageProps) => {
   }
   return (
     <>
-      <LoginModalForm
-        callback={addOrder}
-        isOpen={loginModal}
-        setOpen={setloginModal}
-      />
-      <NavbarDefault />
+      <NavigationContext.Provider value={{ page: "order" }}>
+        <NavbarDefault />
+        <BottomNavbar />
+      </NavigationContext.Provider>
       <Container maxW="full" as="section">
         <Steps py={8} maxW="container.lg" mx="auto">
           <Step
@@ -139,7 +145,7 @@ const AddOrderPage = ({ location }: PageProps) => {
       <Container
         as="section"
         minH="calc(100vh - 100px)"
-        bg="gray.100"
+        bg="outline.light"
         maxW="full"
       >
         <Box
@@ -154,13 +160,13 @@ const AddOrderPage = ({ location }: PageProps) => {
                 <Box
                   mb={5}
                   mr={[0, 0, 8]}
-                  borderRadius="md"
-                  p={5}
+                  borderRadius="base"
+                  p={3}
                   bg="white"
                   borderWidth="1px"
                   flex={1}
                 >
-                  <Heading mb={8} fontSize="3xl">
+                  <Heading mb={8} fontSize="hb1">
                     1. Product Details
                   </Heading>
                   <FormControl w="100%" mb={7}>
@@ -172,7 +178,7 @@ const AddOrderPage = ({ location }: PageProps) => {
                         maxCount={3}
                       />
                     </InputGroup>
-                    <Text color="red.400" as="small">
+                    <Text color="danger.base" as="small">
                       {errors.files?.message}
                     </Text>
                   </FormControl>
@@ -206,7 +212,7 @@ const AddOrderPage = ({ location }: PageProps) => {
                         }
                       />
                     </InputGroup>
-                    <Text color="red.400" as="small">
+                    <Text color="danger.base" as="small">
                       {errors.url?.message}
                     </Text>
                   </FormControl>
@@ -220,7 +226,7 @@ const AddOrderPage = ({ location }: PageProps) => {
                       value={title}
                       name="title"
                     />
-                    <Text color="red.400" as="small">
+                    <Text color="danger.base" as="small">
                       {errors.title?.message}
                     </Text>
                   </FormControl>
@@ -236,7 +242,7 @@ const AddOrderPage = ({ location }: PageProps) => {
                       rows={4}
                       name="description"
                     />
-                    <Text color="red.400" as="small">
+                    <Text color="danger.base" as="small">
                       {errors.description?.message}
                     </Text>
                   </FormControl>
@@ -255,7 +261,7 @@ const AddOrderPage = ({ location }: PageProps) => {
                         />
                       </NumberInput>
                     </InputGroup>
-                    <Text color="red.400" as="small">
+                    <Text color="danger.base" as="small">
                       {errors.item_price?.message}
                     </Text>
                   </FormControl>
@@ -273,7 +279,7 @@ const AddOrderPage = ({ location }: PageProps) => {
                         />
                       </NumberInput>
                     </InputGroup>
-                    <Text color="red.400" as="small">
+                    <Text color="danger.base" as="small">
                       {errors.price?.message}
                     </Text>
                   </FormControl>
@@ -281,18 +287,18 @@ const AddOrderPage = ({ location }: PageProps) => {
                     <FormLabel>Product Weight</FormLabel>
                     <InputGroup size="lg">
                       <InputLeftAddon children="kg" />
-                      <NumberInput maxW="200px">
+                      <NumberInput value={weight} maxW="200px">
                         <NumberInputField
                           name="weight"
                           ref={register({
                             required: "Product Weight is required",
                           })}
-                          placeholder="2 kg"
+                          placeholder="2.5"
                         />
                       </NumberInput>
                     </InputGroup>
-                    <Text color="red.400" as="small">
-                      {errors.price?.message}
+                    <Text color="danger.base" as="small">
+                      {errors.weight?.message}
                     </Text>
                   </FormControl>
                 </Box>
@@ -300,14 +306,14 @@ const AddOrderPage = ({ location }: PageProps) => {
                 <Box flex={["0 0 100%", "0 0 100%", "0 0 300px"]}>
                   <Box
                     w="100%"
-                    borderRadius="md"
+                    borderRadius="base"
                     p={3}
                     bg="white"
                     borderWidth="1px"
                   >
                     {title ? (
                       <>
-                        <Text fontSize="xl" fontWeight="600" mb={5}>
+                        <Text fontSize="600" fontWeight="600" mb={5}>
                           {title}
                         </Text>{" "}
                         <Divider orientation="horizontal" my={5} />
@@ -321,7 +327,7 @@ const AddOrderPage = ({ location }: PageProps) => {
                           Product price{" "}
                           <Text
                             mt="-7px"
-                            fontSize="2xl"
+                            fontSize="700"
                             fontWeight="600"
                             float="right"
                             as="span"
@@ -351,19 +357,19 @@ const AddOrderPage = ({ location }: PageProps) => {
                 <Box
                   mb={5}
                   mr={[0, 0, 8]}
-                  borderRadius="md"
-                  p={5}
+                  borderRadius="base"
+                  p={[3, 5]}
                   bg="white"
                   borderWidth="1px"
                   flex={1}
                 >
-                  <Heading mb={8} fontSize="3xl">
+                  <Heading mb={8} fontSize="hb1">
                     2. Delivery Details
                   </Heading>
                   <Box
                     borderRadius="lg"
                     mb={5}
-                    bg="blueAlpha.100"
+                    bg="lilaPurple"
                     p={3}
                     as="aside"
                   >
@@ -382,12 +388,11 @@ const AddOrderPage = ({ location }: PageProps) => {
                       borderRadius="lg"
                       size="lg"
                       placeholder="City or Country"
-                      fontSize="xl"
                       parentRef={register({
                         required: "Source City is required",
                       })}
                     />
-                    <Text color="red.400" as="small">
+                    <Text color="danger.base" as="small">
                       {errors.origin?.message}
                     </Text>
                   </FormControl>
@@ -399,12 +404,11 @@ const AddOrderPage = ({ location }: PageProps) => {
                       borderRadius="lg"
                       size="lg"
                       placeholder="City or Country"
-                      fontSize="xl"
                       parentRef={register({
                         required: "Destination City is required",
                       })}
                     />
-                    <Text color="red.400" as="small">
+                    <Text color="danger.base" as="small">
                       {errors.destination?.message}
                     </Text>
                   </FormControl>
@@ -412,12 +416,12 @@ const AddOrderPage = ({ location }: PageProps) => {
                 <Box flex={["0 0 100%", "0 0 100%", "0 0 300px"]}>
                   <Box
                     w="100%"
-                    borderRadius="md"
+                    borderRadius="base"
                     p={3}
                     bg="white"
                     borderWidth="1px"
                   >
-                    <Text fontSize="xl" fontWeight="600" mb={5}>
+                    <Text fontSize="600" fontWeight="600" mb={5}>
                       {title}
                     </Text>{" "}
                     <Divider orientation="horizontal" my={5} />{" "}
@@ -425,7 +429,7 @@ const AddOrderPage = ({ location }: PageProps) => {
                       Product price{" "}
                       <Text
                         mt="-7px"
-                        fontSize="2xl"
+                        fontSize="700"
                         fontWeight="600"
                         float="right"
                         as="span"
@@ -456,17 +460,25 @@ const AddOrderPage = ({ location }: PageProps) => {
                 <Box
                   mb={5}
                   mr={[0, 0, 8]}
-                  borderRadius="md"
-                  p={5}
+                  borderRadius="base"
+                  p={[3, 5]}
                   bg="white"
                   borderWidth="1px"
                   flex={1}
                 >
-                  <Heading mb={8} fontSize="3xl">
+                  <Heading mb={8} fontSize="hb1">
                     3. Order Summary
                   </Heading>
-                  <ImageThumbnailViewer images={files.current} />
-                  <Heading my={8} fontSize="2xl" as="h3">
+                  <ImageViewer images={files.current}>
+                    <Flex>
+                      <ImageViewer.ImageThumbnails />
+                      <Center flexGrow={1}>
+                        <ImageViewer.LargeImage />
+                      </Center>
+                    </Flex>
+                  </ImageViewer>
+                  {/* <ImageThumbnailViewer images={files.current} /> */}
+                  <Heading my={8} fontSize="700" as="h3">
                     Payment Details
                   </Heading>
                   <PaymentDisplay {...quote} />
@@ -476,7 +488,7 @@ const AddOrderPage = ({ location }: PageProps) => {
                       as="span"
                       mt="-8px"
                       float="right"
-                      fontSize="2xl"
+                      fontSize="700"
                       color="black"
                       fontWeight="600"
                     >
@@ -487,7 +499,7 @@ const AddOrderPage = ({ location }: PageProps) => {
                   <Text variant="secondary">
                     By publishing my order, I agree to{" "}
                     <Link to="#">
-                      <Text as="span" color="blue.400">
+                      <Text as="span" color="tealBlue.base">
                         Briddgy's Terms of Use
                       </Text>
                     </Link>
@@ -499,7 +511,7 @@ const AddOrderPage = ({ location }: PageProps) => {
                 <Box flex={["0 0 100%", "0 0 100%", "0 0 300px"]}>
                   <Box w="100%">
                     <Box
-                      borderRadius="md"
+                      borderRadius="base"
                       mb={3}
                       p={3}
                       bg="white"
@@ -515,12 +527,12 @@ const AddOrderPage = ({ location }: PageProps) => {
                     </Box>
                     <Box
                       w="100%"
-                      borderRadius="md"
+                      borderRadius="base"
                       p={3}
                       bg="white"
                       borderWidth="1px"
                     >
-                      <Text fontSize="xl" fontWeight="600" mb={5}>
+                      <Text fontSize="600" fontWeight="600" mb={5}>
                         {title}
                       </Text>{" "}
                       <Divider orientation="horizontal" my={5} />
@@ -570,6 +582,7 @@ const AddOrderPage = ({ location }: PageProps) => {
           </Tabs>
         </Box>
       </Container>
+      <Footer />
     </>
   )
 }

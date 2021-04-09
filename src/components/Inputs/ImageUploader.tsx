@@ -1,5 +1,5 @@
 import { Img } from "@chakra-ui/image"
-import { Center, HStack } from "@chakra-ui/layout"
+import { Box, Center, HStack } from "@chakra-ui/layout"
 import Upload from "rc-upload"
 import React, { useEffect, useState } from "react"
 import { CrossIcon } from "../../icons/Cross"
@@ -22,6 +22,7 @@ const ImageUploader = ({ setFiles, file }) => {
   if (file) {
     return (
       <Center
+        mb={2}
         fontSize="3xl"
         color="gray.400"
         borderStyle="dashed"
@@ -66,6 +67,7 @@ const ImageUploader = ({ setFiles, file }) => {
       }}
     >
       <Center
+        mb={2}
         fontSize="3xl"
         color="gray.400"
         borderStyle="dashed"
@@ -90,7 +92,7 @@ export const GroupImageUploader = ({ maxCount = 4, files, register }) => {
   }, [innerfiles])
   return (
     <>
-      <HStack>
+      <HStack flexWrap="wrap">
         <input
           type="hidden"
           value={innerfiles.length}

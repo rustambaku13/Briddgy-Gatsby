@@ -31,12 +31,14 @@ import { Empty } from "../../components/Misc/Empty"
 import { Loader } from "../../components/Misc/Loader"
 import { StepCircle } from "../../components/Misc/StepCircle"
 import NavbarDefault from "../../components/Navbar"
+import { BottomNavbar } from "../../components/Navbar/BottomNavbar"
 import { ChevronDownIcon } from "../../icons/ChevronDown"
 import RotateIcon from "../../icons/Rotate"
 import card from "../../images/debit-cardicon.svg"
 import earth from "../../images/earthicon.svg"
 import note from "../../images/noteicon.svg"
 import plane from "../../images/planeicon.svg"
+import { NavigationContext } from "../../providers/navPage"
 import { defaultOrders, Order, Orders } from "../../types/orders"
 import { filterObject } from "../../utils/misc"
 const OrdersPage = ({ data, location }) => {
@@ -77,7 +79,11 @@ const OrdersPage = ({ data, location }) => {
           content="List orders that are to be delivered. Briddgy postless, peer-to-peer delivery platform. Worldwide shopping with fastest and cheapest delivery. Travel with minimum costs and earn money."
         />
       </Helmet>
-      <NavbarDefault />
+      <NavigationContext.Provider value={{ page: "orders" }}>
+        <NavbarDefault />
+        <BottomNavbar />
+      </NavigationContext.Provider>
+
       <Container pt="40px" as="section" minW="full">
         <Box
           onSubmit={handleSubmit(onSubmit)}

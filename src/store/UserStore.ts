@@ -1,26 +1,25 @@
-import moment from "moment"
-import { Trip } from "./../types/trip"
-import { LoginModalForm } from "./../components/Form/LoginModalForm"
-import { Orders } from "./../types/orders"
 import Cookies from "js-cookie"
 import { flowResult, makeAutoObservable } from "mobx"
-import {
-  createUser,
-  getMyDetails,
-  loginUser,
-  verifyPhoneNumber,
-} from "../api/user"
-import { axios_normal } from "./../api/index"
-import { User } from "./../types/user"
+import moment from "moment"
 import {
   addOrder,
   emailSuggestedTravellers,
   getMyOrders,
   uploadFilestoOrder,
 } from "../api/order"
-import { Trips } from "../types/trip"
 import { addTrip, emailSuggestedOrderers, getMyTrips } from "../api/trip"
+import {
+  createUser,
+  getMyDetails,
+  loginUser,
+  verifyPhoneNumber,
+} from "../api/user"
+import { Trips } from "../types/trip"
 import { compressAndReturn } from "../utils/compression"
+import { axios_normal } from "./../api/index"
+import { Orders } from "./../types/orders"
+import { Trip } from "./../types/trip"
+import { User } from "./../types/user"
 import LayoutStore from "./LayoutStore"
 
 class UserStore {
@@ -220,5 +219,4 @@ class UserStore {
   }
 }
 const a = new UserStore()
-console.log(a.complete, "SALAM")
 export default a

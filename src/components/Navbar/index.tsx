@@ -2,11 +2,11 @@ import {
   Avatar,
   Box,
   Button,
+  Center,
   Flex,
   IconButton,
   Image,
   LinkBox,
-  LinkOverlay,
   Menu,
   MenuButton,
   MenuDivider,
@@ -17,134 +17,26 @@ import {
 } from "@chakra-ui/react"
 import { Link, navigate } from "gatsby-plugin-intl"
 import { observer } from "mobx-react-lite"
-import React, { useEffect, useRef, useState } from "react"
+import React, { useContext, useEffect, useRef, useState } from "react"
 import { bmify } from "../../api"
 import { ChevronDownIcon } from "../../icons/ChevronDown"
+import { HomeIcon } from "../../icons/Home"
 import LoginIcon from "../../icons/Login"
 import LogoutIcon from "../../icons/Logout"
 import OrderIcon from "../../icons/Order"
+import { PlaneIcon } from "../../icons/Plane"
 import ProfileIcon from "../../icons/Profile"
-import { HomeIcon } from "../../icons/Home"
 import SupportIcon from "../../icons/Support"
 import TripIcon from "../../icons/Trip"
 import logo from "../../images/icon_opaque.png"
+import { NavigationContext } from "../../providers/navPage"
 import UserStore from "../../store/UserStore"
 import { AddOrderNavigationMenu } from "../Form/AddOrderForm"
 import { AddTripFormNavigationMenu } from "../Form/AddTripForm"
-import { BottomNavigationItem } from "./BottomNavigationItem"
-import { PlaneIcon } from "../../icons/Plane"
+import { BottomNavigationItem } from "./BottomNavbar/BottomNavigationItem"
 let mouseListener = null
 
-const AuthorizedBottomNavbar = () => {
-  const { getRootProps, getRadioProps } = useRadioGroup({
-    name: "bottom_nav",
-    defaultValue: "/",
-    onChange: e => {
-      navigate(e)
-    },
-  })
-  const group = getRootProps()
-
-  return (
-    <Box
-      as="nav"
-      alignItems="center"
-      px="30px"
-      zIndex={50}
-      bottom="0px"
-      d={["flex", "flex", "none"]}
-      h="65px"
-      justifyContent="space-evenly"
-      pos="fixed"
-      bg="blue.1000"
-      {...group}
-      w="100%"
-    >
-      <BottomNavigationItem
-        key="/"
-        {...getRadioProps({ value: "/" })}
-        icon={<HomeIcon />}
-        text="Home"
-      />
-      <BottomNavigationItem
-        key="/trips"
-        {...getRadioProps({ value: "/trips" })}
-        icon={<TripIcon />}
-        text="Trips"
-      />
-      <BottomNavigationItem
-        key="/orders"
-        {...getRadioProps({ value: "/orders" })}
-        icon={<OrderIcon />}
-        text="Orders"
-      />
-      <BottomNavigationItem
-        key="/profile"
-        {...getRadioProps({ value: "/profile" })}
-        icon={<ProfileIcon />}
-        text="Profile"
-      />
-    </Box>
-  )
-}
-
-const DefaultBottomNavbar = () => {
-  const { getRootProps, getRadioProps } = useRadioGroup({
-    name: "bottom_nav",
-    defaultValue: "/",
-    onChange: e => {
-      navigate(e)
-    },
-  })
-  const group = getRootProps()
-
-  return (
-    <Box
-      as="nav"
-      alignItems="center"
-      px="30px"
-      zIndex={50}
-      bottom="0px"
-      d={["flex", "flex", "none"]}
-      h="65px"
-      justifyContent="space-evenly"
-      pos="fixed"
-      bg="blue.1000"
-      {...group}
-      w="100%"
-    >
-      <BottomNavigationItem
-        key="/"
-        {...getRadioProps({ value: "/" })}
-        to="/"
-        icon={<HomeIcon />}
-        text="Home"
-      />
-      <BottomNavigationItem
-        key="/trips"
-        {...getRadioProps({ value: "/trips" })}
-        to="/trips"
-        icon={<TripIcon />}
-        text="Trips"
-      />
-      <BottomNavigationItem
-        key="/orders"
-        {...getRadioProps({ value: "/orders" })}
-        to="/orders"
-        icon={<OrderIcon />}
-        text="Orders"
-      />
-      <BottomNavigationItem
-        key="/login"
-        {...getRadioProps({ value: "/login" })}
-        to="/login"
-        icon={<LoginIcon />}
-        text="Login"
-      />
-    </Box>
-  )
-}
-
+//  ****** Top NAVBAR *******
 const AuthorizedNavbar = () => {
   const [open, setOpen] = useState(false)
   const [expanded, setExpanded] = useState(false)
@@ -191,10 +83,14 @@ const AuthorizedNavbar = () => {
             </Link>
           </Box>
           <Text d={["none", "none", "inline-block"]} mr={[2, 2, 4]}>
-            <Link to="/trips">Trips</Link>
+            <Link className="nav-item" to="/trips">
+              Trips
+            </Link>
           </Text>
           <Text mr={[2, 2, 4]} d={["none", "none", "inline-block"]}>
-            <Link to="/orders">Orders</Link>
+            <Link className="nav-item" to="/orders">
+              Orders
+            </Link>
           </Text>
         </Flex>
         <Box w="100%" mx="auto">
@@ -336,7 +232,7 @@ const AuthorizedNavbar = () => {
 const DefaultNavbar = () => {
   const [open, setOpen] = useState(false)
   const [expanded, setExpanded] = useState(false)
-
+  const context = useContext(NavigationContext)
   useEffect(() => {
     if (expanded) {
       mouseListener = event => {
@@ -374,16 +270,30 @@ const DefaultNavbar = () => {
             </Link>
 
             <Link to="/">
-              <Text ml={1} fontSize="700" fontWeight="700">
+              <Text ml={1} fontSize={[500, 700]} fontWeight="700">
                 Briddgy
               </Text>
             </Link>
           </Box>
           <Text d={["none", "none", "inline-block"]} mr={[2, 2, 4]}>
-            <Link to="/trips">Trips</Link>
+            <Link
+              className={
+                context.page == "trips" ? "nav-item-selected" : "nav-item"
+              }
+              to="/trips"
+            >
+              Trips
+            </Link>
           </Text>
           <Text mr={[2, 2, 4]} d={["none", "none", "inline-block"]}>
-            <Link to="/orders">Orders</Link>
+            <Link
+              className={
+                context.page == "orders" ? "nav-item-selected" : "nav-item"
+              }
+              to="/orders"
+            >
+              Orders
+            </Link>
           </Text>
         </Flex>
         <Box w="100%" mx="auto">
@@ -400,10 +310,19 @@ const DefaultNavbar = () => {
         </Box>
         <Flex ml={3} alignItems="center" flexShrink={0} h="100%">
           <Text d={["none", "none", "none", "inline-block"]} ml="auto" mr={4}>
-            <Link to="/login">Login</Link>
+            <Link className="nav-item" to="/login">
+              Login
+            </Link>
           </Text>
           <Text d={["none", "none", "none", "inline-block"]} mr={4}>
-            <Link to="/signup">Sign Up</Link>
+            <Link
+              className={
+                context.page == "signup" ? "nav-item-selected" : "nav-item"
+              }
+              to="/signup"
+            >
+              Sign Up
+            </Link>
           </Text>
           <LinkBox>
             <Link id="create_trip" to="/travel">
@@ -413,13 +332,15 @@ const DefaultNavbar = () => {
                 fontWeight="600"
               >
                 <PlaneIcon mt="-2px" fontSize="600" color="cherryRed.base" />{" "}
-                <Text
+                <Button
+                  variant="red_gradient"
+                  px={0}
+                  // bgGradient="linear(to-r,cherryRed.base,warning.dark)"
                   as="span"
-                  bgGradient="linear(to-r,cherryRed.base,warning.dark)"
                   backgroundClip="text"
                 >
                   Travel & Earn
-                </Text>
+                </Button>
               </Text>
 
               <IconButton
@@ -475,20 +396,6 @@ const DefaultNavbar = () => {
   )
 }
 
-export const BottomNavbarDefault = observer(() => {
-  if (UserStore.isLoggedIn) {
-    return <AuthorizedBottomNavbar />
-  }
-  return <DefaultBottomNavbar />
-})
-
-const NavbarDefault = observer(() => {
-  if (UserStore.isLoggedIn) {
-    return <AuthorizedNavbar />
-  }
-  return <DefaultNavbar />
-})
-
 export const OrderNavbar = () => {
   const ref = useRef()
   const [isSticky, setIsSticky] = useState(false)
@@ -505,9 +412,15 @@ export const OrderNavbar = () => {
     }
   }, [])
   return (
-    <div ref={ref} className={isSticky ? " isSticky" : ""} id="order-navbar">
-      <NavbarDefault />
-    </div>
+    <>
+      <header
+        ref={ref}
+        className={isSticky ? " isSticky" : ""}
+        id="order-navbar"
+      >
+        <NavbarDefault />
+      </header>{" "}
+    </>
   )
 }
 
@@ -527,14 +440,24 @@ export const TravelNavbar = () => {
     }
   }, [])
   return (
-    <header
-      ref={ref}
-      className={isSticky ? " isSticky" : ""}
-      id="travel-navbar"
-    >
-      <NavbarDefault />
-    </header>
+    <>
+      <header
+        ref={ref}
+        className={isSticky ? " isSticky" : ""}
+        id="travel-navbar"
+      >
+        <NavbarDefault />
+      </header>
+    </>
   )
 }
+//  ****** Wrappers  *******
+
+const NavbarDefault = observer(() => {
+  if (UserStore.isLoggedIn) {
+    return <AuthorizedNavbar />
+  }
+  return <DefaultNavbar />
+})
 
 export default () => <NavbarDefault />

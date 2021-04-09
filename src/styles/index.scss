@@ -3,6 +3,12 @@
 // Default Stuff
 // @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
 
+// ***********------VARIABLES------************
+
+$transition_navbar: -ms-transform 150ms ease 0s, -webkit-transform 150ms ease 0s,
+  transform 150ms ease 0s, opacity 50ms ease 20ms, visibility 0ms ease 150ms,
+  top ease 150ms !important;
+
 // ***********------GLOBAL STYLES------************
 
 @import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200;300;400;600;700;800;900&display=swap");
@@ -72,12 +78,38 @@ html {
   .form {
     display: none;
   }
+  .nav-item {
+    &:hover:after {
+      opacity: 1;
+    }
+    &:after {
+      float: right;
+      transition: 0.1s ease-in;
+
+      opacity: 0;
+      width: 100%;
+      content: " ";
+      height: 3px;
+      border-radius: 4px;
+      background-color: #32a9d7;
+    }
+  }
+  .nav-item-selected {
+    &:after {
+      float: right;
+      transition: 0.1s ease-in;
+      width: 100%;
+      content: " ";
+      height: 3px;
+      border-radius: 4px;
+      background-color: #32a9d7;
+    }
+  }
 }
 
-$transition_navbar: -ms-transform 150ms ease 0s, -webkit-transform 150ms ease 0s,
-  transform 150ms ease 0s, opacity 50ms ease 20ms, visibility 0ms ease 150ms,
-  top ease 150ms !important;
-
+// ***********------PAGE LEVEL COMPONENT STYLES------************
+.nav-top {
+}
 #travel-navbar {
   position: sticky;
   position: -webkit-sticky;
@@ -362,4 +394,24 @@ $transition_navbar: -ms-transform 150ms ease 0s, -webkit-transform 150ms ease 0s
 }
 
 .medium-order-card {
+}
+.clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.link-overlay {
+  position: static !important;
+  &:before {
+    content: "";
+    cursor: inherit;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+  }
 }

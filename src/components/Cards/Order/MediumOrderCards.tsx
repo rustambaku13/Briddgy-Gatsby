@@ -106,7 +106,7 @@ const MediumOrderCard = chakra(
                       textOverflow="ellipsis"
                       whiteSpace={["normal", "nowrap"]}
                       overflow="hidden"
-                      fontSize="600"
+                      fontSize={[500, 600]}
                       fontWeight="700"
                       flexGrow={1}
                     >
@@ -125,7 +125,7 @@ const MediumOrderCard = chakra(
                   <Box
                     borderColor="outline.medium"
                     borderWidth="1px"
-                    bg="outline.light"
+                    bg="lilaPurple.light"
                     w="100%"
                     mb="auto"
                     p={3}
@@ -158,10 +158,10 @@ const MediumOrderCard = chakra(
               <Box
                 borderColor="outline.medium"
                 borderWidth="1px"
-                bg="outline.light"
+                bg="lilaPurple.light"
                 w="100%"
                 mb={4}
-                p={1}
+                p={2}
                 d={["block", "none"]}
                 borderRadius="base"
               >

@@ -48,6 +48,7 @@ export default {
     dark: "#02090B",
     medium: "#3A4139",
     light: "#8B9AA0",
+    lighter: "#E1E4E8",
     disabled: "#9998B2",
   },
   outline: {

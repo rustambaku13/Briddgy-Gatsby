@@ -44,6 +44,8 @@ import { Trip } from "../../types/trip"
 import { Helmet } from "react-helmet"
 import { MyMediumOrderCard } from "../../components/Cards/Order/MediumOrderCards"
 import { MyMediumTripCard } from "../../components/Cards/Trip/MediumTripCards"
+import { NavigationContext } from "../../providers/navPage"
+import { BottomNavbar } from "../../components/Navbar/BottomNavbar"
 const PersonalDetailsSection = observer(() => {
   return (
     <Box py={3} maxW="container.lg" mx="auto">
@@ -506,7 +508,10 @@ const MyProfilePage = observer(({ location }) => {
           content="Briddgy postless, peer-to-peer delivery platform. Worldwide shopping with fastest and cheapest delivery. Travel with minimum costs and earn money."
         />
       </Helmet>
-      <NavbarDefault />
+      <NavigationContext.Provider value={{ page: "profile" }}>
+        <NavbarDefault />
+        <BottomNavbar />
+      </NavigationContext.Provider>
       <Container pt="50px" maxW="container.xl">
         <Flex mb="30px" w="100%">
           <Heading fontSize="5xl" as="h1">

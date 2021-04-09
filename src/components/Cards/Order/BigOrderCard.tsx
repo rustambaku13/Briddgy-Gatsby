@@ -1,94 +1,156 @@
 import {
+  AspectRatio,
   Box,
   chakra,
   Divider,
   Flex,
   Heading,
+  Img,
   Text,
+  Link as CLink,
   VStack,
+  Button,
+  HStack,
+  Center,
 } from "@chakra-ui/react"
 import React, { useEffect, useState } from "react"
-import { bmify } from "../../../api"
+import { bmify, FRONTEND_DATE_FORMAT } from "../../../api"
 import { LocationIcon } from "../../../icons/Location"
 import { Order } from "../../../types/orders"
 import { trimCityEmpty } from "../../../utils/misc"
-import ImageThumbnailViewer from "../../Misc/ImageThumbnailViewer"
-
+import { Avatar } from "../../Avatar/Avatar"
+import ImageThumbnailViewer, {
+  ImageViewer,
+} from "../../Misc/ImageThumbnailViewer"
+import { Rating } from "../../Misc/Rating"
+import moment from "moment"
+import { CurvedArrowRight } from "../../../icons/CurvedArrowRight"
+import LayoutStore from "../../../store/LayoutStore"
 export const BigOrderCard = chakra(
   ({ className, orderData }: { className?: any; orderData: Order }) => {
-    console.log(orderData)
-
     const [images, setImages] = useState([])
     useEffect(() => {
-      const imgs = orderData.orderimage.map(item => {
-        return {
-          preview: bmify(item),
-        }
-      })
-      setImages(imgs)
-    }, [orderData])
+      setImages(
+        orderData.orderimage.map(img => ({
+          preview: bmify(img),
+        }))
+      )
+    }, [])
     return (
-      <Box maxW="500px" className={className} w="100%">
-        <Flex
-          mb={5}
-          borderWidth="1px"
-          flexDir="column"
-          px={5}
-          py={8}
-          w="100%"
-          borderRadius="xl"
-          bg="white"
-        >
-          <ImageThumbnailViewer images={images} />
-          <Divider my={5} />
-          <Heading mb={5} fontSize="2xl">
-            {orderData.title}
-          </Heading>
-          <Text variant="secondary">{orderData.description}</Text>
+      <Box
+        w="100%"
+        boxShadow="md"
+        p={[2, 4, 6]}
+        bg="white"
+        borderColor="outline.medium"
+        borderWidth="1px"
+        borderRadius="lg"
+      >
+        <Flex flexDir={["column-reverse", "column-reverse", "row"]} w="100%">
+          <VStack
+            alignItems="flex-start"
+            mt={[8, 8, 0]}
+            mr={[0, 0, 4]}
+            spacing={4}
+            flex={1}
+          >
+            <Flex alignItems="center" w="100%">
+              <Avatar mr={2} user={orderData.owner} />
+              <Box>
+                <Text>{`${orderData.owner.first_name} ${orderData.owner.last_name}`}</Text>
+                <Rating
+                  fontSize="400"
+                  readonly
+                  rating={orderData.owner.rating}
+                />
+              </Box>
+              <Text variant="light" textAlign="right" fontSize="400" flex={1}>
+                {moment(orderData.date).format(FRONTEND_DATE_FORMAT)}
+              </Text>
+            </Flex>
+            <Text
+              fontSize="700"
+              w="100%"
+              fontWeight="700"
+              variant="secondary"
+              as="h1"
+            >
+              {orderData.title}
+            </Text>
+            <Text
+              minH={["unset", "unset", "7.5em"]}
+              w="100%"
+              fontSize="500"
+              variant="light"
+            >
+              {orderData.description}
+            </Text>
+            <Box
+              borderColor="outline.medium"
+              borderWidth="1px"
+              bg="lilaPurple.light"
+              w="100%"
+              mt={4}
+              p={3}
+              borderRadius="base"
+            >
+              <Text variant="light">
+                Buy From{" "}
+                <CLink href={orderData.order_url} color="warning.dark">
+                  {orderData.host}
+                </CLink>
+              </Text>
+              <Text variant="light">
+                Product Price{" "}
+                <Text color="text.medium" as="span">
+                  ${orderData.item_price}
+                </Text>
+              </Text>
+            </Box>
+            <Divider my={0} />
+            <Button
+              onClick={() => {
+                LayoutStore.toOrderProposalModalOpen({ order: orderData })
+              }}
+              size="lg"
+              variant="primary_dark"
+              w="100%"
+            >
+              Offer to deliver
+            </Button>
+          </VStack>
+          <ImageViewer images={images}>
+            <Center
+              mr={[0, 0, 4]}
+              mt={[2, 2, 0]}
+              p={2}
+              borderRadius="lg"
+              borderColor="outline.medium"
+              borderWidth={["0px", "0px", "1px"]}
+              flex={1}
+            >
+              <ImageViewer.LargeImage />
+            </Center>
+            <ImageViewer.ImageThumbnails />
+          </ImageViewer>
         </Flex>
-        <VStack
-          borderWidth="1px"
-          px={5}
-          py={8}
-          w="100%"
-          borderRadius="xl"
-          bg="white"
-          spacing={5}
-        >
-          <Text fontSize="sm" variant="secondary" textAlign="center">
-            You requrested this product to be bought and delivered 8 days ago{" "}
-            <br /> from amazon.com
-          </Text>
-          <Text w="100%" verticalAlign="baseline">
+
+        <Divider my={4} />
+        <HStack flexWrap="wrap" alignItems="center" w="100%">
+          <Text color="text.medium" as="span">{`${trimCityEmpty(
+            orderData.source.city
+          )}${orderData.source.country_en}`}</Text>
+          <CurvedArrowRight color="text.light" />
+          <Text color="text.medium" as="span">{`${trimCityEmpty(
+            orderData.destination.city
+          )}${orderData.destination.country_en}`}</Text>
+          <Text fontSize="500" variant="light" flex={1} textAlign="right">
             Traveler's reward{" "}
-            <Text as="strong" mt="-8px" fontSize="3xl">
+            <Text as="strong" color="text.dark" fontSize="hb1" fontWeight="700">
               ${orderData.price}
             </Text>
           </Text>
-          <Divider />
-          <Box w="100%">
-            <Text variant="secondary" as="label" size="sm">
-              From
-            </Text>
-            <Text pl={3}>
-              <LocationIcon />{" "}
-              {`${trimCityEmpty(orderData.source.city)}${
-                orderData.source.country_en
-              }`}
-            </Text>
-          </Box>
-          <Box w="100%">
-            <Text variant="secondary" as="label" size="sm">
-              To
-            </Text>
-            <Text pl={3}>
-              <LocationIcon />{" "}
-              {`${trimCityEmpty(orderData.destination.city)}${
-                orderData.destination.country_en
-              }`}
-            </Text>
-          </Box>
-        </VStack>
+        </HStack>
       </Box>
     )
   }

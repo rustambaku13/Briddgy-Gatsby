@@ -25,13 +25,13 @@ export const AddTripDetailsModal = ({ isOpen, setOpen, callback }) => {
     >
       <ModalOverlay />
       <ModalContent onSubmit={handleSubmit(callback)} as="form">
-        <ModalHeader fontSize="3xl">You are almost done</ModalHeader>
+        <ModalHeader fontSize="hb1">You are almost done</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
           <Text fontWeight="600" as="label">
             Unused baggage
           </Text>
-          <Text fontSize="sm" variant="secondary">
+          <Text fontSize="400" variant="secondary">
             How much baggage space you have left unused{" "}
           </Text>
           <Center>
@@ -44,7 +44,7 @@ export const AddTripDetailsModal = ({ isOpen, setOpen, callback }) => {
           <Text fontWeight="600" htmlFor="description" as="label">
             Description
           </Text>
-          <Text fontSize="sm" variant="secondary">
+          <Text fontSize="400" variant="secondary">
             Description of items you can carry, forbidden items and etc
           </Text>
           <Textarea

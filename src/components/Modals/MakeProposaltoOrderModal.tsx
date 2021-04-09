@@ -45,7 +45,7 @@ import UserStore from "../../store/UserStore"
 import { Trip, Trips } from "../../types/trip"
 import { trimCityEmpty } from "../../utils/misc"
 import { Loader } from "../Misc/Loader"
-export const MakeProposalOrderModal = observer(() => {
+export const MakeProposaltoOrderModal = observer(() => {
   const [filteredTrips, setFilteredTrips] = useState({
     loading: true,
     results: [],
@@ -56,26 +56,18 @@ export const MakeProposalOrderModal = observer(() => {
   const { handleSubmit, register, errors } = useForm()
   const selectedTrip = useRef(null)
   useEffect(() => {
-    // Fetch the trips if I have not yet visited profile page
-    if (
-      UserStore.trips.loading &&
-      LayoutStore.makeProposaltoOrderModalVisible
-    ) {
-      UserStore.fetchMyTrips()
-    }
-  }, [LayoutStore.makeProposaltoOrderModalVisible])
-  useEffect(() => {
-    // Filter the needed Trips
-    if (UserStore.upcomingTrips.length && LayoutStore.toOrderProposalContext) {
+    // Fetch the Trips suitable
+    if (LayoutStore.toOrderProposalModalVisible) {
       getSuggestedTrips(
-        LayoutStore.toOrderProposalContext.order.id,
+        LayoutStore.toOrderProposalModalContext.order.id,
         UserStore.me.id
       ).then(trips => {
         setFilteredTrips({ loading: false, results: trips.data.results })
       })
     }
-  }, [UserStore.upcomingTrips, LayoutStore.makeProposaltoOrderModalVisible])
+  }, [LayoutStore.toOrderProposalModalVisible])
   const switchPage = e => {
+    // Turn to the next page
     const trip = filteredTrips.results.filter(
       trip => trip.id == e.currentTarget.value
     )
@@ -83,16 +75,16 @@ export const MakeProposalOrderModal = observer(() => {
     setPage(1)
   }
   const closeModal = () => {
-    LayoutStore.savetoOrderProposalContext(null)
+    LayoutStore.toOrderProposalModalOpen(null)
     setPage(0)
     selectedTrip.current = null
-    LayoutStore.toggleProposaltoOrderModal()
     setFilteredTrips({ results: [], loading: true })
   }
   const proposalHandler = data => {
+    // Actually make a contract
     setLoading(true)
     addContract({
-      order: LayoutStore.toOrderProposalContext.order.id,
+      order: LayoutStore.toOrderProposalModalContext.order.id,
       trip: selectedTrip.current.id,
       price_bid: data.price,
     })
@@ -112,7 +104,7 @@ export const MakeProposalOrderModal = observer(() => {
   }
   return (
     <Modal
-      isOpen={LayoutStore.makeProposaltoOrderModalVisible}
+      isOpen={LayoutStore.toOrderProposalModalVisible}
       onClose={closeModal}
     >
       <ModalOverlay></ModalOverlay>
@@ -122,62 +114,31 @@ export const MakeProposalOrderModal = observer(() => {
         w="full"
         maxW="container.sm"
       >
-        <ModalHeader></ModalHeader>
+        <ModalHeader>
+          {page == 0
+            ? `You have ${filteredTrips.results.length} suitable Trips`
+            : `${trimCityEmpty(selectedTrip.current?.source?.city)}
+              ${selectedTrip.current?.source?.country_en} - ${trimCityEmpty(
+                selectedTrip.current?.destination?.city
+              )}     ${selectedTrip.current?.destination?.country_en}`}
+        </ModalHeader>
         <ModalCloseButton />
         <ModalBody fontSize="sm">
           <Tabs index={page}>
             <TabPanels>
               <TabPanel w="100%" h="100%" p={0}>
-                <Heading mb={5} fontSize="2xl">
-                  {`You have ${filteredTrips.results.length} suitable Trips`}
-                </Heading>
-
                 <Text
                   w="100%"
-                  bg="lightBlue.200"
-                  mb={8}
                   px={2}
+                  bg="lilaPurple.light"
+                  mb={8}
                   py={5}
                   borderRadius="md"
                 >
-                  <LightBulbIcon float="left" fontSize="20px" mr={2} />
+                  <LightBulbIcon float="left" fontSize="500" />
                   Select the trips that would like to offer for this order
                 </Text>
-                <HStack mb={5} spacing={4}>
-                  <Text
-                    fontWeight="500"
-                    flex={1}
-                    flexGrow={1}
-                    variant="secondary"
-                  >
-                    From
-                  </Text>
-                  <Text
-                    fontWeight="500"
-                    flex={1}
-                    flexGrow={1}
-                    variant="secondary"
-                  >
-                    To
-                  </Text>
-                  <Text
-                    flexGrow={0}
-                    fontWeight="500"
-                    flex={1}
-                    variant="secondary"
-                  >
-                    Baggage
-                  </Text>
-                  <Text
-                    flex={1}
-                    flexGrow={1}
-                    fontWeight="500"
-                    variant="secondary"
-                  >
-                    Date
-                  </Text>
-                  <Text w="50px"></Text>
-                </HStack>
+
                 {filteredTrips.loading ? <Loader mx="auto" /> : null}
                 {filteredTrips.results.map((trip: Trip) => (
                   <div key={trip.id}>
@@ -197,7 +158,7 @@ export const MakeProposalOrderModal = observer(() => {
                         {trip.date}
                       </Text>
                       <Button
-                        w="50px"
+                        w="12"
                         variant="link"
                         value={trip.id}
                         color="blue.500"
@@ -212,18 +173,11 @@ export const MakeProposalOrderModal = observer(() => {
                 ))}
               </TabPanel>
               <TabPanel p={0} w="100%" h="100%">
-                <Heading mb={5} fontSize="2xl">
-                  {trimCityEmpty(selectedTrip.current?.source?.city)}
-                  {selectedTrip.current?.source?.country_en}
-                  &nbsp;- &nbsp;
-                  {trimCityEmpty(selectedTrip.current?.destination?.city)}
-                  {selectedTrip.current?.destination?.country_en}
-                </Heading>{" "}
                 <Text
                   w="100%"
-                  bg="lightBlue.200"
-                  mb={8}
                   px={2}
+                  bg="lilaPurple.light"
+                  mb={8}
                   py={5}
                   borderRadius="md"
                 >
@@ -238,7 +192,7 @@ export const MakeProposalOrderModal = observer(() => {
                     <InputLeftAddon children="$" />
                     <NumberInput
                       defaultValue={
-                        LayoutStore.toOrderProposalContext?.order.price
+                        LayoutStore.toOrderProposalModalContext?.order.price
                       }
                       maxW="200px"
                     >
@@ -270,8 +224,8 @@ export const MakeProposalOrderModal = observer(() => {
                 {" "}
                 Back
               </Button>
-              <Button isLoading={loading} type="submit" variant="primary">
-                Submit
+              <Button isLoading={loading} type="submit" variant="success">
+                Offer Now
               </Button>
             </>
           ) : null}

@@ -16,11 +16,11 @@ import { CalendarIcon } from "../../icons/Calendar"
 import { LocationIcon } from "../../icons/Location"
 import RotateIcon from "../../icons/Rotate"
 import { TripIcon } from "../../icons/Trip"
+import LayoutStore from "../../store/LayoutStore"
 import UserStore from "../../store/UserStore"
 import { DatePicker } from "../Inputs/DatePicker"
 import { LocationAutoComplete } from "../Inputs/LocationAutoComplete"
 import { AddTripDetailsModal } from "../Modals/AddTripDetailsModal"
-import { LoginModalForm } from "./LoginModalForm"
 
 const TopSearchButton = chakra(
   ({ className, expand }: { className?: any; expand: any }) => {
@@ -64,9 +64,10 @@ const TopSearchButton = chakra(
 export const AddTripForm = chakra(({ className }: { className?: any }) => {
   const { register, getValues, handleSubmit, watch, errors } = useForm()
   const [modalOpen, setModalOpen] = useState(false)
-  const [loginModalOpen, setLoginModalOpen] = useState(false) // Modal controlling login add trip
+  // const [loginModalOpen, setLoginModalOpen] = useState(false) // Modal controlling login add trip
   const [loading, setLoading] = useState(false)
   const addTrip = () => {
+    // Actually adding the trip, of course if the user is logged in
     setLoading(true)
     flowResult(UserStore.saveNewTrip())
       .then(e => {
@@ -84,7 +85,7 @@ export const AddTripForm = chakra(({ className }: { className?: any }) => {
       // Add the trip and redirect
       return
     }
-    setLoginModalOpen(true)
+    LayoutStore.loginModalFormOpen(addTrip)
   }
 
   return (
@@ -105,11 +106,6 @@ export const AddTripForm = chakra(({ className }: { className?: any }) => {
       })}
       className={className}
     >
-      <LoginModalForm
-        isOpen={loginModalOpen}
-        setOpen={setLoginModalOpen}
-        callback={addTrip}
-      />
       <AddTripDetailsModal
         callback={finalSub}
         isOpen={modalOpen}
@@ -166,7 +162,7 @@ export const AddTripForm = chakra(({ className }: { className?: any }) => {
       <Button
         isLoading={loading}
         h="auto"
-        minH="40px"
+        minH="50px"
         fontWeight="700"
         px={[1, 5, 8]}
         variant="red_gradient"

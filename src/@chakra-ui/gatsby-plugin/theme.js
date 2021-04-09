@@ -9,12 +9,15 @@ import global from "./global"
 import Colors from "./colors"
 import sizes from "./grid"
 import Menu from "./Menu"
+import Modal from "./Modal"
+import shadows from "./BoxShadow"
 const overrides = {
   fonts: {
     html: "Nunito Sans",
     heading: "Nunito Sans",
     body: "Nunito Sans",
   },
+  shadows,
 
   fontSizes,
   sizes,
@@ -27,6 +30,7 @@ const overrides = {
     Button,
     Menu,
     Heading,
+    Modal,
     Input,
     Text,
   },

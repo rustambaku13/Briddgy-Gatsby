@@ -53,7 +53,7 @@ export const HowToEarnMoney = () => {
             only takes 1 minute
           </Text>
         </Box>
-        <Box maxW="400px">
+        <Box>
           <StepCircle
             mb={5}
             mx="auto"
@@ -77,7 +77,7 @@ export const HowToEarnMoney = () => {
             Offer delivery offers to the orderers, contact and chat with them.
           </Text>
         </Box>
-        <Box maxW="400px">
+        <Box>
           <StepCircle
             mb={5}
             mx="auto"
@@ -107,7 +107,7 @@ export const HowToEarnMoney = () => {
             simply grab & deliver the porduct.
           </Text>
         </Box>
-        <Box maxW="400px">
+        <Box>
           <StepCircle
             mb={5}
             mx="auto"

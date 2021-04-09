@@ -16,7 +16,7 @@ export const PaymentDisplay = chakra(
     return (
       <Box className={className}>
         <SkeletonText colorScheme="orange" isLoaded={!loading}>
-          <Box w="100%" p={3} borderRadius="lg" bg="blueAlpha.100">
+          <Box w="100%" p={3} borderRadius="lg" bg="lilaPurple.light">
             <Text variant="secondary" mb={5}>
               Product price{" "}
               <Text as="span" float="right">

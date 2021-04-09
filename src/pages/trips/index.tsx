@@ -39,6 +39,8 @@ import plane from "../../images/planeicon.svg"
 import { defaultTrips, Trip, Trips } from "../../types/trip"
 import { filterObject } from "../../utils/misc"
 import { HowToEarnMoney } from "../../components/Layout/HowToEarnMoney"
+import { NavigationContext } from "../../providers/navPage"
+import { BottomNavbar } from "../../components/Navbar/BottomNavbar"
 
 const TripsPage = ({ data, location }) => {
   const { register, handleSubmit, setValue } = useForm()
@@ -75,7 +77,10 @@ const TripsPage = ({ data, location }) => {
           content="List available travelers who are ready to deliver. Briddgy postless, peer-to-peer delivery platform. Worldwide shopping with fastest and cheapest delivery. Travel with minimum costs and earn money."
         />
       </Helmet>
-      <NavbarDefault />
+      <NavigationContext.Provider value={{ page: "trips" }}>
+        <NavbarDefault />
+        <BottomNavbar />
+      </NavigationContext.Provider>
       <Container pt="40px" as="section" minW="full">
         <Box
           onSubmit={handleSubmit(onSubmit)}

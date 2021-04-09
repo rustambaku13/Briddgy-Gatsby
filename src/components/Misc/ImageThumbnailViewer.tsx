@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import {
   Tabs,
   TabList,
@@ -10,7 +10,66 @@ import {
   Flex,
   VStack,
   Box,
+  chakra,
 } from "@chakra-ui/react"
+
+export const ImagesContext = React.createContext({
+  images: [],
+  selected: null,
+  select: img => {},
+})
+
+export const ImageViewer = ({ images, children }) => {
+  const [selected, setSelected] = useState(null)
+  useEffect(() => {
+    setSelected(images?.[0] || null)
+  }, [images])
+  return (
+    <ImagesContext.Provider
+      value={{
+        images,
+        selected,
+        select: setSelected,
+      }}
+    >
+      {children}
+    </ImagesContext.Provider>
+  )
+}
+
+ImageViewer.LargeImage = () => {
+  const context = useContext(ImagesContext)
+  return <Img src={context.selected?.preview} />
+}
+
+ImageViewer.ImageThumbnails = chakra(({ className }) => {
+  const context = useContext(ImagesContext)
+  const onSelect = e => {
+    e.preventDefault()
+    context.select(context.images[e.currentTarget.value])
+  }
+  const thumbnails = context.images.map((item, index) => {
+    return (
+      <Center
+        as="button"
+        onClick={onSelect}
+        value={index}
+        h="12"
+        w="12"
+        outline="none"
+        className={className}
+        zIndex="1"
+        borderWidth="1px"
+        borderRadius="md"
+        bg={item == context.selected ? "outline.light" : "white"}
+      >
+        <Img zIndex="-1" src={item.preview} />
+      </Center>
+    )
+  })
+  return <VStack mr="3">{thumbnails}</VStack>
+})
+
 function ImageThumbnailViewer({ images }) {
   const [selectedImage, setSelectedImage] = useState({})
   const onSelect = e => {

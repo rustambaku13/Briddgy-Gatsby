@@ -19,6 +19,9 @@ export default {
     light: {
       color: "text.light",
     },
+    lighter: {
+      color: "text.lighter",
+    },
     halfUnderline: {
       d: "inline-block",
       _after: {

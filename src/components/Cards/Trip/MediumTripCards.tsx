@@ -28,8 +28,7 @@ const MediumTripCard = chakra(
           <Box
             w="100%"
             className={className}
-            px={6}
-            py={4}
+            p={[3, 5]}
             bg="white"
             borderColor="outline.medium"
             borderWidth="1px"
@@ -70,10 +69,10 @@ const MediumTripCard = chakra(
                   From
                 </Text>
 
-                <Text fontWeight="700" fontSize="700" mb={1}>
+                <Text fontWeight="700" fontSize={[600, 700]} mb={1}>
                   {tripCityAnywhere(trip.source.city)}
                 </Text>
-                <Text fontSize="600" variant="secondary">
+                <Text fontSize={[500, 600]} variant="secondary">
                   {trip.source.country_en}
                 </Text>
               </Box>
@@ -83,10 +82,19 @@ const MediumTripCard = chakra(
                   To
                 </Text>
 
-                <Text fontWeight="700" fontSize="700" textAlign="right" mb={1}>
+                <Text
+                  fontWeight="700"
+                  fontSize={[600, 700]}
+                  textAlign="right"
+                  mb={1}
+                >
                   {tripCityAnywhere(trip.destination.city)}
                 </Text>
-                <Text fontSize="600" variant="secondary" textAlign="right">
+                <Text
+                  fontSize={[500, 600]}
+                  variant="secondary"
+                  textAlign="right"
+                >
                   {trip.destination.country_en}
                 </Text>
               </Box>

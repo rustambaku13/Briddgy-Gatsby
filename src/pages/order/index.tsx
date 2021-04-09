@@ -32,6 +32,8 @@ import plane from "../../images/planeicon.svg"
 import { Helmet } from "react-helmet"
 import Footer from "../../components/Footer"
 import { HowToEarnMoney } from "../../components/Layout/HowToEarnMoney"
+import { NavigationContext } from "../../providers/navPage"
+import { BottomNavbar } from "../../components/Navbar/BottomNavbar"
 const AddOrder = ({ data }) => {
   const { register, handleSubmit, errors } = useForm()
   return (
@@ -42,7 +44,10 @@ const AddOrder = ({ data }) => {
           content="Shop Worldwide with fastest and cheapest delivery. Briddgy postless, peer-to-peer delivery platform.Travel with minimum costs and earn money."
         />
       </Helmet>
-      <OrderNavbar />
+      <NavigationContext.Provider value={{ page: "order" }}>
+        <OrderNavbar />
+        <BottomNavbar />
+      </NavigationContext.Provider>
       <Box
         overflow="hidden"
         bgGradient="linear(to-b,tealBlue.light,tealBlue.dark)"
@@ -67,7 +72,7 @@ const AddOrder = ({ data }) => {
           <Box flex={3}>
             <Heading
               mb={5}
-              fontSize="hb4"
+              fontSize={["hb2", "hb4"]}
               color="white"
               as="h1"
               fontWeight="700"
@@ -75,7 +80,7 @@ const AddOrder = ({ data }) => {
             >
               Shop Product from Anywhere and save up to 40%
             </Heading>
-            <Text mr={4} d="inline-block" variant="transparentOutline">
+            <Text mb={4} mr={4} d="inline-block" variant="transparentOutline">
               Delivered by our verified users
             </Text>
             <Text d="inline-block" variant="transparentOutline">

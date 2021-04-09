@@ -18,6 +18,7 @@ import { ProductCard } from "../components/Cards/Order/Product"
 import { TravelDestinationCard } from "../components/Cards/Trip/TravelDestination"
 import Footer from "../components/Footer"
 import Navbar from "../components/Navbar"
+import { BottomNavbar } from "../components/Navbar/BottomNavbar"
 import { TestimonialLanding } from "../components/Testimonials"
 import { CalendarIcon } from "../icons/Calendar"
 import { ChevronRightIcon } from "../icons/ChevronRight"
@@ -37,6 +38,7 @@ const Home = ({ data }) => {
         />
       </Helmet>
       <Navbar />
+      <BottomNavbar />
       <Center
         minH="700px"
         py="60px"
@@ -57,7 +59,12 @@ const Home = ({ data }) => {
         />
 
         <Box>
-          <Heading mb={12} textAlign="center" fontWeight="700" fontSize="96px">
+          <Heading
+            mb={12}
+            textAlign="center"
+            fontWeight="700"
+            fontSize={["hb3", "hb5", "96px"]}
+          >
             Your first{" "}
             <Text variant="fullUnderline" as="span" color="tealBlue.light">
               postless
@@ -69,11 +76,18 @@ const Home = ({ data }) => {
             We connect travelers and orderers, making delivery more accessible
           </Text>
           <Flex>
-            <Box mx="auto">
-              <Button bg="tealBlue.base" mr={4} variant="primary" size="lg">
+            <Box px={3} mx="auto">
+              <Button
+                mb={5}
+                w={["100%", "auto"]}
+                bg="tealBlue.base"
+                mr={4}
+                variant="primary"
+                size="lg"
+              >
                 Order with Briddgy
               </Button>
-              <Button variant="outline" size="lg">
+              <Button mb={5} w={["100%", "auto"]} variant="outline" size="lg">
                 Travel with Briddgy
               </Button>
             </Box>
