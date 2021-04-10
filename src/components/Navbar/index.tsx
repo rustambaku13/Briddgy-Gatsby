@@ -36,11 +36,11 @@ import { AddTripFormNavigationMenu } from "../Form/AddTripForm"
 import { BottomNavigationItem } from "./BottomNavbar/BottomNavigationItem"
 let mouseListener = null
 
-//  ****** Top NAVBAR *******
+//  ******  Normal Navbars  *******
 const AuthorizedNavbar = () => {
   const [open, setOpen] = useState(false)
   const [expanded, setExpanded] = useState(false)
-
+  const context = useContext(NavigationContext)
   useEffect(() => {
     if (expanded) {
       mouseListener = event => {
@@ -83,12 +83,22 @@ const AuthorizedNavbar = () => {
             </Link>
           </Box>
           <Text d={["none", "none", "inline-block"]} mr={[2, 2, 4]}>
-            <Link className="nav-item" to="/trips">
+            <Link
+              className={
+                context.page == "trips" ? "nav-item-selected" : "nav-item"
+              }
+              to="/trips"
+            >
               Trips
             </Link>
           </Text>
           <Text mr={[2, 2, 4]} d={["none", "none", "inline-block"]}>
-            <Link className="nav-item" to="/orders">
+            <Link
+              className={
+                context.page == "orders" ? "nav-item-selected" : "nav-item"
+              }
+              to="/orders"
+            >
               Orders
             </Link>
           </Text>
@@ -111,7 +121,7 @@ const AuthorizedNavbar = () => {
               <Text
                 d={["none", "none", "none", "block"]}
                 mr={4}
-                fontWeight="600"
+                fontWeight="700"
               >
                 <PlaneIcon mt="-2px" fontSize="600" color="cherryRed.base" />{" "}
                 <Text
@@ -396,6 +406,7 @@ const DefaultNavbar = () => {
   )
 }
 
+//  ****** Exceptional Navbar Designs  *******
 export const OrderNavbar = () => {
   const ref = useRef()
   const [isSticky, setIsSticky] = useState(false)
@@ -451,7 +462,7 @@ export const TravelNavbar = () => {
     </>
   )
 }
-//  ****** Wrappers  *******
+//  ****** Wrapper  *******
 
 const NavbarDefault = observer(() => {
   if (UserStore.isLoggedIn) {

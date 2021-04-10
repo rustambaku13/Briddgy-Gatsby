@@ -11,6 +11,7 @@ import sizes from "./grid"
 import Menu from "./Menu"
 import Modal from "./Modal"
 import shadows from "./BoxShadow"
+import Accordion from "./Accordion"
 const overrides = {
   fonts: {
     html: "Nunito Sans",
@@ -28,6 +29,7 @@ const overrides = {
   components: {
     FormLabel,
     Button,
+    Accordion,
     Menu,
     Heading,
     Modal,

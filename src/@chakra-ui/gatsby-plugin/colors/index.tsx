@@ -6,7 +6,7 @@ export default {
   },
   crayolaGreen: {
     light: "#D2F9FF",
-    base: "#6ECEDC",
+    base: "#5CB2CD",
     dark: "#228796",
   },
   oxfordBlue: {

@@ -1,7 +1,63 @@
-import { Box, chakra, Center, Flex, Text } from "@chakra-ui/react"
+import {
+  Box,
+  chakra,
+  Center,
+  Flex,
+  Text,
+  VStack,
+  HStack,
+} from "@chakra-ui/react"
 import React from "react"
 import { CheckIcon } from "../../icons/Check"
+
 export const Step = ({
+  icon,
+  title,
+  step,
+  last,
+  selected,
+}: {
+  icon: any
+  title: string
+  last: any
+  step: number
+  selected: number
+}) => {
+  return (
+    <VStack w={last ? "auto" : "100%"} alignItems="stretch" spacing={1}>
+      <Flex w="100%" alignItems="center">
+        <Center
+          mr={2}
+          color="white"
+          fontSize="500"
+          bg="crayolaGreen.base"
+          borderRadius="50%"
+          h="10"
+          w="10"
+        >
+          {icon}
+        </Center>
+        {last ? null : (
+          <Box
+            overflow="hidden"
+            bg="outline.medium"
+            h="4px"
+            borderRadius="base"
+            flex={1}
+          >
+            <Box bg="crayolaGreen.base" h="100%" w="50%"></Box>
+          </Box>
+        )}
+      </Flex>
+      <Text fontSize="300" color="text.light" as="span">{`STEP ${step}`}</Text>
+      <Text whiteSpace="nowrap" color="text.medium" fontWeight="700">
+        {title}
+      </Text>
+    </VStack>
+  )
+}
+
+export const Step2 = ({
   Icon,
   title,
   step,
@@ -55,9 +111,9 @@ export const Step = ({
 export const Steps = chakra(
   ({ children, className }: { className?: any; children: any[] }) => {
     return (
-      <Flex className={className} w="100%">
+      <HStack alignItems="stretch" spacing={6} className={className} w="100%">
         {children}
-      </Flex>
+      </HStack>
     )
   }
 )

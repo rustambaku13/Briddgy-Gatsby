@@ -4,6 +4,7 @@ import {
   Divider,
   Flex,
   Heading,
+  HStack,
   Text,
   VStack,
 } from "@chakra-ui/react"
@@ -12,20 +13,26 @@ import { observer } from "mobx-react-lite"
 import React, { useEffect, useState } from "react"
 import { getOrderProposals } from "../../api/contract"
 import { getOrder, getOrders, getSuggestedTrips } from "../../api/order"
-import { PublicMediumTripCard } from "../../components/Cards/Trip/MediumTripCards"
+import { getTrips } from "../../api/trip"
 import { BigOrderCard } from "../../components/Cards/Order/BigOrderCard"
-import { OrderProposalCard } from "../../components/Cards/Order/OrderProposalCard"
+import { CollapsableOrderCard } from "../../components/Cards/Order/CollapsableOrderCard"
+import { PublicMediumOrderCard } from "../../components/Cards/Order/MediumOrderCards"
+import { ToOrderProposalCard } from "../../components/Cards/Order/toOrderProposalCard"
+import { PublicMediumTripCard } from "../../components/Cards/Trip/MediumTripCards"
+import Footer from "../../components/Footer"
+import { Empty } from "../../components/Misc/Empty"
 import { Loader } from "../../components/Misc/Loader"
+import { Step, Steps } from "../../components/Misc/Steps"
 import NavbarDefault from "../../components/Navbar"
+import { BottomNavbar } from "../../components/Navbar/BottomNavbar"
+import { CardIcon } from "../../icons/Card"
+import CheckIcon from "../../icons/Check"
+import { DeliveryBoxIcon } from "../../icons/DeliveryBox"
+import { NavigationContext } from "../../providers/navPage"
 import UserStore from "../../store/UserStore"
 import { Contracts, defaultContracts } from "../../types/contract"
 import { defaultOrders, Order, Orders } from "../../types/orders"
 import { defaultTrips, Trips } from "../../types/trip"
-import { PublicMediumOrderCard } from "../../components/Cards/Order/MediumOrderCards"
-import { Empty } from "../../components/Misc/Empty"
-import Footer from "../../components/Footer"
-import { NavigationContext } from "../../providers/navPage"
-import { BottomNavbar } from "../../components/Navbar/BottomNavbar"
 const MyOrderPage = ({ order }: { order: Order }) => {
   const [suggested, setSuggested]: [Trips, any] = useState({
     ...defaultTrips,
@@ -42,7 +49,7 @@ const MyOrderPage = ({ order }: { order: Order }) => {
         setSuggested(e.data)
       })
     }
-  }, [UserStore.complete])
+  }, [])
 
   const proposalRejectCallback = contract => {
     proposals.results = proposals.results.filter(item => item != contract)
@@ -58,56 +65,68 @@ const MyOrderPage = ({ order }: { order: Order }) => {
         <NavbarDefault />
         <BottomNavbar />
       </NavigationContext.Provider>
+      <Container bg="white" py={5} as="section" minW="full">
+        <Container maxW="container.lg">
+          <Steps>
+            <Step step={1} title="Deal Settled" icon={<CheckIcon />}></Step>
+            <Step step={2} title="Payment Made" icon={<CardIcon />}></Step>
+            <Step
+              step={3}
+              title="Delivery Complete"
+              icon={<DeliveryBoxIcon />}
+            ></Step>
+            <Step
+              last
+              step={4}
+              title="Payment Transfered"
+              icon={<CheckIcon />}
+            ></Step>
+          </Steps>
+        </Container>
+      </Container>
       <Container
-        minH="calc(100vh - 55px)"
-        px={16}
-        bg="blueAlpha.100"
-        pt={8}
+        minH="calc(100vh - 200px)"
+        bg="outline.light"
+        py={5}
         as="section"
         minW="full"
       >
-        <Flex mx="auto" maxW="container.xl" w="100%">
-          <BigOrderCard mr={8} orderData={order} maxW="450px" />
-          <Box flex={1}>
-            <Box
-              overflow="hidden"
-              mb="30px"
-              bg="white"
-              px={8}
-              py={12}
-              borderWidth="1px"
-              borderRadius="xl"
-            >
-              <Heading px={3} mb={8} fontSize="2xl">
+        <HStack
+          alignItems="flex-start"
+          spacing={6}
+          w="100%"
+          maxW="container.xl"
+          mx="auto"
+        >
+          <Box flex={2}>
+            <Box mb={10} bg="white" borderRadius="xl" borderWidth="1px" p={6}>
+              <Heading mb={4} as="h1" fontSize="600" fontWeight="700">
+                Order Summary
+              </Heading>
+              <CollapsableOrderCard orderData={order} />
+            </Box>
+            <Heading mb={4} as="h1" fontSize="600">
+              Suggested Trips
+            </Heading>
+            <VStack spacing={4}>
+              {suggested.results.map(trip => (
+                <PublicMediumTripCard trip={trip} />
+              ))}
+            </VStack>
+          </Box>
+          <Box flex={3}>
+            <Box bg="white" borderRadius="xl" borderWidth="1px" p={6}>
+              <Heading mb={4} as="h1" fontSize="600" fontWeight="700">
                 Proposals
               </Heading>
-              {proposals.results.map((contract, index) => {
-                return (
-                  <>
-                    <OrderProposalCard
-                      rejectCallback={proposalRejectCallback}
-                      contract={contract}
-                    />
-                    {index < proposals.results.length - 1 ? <Divider /> : null}
-                  </>
-                )
-              })}
-            </Box>
-            <Box overflow="hidden" mb="30px">
-              <Heading px={3} mb={8} fontSize="2xl">
-                Suggested
-              </Heading>
-              {suggested.results.map((trip, index) => {
-                return (
-                  <>
-                    <PublicMediumTripCard trip={trip} />
-                    {index < suggested.results.length - 1 ? <Divider /> : null}
-                  </>
-                )
-              })}
+              <VStack spacing={4}>
+                {proposals.results.map(contract => (
+                  <ToOrderProposalCard contract={contract} />
+                ))}
+              </VStack>
             </Box>
           </Box>
-        </Flex>
+        </HStack>
       </Container>
     </>
   )

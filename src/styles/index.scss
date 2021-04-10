@@ -3,13 +3,17 @@
 // Default Stuff
 // @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap");
 
-// ***********------VARIABLES------************
+/* ==========================================================================
+   VARIABLES
+   ========================================================================== */
 
 $transition_navbar: -ms-transform 150ms ease 0s, -webkit-transform 150ms ease 0s,
   transform 150ms ease 0s, opacity 50ms ease 20ms, visibility 0ms ease 150ms,
   top ease 150ms !important;
 
-// ***********------GLOBAL STYLES------************
+/* ==========================================================================
+   GLOBAL STYLES
+   ========================================================================== */
 
 @import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@200;300;400;600;700;800;900&display=swap");
 
@@ -28,9 +32,9 @@ html {
   }
 }
 
-// ***********------PAGE LEVEL STYLES------************
-
-// >>>LANDING PAGE
+/* ==========================================================================
+   PAGES
+   ========================================================================== */
 .landing-header {
   position: relative;
   overflow-x: hidden;
@@ -56,7 +60,6 @@ html {
   }
 }
 
-// >>>> Order Page top section Header
 .order-header {
   .overlay {
     right: -25vw;
@@ -74,6 +77,11 @@ html {
     }
   }
 }
+
+/* ==========================================================================
+    LARGE COMPONENT STYLES 
+   ========================================================================== */
+
 .nav-top {
   .form {
     display: none;
@@ -107,9 +115,6 @@ html {
   }
 }
 
-// ***********------PAGE LEVEL COMPONENT STYLES------************
-.nav-top {
-}
 #travel-navbar {
   position: sticky;
   position: -webkit-sticky;
@@ -335,7 +340,9 @@ html {
   }
 }
 
-// ***********------COMPONENT LEVEL STYLES------************
+/* ==========================================================================
+   SMALL COMPONENT STYLES
+   ========================================================================== */
 .travel-destination-card {
   img {
     transition: all 500ms ease 0s !important;
