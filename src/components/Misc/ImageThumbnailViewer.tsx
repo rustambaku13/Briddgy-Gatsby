@@ -11,6 +11,7 @@ import {
   VStack,
   Box,
   chakra,
+  AspectRatio,
 } from "@chakra-ui/react"
 
 export const ImagesContext = React.createContext({
@@ -50,7 +51,7 @@ ImageViewer.ImageThumbnails = chakra(({ className }) => {
   }
   const thumbnails = context.images.map((item, index) => {
     return (
-      <Center
+      <AspectRatio
         as="button"
         onClick={onSelect}
         value={index}
@@ -61,10 +62,10 @@ ImageViewer.ImageThumbnails = chakra(({ className }) => {
         zIndex="1"
         borderWidth="1px"
         borderRadius="md"
-        bg={item == context.selected ? "outline.light" : "white"}
+        boxShadow={item == context.selected ? "lg" : "none"}
       >
         <Img zIndex="-1" src={item.preview} />
-      </Center>
+      </AspectRatio>
     )
   })
   return <VStack mr="3">{thumbnails}</VStack>

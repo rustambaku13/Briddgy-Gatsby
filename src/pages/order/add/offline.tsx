@@ -42,6 +42,7 @@ import { ChevronLeftIcon } from "../../../icons/ChevronLeft"
 import { LightBulbIcon } from "../../../icons/LightBulb"
 import { PlaneIcon } from "../../../icons/Plane"
 import { NavigationContext } from "../../../providers/navPage"
+import LayoutStore from "../../../store/LayoutStore"
 import UserStore from "../../../store/UserStore"
 
 const pageFields = {
@@ -52,8 +53,7 @@ const Summary = ({ files, pageChange, back, page }) => {
   const { register, errors, watch, getValues, formState } = useFormContext()
   const item_price = watch("item_price")
   const price = watch("price")
-  const weight = watch("weight")
-  const quote = useQuoteGetterHook(item_price, price, page == 3)
+  const quote = useQuoteGetterHook(item_price, price, page == 2)
 
   return (
     <>
@@ -448,14 +448,13 @@ const AddOrderPage = ({ location }: PageProps) => {
     // Real add Order part
     try {
       setAdding(true)
-      await axios_normal.get("https://reqres.in/api/users/2")
-      // flowResult(UserStore.saveNewOrder())
-      //   .then(e => {
-      //     navigate("/profile?page=orders")
-      //   })
-      //   .finally(() => {
-      //     setAdding(false)
-      //   })
+      flowResult(UserStore.saveNewOrder())
+        .then(e => {
+          navigate("/profile?page=orders")
+        })
+        .finally(() => {
+          setAdding(false)
+        })
     } catch (e) {}
   }
   const pageChange = async data => {
@@ -470,7 +469,7 @@ const AddOrderPage = ({ location }: PageProps) => {
           addOrder()
           return
         }
-        // setloginModal(true)
+        LayoutStore.loginModalFormOpen(addOrder)
         return
       }
       const values = getValues(pageFields[page])
@@ -534,7 +533,12 @@ const AddOrderPage = ({ location }: PageProps) => {
                   />
                 </TabPanel>
                 <TabPanel px={0} display="flex" flexWrap="wrap">
-                  <Summary back={back} pageChange={pageChange} files={files} />
+                  <Summary
+                    page={page}
+                    back={back}
+                    pageChange={pageChange}
+                    files={files}
+                  />
                 </TabPanel>
               </TabPanels>
             </Tabs>
