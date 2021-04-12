@@ -1,15 +1,21 @@
 export interface Location {
-  city: string
-  country_en: string
-  id: number
-  full_ids: number[]
+  countryCode: string
+  id: string
+  details: [
+    {
+      en: {
+        city: string
+        country: string
+      }
+    }
+  ]
 }
-export interface Locations {
-  count: number
-  next: null | string
-  previous: null | string
-  results: Location[]
+export interface ApiLocation {
+  value: string
+  key: string
+  iso_a2: string
 }
+
 export const defaultLocations = {
   count: 0,
   next: null,

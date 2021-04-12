@@ -29,14 +29,16 @@ collections:
           label: Vertically Oriented,
           widget: "boolean",
           required: true,
+          hint: "Is this image vertical or horizontal. Vertical Images are viewed differently in website",
         }
       - { name: price, label: Price, required: true, widget: "number" }
       - { name: image, label: Image, required: true, widget: "image" }
+
   - name: tag
     label: Tag
     folder: tag
     create: true
-    delete: true
+    delete: false
     fields:
       - {
           label: "Template Key",
@@ -65,12 +67,13 @@ collections:
           name: "language",
           widget: "string",
           default: "en",
+          hint: "Language of content inside this testimonial",
         }
       - { label: "Title(Name Surname)", name: "title", widget: "string" }
       - { label: "Publish Date", name: "date", widget: "datetime" }
       - { label: "Short Description", name: "description", widget: "text" }
       - { label: "Featured Image", name: "featuredimage", widget: image }
-      - { label: "Body", name: "body", widget: "markdown" }
+      - { label: "Body", required: true, name: "body", widget: "markdown" }
       - {
           label: "Tags",
           name: "tag",
@@ -89,6 +92,7 @@ collections:
           value_field: "title",
           search_fields: ["title"],
           display_fields: ["title", "color"],
+          hint: "To which page this testimonial relates to. Select either [orderer,traveler] ",
         }
 
   - name: blog
@@ -134,4 +138,47 @@ collections:
           value_field: "title",
           search_fields: ["title"],
           display_fields: ["title", "color"],
+          hint: "In which page this blog should be displayed in.",
+        }
+
+  - name: faq
+    label: FAQ
+    folder: faq
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    fields:
+      - {
+          label: "Template Key",
+          name: "templateKey",
+          widget: "hidden",
+          default: "faq",
+        }
+      - {
+          label: "Popular question",
+          name: "popular",
+          widget: "boolean",
+          default: false,
+        }
+      - {
+          label: "Language(ISO 639-1 format)",
+          name: "language",
+          widget: "string",
+          default: "en",
+        }
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Body", name: "body", widget: "markdown" }
+      - {
+          label: "Section",
+          name: "tag",
+          widget: "select",
+          options:
+            [
+              "get_started",
+              "general",
+              "orderer",
+              "traveler",
+              "payment",
+              "tips",
+            ],
         }

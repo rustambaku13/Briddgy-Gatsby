@@ -17,6 +17,7 @@ import { Swiper, SwiperSlide } from "swiper/react"
 import { ProductCard } from "../components/Cards/Order/Product"
 import { TravelDestinationCard } from "../components/Cards/Trip/TravelDestination"
 import Footer from "../components/Footer"
+import { ProductGrid } from "../components/Layout/ProductGrid"
 import Navbar from "../components/Navbar"
 import { BottomNavbar } from "../components/Navbar/BottomNavbar"
 import { TestimonialLanding } from "../components/Testimonials"
@@ -95,7 +96,7 @@ const Home = ({ data }) => {
         </Box>
       </Center>
       <Box w="100%" mb={[20, 20, "150px"]} as="section">
-        <Container h="100%" maxW="1200px">
+        <Container h="100%" maxW="container.xl">
           <Heading mb={10} fontSize="hb3" fontWeight="700" textAlign="center">
             Travelers
           </Heading>
@@ -231,7 +232,7 @@ const Home = ({ data }) => {
         </Container>
       </Box>
       <Box w="100%" mb={[20, 20, "150px"]} as="section">
-        <Container h="100%" maxW="1200px">
+        <Container h="100%" maxW="container.xl">
           <Heading mb={10} fontSize="hb3" fontWeight="700" textAlign="center">
             Orderers
           </Heading>
@@ -317,45 +318,8 @@ const Home = ({ data }) => {
               </Link>
             </Text>
           </Text>
-          <Flex pt="50px" w="100%">
-            <Grid
-              gridTemplateColumns={[
-                "repeat(1, 1fr)",
-                "repeat(2, 1fr)",
-                "repeat(4, 1fr)",
-                "repeat(4, 1fr)",
-              ]}
-              gap="32px"
-              w="100%"
-            >
-              <ProductCard
-                productId={1}
-                price={data.products_vertical.edges?.[0].node.frontmatter.price}
-                productName={
-                  data.products_vertical.edges?.[0].node.frontmatter.title
-                }
-                store={data.products_vertical.edges?.[0].node.frontmatter.store}
-                img={data.products_vertical.edges?.[0].node.frontmatter.image}
-              />
-              <ProductCard
-                productId="1"
-                price={data.products_vertical.edges?.[1].node.frontmatter.price}
-                productName={
-                  data.products_vertical.edges?.[1].node.frontmatter.title
-                }
-                store={data.products_vertical.edges?.[1].node.frontmatter.store}
-                img={data.products_vertical.edges?.[1].node.frontmatter.image}
-              />
-              <ProductCard
-                gridColumn={["1 / span 1", "1 / span 2", "3 / span 2"]}
-                productId="1"
-                price={data.products_horizontal.frontmatter.price}
-                productName={data.products_horizontal.frontmatter.title}
-                store={data.products_horizontal.frontmatter.store}
-                img={data.products_horizontal.frontmatter.image}
-              />
-            </Grid>
-          </Flex>
+
+          <ProductGrid />
 
           <Text mt="40px" fontSize="2xl" textAlign="right">
             Check our{" "}
@@ -374,7 +338,7 @@ const Home = ({ data }) => {
         </Container>
       </Box>
       <Box w="100%" mb={[20, 20, "150px"]} as="section">
-        <Container h="100%" maxW="1200px">
+        <Container h="100%" maxW="container.xl">
           <Heading mb="10" fontSize="hb3" fontWeight="700" textAlign="center">
             Why people love Briddgy &nbsp;
             <HeartIcon display="inline-block" color="red.400" />

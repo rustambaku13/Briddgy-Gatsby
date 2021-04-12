@@ -3,9 +3,9 @@ import {
   Button,
   Container,
   Divider,
+  Grid,
   Heading,
   IconButton,
-  Img as CImg,
   LinkBox,
   SimpleGrid,
   Stack,
@@ -26,85 +26,15 @@ import { Swiper, SwiperSlide } from "swiper/react"
 import { BlogLinkCard } from "../../components/Cards/Blog/BlogLinkCard"
 import { TestimonialLinkCard } from "../../components/Cards/Testimonial/TestimonialLinkCard"
 import { TravelDestinationCard } from "../../components/Cards/Trip/TravelDestination"
-import { StepCircle } from "../../components/Misc/StepCircle"
+import Footer from "../../components/Footer"
+import { HowToEarnMoney } from "../../components/Layout/HowToEarnMoney"
 import { TravelNavbar } from "../../components/Navbar"
+import { BottomNavbar } from "../../components/Navbar/BottomNavbar"
 import BulletTriangleIcon from "../../icons/BulletTriangle"
 import { ChevronLeftIcon } from "../../icons/ChevronLeft"
 import { ChevronRightIcon } from "../../icons/ChevronRight"
 import SupportIcon from "../../icons/Support"
-import card from "../../images/debit-cardicon.svg"
-import earth from "../../images/earthicon.svg"
-import note from "../../images/noteicon.svg"
-import plane from "../../images/planeicon.svg"
-import Footer from "../../components/Footer"
-import { HowToEarnMoney } from "../../components/Layout/HowToEarnMoney"
-import { BottomNavbar } from "../../components/Navbar/BottomNavbar"
 import { NavigationContext } from "../../providers/navPage"
-export const query = graphql`
-  query {
-    globe: file(relativePath: { eq: "travel_page_main.png" }) {
-      childImageSharp {
-        fluid(maxWidth: 500) {
-          ...GatsbyImageSharpFluid
-        }
-      }
-    }
-    az: file(relativePath: { eq: "azerbaijan.jpg" }) {
-      childImageSharp {
-        fluid {
-          ...GatsbyImageSharpFluid
-        }
-      }
-    }
-    ru: file(relativePath: { eq: "russia.jpg" }) {
-      childImageSharp {
-        fluid {
-          ...GatsbyImageSharpFluid
-        }
-      }
-    }
-    tr: file(relativePath: { eq: "turkey.jpg" }) {
-      childImageSharp {
-        fluid {
-          ...GatsbyImageSharpFluid
-        }
-      }
-    }
-    en: file(relativePath: { eq: "england.jpg" }) {
-      childImageSharp {
-        fluid {
-          ...GatsbyImageSharpFluid
-        }
-      }
-    }
-    # Blogs
-    blogs: allMarkdownRemark(
-      filter: {
-        fields: { sourceName: { eq: "blogs" } }
-        frontmatter: { scoppe_tag: { eq: "Traveler" } }
-      }
-      limit: 4
-    ) {
-      edges {
-        node {
-          frontmatter {
-            description
-            title
-            featuredimage {
-              childImageSharp {
-                fluid(maxWidth: 800) {
-                  ...GatsbyImageSharpFluid
-                }
-              }
-            }
-            date
-            tag
-          }
-        }
-      }
-    }
-  }
-`
 
 const AddTrip = ({ data }: PageProps) => {
   return (
@@ -285,32 +215,18 @@ const AddTrip = ({ data }: PageProps) => {
           Information for orderers
         </Heading>
 
-        <BlogLinkCard
-          title={data.blogs.edges[0].node.frontmatter.title}
-          description={data.blogs.edges[0].node.frontmatter.description}
-          tags={data.blogs.edges[0].node.frontmatter.tag}
-          orientation="horizontal"
-        />
-        <SimpleGrid columns={[1, 2, 3]} spacing="8">
+        <Grid templateColumns="repeat(9, 1fr)" gap={[3, 5, 8]}>
           <BlogLinkCard
-            title={data.blogs.edges[0].node.frontmatter.title}
-            description={data.blogs.edges[0].node.frontmatter.description}
-            tags={data.blogs.edges[0].node.frontmatter.tag}
-            orientation="vertical"
+            flexDir={["column", "column", "row"]}
+            gridColumn={["1 / span 9"]}
+            blog={data.blogs.edges[0].node.frontmatter}
           />
           <BlogLinkCard
-            title={data.blogs.edges[0].node.frontmatter.title}
-            description={data.blogs.edges[0].node.frontmatter.description}
-            tags={data.blogs.edges[0].node.frontmatter.tag}
-            orientation="vertical"
+            flexDir={["column", "column", "row"]}
+            gridColumn={["1 / span 9", "1 / span 9", "1 / span 9"]}
+            blog={data.blogs.edges[1].node.frontmatter}
           />
-          <BlogLinkCard
-            title={data.blogs.edges[0].node.frontmatter.title}
-            description={data.blogs.edges[0].node.frontmatter.description}
-            tags={data.blogs.edges[0].node.frontmatter.tag}
-            orientation="vertical"
-          />
-        </SimpleGrid>
+        </Grid>
       </Container>
       <Divider />
       <HowToEarnMoney />
@@ -326,16 +242,13 @@ const AddTrip = ({ data }: PageProps) => {
           maxW="container.xl"
         >
           <TestimonialLinkCard
-            title="Rustam Quliyev"
-            description="Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce "
+            testimonial={data.testimonials.edges[1].node.frontmatter}
           />
           <TestimonialLinkCard
-            title="Rustam Quliyev"
-            description="Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce "
+            testimonial={data.testimonials.edges[1].node.frontmatter}
           />
           <TestimonialLinkCard
-            title="Rustam Quliyev"
-            description="Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce "
+            testimonial={data.testimonials.edges[1].node.frontmatter}
           />
         </SimpleGrid>
       </Container>
@@ -392,4 +305,95 @@ const AddTrip = ({ data }: PageProps) => {
     </>
   )
 }
+
+export const query = graphql`
+  query {
+    globe: file(relativePath: { eq: "travel_page_main.png" }) {
+      childImageSharp {
+        fluid(maxWidth: 500) {
+          ...GatsbyImageSharpFluid
+        }
+      }
+    }
+    az: file(relativePath: { eq: "azerbaijan.jpg" }) {
+      childImageSharp {
+        fluid {
+          ...GatsbyImageSharpFluid
+        }
+      }
+    }
+    ru: file(relativePath: { eq: "russia.jpg" }) {
+      childImageSharp {
+        fluid {
+          ...GatsbyImageSharpFluid
+        }
+      }
+    }
+    tr: file(relativePath: { eq: "turkey.jpg" }) {
+      childImageSharp {
+        fluid {
+          ...GatsbyImageSharpFluid
+        }
+      }
+    }
+    en: file(relativePath: { eq: "england.jpg" }) {
+      childImageSharp {
+        fluid {
+          ...GatsbyImageSharpFluid
+        }
+      }
+    }
+    #Testimonials
+    testimonials: allMarkdownRemark(
+      filter: { fields: { sourceName: { eq: "testimonial" } } }
+      limit: 3
+    ) {
+      edges {
+        node {
+          frontmatter {
+            title
+            date
+            description
+            featuredimage {
+              childImageSharp {
+                fluid(fit: INSIDE) {
+                  ...GatsbyImageSharpFluid
+                }
+              }
+            }
+            tag
+            scoppe_tag
+          }
+        }
+      }
+    }
+
+    # Blogs
+    blogs: allMarkdownRemark(
+      filter: {
+        fields: { sourceName: { eq: "blogs" } }
+        frontmatter: { scoppe_tag: { eq: "Traveler" } }
+      }
+      limit: 4
+    ) {
+      edges {
+        node {
+          frontmatter {
+            description
+            title
+            featuredimage {
+              childImageSharp {
+                fluid(maxWidth: 800) {
+                  ...GatsbyImageSharpFluid
+                }
+              }
+            }
+            date
+            tag
+          }
+        }
+      }
+    }
+  }
+`
 export default injectIntl(AddTrip)

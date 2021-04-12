@@ -5,8 +5,6 @@ import {
   Flex,
   Heading,
   IconButton,
-  Img as CImg,
-  LinkBox,
   Menu,
   MenuButton,
   MenuItemOption,
@@ -16,34 +14,37 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react"
-import { Link, navigate } from "gatsby-plugin-intl"
 import { graphql } from "gatsby"
+import { navigate } from "gatsby-plugin-intl"
 import React, { useEffect, useState } from "react"
 import { Helmet } from "react-helmet"
-import { useForm } from "react-hook-form"
+import { FormProvider, useForm } from "react-hook-form"
 import { getTrips } from "../../api/trip"
 import { TestimonialLinkCard } from "../../components/Cards/Testimonial/TestimonialLinkCard"
 import { PublicMediumTripCard } from "../../components/Cards/Trip/MediumTripCards"
 import Footer from "../../components/Footer"
 import { LocationAutoComplete } from "../../components/Inputs/LocationAutoComplete"
+import { HowToEarnMoney } from "../../components/Layout/HowToEarnMoney"
 import { Empty } from "../../components/Misc/Empty"
 import { Loader } from "../../components/Misc/Loader"
-import { StepCircle } from "../../components/Misc/StepCircle"
 import NavbarDefault from "../../components/Navbar"
+import { BottomNavbar } from "../../components/Navbar/BottomNavbar"
 import { ChevronDownIcon } from "../../icons/ChevronDown"
 import RotateIcon from "../../icons/Rotate"
-import card from "../../images/debit-cardicon.svg"
-import earth from "../../images/earthicon.svg"
-import note from "../../images/noteicon.svg"
-import plane from "../../images/planeicon.svg"
-import { defaultTrips, Trip, Trips } from "../../types/trip"
-import { filterObject } from "../../utils/misc"
-import { HowToEarnMoney } from "../../components/Layout/HowToEarnMoney"
 import { NavigationContext } from "../../providers/navPage"
-import { BottomNavbar } from "../../components/Navbar/BottomNavbar"
+import { defaultTrips, Trip, Trips } from "../../types/trip"
+import { filterObject, swapItinerary } from "../../utils/misc"
+
+/**
+ * Trip Page /trips
+ * @var {results} // Stores the results of searched trips
+ * @var {loading} //  Is the state in Loading
+ * @returns
+ */
 
 const TripsPage = ({ data, location }) => {
-  const { register, handleSubmit, setValue } = useForm()
+  const methods = useForm()
+  const { register, handleSubmit, setValue } = methods
   const [results, setResults]: [Trips, any] = useState(defaultTrips)
   const [loading, setLoading] = useState(true)
   const updateFilters = () => {
@@ -52,9 +53,9 @@ const TripsPage = ({ data, location }) => {
     for (const [key, value] of a.entries()) {
       if (!value) continue
       setValue(key, value)
-
       b[key] = value
     }
+    setLoading(true)
     getTrips(b)
       .then(({ data }) => {
         setResults(data)
@@ -70,7 +71,7 @@ const TripsPage = ({ data, location }) => {
     navigate(`.?${searchParams.toString()}`)
   }
   return (
-    <>
+    <FormProvider {...methods}>
       <Helmet title="Briddgy | Available Travelers" defer={false}>
         <meta
           name="description"
@@ -106,15 +107,17 @@ const TripsPage = ({ data, location }) => {
                 From
               </Text>
               <LocationAutoComplete
-                name="origin"
+                name="src"
                 placeholder="City or Country"
                 fontSize="md"
-                parentRef={register()}
               />
             </Flex>
             <IconButton
               variant="link"
               mx={["auto", "auto", 5]}
+              onClick={() => {
+                swapItinerary(methods.getValues(), setValue)
+              }}
               mb={5}
               aria-label="Swap Button"
               icon={
@@ -220,38 +223,59 @@ const TripsPage = ({ data, location }) => {
 
       <HowToEarnMoney />
       <Container my="80px" pt={8} maxW="full" as="section">
-        <Heading textAlign="center" mb="80px">
+        <Heading mb={10} fontSize="hb3" fontWeight="700" textAlign="center">
           Why our shoppers love Briddgy
         </Heading>
         <SimpleGrid
           spacing={7}
-          columns={[1, 1, 3]}
+          columns={[1, 2, 3]}
           mx="auto"
           className="even-right-align"
           maxW="container.xl"
         >
           <TestimonialLinkCard
-            title="Rustam Quliyev"
-            description="Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce "
+            testimonial={data.testimonials.edges[1].node.frontmatter}
           />
           <TestimonialLinkCard
-            title="Rustam Quliyev"
-            description="Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce "
+            testimonial={data.testimonials.edges[1].node.frontmatter}
           />
           <TestimonialLinkCard
-            title="Rustam Quliyev"
-            description="Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce "
+            testimonial={data.testimonials.edges[1].node.frontmatter}
           />
         </SimpleGrid>
       </Container>
 
       <Footer />
-    </>
+    </FormProvider>
   )
 }
 
 export const query = graphql`
   query {
+    testimonials: allMarkdownRemark(
+      filter: { fields: { sourceName: { eq: "testimonial" } } }
+      limit: 3
+    ) {
+      edges {
+        node {
+          frontmatter {
+            title
+            date
+            description
+            featuredimage {
+              childImageSharp {
+                fluid(fit: INSIDE) {
+                  ...GatsbyImageSharpFluid
+                }
+              }
+            }
+            tag
+            scoppe_tag
+          }
+        }
+      }
+    }
+
     nature_travel: file(relativePath: { eq: "nature_travel.png" }) {
       childImageSharp {
         fixed(fit: COVER) {

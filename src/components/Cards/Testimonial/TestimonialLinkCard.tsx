@@ -1,21 +1,53 @@
-import { chakra, Box, Heading, Tag, Text, Flex } from "@chakra-ui/react"
+import {
+  chakra,
+  Box,
+  Heading,
+  Tag,
+  Text,
+  Flex,
+  AspectRatio,
+} from "@chakra-ui/react"
 import Img from "gatsby-image"
+import { Link } from "gatsby-plugin-intl"
 import React from "react"
+import { Testimonial } from "../../../types/testimonial"
 // Switching Order Type Button. Used in Create Order Page
 export const TestimonialLinkCard = chakra(
   ({
-    title,
-
-    description,
+    testimonial,
     className,
-    orientation = "vertical",
   }: {
-    title: string
-
-    description: string
+    testimonial: Testimonial
     className?: any
-    orientation?: "horizontal" | "vertical"
   }) => {
+    return (
+      <Flex
+        maxH="400px"
+        flexDir="column"
+        className={className + " testimonial"}
+        mb={8}
+        w="100%"
+      >
+        <Img fluid={testimonial.featuredimage.childImageSharp.fluid} />
+
+        <Box mt={3} flex={3}>
+          <Link to="blog/">
+            <Heading mb={5} fontSize="2xl" as="h3">
+              {testimonial.title}
+            </Heading>
+          </Link>
+          <Text className="clamp-2" variant="secondary">
+            {testimonial.description}
+          </Text>
+          <Link to="blog/">
+            <Text color="tealBlue.base" as="span">
+              Read more
+            </Text>
+          </Link>
+        </Box>
+      </Flex>
+    )
+
     if (orientation == "horizontal") {
       return (
         <Flex mb={8} minH="300px" maxW="800px" w="100%">

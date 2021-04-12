@@ -1,52 +1,43 @@
-import { chakra, Box, Heading, Tag, Text, Flex } from "@chakra-ui/react"
-import Img from "gatsby-image"
+import {
+  AspectRatio,
+  Box,
+  Center,
+  chakra,
+  Flex,
+  Heading,
+  Tag,
+  Text,
+} from "@chakra-ui/react"
 import React from "react"
-// Switching Order Type Button. Used in Create Order Page
+import { Blog } from "../../../types/blog"
+import Img from "gatsby-image"
+import { Link } from "gatsby-plugin-intl"
 export const BlogLinkCard = chakra(
-  ({
-    title,
-    tags,
-    description,
-    className,
-    orientation = "vertical",
-  }: {
-    title: string
-    tags: any[]
-    description: string
-    className?: any
-    orientation: "horizontal" | "vertical"
-  }) => {
-    if (orientation == "horizontal") {
-      return (
-        <Flex className={className} mb={8} maxW="800px" w="100%">
-          <Box mr={[2, 4, 6]} flex="3" bg="purple.200" borderRadius="xl"></Box>
-          <Box flex="2">
-            {tags.map(item => (
-              <Tag mb={5} colorScheme="blue">
-                {item}
-              </Tag>
-            ))}
-            <Heading mb={5} fontSize="2xl" as="h3">
-              {title}
-            </Heading>
-            <Text variant="secondary">{description}</Text>
-          </Box>
-        </Flex>
-      )
-    }
+  ({ blog, className }: { blog: Blog; className?: any }) => {
     return (
-      <Box className={className}>
-        <Box mb={5} h="200px" bg="blue.200" borderRadius="xl"></Box>
-        {tags.map(item => (
-          <Tag mb={5} colorScheme="blue">
-            {item}
-          </Tag>
-        ))}
-        <Heading mb={5} fontSize="2xl" as="h3">
-          {title}
-        </Heading>
-        <Text variant="secondary">{description}</Text>
-      </Box>
+      <Flex className={className + " blog-post"} mb={4}>
+        <Box mb={5} flex={3} overflow="hidden" mr={[2, 4, 6]}>
+          <Img fluid={blog.featuredimage.childImageSharp.fluid} />
+        </Box>
+        <Box flex={3}>
+          {blog.tag.map(item => (
+            <Tag mb={5} mr={1} colorScheme="blue">
+              {item}
+            </Tag>
+          ))}
+          <Link to="blog/">
+            <Heading mb={5} fontSize="2xl" as="h3">
+              {blog.title}
+            </Heading>
+          </Link>
+          <Text variant="secondary">{blog.description}</Text>
+          <Link to="blog/">
+            <Text color="tealBlue.base" as="span">
+              Read more
+            </Text>
+          </Link>
+        </Box>
+      </Flex>
     )
   }
 )

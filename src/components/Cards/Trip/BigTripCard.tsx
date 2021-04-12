@@ -14,7 +14,7 @@ import React from "react"
 import { BACKEND_DATE_FORMAT, bmify, FRONTEND_DATE_FORMAT } from "../../../api"
 import Img from "gatsby-image"
 import { Trip } from "../../../types/trip"
-import { tripCityAnywhere } from "../../../utils/misc"
+import { getCountryFromCode, tripCityAnywhere } from "../../../utils/misc"
 import { Avatar } from "../../Avatar/Avatar"
 import { Rating } from "../../Misc/Rating"
 import LayoutStore from "../../../store/LayoutStore"
@@ -61,11 +61,12 @@ export const BigTripCard = chakra(
           />
         </Box>
         <Heading fontWeight="700" fontSize={["hb1", "hb2"]} as="h2">
-          {tripCityAnywhere(trip.source.city)}, {trip.source.country_en}
+          {tripCityAnywhere(trip.src.details[0].en.city)},{" "}
+          {getCountryFromCode(trip.src.countryCode)}
         </Heading>
         <Heading fontWeight="700" fontSize={["hb1", "hb2"]} as="h2">
-          {tripCityAnywhere(trip.destination.city)},{" "}
-          {trip.destination.country_en}
+          {tripCityAnywhere(trip.dest.details[0].en.city)},
+          {getCountryFromCode(trip.dest.countryCode)}
         </Heading>
         <Text fontWeight="700">
           {moment(trip.date).format(FRONTEND_DATE_FORMAT)}

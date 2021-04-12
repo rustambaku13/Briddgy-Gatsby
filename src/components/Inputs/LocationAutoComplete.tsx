@@ -8,56 +8,69 @@ import {
   Text,
 } from "@chakra-ui/react"
 import React, { useState } from "react"
+import { useForm, FormProvider, useFormContext } from "react-hook-form"
 import { searchLocation } from "../../api/location"
 import { LocationIcon } from "../../icons/Location"
-import { Location } from "../../types/location"
+import { ApiLocation, Location } from "../../types/location"
 import { trimCityEmpty } from "../../utils/misc"
 
 let a = null
+
+/**
+ *
+ * This is location autocomplete that is used everywhere
+ * @tutorial
+ * Has to be wrapped in a FormProvider from react hook form
+ * @var {hidden} // When the Bottom List is Hidden
+ * @var {searching} // When the Currently there is a search going on
+ * @var {results} // Listed Cities
+ * @method <searchHander> // Firing each time our input is altered
+ * @method <fetchData> // Actually fetch api and populate the results
+ * @method <selecthandler> // Populate hidden input fields on selecting the option
+ */
 export const LocationAutoComplete = chakra(
-  ({
-    className,
-    parentRef,
-    size = "md",
-    placeholder = "Where to",
-    name,
-  }: {
-    className?: string
-    placeholder?: string
-    parentRef: any
-    size?: "lg" | "md"
-    name: string
-  }) => {
-    const [searching, setSearching] = useState(false)
-
-    const [results, setResults] = useState([])
+  ({ className, name, size, placeholder }) => {
+    const { register, setValue } = useFormContext()
     const [hidden, setHidden] = useState(true)
-    let inputRef = null
-    let nameRef = null
-
+    const [searching, setSearching] = useState(false)
+    const [results, setResults] = useState([])
     const fetchData = value => {
-      searchLocation(value).then(({ data }) => {
-        setResults(data.results)
-        setSearching(false)
-      })
+      searchLocation(value)
+        .then(({ data }) => {
+          setResults(data)
+          setSearching(false)
+        })
+        .catch(() => {
+          setResults([])
+          setSearching(false)
+        })
     }
     const searchHandler = ({ target: { value } }) => {
       if (value.length && hidden) setHidden(false)
       else if (value.length == 0 && !hidden) {
         setHidden(true)
-        inputRef.value = null
+        setValue(name + "_id", undefined)
+        setValue(name + "_code", undefined)
       }
       if (a) clearTimeout(a)
-      a = setTimeout(fetchData, 300, value)
+      a = setTimeout(fetchData, 400, value)
       setSearching(true)
     }
     const selectHandler = e => {
-      const [id, title] = [
+      const [id, title, type] = [
         e.currentTarget.getAttribute("value"),
         e.currentTarget.getAttribute("title"),
+        e.currentTarget.getAttribute("data-type"),
       ]
-      inputRef.value = id
-      nameRef.value = title
+      console.log(title, id)
+
+      if (type == "city") {
+        // City was selected
+        setValue(name + "_id", id)
+        setValue(name, title)
+      } else {
+        // Country was selected
+      }
       document.activeElement.blur()
     }
     return (
@@ -69,23 +82,13 @@ export const LocationAutoComplete = chakra(
             autoComplete="off"
             onChange={searchHandler}
             type="search"
-            // ref={displayRef}
-            name={name + "_name"}
-            ref={e => {
-              parentRef(e)
-              nameRef = e
-            }}
+            ref={register()}
+            name={name}
             border="none"
             placeholder={placeholder}
           />
-          <input
-            type="hidden"
-            name={name}
-            ref={e => {
-              parentRef(e)
-              inputRef = e
-            }}
-          />
+          <input type="hidden" ref={register()} name={name + "_id"} />
+          <input type="hidden" ref={register()} name={name + "_code"} />
         </InputGroup>
         <Box
           hidden={hidden}
@@ -102,26 +105,27 @@ export const LocationAutoComplete = chakra(
               <Spinner />
             </Flex>
           ) : (
-            results.map((location: Location) => (
+            results.map((location: ApiLocation) => (
               <Box
                 as="button"
                 fontSize="1em"
                 type="button"
                 onClick={selectHandler}
-                value={location.id}
-                key={location.id}
-                title={`${trimCityEmpty(location.city)}${location.country_en}`}
+                data-type="city"
+                value={location.key}
+                key={location.key}
+                title={`${trimCityEmpty(location.value)}${location.iso_a2}`}
               >
                 <LocationIcon />
                 <Text as="h5">
-                  {`${location.city || location.country_en}`}{" "}
+                  {trimCityEmpty(location.value)}
                   <Text
                     ml="auto"
                     textTransform="uppercase"
                     as="span"
                     variant="secondary"
                   >
-                    {location.city ? location.country_en.substr(0, 2) : ""}
+                    {location.iso_a2}
                   </Text>
                 </Text>
               </Box>

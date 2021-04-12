@@ -121,7 +121,7 @@ const AuthorizedNavbar = () => {
               <Text
                 d={["none", "none", "none", "block"]}
                 mr={4}
-                fontWeight="700"
+                fontWeight="7gat00"
               >
                 <PlaneIcon mt="-2px" fontSize="600" color="cherryRed.base" />{" "}
                 <Text
@@ -240,7 +240,6 @@ const AuthorizedNavbar = () => {
 }
 
 const DefaultNavbar = () => {
-  const [open, setOpen] = useState(false)
   const [expanded, setExpanded] = useState(false)
   const context = useContext(NavigationContext)
   useEffect(() => {

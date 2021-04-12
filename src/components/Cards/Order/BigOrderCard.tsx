@@ -17,7 +17,7 @@ import React, { useEffect, useState } from "react"
 import { bmify, FRONTEND_DATE_FORMAT } from "../../../api"
 import { LocationIcon } from "../../../icons/Location"
 import { Order } from "../../../types/orders"
-import { trimCityEmpty } from "../../../utils/misc"
+import { getCountryFromCode, trimCityEmpty } from "../../../utils/misc"
 import { Avatar } from "../../Avatar/Avatar"
 import ImageThumbnailViewer, {
   ImageViewer,
@@ -138,12 +138,12 @@ export const BigOrderCard = chakra(
         <Divider my={4} />
         <HStack flexWrap="wrap" alignItems="center" w="100%">
           <Text color="text.medium" as="span">{`${trimCityEmpty(
-            orderData.source.city
-          )}${orderData.source.country_en}`}</Text>
+            orderData.src.details[0].en.city
+          )}${getCountryFromCode(orderData.src.countryCode)}`}</Text>
           <CurvedArrowRight color="text.light" />
           <Text color="text.medium" as="span">{`${trimCityEmpty(
-            orderData.destination.city
-          )}${orderData.destination.country_en}`}</Text>
+            orderData.dest.details[0].en.city
+          )}${getCountryFromCode(orderData.dest.countryCode)}`}</Text>
           <Text fontSize="500" variant="light" flex={1} textAlign="right">
             Traveler's reward{" "}
             <Text as="strong" color="text.dark" fontSize="hb1" fontWeight="700">

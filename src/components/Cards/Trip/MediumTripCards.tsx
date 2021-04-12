@@ -16,7 +16,7 @@ import { FRONTEND_DATE_FORMAT } from "../../../api"
 import { ChevronRightIcon } from "../../../icons/ChevronRight"
 import { PlaneIcon } from "../../../icons/Plane"
 import { Trip } from "../../../types/trip"
-import { tripCityAnywhere } from "../../../utils/misc"
+import { getCountryFromCode, tripCityAnywhere } from "../../../utils/misc"
 import { Avatar } from "../../Avatar/Avatar"
 import moment from "moment"
 
@@ -70,10 +70,10 @@ const MediumTripCard = chakra(
                 </Text>
 
                 <Text fontWeight="700" fontSize={[600, 700]} mb={1}>
-                  {tripCityAnywhere(trip.source.city)}
+                  {tripCityAnywhere(trip.src.details[0].en.city)}
                 </Text>
                 <Text fontSize={[500, 600]} variant="secondary">
-                  {trip.source.country_en}
+                  {getCountryFromCode(trip.src.countryCode)}
                 </Text>
               </Box>
 
@@ -88,14 +88,14 @@ const MediumTripCard = chakra(
                   textAlign="right"
                   mb={1}
                 >
-                  {tripCityAnywhere(trip.destination.city)}
+                  {tripCityAnywhere(trip.dest.details[0].en.city)}
                 </Text>
                 <Text
                   fontSize={[500, 600]}
                   variant="secondary"
                   textAlign="right"
                 >
-                  {trip.destination.country_en}
+                  {getCountryFromCode(trip.dest.countryCode)}
                 </Text>
               </Box>
             </Flex>

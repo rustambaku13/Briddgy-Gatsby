@@ -5,8 +5,6 @@ import {
   Flex,
   Heading,
   IconButton,
-  Img as CImg,
-  LinkBox,
   Menu,
   MenuButton,
   MenuItemOption,
@@ -17,10 +15,10 @@ import {
   VStack,
 } from "@chakra-ui/react"
 import { graphql } from "gatsby"
-import { Link, navigate } from "gatsby-plugin-intl"
+import { navigate } from "gatsby-plugin-intl"
 import React, { useEffect, useState } from "react"
 import { Helmet } from "react-helmet"
-import { useForm } from "react-hook-form"
+import { FormProvider, useForm } from "react-hook-form"
 import { getOrders } from "../../api/order"
 import { PublicMediumOrderCard } from "../../components/Cards/Order/MediumOrderCards"
 import { TestimonialLinkCard } from "../../components/Cards/Testimonial/TestimonialLinkCard"
@@ -29,21 +27,16 @@ import { LocationAutoComplete } from "../../components/Inputs/LocationAutoComple
 import { HowToEarnMoney } from "../../components/Layout/HowToEarnMoney"
 import { Empty } from "../../components/Misc/Empty"
 import { Loader } from "../../components/Misc/Loader"
-import { StepCircle } from "../../components/Misc/StepCircle"
 import NavbarDefault from "../../components/Navbar"
 import { BottomNavbar } from "../../components/Navbar/BottomNavbar"
 import { ChevronDownIcon } from "../../icons/ChevronDown"
 import RotateIcon from "../../icons/Rotate"
-import card from "../../images/debit-cardicon.svg"
-import earth from "../../images/earthicon.svg"
-import note from "../../images/noteicon.svg"
-import plane from "../../images/planeicon.svg"
 import { NavigationContext } from "../../providers/navPage"
 import { defaultOrders, Order, Orders } from "../../types/orders"
-import { filterObject } from "../../utils/misc"
+import { filterObject, swapItinerary } from "../../utils/misc"
 const OrdersPage = ({ data, location }) => {
-  const { register, handleSubmit, setValue } = useForm()
-
+  const methods = useForm()
+  const { register, handleSubmit, setValue, getValues } = methods
   const [results, setResults]: [Orders, any] = useState(defaultOrders)
   const [loading, setLoading] = useState(true)
   const updateFilters = () => {
@@ -72,7 +65,7 @@ const OrdersPage = ({ data, location }) => {
   }
 
   return (
-    <>
+    <FormProvider {...methods}>
       <Helmet title="Briddgy | Available Orders" defer={false}>
         <meta
           name="description"
@@ -109,15 +102,17 @@ const OrdersPage = ({ data, location }) => {
                 From
               </Text>
               <LocationAutoComplete
-                name="origin"
+                name="src"
                 placeholder="City or Country"
                 fontSize="md"
-                parentRef={register()}
               />
             </Flex>
             <IconButton
               variant="link"
               mx={["auto", "auto", 5]}
+              onClick={() => {
+                swapItinerary(getValues(), setValue)
+              }}
               mb={5}
               aria-label="Swap Button"
               icon={
@@ -154,7 +149,7 @@ const OrdersPage = ({ data, location }) => {
               size="lg"
               variant="primary"
             >
-              Find Orders
+              Find Trips
             </Button>
           </Flex>
         </Box>
@@ -228,32 +223,52 @@ const OrdersPage = ({ data, location }) => {
         </Heading>
         <SimpleGrid
           spacing={7}
-          columns={[1, 1, 3]}
+          columns={[1, 2, 3]}
           mx="auto"
           className="even-right-align"
           maxW="container.xl"
         >
           <TestimonialLinkCard
-            title="Rustam Quliyev"
-            description="Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce "
+            testimonial={data.testimonials.edges[1].node.frontmatter}
           />
           <TestimonialLinkCard
-            title="Rustam Quliyev"
-            description="Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce "
+            testimonial={data.testimonials.edges[1].node.frontmatter}
           />
           <TestimonialLinkCard
-            title="Rustam Quliyev"
-            description="Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce "
+            testimonial={data.testimonials.edges[1].node.frontmatter}
           />
         </SimpleGrid>
       </Container>
       <Footer />
-    </>
+    </FormProvider>
   )
 }
 
 export const query = graphql`
   query {
+    testimonials: allMarkdownRemark(
+      filter: { fields: { sourceName: { eq: "testimonial" } } }
+      limit: 3
+    ) {
+      edges {
+        node {
+          frontmatter {
+            title
+            date
+            description
+            featuredimage {
+              childImageSharp {
+                fluid(fit: INSIDE) {
+                  ...GatsbyImageSharpFluid
+                }
+              }
+            }
+            tag
+            scoppe_tag
+          }
+        }
+      }
+    }
     nature_travel: file(relativePath: { eq: "nature_travel.png" }) {
       childImageSharp {
         fixed(fit: COVER) {

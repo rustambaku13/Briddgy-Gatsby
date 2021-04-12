@@ -7,8 +7,8 @@ export interface Order {
   date: string
   title: string
   description: string | null
-  destination: Location
-  source: Location
+  dest: Location
+  src: Location
   weight: number
   host: string
   owner: User

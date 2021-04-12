@@ -1,39 +1,30 @@
 import {
   Box,
   Button,
-  Center,
   Container,
-  Flex,
   Grid,
   Heading,
-  HStack,
-  Img as CImg,
   LinkBox,
   SimpleGrid,
   Stack,
   Text,
 } from "@chakra-ui/react"
-import anime from "animejs/lib/anime.es.js"
 import { graphql } from "gatsby"
 import Img from "gatsby-image"
 import { Link } from "gatsby-plugin-intl"
-import React, { useEffect } from "react"
+import React from "react"
+import { Helmet } from "react-helmet"
 import { useForm } from "react-hook-form"
 import { BlogLinkCard } from "../../components/Cards/Blog/BlogLinkCard"
 import { ProductCard } from "../../components/Cards/Order/Product"
 import { TestimonialLinkCard } from "../../components/Cards/Testimonial/TestimonialLinkCard"
-import { StepCircle } from "../../components/Misc/StepCircle"
-import { OrderNavbar } from "../../components/Navbar"
-import SupportIcon from "../../icons/Support"
-import card from "../../images/debit-cardicon.svg"
-import earth from "../../images/earthicon.svg"
-import note from "../../images/noteicon.svg"
-import plane from "../../images/planeicon.svg"
-import { Helmet } from "react-helmet"
 import Footer from "../../components/Footer"
 import { HowToEarnMoney } from "../../components/Layout/HowToEarnMoney"
-import { NavigationContext } from "../../providers/navPage"
+import { ProductGrid } from "../../components/Layout/ProductGrid"
+import { OrderNavbar } from "../../components/Navbar"
 import { BottomNavbar } from "../../components/Navbar/BottomNavbar"
+import SupportIcon from "../../icons/Support"
+import { NavigationContext } from "../../providers/navPage"
 const AddOrder = ({ data }) => {
   const { register, handleSubmit, errors } = useForm()
   return (
@@ -107,89 +98,25 @@ const AddOrder = ({ data }) => {
           Trending Products in Briddgy
         </Heading>
 
-        <Grid templateColumns="repeat(6, 1fr)" gap={[3, 5, 8]}>
-          <ProductCard
-            gridColumn={["1 / span 3", "1 / span 2"]}
-            productId={1}
-            price={data.products_vertical.edges?.[0].node.frontmatter.price}
-            productName={
-              data.products_vertical.edges?.[0].node.frontmatter.title
-            }
-            store={data.products_vertical.edges?.[0].node.frontmatter.store}
-            img={data.products_vertical.edges?.[0].node.frontmatter.image}
-          />
-          <ProductCard
-            gridColumn={["1 / span 6", "3 / span 4"]}
-            productId="1"
-            price={data.products_horizontal.frontmatter.price}
-            productName={data.products_horizontal.frontmatter.title}
-            store={data.products_horizontal.frontmatter.store}
-            img={data.products_horizontal.frontmatter.image}
-          />
-          <ProductCard
-            gridColumn={["1 / span 3", "1 / span 2"]}
-            productId={1}
-            price={data.products_vertical.edges?.[1].node.frontmatter.price}
-            productName={
-              data.products_vertical.edges?.[1].node.frontmatter.title
-            }
-            store={data.products_vertical.edges?.[1].node.frontmatter.store}
-            img={data.products_vertical.edges?.[1].node.frontmatter.image}
-          />
-          <ProductCard
-            gridColumn={["4 / span 3", "3 / span 2"]}
-            productId={1}
-            price={data.products_vertical.edges?.[1].node.frontmatter.price}
-            productName={
-              data.products_vertical.edges?.[1].node.frontmatter.title
-            }
-            store={data.products_vertical.edges?.[1].node.frontmatter.store}
-            img={data.products_vertical.edges?.[1].node.frontmatter.image}
-          />
-          <ProductCard
-            gridRow={["1", "2"]}
-            gridColumn={["4 / span 3", "5 / span 2"]}
-            productId={1}
-            price={data.products_vertical.edges?.[1].node.frontmatter.price}
-            productName={
-              data.products_vertical.edges?.[1].node.frontmatter.title
-            }
-            store={data.products_vertical.edges?.[1].node.frontmatter.store}
-            img={data.products_vertical.edges?.[1].node.frontmatter.image}
-          />
-        </Grid>
+        <ProductGrid />
       </Container>
       <Container mb={[20, 20, "150px"]} as="section" maxW="container.lg">
         <Heading mb={10} fontSize="hb3" fontWeight="700" textAlign="center">
           Information for orderers
         </Heading>
 
-        <BlogLinkCard
-          title={data.blogs.edges[0].node.frontmatter.title}
-          description={data.blogs.edges[0].node.frontmatter.description}
-          tags={data.blogs.edges[0].node.frontmatter.tag}
-          orientation="horizontal"
-        />
-        <SimpleGrid columns={[1, 2, 3]} spacing="8">
+        <Grid templateColumns="repeat(9, 1fr)" gap={[3, 5, 8]}>
           <BlogLinkCard
-            title={data.blogs.edges[0].node.frontmatter.title}
-            description={data.blogs.edges[0].node.frontmatter.description}
-            tags={data.blogs.edges[0].node.frontmatter.tag}
-            orientation="vertical"
+            flexDir={["column", "column", "row"]}
+            gridColumn={["1 / span 9"]}
+            blog={data.blogs.edges[0].node.frontmatter}
           />
           <BlogLinkCard
-            title={data.blogs.edges[0].node.frontmatter.title}
-            description={data.blogs.edges[0].node.frontmatter.description}
-            tags={data.blogs.edges[0].node.frontmatter.tag}
-            orientation="vertical"
+            flexDir={["column", "column", "row"]}
+            gridColumn={["1 / span 9", "1 / span 9", "1 / span 9"]}
+            blog={data.blogs.edges[1].node.frontmatter}
           />
-          <BlogLinkCard
-            title={data.blogs.edges[0].node.frontmatter.title}
-            description={data.blogs.edges[0].node.frontmatter.description}
-            tags={data.blogs.edges[0].node.frontmatter.tag}
-            orientation="vertical"
-          />
-        </SimpleGrid>
+        </Grid>
       </Container>
       <HowToEarnMoney />
       <Container mb={[20, 20, "150px"]} pt={8} maxW="full" as="section">
@@ -198,22 +125,19 @@ const AddOrder = ({ data }) => {
         </Heading>
         <SimpleGrid
           spacing={7}
-          columns={[1, 1, 3]}
+          columns={[1, 2, 3]}
           mx="auto"
           className="even-right-align"
           maxW="container.xl"
         >
           <TestimonialLinkCard
-            title="Rustam Quliyev"
-            description="Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce "
+            testimonial={data.testimonials.edges[1].node.frontmatter}
           />
           <TestimonialLinkCard
-            title="Rustam Quliyev"
-            description="Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce "
+            testimonial={data.testimonials.edges[1].node.frontmatter}
           />
           <TestimonialLinkCard
-            title="Rustam Quliyev"
-            description="Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce asdasda sda sda sd asd asd Menim fikirimce "
+            testimonial={data.testimonials.edges[1].node.frontmatter}
           />
         </SimpleGrid>
       </Container>
@@ -272,62 +196,6 @@ const AddOrder = ({ data }) => {
 }
 export const query = graphql`
   query {
-    products_horizontal: markdownRemark(
-      fields: { sourceName: { eq: "products" } }
-      frontmatter: { vertical: { eq: false } }
-    ) {
-      frontmatter {
-        title
-        date
-        store
-        vertical
-        price
-        image {
-          childImageSharp {
-            fluid(maxWidth: 800) {
-              ...GatsbyImageSharpFluid
-            }
-          }
-        }
-        templateKey
-        description
-        featuredpost
-        tag
-        color
-      }
-    }
-    products_vertical: allMarkdownRemark(
-      filter: {
-        fields: { sourceName: { eq: "products" } }
-        frontmatter: { vertical: { eq: true } }
-      }
-      limit: 4
-    ) {
-      edges {
-        node {
-          frontmatter {
-            title
-            date
-            store
-            vertical
-            price
-            image {
-              childImageSharp {
-                fluid(maxWidth: 800) {
-                  ...GatsbyImageSharpFluid
-                }
-              }
-            }
-            templateKey
-            description
-            featuredpost
-            tag
-            color
-          }
-        }
-      }
-    }
-
     blogs: allMarkdownRemark(
       filter: {
         fields: { sourceName: { eq: "blogs" } }
@@ -342,13 +210,37 @@ export const query = graphql`
             title
             featuredimage {
               childImageSharp {
-                fluid(maxWidth: 800) {
+                fluid(fit: INSIDE) {
                   ...GatsbyImageSharpFluid
                 }
               }
             }
             date
             tag
+          }
+        }
+      }
+    }
+
+    testimonials: allMarkdownRemark(
+      filter: { fields: { sourceName: { eq: "testimonial" } } }
+      limit: 3
+    ) {
+      edges {
+        node {
+          frontmatter {
+            title
+            date
+            description
+            featuredimage {
+              childImageSharp {
+                fluid(fit: INSIDE) {
+                  ...GatsbyImageSharpFluid
+                }
+              }
+            }
+            tag
+            scoppe_tag
           }
         }
       }

@@ -4,8 +4,8 @@ export interface Trip {
   id: number
   date: string
   description: string | null
-  destination: Location
-  source: Location
+  dest: Location
+  src: Location
   weight_limit: number
   owner: User
   number_of_contracts: number

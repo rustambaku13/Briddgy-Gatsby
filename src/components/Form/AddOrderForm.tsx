@@ -24,7 +24,6 @@ const TopSearchButton = chakra(
         px="5px"
         alignItems="center"
         borderWidth={1}
-        // borderWidth={["none", "1px"]}
       >
         <Text pl={3} fontSize={["xs", "sm"]} flexGrow={1}>
           Add Order
@@ -33,7 +32,6 @@ const TopSearchButton = chakra(
         <IconButton
           flexShrink={0}
           h="40px"
-          // mx={["auto", "unset"]}
           d="block"
           w="40px"
           borderRadius="50%"
@@ -47,7 +45,7 @@ const TopSearchButton = chakra(
   }
 )
 
-const AddOrderFormN = chakra(({ className }: { className?: any }) => {
+const AddOrderForm = chakra(({ className }: { className?: any }) => {
   return (
     <Flex
       p={3}
@@ -115,7 +113,7 @@ export const AddOrderNavigationMenu = ({ expand }) => {
         >
           <TopSearchButton expand={expand} />
           <Box px={3} className="overlay">
-            <AddOrderFormN />
+            <AddOrderForm />
           </Box>
         </Box>
       </FormProvider>

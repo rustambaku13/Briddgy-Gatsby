@@ -11,17 +11,20 @@ import {
 import { navigate } from "gatsby-plugin-intl"
 import { flowResult } from "mobx"
 import React, { useState } from "react"
-import { useForm } from "react-hook-form"
+import { FormProvider, useForm, useFormContext } from "react-hook-form"
 import { CalendarIcon } from "../../icons/Calendar"
 import { LocationIcon } from "../../icons/Location"
 import RotateIcon from "../../icons/Rotate"
 import { TripIcon } from "../../icons/Trip"
 import LayoutStore from "../../store/LayoutStore"
 import UserStore from "../../store/UserStore"
+import { swapItinerary } from "../../utils/misc"
 import { DatePicker } from "../Inputs/DatePicker"
 import { LocationAutoComplete } from "../Inputs/LocationAutoComplete"
 import { AddTripDetailsModal } from "../Modals/AddTripDetailsModal"
-
+/**
+ * Top search Button when screen size is small, It opens, expands the normal form
+ */
 const TopSearchButton = chakra(
   ({ className, expand }: { className?: any; expand: any }) => {
     return (
@@ -61,10 +64,20 @@ const TopSearchButton = chakra(
     )
   }
 )
+/**
+ * Add Trip Form in /travel page
+ * @var {modalOpen} // Where the additional info modal is open
+ */
 export const AddTripForm = chakra(({ className }: { className?: any }) => {
-  const { register, getValues, handleSubmit, watch, errors } = useForm()
+  const {
+    register,
+    getValues,
+    setValue,
+    handleSubmit,
+    watch,
+    errors,
+  } = useFormContext()
   const [modalOpen, setModalOpen] = useState(false)
-  // const [loginModalOpen, setLoginModalOpen] = useState(false) // Modal controlling login add trip
   const [loading, setLoading] = useState(false)
   const addTrip = () => {
     // Actually adding the trip, of course if the user is logged in
@@ -113,15 +126,16 @@ export const AddTripForm = chakra(({ className }: { className?: any }) => {
       />
       <Flex pl={4} py={3} alignItems="center" flex={1}>
         <LocationIcon color="gray.500" />
-        <LocationAutoComplete
-          fontSize="md"
-          name="source"
-          parentRef={register({ required: true })}
-        />
+        <LocationAutoComplete fontSize="md" name="src" placeholder="From" />
       </Flex>
       <Divider d={["block", "block", "none"]} />
       <Center d={["none", "none", "flex"]} pos="relative" h="100%" w="5px">
-        <Center
+        <IconButton
+          onClick={() => {
+            swapItinerary(getValues(), setValue)
+          }}
+          aria-label="Swap"
+          minW="unset"
           pos="absolute"
           bg="white"
           cursor="pointer"
@@ -131,19 +145,14 @@ export const AddTripForm = chakra(({ className }: { className?: any }) => {
           h="30px"
           borderWidth="1px"
           fontSize="20px"
+          icon={<RotateIcon />}
           color="blue.400"
-        >
-          <RotateIcon />
-        </Center>
+        />
         <Divider orientation="vertical" />
       </Center>
       <Flex py={3} alignItems="center" pl={4} flex={1}>
         <LocationIcon color="gray.500" />
-        <LocationAutoComplete
-          fontSize="md"
-          name="destination"
-          parentRef={register({ required: true })}
-        />
+        <LocationAutoComplete placeholder="To" fontSize="md" name="dest" />
       </Flex>
       <Divider d={["block", "block", "none"]} />
       <Center pos="relative" h="100%" w="5px">
@@ -176,14 +185,17 @@ export const AddTripForm = chakra(({ className }: { className?: any }) => {
 })
 
 export const AddTripFormNavigationMenu = ({ expand }) => {
+  const formObject = useForm()
   return (
     <>
-      <Box id="trip_navigation" className="form" w="100%" h="100%" mx="auto">
-        <TopSearchButton expand={expand} />
-        <Box px={3} className="overlay">
-          <AddTripForm />
+      <FormProvider {...formObject}>
+        <Box id="trip_navigation" className="form" w="100%" h="100%" mx="auto">
+          <TopSearchButton expand={expand} />
+          <Box px={3} className="overlay">
+            <AddTripForm />
+          </Box>
         </Box>
-      </Box>
+      </FormProvider>
     </>
   )
 }
