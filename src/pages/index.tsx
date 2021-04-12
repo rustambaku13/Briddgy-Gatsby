@@ -48,7 +48,7 @@ const Home = ({ data }) => {
         as="main"
         className="landing-header"
       >
-        <Img
+        {/* <Img
           className="overlay"
           alt="Travel and Earn"
           fixed={data.overlay.childImageSharp.fixed}
@@ -57,7 +57,7 @@ const Home = ({ data }) => {
           alt="Travel and Earn"
           className="overlay"
           fixed={data.overlay.childImageSharp.fixed}
-        />
+        /> */}
 
         <Box>
           <Heading

@@ -39,25 +39,39 @@ html {
   position: relative;
   overflow-x: hidden;
   overflow-y: visible;
-  .overlay:nth-child(2) {
-    right: 0px;
-    position: absolute !important;
+  background: radial-gradient(
+        circle,
+        rgba(50, 169, 215, 0.2374124649859944) 0%,
+        rgba(255, 255, 255, 0) 70%
+      )
+      no-repeat,
+    radial-gradient(
+        circle,
+        rgba(50, 169, 215, 0.2374124649859944) 0%,
+        rgba(255, 255, 255, 0) 70%
+      )
+      no-repeat;
+  background-position: -25vw -25vw, 75vw 0vw;
+  background-size: 50vw 50vw, 50vw 50vw;
+  // .overlay:nth-child(2) {
+  //   right: 0px;
+  //   position: absolute !important;
 
-    bottom: 0;
-    width: 500px;
-    height: 500px;
-    z-index: 0;
-  }
-  .overlay:first-child {
-    top: 0px;
-    position: absolute !important;
+  //   bottom: 0;
+  //   width: 500px;
+  //   height: 500px;
+  //   z-index: 0;
+  // }
+  // .overlay:first-child {
+  //   top: 0px;
+  //   position: absolute !important;
 
-    border-radius: 250px;
-    left: 0;
-    width: 500px;
-    height: 500px;
-    z-index: 0;
-  }
+  //   border-radius: 250px;
+  //   left: 0;
+  //   width: 500px;
+  //   height: 500px;
+  //   z-index: 0;
+  // }
 }
 
 .order-header {

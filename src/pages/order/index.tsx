@@ -58,7 +58,7 @@ const AddOrder = ({ data }) => {
           mx="auto"
           mb="100px"
           maxW="container.xxl"
-          mt="130px"
+          mt={["160px", "160px", "130px"]}
         >
           <Box flex={3}>
             <Heading

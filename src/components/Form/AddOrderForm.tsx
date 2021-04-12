@@ -50,10 +50,12 @@ const AddOrderForm = chakra(({ className }: { className?: any }) => {
     <Flex
       p={3}
       bg="white"
-      borderRadius="lg"
+      flexDir={["column", "column", "row"]}
+      borderRadius={["md", "md", "lg"]}
       borderColor="outline.medium"
       borderWidth="1px"
       id="add_order_form"
+      h={["auto", "auto", "80px"]}
       autoComplete={"off"}
       w="100%"
     >
@@ -61,7 +63,7 @@ const AddOrderForm = chakra(({ className }: { className?: any }) => {
         <Text
           as="label"
           fontWeight="700"
-          fontSize={["500", "600"]}
+          fontSize="600"
           color="oxfordBlue.dark"
         >
           URL or Name of product
@@ -74,13 +76,13 @@ const AddOrderForm = chakra(({ className }: { className?: any }) => {
       </Box>
       <Button
         h="auto"
-        color="white"
-        type="submit"
-        borderRadius="lg"
-        size={"md"}
-        px={[2, 5, 8]}
-        variant="red_gradient"
+        minH="50px"
+        mt={[3, 3, 0]}
         fontWeight="700"
+        px={[1, 5, 8]}
+        variant="red_gradient"
+        type="submit"
+        borderRadius={"lg"}
       >
         Create Order
       </Button>
