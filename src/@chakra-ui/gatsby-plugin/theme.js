@@ -12,6 +12,7 @@ import Menu from "./Menu"
 import Modal from "./Modal"
 import shadows from "./BoxShadow"
 import Accordion from "./Accordion"
+import Tabs from "./Tabs"
 const overrides = {
   fonts: {
     html: "Nunito Sans",
@@ -32,6 +33,7 @@ const overrides = {
     Accordion,
     Menu,
     Heading,
+    Tabs,
     Modal,
     Input,
     Text,

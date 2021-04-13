@@ -6,10 +6,20 @@ export default {
   },
 
   variants: {
+    filled: {
+      field: {
+        _focus: {
+          bg: "white",
+          borderColor: "transparent",
+        },
+      },
+      addon: {},
+    },
+
     outline: {
       field: {
         _focus: {
-          borderColor: "blue.300",
+          borderColor: "tealBlue.base",
           boxShadow: "none",
         },
       },

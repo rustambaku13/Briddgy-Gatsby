@@ -7,6 +7,7 @@ import {
   Flex,
   Heading,
   SimpleGrid,
+  VStack,
 } from "@chakra-ui/layout"
 import {
   Avatar,
@@ -20,32 +21,33 @@ import {
   Tabs,
   Text,
 } from "@chakra-ui/react"
-import { navigate } from "gatsby-link"
 import { Link } from "gatsby-plugin-intl"
 import { observer } from "mobx-react-lite"
 import React, { useEffect, useRef, useState } from "react"
+import { Helmet } from "react-helmet"
 import { useForm } from "react-hook-form"
 import { bmify } from "../../api"
 import { Discount } from "../../components/Animations/Discount"
 import { FriendsInvite } from "../../components/Animations/FriendsInvite"
+import { MyMediumOrderCard } from "../../components/Cards/Order/MediumOrderCards"
+import { MyMediumTripCard } from "../../components/Cards/Trip/MediumTripCards"
 import { Empty } from "../../components/Misc/Empty"
 import { Loader } from "../../components/Misc/Loader"
 import { VerificationStatus } from "../../components/Misc/VerificationStatus"
 import NavbarDefault from "../../components/Navbar"
+import { BottomNavbar } from "../../components/Navbar/BottomNavbar"
 import { useAuthHook } from "../../hooks/useAuthHook"
 import { usePopulateQueryHook } from "../../hooks/usePopulateQueryHook"
 import { CheckIcon } from "../../icons/Check"
 import ClipboardIcon from "../../icons/Clipboard"
+import OrderIcon from "../../icons/Order"
 import { TripIcon } from "../../icons/Trip"
+import { NavigationContext } from "../../providers/navPage"
 import LayoutStore from "../../store/LayoutStore"
 import UserStore from "../../store/UserStore"
 import { Order } from "../../types/orders"
+import Footer from "../../components/Footer"
 import { Trip } from "../../types/trip"
-import { Helmet } from "react-helmet"
-import { MyMediumOrderCard } from "../../components/Cards/Order/MediumOrderCards"
-import { MyMediumTripCard } from "../../components/Cards/Trip/MediumTripCards"
-import { NavigationContext } from "../../providers/navPage"
-import { BottomNavbar } from "../../components/Navbar/BottomNavbar"
 const PersonalDetailsSection = observer(() => {
   return (
     <Box py={3} maxW="container.lg" mx="auto">
@@ -361,7 +363,7 @@ const MyOrdersSection = observer(() => {
     if (UserStore.orders.loading) UserStore.fetchMyOrders()
   }, [])
   return (
-    <Box py={3} maxW="container.lg" mx="auto">
+    <Box py={3} maxW="container.md" mx="auto">
       <Flex alignItems="center">
         <Heading flexGrow={1} fontSize="2xl">
           My Orders: {UserStore.orders.count}
@@ -370,23 +372,23 @@ const MyOrdersSection = observer(() => {
           <Button
             ml="auto"
             flexGrow={0}
-            variant="primary"
-            leftIcon={<TripIcon />}
+            variant="primary_dark"
+            leftIcon={<OrderIcon />}
           >
             Add Order
           </Button>
         </Link>
       </Flex>
 
-      <SimpleGrid w="100%" spacing={5} columns={1}>
+      <VStack spacing={10} pt={10}>
         {UserStore.orders.loading ? (
           <Spinner />
         ) : (
           UserStore.orders.results.map((order: Order) => (
-            <MyMediumOrderCard mx="auto" orderData={order} />
+            <MyMediumOrderCard orderData={order} />
           ))
         )}
-      </SimpleGrid>
+      </VStack>
     </Box>
   )
 })
@@ -403,7 +405,7 @@ const MyTripsSections = observer(() => {
     )
   if (UserStore.upcomingTrips.length) {
     return (
-      <Box py={3} maxW="container.lg" mx="auto">
+      <Box py={3} maxW="container.md" mx="auto">
         <Flex alignItems="center">
           <Heading flexGrow={1} fontSize="2xl">
             Upcoming Trips: {UserStore.upcomingTrips.length}
@@ -412,35 +414,35 @@ const MyTripsSections = observer(() => {
             <Button
               ml="auto"
               flexGrow={0}
-              variant="primary"
+              variant="primary_dark"
               leftIcon={<TripIcon />}
             >
               Add Trip
             </Button>
           </Link>
         </Flex>
-        <SimpleGrid pt="20px" w="100%" spacing={5} columns={1}>
+        <VStack pt={10} spacing={10}>
           {UserStore.upcomingTrips.length ? (
             UserStore.upcomingTrips.map((trip: Trip) => (
-              <MyMediumTripCard my="20px" mx="auto" trip={trip} />
+              <MyMediumTripCard trip={trip} />
             ))
           ) : (
             <Empty />
           )}
-        </SimpleGrid>
+        </VStack>
         <Divider my={8} />
         <Heading fontSize="2xl">
           Past Trips: {UserStore.passedTrips.length}
         </Heading>
-        <SimpleGrid pt="20px" w="100%" spacing={5} columns={1}>
+        <VStack pt={10} spacing={10}>
           {UserStore.passedTrips.length ? (
             UserStore.passedTrips.map((trip: Trip) => (
-              <MyMediumTripCard my="20px" mx="auto" trip={trip} />
+              <MyMediumTripCard trip={trip} />
             ))
           ) : (
             <Empty />
           )}
-        </SimpleGrid>
+        </VStack>
       </Box>
     )
   }
@@ -461,15 +463,15 @@ const MyTripsSections = observer(() => {
           </Button>
         </Link>
       </Flex>
-      <SimpleGrid pt="20px" w="100%" spacing={5} columns={1}>
+      <VStack pt={10} spacing={10}>
         {UserStore.passedTrips.length ? (
           UserStore.passedTrips.map((trip: Trip) => (
-            <MyTripCard my="20px" mx="auto" trip={trip} />
+            <MyMediumTripCard trip={trip} />
           ))
         ) : (
           <Empty />
         )}
-      </SimpleGrid>
+      </VStack>
     </Box>
   )
 })
@@ -481,14 +483,14 @@ const PAGE_INDEX_MAPPER = {
   redeem: 3,
   promo: 4,
 }
-// TO DO: Make INDEX_PAGE_MAPPER Dynamic from the PAGE_INDEX_MAPPER
-const INDEX_PAGE_MAPPER = {
-  0: "profile",
-  1: "trips",
-  2: "orders",
-  3: "redeem",
-  4: "promo",
-}
+// // TO DO: Make INDEX_PAGE_MAPPER Dynamic from the PAGE_INDEX_MAPPER
+// const INDEX_PAGE_MAPPER = {
+//   0: "profile",
+//   1: "trips",
+//   2: "orders",
+//   3: "redeem",
+//   4: "promo",
+// }
 
 const MyProfilePage = observer(({ location }) => {
   useAuthHook(user => user == false, "/login")
@@ -514,24 +516,26 @@ const MyProfilePage = observer(({ location }) => {
       </NavigationContext.Provider>
       <Container pt="50px" maxW="container.xl">
         <Flex mb="30px" w="100%">
-          <Heading fontSize="5xl" as="h1">
+          <Heading as="h1" mb={10} fontSize="hb3" fontWeight="700">
             Profile
           </Heading>
         </Flex>
         <Tabs
+          minH="100vh"
+          isFitted={true}
           onChange={index => {
-            navigate(`?page=${INDEX_PAGE_MAPPER[index]}`)
+            setOpenTab(index)
           }}
+          variant="enclosed"
+          orientation="horizontal"
           index={openTab}
-          variant="line"
-          colorScheme="blue"
         >
-          <TabList>
-            <Tab fontSize={["sm", "md"]}>Personal Details</Tab>
-            <Tab fontSize={["sm", "md"]}>My Trips</Tab>
-            <Tab fontSize={["sm", "md"]}>My Orders</Tab>
-            <Tab fontSize={["sm", "md"]}>Promo Code</Tab>
-            <Tab fontSize={["sm", "md"]}>Earn Free Deliveries</Tab>
+          <TabList style={{ "--count": "4" }} className="tabs">
+            <Tab fontSize={[400, 500]}>Personal Details</Tab>
+            <Tab fontSize={[400, 500]}>My Trips</Tab>
+            <Tab fontSize={[400, 500]}>My Orders</Tab>
+            <Tab fontSize={[400, 500]}>Promo Code</Tab>
+            <li className="presentation-slider" role="presentation"></li>
           </TabList>
           <TabPanels>
             <TabPanel px={0} pt="40px">
@@ -552,6 +556,7 @@ const MyProfilePage = observer(({ location }) => {
           </TabPanels>
         </Tabs>
       </Container>
+      <Footer />
     </>
   )
 })

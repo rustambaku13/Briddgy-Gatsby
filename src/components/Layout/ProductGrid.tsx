@@ -24,7 +24,7 @@ export const ProductGrid = () => {
               price
               image {
                 childImageSharp {
-                  fluid(maxWidth: 800) {
+                  fluid(cropFocus: CENTER, maxWidth: 500) {
                     ...GatsbyImageSharpFluid
                   }
                 }

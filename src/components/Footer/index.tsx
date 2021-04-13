@@ -85,7 +85,7 @@ const Footer = () => {
               <Link to="/">Blogs</Link>
             </Text>
             <Text fontWeight="300" mb={3}>
-              <Link to="/">Collections</Link>
+              <Link to="/faq">Collections</Link>
             </Text>
             <Text fontWeight="300" mb={3}>
               <Link to="/">Testimonials</Link>
@@ -96,7 +96,7 @@ const Footer = () => {
               Resources
             </Heading>
             <Text fontWeight="300" mb={3}>
-              <Link to="/">Help Center</Link>
+              <Link to="/faq">Help Center</Link>
             </Text>
             <Text fontWeight="300" mb={3}>
               <Link to="/">Contact Us</Link>

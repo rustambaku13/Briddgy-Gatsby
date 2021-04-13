@@ -28,12 +28,11 @@ export const ProductCard = chakra(
           </Text>
         </Box>
         <Center flexGrow={1} overflow="hidden" m="auto" w="60%">
-          <Box w="100%" overflow="hidden" maxH="100%">
-            <Img
-              alt="Product Item"
-              fluid={product.image.childImageSharp.fluid}
-            />
-          </Box>
+          <Img
+            className="full-width"
+            alt="Product Item"
+            fluid={product.image.childImageSharp.fluid}
+          />
         </Center>
 
         <Box p={2}>
