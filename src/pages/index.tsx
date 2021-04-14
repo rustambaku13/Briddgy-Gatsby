@@ -73,7 +73,7 @@ const Home = ({ data }) => {
             <br />
             delivery platform
           </Heading>
-          <Text mb={12} fontSize="600" textAlign="center" color="text.light">
+          <Text mb={12} fontSize="600" textAlign="center">
             We connect travelers and orderers, making delivery more accessible
           </Text>
           <Flex>
@@ -88,7 +88,13 @@ const Home = ({ data }) => {
               >
                 Order with Briddgy
               </Button>
-              <Button mb={5} w={["100%", "auto"]} variant="outline" size="lg">
+              <Button
+                color="text.dark"
+                mb={5}
+                w={["100%", "auto"]}
+                variant="outline"
+                size="lg"
+              >
                 Travel with Briddgy
               </Button>
             </Box>

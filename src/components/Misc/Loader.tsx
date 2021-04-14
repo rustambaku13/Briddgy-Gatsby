@@ -1,66 +1,71 @@
-import { Box } from "@chakra-ui/layout"
-import { chakra } from "@chakra-ui/system"
+import { Box, chakra, Spinner } from "@chakra-ui/react"
+
 import React, { Suspense, useEffect, useRef } from "react"
 import anime from "animejs/lib/anime.es.js"
 
 export const Loader = chakra(({ className }) => {
+  return (
+    <Box mx="auto" h="50px" w="50px">
+      <Spinner />
+    </Box>
+  )
   const box = useRef(null)
   const box1 = useRef(null)
   const box2 = useRef(null)
   const box3 = useRef(null)
   const box4 = useRef(null)
-  useEffect(() => {
-    if (
-      box.current &&
-      box1.current &&
-      box2.current &&
-      box3.current &&
-      box4.current
-    ) {
-      anime({
-        targets: [box.current],
-        keyframes: [{ rotate: "90deg" }],
-        duration: 750,
+  // useEffect(() => {
+  //   if (
+  //     box.current &&
+  //     box1.current &&
+  //     box2.current &&
+  //     box3.current &&
+  //     box4.current
+  //   ) {
+  //     anime({
+  //       targets: [box.current],
+  //       keyframes: [{ rotate: "90deg" }],
+  //       duration: 750,
 
-        easing: "spring(1, 80, 10, 0)",
+  //       easing: "spring(1, 80, 10, 0)",
 
-        loop: true,
-      })
-      anime({
-        targets: [box2.current],
-        keyframes: [{ translateX: -27 }, { translateX: 0 }],
-        duration: 1500,
-        easing: "spring(1, 80, 10, 0)",
-        delay: 750,
-        loop: true,
-      })
-      anime({
-        targets: [box1.current],
-        keyframes: [{ translateX: 27 }, { translateX: 0 }],
-        duration: 1500,
-        easing: "spring(1, 80, 10, 0)",
-        delay: 750,
-        loop: true,
-      })
+  //       loop: true,
+  //     })
+  //     anime({
+  //       targets: [box2.current],
+  //       keyframes: [{ translateX: -27 }, { translateX: 0 }],
+  //       duration: 1500,
+  //       easing: "spring(1, 80, 10, 0)",
+  //       delay: 750,
+  //       loop: true,
+  //     })
+  //     anime({
+  //       targets: [box1.current],
+  //       keyframes: [{ translateX: 27 }, { translateX: 0 }],
+  //       duration: 1500,
+  //       easing: "spring(1, 80, 10, 0)",
+  //       delay: 750,
+  //       loop: true,
+  //     })
 
-      anime({
-        targets: [box3.current],
-        keyframes: [{ translateY: 27 }, { translateY: 0 }],
-        duration: 1500,
-        easing: "spring(1, 80, 10, 0)",
-        delay: 750,
-        loop: true,
-      })
-      anime({
-        targets: [box4.current],
-        keyframes: [{ translateY: -27 }, { translateY: 0 }],
-        duration: 1500,
-        easing: "spring(1, 80, 10, 0)",
-        delay: 750,
-        loop: true,
-      })
-    }
-  }, [box, box1, box2, box3, box4])
+  //     anime({
+  //       targets: [box3.current],
+  //       keyframes: [{ translateY: 27 }, { translateY: 0 }],
+  //       duration: 1500,
+  //       easing: "spring(1, 80, 10, 0)",
+  //       delay: 750,
+  //       loop: true,
+  //     })
+  //     anime({
+  //       targets: [box4.current],
+  //       keyframes: [{ translateY: -27 }, { translateY: 0 }],
+  //       duration: 1500,
+  //       easing: "spring(1, 80, 10, 0)",
+  //       delay: 750,
+  //       loop: true,
+  //     })
+  //   }
+  // }, [box, box1, box2, box3, box4])
   return (
     <Box
       ref={box}

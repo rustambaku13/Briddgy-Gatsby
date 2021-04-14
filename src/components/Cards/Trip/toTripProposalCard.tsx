@@ -14,7 +14,7 @@ import { bmify } from "../../../api"
 import { Contract } from "../../../types/contract"
 import { ContractSteps } from "../../Misc/ContractSteps"
 //Proposal Card for Trip Page
-export const TripProposalsCard = chakra(
+export const ToTripProposalCard = chakra(
   ({ className, contract }: { className?: any; contract: Contract }) => {
     return (
       <Box

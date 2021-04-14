@@ -39,39 +39,44 @@ html {
   position: relative;
   overflow-x: hidden;
   overflow-y: visible;
-  background: radial-gradient(
-        circle,
-        rgba(50, 169, 215, 0.2374124649859944) 0%,
-        rgba(255, 255, 255, 0) 70%
-      )
-      no-repeat,
-    radial-gradient(
-        circle,
-        rgba(50, 169, 215, 0.2374124649859944) 0%,
-        rgba(255, 255, 255, 0) 70%
-      )
-      no-repeat;
-  background-position: -25vw -25vw, 75vw 0vw;
-  background-size: 50vw 50vw, 50vw 50vw;
-  // .overlay:nth-child(2) {
-  //   right: 0px;
-  //   position: absolute !important;
+  // background: radial-gradient(
+  //       circle,
+  //       rgba(50, 169, 215, 0.2374124649859944) 0%,
+  //       rgba(255, 255, 255, 0) 70%
+  //     )
+  //     no-repeat,
+  //   radial-gradient(
+  //       circle,
+  //       rgba(50, 169, 215, 0.2374124649859944) 0%,
+  //       rgba(255, 255, 255, 0) 70%
+  //     )
+  //     no-repeat;
+  background: linear-gradient(
+      135deg,
+      rgba(50, 169, 215, 0.4374124649859944) 0%,
+      rgba(255, 255, 255, 0) 30%
+    ),
+    linear-gradient(
+      315deg,
+      rgba(50, 169, 215, 0.4374124649859944) 0%,
+      rgba(255, 255, 255, 0) 30%
+    );
 
-  //   bottom: 0;
-  //   width: 500px;
-  //   height: 500px;
-  //   z-index: 0;
-  // }
-  // .overlay:first-child {
-  //   top: 0px;
-  //   position: absolute !important;
-
-  //   border-radius: 250px;
-  //   left: 0;
-  //   width: 500px;
-  //   height: 500px;
-  //   z-index: 0;
-  // }
+  // background-size: 100% 100%, 100% 100%;
+  background-position: 0% 0%, 0% 0%;
+  background-size: 100% 100%, 100% 100%;
+  animation: gradient 15s ease infinite;
+  @keyframes gradient {
+    0% {
+      background-size: 100% 100%, 100% 100%;
+    }
+    50% {
+      background-size: 150% 150%, 150% 150%;
+    }
+    100% {
+      background-size: 100% 100%, 100% 100%;
+    }
+  }
 }
 
 .order-header {
@@ -374,11 +379,6 @@ html {
 }
 .tabs {
   position: relative;
-  // &:after {
-  //   content: " ";
-  //   display: table;
-  //   clear: both;
-  // }
   list-style: none;
   > button:first-child[aria-selected="true"] ~ .presentation-slider {
     transform: translateX(0) scaleX(calc(1 / var(--count)));
@@ -410,8 +410,7 @@ html {
     transition: transform 0.2s;
   }
 }
-.datepicker {
-}
+
 .options-autocomplete {
   position: absolute;
   min-width: 200px;
@@ -452,9 +451,6 @@ html {
   }
 }
 
-.medium-order-card {
-}
-
 .link-overlay {
   position: static !important;
   &:before {
@@ -476,8 +472,6 @@ html {
 }
 
 .testimonial {
-  img {
-  }
 }
 
 /* ==========================================================================

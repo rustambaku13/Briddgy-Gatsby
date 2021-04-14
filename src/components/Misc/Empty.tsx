@@ -9,7 +9,7 @@ export const Empty = chakra(({ className, text }) => {
         query {
           empty: file(relativePath: { eq: "empty.png" }) {
             childImageSharp {
-              fixed(width: 300) {
+              fixed(width: 100, height: 100) {
                 ...GatsbyImageSharpFixed
               }
             }
@@ -21,7 +21,7 @@ export const Empty = chakra(({ className, text }) => {
         <Center className={className} flexWrap="wrap" mx="auto">
           <Img fixed={data.empty.childImageSharp.fixed} />
 
-          <Text textAlign="center" w="100%" fontSize="xl">
+          <Text textAlign="center" mt={2} w="100%" fontSize="xl">
             {text}
           </Text>
         </Center>

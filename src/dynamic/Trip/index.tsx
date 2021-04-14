@@ -2,9 +2,8 @@ import {
   Box,
   Container,
   Divider,
-  Flex,
   Heading,
-  SimpleGrid,
+  HStack,
   Text,
   VStack,
 } from "@chakra-ui/layout"
@@ -12,28 +11,27 @@ import { navigate } from "gatsby-link"
 import { observer } from "mobx-react-lite"
 import React, { useEffect, useState } from "react"
 import { getTripContracts, getTripProposals } from "../../api/contract"
-import { getTrip, getSuggestedOrders, getTrips } from "../../api/trip"
-import { PublicMediumOrderCard } from "../../components/Cards/Order/MediumOrderCards"
-import { TripStatsCard } from "../../components/Cards/Stats/TripStats"
+import { getSuggestedOrders, getTrip, getTrips } from "../../api/trip"
 import { BigTripCard } from "../../components/Cards/Trip/BigTripCard"
+import { CollapsableTripCard } from "../../components/Cards/Trip/CollapsableTripCard"
 import { PublicMediumTripCard } from "../../components/Cards/Trip/MediumTripCards"
-import { TripContractsStateCard } from "../../components/Cards/Trip/TripContractsStateCard"
-import { TripProposalsCard } from "../../components/Cards/Trip/TripProposalsCard"
+import { ToTripProposalCard } from "../../components/Cards/Trip/toTripProposalCard"
 import Footer from "../../components/Footer"
 import { Empty } from "../../components/Misc/Empty"
 import { Loader } from "../../components/Misc/Loader"
+import { Step, Steps } from "../../components/Misc/Steps"
 import NavbarDefault from "../../components/Navbar"
 import { BottomNavbar } from "../../components/Navbar/BottomNavbar"
-import { useAuthHook } from "../../hooks/useAuthHook"
-import LightBulbIcon from "../../icons/LightBulb"
+import { CardIcon } from "../../icons/Card"
+import CheckIcon from "../../icons/Check"
+import { DeliveryBoxIcon } from "../../icons/DeliveryBox"
 import { NavigationContext } from "../../providers/navPage"
 import UserStore from "../../store/UserStore"
 import { Contracts, defaultContracts } from "../../types/contract"
 import { defaultOrders, Orders } from "../../types/orders"
 import { defaultTrips, Trip, Trips } from "../../types/trip"
-const MyTripPage = observer(({ tripId }) => {
+const MyTripPage = ({ trip }: { trip: Trip }) => {
   // useAuthHook(user => !user)
-  const [trip, setTrip]: [Trip, any] = useState(null)
   const [suggested, setSuggested]: [Orders, any] = useState({
     ...defaultOrders,
     loading: true,
@@ -43,26 +41,16 @@ const MyTripPage = observer(({ tripId }) => {
   const [contracts, setContracts]: [Contracts, any] = useState(defaultContracts)
 
   useEffect(() => {
-    if (UserStore.complete && !trip) {
-      getTrip(tripId)
-        .then(trip => {
-          setTrip(trip.data)
-        })
-        .catch(e => {
-          navigate("/404")
-        })
-        .finally(() => {})
-      getSuggestedOrders(tripId).then(e => {
-        setSuggested(e.data)
-      })
-      getTripProposals(tripId).then(e => {
-        setProposals(e.data)
-      })
-      getTripContracts(tripId).then(e => {
-        setContracts(e.data)
-      })
-    }
-  }, [UserStore.complete])
+    getSuggestedOrders(trip.id).then(e => {
+      setSuggested(e.data)
+    })
+    getTripProposals(trip.id).then(e => {
+      setProposals(e.data)
+    })
+    getTripContracts(trip.id).then(e => {
+      setContracts(e.data)
+    })
+  }, [trip])
   if (!trip) {
     return <Loader />
   }
@@ -72,7 +60,94 @@ const MyTripPage = observer(({ tripId }) => {
         <NavbarDefault />
         <BottomNavbar />
       </NavigationContext.Provider>
+      <Container bg="white" py={5} as="section" minW="full">
+        <Container maxW="container.lg">
+          <Steps>
+            <Step step={1} title="Deal Settled" icon={<CheckIcon />}></Step>
+            <Step step={2} title="Payment Made" icon={<CardIcon />}></Step>
+            <Step
+              step={3}
+              title="Delivery Complete"
+              icon={<DeliveryBoxIcon />}
+            ></Step>
+            <Step
+              last
+              step={4}
+              title="Payment Transfered"
+              icon={<CheckIcon />}
+            ></Step>
+          </Steps>
+        </Container>
+      </Container>
       <Container
+        minH="calc(100vh - 200px)"
+        bg="outline.light"
+        py={5}
+        as="section"
+        minW="full"
+      >
+        <HStack
+          alignItems="flex-start"
+          spacing={6}
+          w="100%"
+          maxW="container.xxl"
+          mx="auto"
+        >
+          <Box flex={2}>
+            <Box mb={10} bg="white" borderRadius="xl" borderWidth="1px" p={6}>
+              <Heading mb={4} as="h1" fontSize="600" fontWeight="700">
+                Trip Summary
+              </Heading>
+              <CollapsableTripCard trip={trip} />
+            </Box>
+            <Heading mb={4} as="h1" fontSize="600" fontWeight="700">
+              Suggested orders
+            </Heading>
+            {suggested.results.map(order => {
+              return <PublicMediumTripCard orderData={order} />
+            })}
+            {suggested.loading ? <Loader /> : null}
+            {!suggested.loading && suggested.count == 0 ? (
+              <Empty text="No Suggested Orders" />
+            ) : null}
+          </Box>
+          <Box flex={3}>
+            <Box mb={10} bg="white" borderRadius="xl" borderWidth="1px" p={6}>
+              <Heading mb={4} as="h1" fontSize="600" fontWeight="700">
+                Proposals
+              </Heading>
+              {proposals.results.map((contract, index) => {
+                return (
+                  <>
+                    <ToTripProposalCard contract={contract} />
+                    {index < proposals.results.length - 1 ? <Divider /> : null}
+                  </>
+                )
+              })}
+              {!proposals.loading && proposals.count == 0 ? (
+                <Empty text="No Proposals yet" />
+              ) : null}
+            </Box>
+            <Box mb={10} bg="white" borderRadius="xl" borderWidth="1px" p={6}>
+              <Heading mb={4} as="h1" fontSize="600" fontWeight="700">
+                Contracts
+              </Heading>
+              {contracts.results.map((contract, index) => {
+                return (
+                  <>
+                    <ToTripProposalCard contract={contract} />
+                    {index < contracts.results.length - 1 ? <Divider /> : null}
+                  </>
+                )
+              })}
+              {!contracts.loading && contracts.count == 0 ? (
+                <Empty text="No Contracts yet" />
+              ) : null}
+            </Box>
+          </Box>
+        </HStack>
+      </Container>
+      {/* <Container
         minH="calc(100vh - 55px)"
         px={16}
         bg="blueAlpha.100"
@@ -143,10 +218,10 @@ const MyTripPage = observer(({ tripId }) => {
             </Box>
           </Box>
         </Flex>
-      </Container>
+      </Container> */}
     </>
   )
-})
+}
 const PublicPage = ({ trip }) => {
   const [similarTrips, setSimilarTrips]: [Trips, any] = useState(defaultTrips)
   const [loading, setLoading] = useState(false)
@@ -192,10 +267,11 @@ const PublicPage = ({ trip }) => {
 
 const SpecificTripPage = observer(({ tripId }) => {
   const [trip, setTrip]: [Trip | null, any] = useState(null)
+
   useEffect(() => {
     getTrip(tripId)
-      .then(order => {
-        setTrip(order.data)
+      .then(trip => {
+        setTrip(trip.data)
       })
       .catch(e => {
         navigate("/404")

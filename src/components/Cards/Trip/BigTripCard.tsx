@@ -43,6 +43,7 @@ export const BigTripCard = chakra(
         borderRadius="xl"
         w="100%"
         p={6}
+        zIndex="1"
         pos="relative"
         overflow="hidden"
       >
