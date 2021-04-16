@@ -8,9 +8,10 @@ import {
   LinkBox,
   LinkOverlay,
   Text,
+  useToast,
 } from "@chakra-ui/react"
 import { Link } from "gatsby-plugin-intl"
-import React from "react"
+import React, { useContext, useState } from "react"
 import { Rating } from "../../Misc/Rating"
 import { FRONTEND_DATE_FORMAT } from "../../../api"
 import { ChevronRightIcon } from "../../../icons/ChevronRight"
@@ -19,9 +20,24 @@ import { Trip } from "../../../types/trip"
 import { getCountryFromCode, tripCityAnywhere } from "../../../utils/misc"
 import { Avatar } from "../../Avatar/Avatar"
 import moment from "moment"
+import { addContract, getOrderProposals } from "../../../api/contract"
+import { OrderPageState } from "../../../providers/navPage"
+import { Order } from "../../../types/orders"
 
 const MediumTripCard = chakra(
-  ({ className, trip }: { className?: any; trip: Trip }) => {
+  ({
+    className,
+    trip,
+    children,
+    callback,
+    loading = false,
+  }: {
+    className?: any
+    trip: Trip
+    children: any
+    callback: any
+    loading: boolean
+  }) => {
     return (
       <LinkBox w="100%">
         <LinkOverlay>
@@ -103,8 +119,13 @@ const MediumTripCard = chakra(
               {trip.description ? trip.description : "No Description"}
             </Text>
             <Link to={`/trips/${trip.id}`}>
-              <Button w="100%" variant="primary_dark">
-                Make Offer
+              <Button
+                isLoading={loading}
+                onClick={callback}
+                w="100%"
+                variant="primary_dark"
+              >
+                {children}
               </Button>
             </Link>
           </Box>
@@ -115,9 +136,76 @@ const MediumTripCard = chakra(
 )
 
 export const MyMediumTripCard = props => {
-  return <MediumTripCard {...props}></MediumTripCard>
+  return <MediumTripCard {...props}>View Trip</MediumTripCard>
 }
 
 export const PublicMediumTripCard = props => {
-  return <MediumTripCard {...props}></MediumTripCard>
+  return <MediumTripCard {...props}>Make Offer</MediumTripCard>
+}
+export const PublicMediumTripCardProposal = (props: {
+  className?: any
+  trip: Trip
+  children: any
+  callback: any
+  loading: boolean
+}) => {
+  const [loading, setLoading] = useState(false)
+  const context = useContext(OrderPageState)
+  const toast = useToast()
+  const order: Order = context.order
+  const callback = e => {
+    e.preventDefault()
+    setLoading(true)
+    addContract({
+      order: order.id,
+      trip: props.trip.id,
+      price_bid: order.price,
+    })
+      .then(e => {
+        toast({
+          title: "Proposal was made",
+          description: "Wait for the traveler to accept your your",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        })
+      })
+      .then(e => {
+        context.suggested.results = context.suggested.results.filter(
+          item => item.id != props.trip.id
+        )
+        context.suggested.count--
+        return getOrderProposals(order.id)
+      })
+      .then(e => {
+        context.setProposals(e.data)
+      })
+      .catch(() => {
+        toast({
+          title: "Error has occured",
+          description: "Please try again later or contract our support",
+          status: "error",
+          duration: 3000,
+          isClosable: true,
+        })
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }
+  return (
+    <MediumTripCard callback={callback} loading={loading} {...props}>
+      Make Offer
+    </MediumTripCard>
+  )
+}
+
+export const PublicMediumTripCardMessage = (props: {
+  className?: any
+  trip: Trip
+  children: any
+  callback: any
+  loading: boolean
+}) => {
+  return <MediumTripCard {...props}>Send Message</MediumTripCard>
 }

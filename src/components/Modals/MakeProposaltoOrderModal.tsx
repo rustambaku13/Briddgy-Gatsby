@@ -1,4 +1,4 @@
-import { Box, Divider, Heading, HStack } from "@chakra-ui/layout"
+import { Divider, HStack } from "@chakra-ui/layout"
 import {
   Modal,
   ModalBody,
@@ -9,29 +9,18 @@ import {
   ModalOverlay,
 } from "@chakra-ui/modal"
 import {
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
-  NumberIncrementStepper,
-  NumberDecrementStepper,
+  Button,
+  FormControl,
+  FormLabel,
   InputGroup,
   InputLeftAddon,
-  FormLabel,
-  useToast,
-} from "@chakra-ui/react"
-import {
-  Button,
-  Checkbox,
-  CheckboxGroup,
-  FormControl,
-  Input,
-  InputLeftElement,
-  Radio,
-  RadioGroup,
+  NumberInput,
+  NumberInputField,
   TabPanel,
   TabPanels,
   Tabs,
   Text,
+  useToast,
 } from "@chakra-ui/react"
 import { observer } from "mobx-react-lite"
 import React, { useEffect, useRef, useState } from "react"
@@ -42,9 +31,21 @@ import { ChevronLeftIcon } from "../../icons/ChevronLeft"
 import { LightBulbIcon } from "../../icons/LightBulb"
 import LayoutStore from "../../store/LayoutStore"
 import UserStore from "../../store/UserStore"
-import { Trip, Trips } from "../../types/trip"
+import { Trip } from "../../types/trip"
 import { trimCityEmpty } from "../../utils/misc"
 import { Loader } from "../Misc/Loader"
+
+const shouldModalBeOpened = () => {
+  return (
+    LayoutStore.toOrderProposalModalActivate &&
+    !LayoutStore.toOrderProposalModalContext.trip
+  )
+}
+/**
+ * This is a modal that is opened once the LayoutStore.toOrderProposalModalContext is not null
+ * If the @function {shouldModalBeOpened} return true that means that @member {LayoutStore.toOrderProposalModalActivate} has a trip set
+ * Which in turn means that we actually need to open modal in second page where user enter his preferred reward
+ */
 export const MakeProposaltoOrderModal = observer(() => {
   const [filteredTrips, setFilteredTrips] = useState({
     loading: true,
@@ -54,18 +55,26 @@ export const MakeProposaltoOrderModal = observer(() => {
   const [page, setPage] = useState(0)
   const [loading, setLoading] = useState(false)
   const { handleSubmit, register, errors } = useForm()
-  const selectedTrip = useRef(null)
+  const selectedTrip: { current: Trip } = useRef(null)
+
+  const fetchSuggestions = () => {
+    getSuggestedTrips(
+      LayoutStore.toOrderProposalModalContext.order.id,
+      UserStore.me.id
+    ).then(trips => {
+      setFilteredTrips({ loading: false, results: trips.data.results })
+    })
+  }
+
   useEffect(() => {
     // Fetch the Trips suitable
-    if (LayoutStore.toOrderProposalModalVisible) {
-      getSuggestedTrips(
-        LayoutStore.toOrderProposalModalContext.order.id,
-        UserStore.me.id
-      ).then(trips => {
-        setFilteredTrips({ loading: false, results: trips.data.results })
-      })
+    if (!LayoutStore.toOrderProposalModalActivate) return
+    if (shouldModalBeOpened()) fetchSuggestions()
+    else {
+      selectedTrip.current = LayoutStore.toOrderProposalModalContext.trip
+      setPage(1)
     }
-  }, [LayoutStore.toOrderProposalModalVisible])
+  }, [LayoutStore.toOrderProposalModalActivate])
   const switchPage = e => {
     // Turn to the next page
     const trip = filteredTrips.results.filter(
@@ -89,11 +98,24 @@ export const MakeProposaltoOrderModal = observer(() => {
       price_bid: data.price,
     })
       .then(e => {
+        LayoutStore.toOrderProposalModalContext.callback
+          ? LayoutStore.toOrderProposalModalContext.callback()
+          : null
+
         closeModal()
         toast({
           title: "Proposal was made",
           description: "Wait for the orderer to confirm your delivery",
           status: "success",
+          duration: 3000,
+          isClosable: true,
+        })
+      })
+      .catch(() => {
+        toast({
+          title: "Error has occured",
+          description: "Please try again later or contract our support",
+          status: "error",
           duration: 3000,
           isClosable: true,
         })
@@ -104,133 +126,132 @@ export const MakeProposaltoOrderModal = observer(() => {
   }
   return (
     <Modal
-      isOpen={LayoutStore.toOrderProposalModalVisible}
+      isOpen={LayoutStore.toOrderProposalModalContext != null}
       onClose={closeModal}
     >
-      <ModalOverlay></ModalOverlay>
-      <ModalContent
-        onSubmit={handleSubmit(proposalHandler)}
-        as="form"
-        w="full"
-        maxW="container.sm"
-      >
-        <ModalHeader>
-          {page == 0
-            ? `You have ${filteredTrips.results.length} suitable Trips`
-            : `${trimCityEmpty(selectedTrip.current?.source?.city)}
-              ${selectedTrip.current?.source?.country_en} - ${trimCityEmpty(
-                selectedTrip.current?.destination?.city
-              )}     ${selectedTrip.current?.destination?.country_en}`}
-        </ModalHeader>
-        <ModalCloseButton />
-        <ModalBody fontSize="sm">
-          <Tabs index={page}>
-            <TabPanels>
-              <TabPanel w="100%" h="100%" p={0}>
-                <Text
-                  w="100%"
-                  px={2}
-                  bg="lilaPurple.light"
-                  mb={8}
-                  py={5}
-                  borderRadius="md"
-                >
-                  <LightBulbIcon float="left" fontSize="500" />
-                  Select the trips that would like to offer for this order
-                </Text>
+      <form onSubmit={handleSubmit(proposalHandler)}>
+        <ModalOverlay></ModalOverlay>
+        <ModalContent maxW="container.sm">
+          <ModalHeader>
+            {page == 0
+              ? `You have ${filteredTrips.results.length} suitable Trips`
+              : `${trimCityEmpty(
+                  selectedTrip.current.src.details[0].en.city
+                )} ${selectedTrip.current.src.countryCode} - ${trimCityEmpty(
+                  selectedTrip.current.dest.details[0].en.city
+                )} ${selectedTrip.current.dest.countryCode}`}
+          </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody fontSize="sm">
+            <Tabs index={page}>
+              <TabPanels>
+                <TabPanel w="100%" h="100%" p={0}>
+                  <Text
+                    w="100%"
+                    px={2}
+                    bg="lilaPurple.light"
+                    mb={8}
+                    py={5}
+                    borderRadius="md"
+                  >
+                    <LightBulbIcon float="left" fontSize="500" />
+                    Select the trips that would like to offer for this order
+                  </Text>
 
-                {filteredTrips.loading ? <Loader mx="auto" /> : null}
-                {filteredTrips.results.map((trip: Trip) => (
-                  <div key={trip.id}>
-                    <HStack my={2} spacing={4}>
-                      <Text flex={1} variant="secondary">
-                        {trimCityEmpty(trip.source.city)}
-                        {trip.source.country_en}
-                      </Text>
-                      <Text flex={1} variant="secondary">
-                        {trimCityEmpty(trip.destination.city)}
-                        {trip.destination.country_en}
-                      </Text>
-                      <Text flex={1} variant="secondary">
-                        {trip.weight_limit} kg
-                      </Text>
-                      <Text flex={1} variant="secondary">
-                        {trip.date}
-                      </Text>
-                      <Button
-                        w="12"
-                        variant="link"
-                        value={trip.id}
-                        color="blue.500"
-                        size="sm"
-                        onClick={switchPage}
+                  {filteredTrips.loading ? <Loader mx="auto" /> : null}
+                  {filteredTrips.results.map((trip: Trip) => (
+                    <div key={trip.id}>
+                      <HStack my={2} spacing={4}>
+                        <Text flex={1} variant="secondary">
+                          {trimCityEmpty(trip.src.details[0].en.city)}
+                          {trip.src.countryCode}
+                        </Text>
+                        <Text flex={1} variant="secondary">
+                          {trimCityEmpty(trip.dest.details[0].en.city)}
+                          {trip.dest.countryCode}
+                        </Text>
+                        <Text flex={1} variant="secondary">
+                          {trip.weight_limit} kg
+                        </Text>
+                        <Text flex={1} variant="secondary">
+                          {trip.date}
+                        </Text>
+                        <Button
+                          w="12"
+                          variant="link"
+                          value={trip.id}
+                          color="blue.500"
+                          size="sm"
+                          onClick={switchPage}
+                        >
+                          select
+                        </Button>
+                      </HStack>
+                      <Divider my={5} />
+                    </div>
+                  ))}
+                </TabPanel>
+                <TabPanel p={0} w="100%" h="100%">
+                  <Text
+                    w="100%"
+                    px={2}
+                    bg="lilaPurple.light"
+                    mb={8}
+                    py={5}
+                    borderRadius="md"
+                  >
+                    <LightBulbIcon float="left" fontSize="20px" mr={2} />
+                    You can bid for a different reward than the one that has
+                    been set by the order
+                  </Text>
+                  <FormControl>
+                    {" "}
+                    <FormLabel>Your reward</FormLabel>
+                    <InputGroup size="lg">
+                      <InputLeftAddon children="$" />
+                      <NumberInput
+                        defaultValue={
+                          LayoutStore.toOrderProposalModalContext?.order.price
+                        }
+                        maxW="200px"
                       >
-                        select
-                      </Button>
-                    </HStack>
-                    <Divider my={5} />
-                  </div>
-                ))}
-              </TabPanel>
-              <TabPanel p={0} w="100%" h="100%">
-                <Text
-                  w="100%"
-                  px={2}
-                  bg="lilaPurple.light"
-                  mb={8}
-                  py={5}
-                  borderRadius="md"
+                        <NumberInputField
+                          name="price"
+                          ref={register({
+                            required: "Your Reward is required",
+                          })}
+                          placeholder="159.99"
+                        />
+                      </NumberInput>
+                    </InputGroup>
+                    <Text color="red.600">{errors.price?.message}</Text>
+                  </FormControl>
+                </TabPanel>
+              </TabPanels>
+            </Tabs>
+          </ModalBody>
+          <ModalFooter>
+            {page == 1 ? (
+              <>
+                <Button
+                  d={shouldModalBeOpened() ? "flex" : "none"}
+                  leftIcon={<ChevronLeftIcon />}
+                  mr="auto"
+                  onClick={() => {
+                    setPage(0)
+                  }}
                 >
-                  <LightBulbIcon float="left" fontSize="20px" mr={2} />
-                  You can bid for a different reward than the one that has been
-                  set by the order
-                </Text>
-                <FormControl>
                   {" "}
-                  <FormLabel>Your reward</FormLabel>
-                  <InputGroup size="lg">
-                    <InputLeftAddon children="$" />
-                    <NumberInput
-                      defaultValue={
-                        LayoutStore.toOrderProposalModalContext?.order.price
-                      }
-                      maxW="200px"
-                    >
-                      <NumberInputField
-                        name="price"
-                        ref={register({
-                          required: "Your Reward is required",
-                        })}
-                        placeholder="159.99"
-                      />
-                    </NumberInput>
-                  </InputGroup>
-                  <Text color="red.600">{errors.price?.message}</Text>
-                </FormControl>
-              </TabPanel>
-            </TabPanels>
-          </Tabs>
-        </ModalBody>
-        <ModalFooter>
-          {page == 1 ? (
-            <>
-              <Button
-                leftIcon={<ChevronLeftIcon />}
-                mr="auto"
-                onClick={() => {
-                  setPage(0)
-                }}
-              >
-                {" "}
-                Back
-              </Button>
-              <Button isLoading={loading} type="submit" variant="success">
-                Offer Now
-              </Button>
-            </>
-          ) : null}
-        </ModalFooter>
-      </ModalContent>
+                  Back
+                </Button>
+                <Button isLoading={loading} type="submit" variant="success">
+                  Offer Now
+                </Button>
+              </>
+            ) : null}
+          </ModalFooter>
+        </ModalContent>
+      </form>
     </Modal>
   )
 })

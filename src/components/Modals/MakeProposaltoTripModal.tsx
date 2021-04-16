@@ -1,4 +1,3 @@
-import { Box, Center, Divider, HStack, Image } from "@chakra-ui/react"
 import {
   Modal,
   ModalBody,
@@ -9,27 +8,29 @@ import {
   ModalOverlay,
 } from "@chakra-ui/modal"
 import {
+  AspectRatio,
   Button,
+  Center,
   Checkbox,
   CheckboxGroup,
+  Divider,
+  HStack,
+  Image,
   Text,
   useToast,
 } from "@chakra-ui/react"
+import { Link } from "gatsby-plugin-intl"
 import { observer } from "mobx-react-lite"
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
+import { bmify } from "../../api"
 import { addContract } from "../../api/contract"
 import { getSuggestedOrders } from "../../api/trip"
 import { LightBulbIcon } from "../../icons/LightBulb"
 import LayoutStore from "../../store/LayoutStore"
 import UserStore from "../../store/UserStore"
-import { Trip } from "../../types/trip"
-import { trimCityEmpty } from "../../utils/misc"
-import { Loader } from "../Misc/Loader"
 import { Order } from "../../types/orders"
-import { bmify } from "../../api"
-import { Link } from "gatsby-plugin-intl"
-import { getOrders } from "../../api/order"
+import { Loader } from "../Misc/Loader"
 export const MakeProposaltoTripModal = observer(() => {
   const [filteredOrders, setFilteredOrders] = useState({
     loading: true,
@@ -42,10 +43,6 @@ export const MakeProposaltoTripModal = observer(() => {
   useEffect(() => {
     // Fetch the Trips suitable
     if (LayoutStore.toTripProposalModalVisible) {
-      // getOrders().then(orders => {
-      //   setFilteredOrders({ loading: false, results: orders.data.results })
-      // })
-      // return
       getSuggestedOrders(
         LayoutStore.toTripProposalModalContext.trip.id,
         UserStore.me.id
@@ -75,6 +72,15 @@ export const MakeProposaltoTripModal = observer(() => {
           title: "Proposal was made",
           description: "Wait for the orderer to confirm your delivery",
           status: "success",
+          duration: 3000,
+          isClosable: true,
+        })
+      })
+      .catch(() => {
+        toast({
+          title: "Error has occured",
+          description: "Please try again later or contract our support",
+          status: "error",
           duration: 3000,
           isClosable: true,
         })
@@ -124,13 +130,18 @@ export const MakeProposaltoTripModal = observer(() => {
               <div key={order.id}>
                 <HStack my={2} spacing={4}>
                   <Checkbox outline="none" value={`${index}`} variant="light" />
-                  <Center h="16" bg="outline.light" borderRadius="base" w="16">
+                  <AspectRatio
+                    h="16"
+                    bg="outline.light"
+                    borderRadius="base"
+                    w="16"
+                  >
                     <Image
                       maxW="100%"
                       maxH="100%"
                       src={bmify(order.orderimage[0])}
                     />
-                  </Center>
+                  </AspectRatio>
 
                   <Link
                     style={{ flex: 1 }}

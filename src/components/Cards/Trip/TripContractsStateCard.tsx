@@ -1,75 +1,99 @@
 import {
+  AspectRatio,
   Box,
   Button,
   Center,
   Flex,
   Heading,
-  HStack,
+  Link as CLink,
   Image,
-  Link,
   Text,
+  IconButton,
 } from "@chakra-ui/react"
 import { chakra } from "@chakra-ui/system"
-import React from "react"
+import { Link } from "gatsby-plugin-intl"
+import { CrossIcon } from "../../../icons/Cross"
+import React, { useContext } from "react"
 import { bmify } from "../../../api"
 import { Contract } from "../../../types/contract"
-import { ChatIcon } from "../../../icons/Chat"
-import { Order } from "../../../types/orders"
-import { Trip } from "../../../types/trip"
 import { ContractSteps } from "../../Misc/ContractSteps"
+import LayoutStore from "../../../store/LayoutStore"
+import { removeContract } from "../../../api/contract"
+import { TripPageState } from "../../../providers/navPage"
 
 export const TripContractsStateCard = chakra(
   ({ className, contract }: { className?: any; contract: Contract }) => {
+    const context = useContext(TripPageState)
+    const cancelHandler = async () => {
+      await removeContract(contract.id)
+      context.contracts.results = context.contracts.results.filter(
+        item => item.id != contract.id
+      )
+      context.contracts.count--
+      context.setContracts({ ...context.contracts })
+    }
+
     return (
-      <Box
-        px={3}
-        my={8}
-        py={5}
-        cursor="pointer"
-        transition="0.3s ease"
-        _hover={{ bg: "blueAlpha.100" }}
-      >
-        <Heading fontSize="lg" mb={5}>
-          {contract.order.title}
-        </Heading>
-        <Flex h="85px">
-          <Center mr={5} p={3} bg="gray.100" h="85px" w="85px">
-            <Image
-              maxW="100%"
-              maxH="100%"
-              w="75px"
-              src={bmify(contract.order.orderimage?.[0])}
-            />
-          </Center>
-          <Flex
-            alignItems="center"
-            justifyContent="space-between"
-            flex={1}
-            h="100%"
+      <Box py={4} transition="0.3s ease">
+        <Flex alignItems="center" mb={3}>
+          <Box overflow="hidden" mr={3}>
+            <Link to={`/orders/${contract.order.id}`}>
+              <Text className="clamp-1" fontWeight="700" as="h3">
+                {contract.order.title}
+              </Text>
+            </Link>
+          </Box>
+          <IconButton
+            onClick={() => {
+              LayoutStore.alertDialogModalOpen({
+                title: "Cancel Deal",
+                yes: "Yes",
+                callback: cancelHandler,
+                no: "No",
+                description: "Are you sure you want to cancel the deal? ",
+              })
+            }}
+            ml="auto"
+            color="danger.base"
+            fontSize="200"
+            size="xs"
+            aria-label="Delete"
+            icon={<CrossIcon />}
+          />
+        </Flex>
+        <Flex alignItems="center">
+          <AspectRatio
+            mr={3}
+            ratio={1}
+            borderWidth="1px"
+            borderRadius="base"
+            w="4.5em"
           >
-            <Box>
-              <Link
-                d="block"
-                href={contract.order.order_url}
-                mb={3}
-                color="blue.400"
-              >
+            <Image src={bmify(contract.order.orderimage?.[0])} />
+          </AspectRatio>
+          <Box flex={1}>
+            <Text variant="light">
+              Buy From{" "}
+              <CLink href={contract.order.order_url} color="tealBlue.base">
                 {contract.order.host}
-              </Link>
-              <Text variant="secondary">${contract.order.item_price}</Text>
-            </Box>
-            <Box>
-              <Text mb={3} variant="secondary">
-                Reward
+              </CLink>
+            </Text>
+            <Text variant="light">
+              Your reward{" "}
+              <Text as="span" fontWeight="700" color="text.dark">
+                ${contract.price_bid}
               </Text>
-              <Text fontWeight="600" variant="secondary">
-                ${contract.order.price}
+            </Text>
+            <Text variant="light">
+              Product price{" "}
+              <Text as="span" color="text.dark">
+                ${contract.order.item_price}
               </Text>
-            </Box>
-            <Button size="sm" variant="primary">
-              Message
-            </Button>
-          </Flex>
+            </Text>
+          </Box>
+          <Button size="sm" variant="primary">
+            Send message
+          </Button>
         </Flex>
         <ContractSteps w="100%" contract={contract} />
       </Box>

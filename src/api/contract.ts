@@ -17,6 +17,13 @@ export async function addContract({
     price_bid,
   })
 }
+
+export async function acceptContract(orderId, tripId) {
+  return await axios_normal.post(`/contracts/accept/`, {
+    order: orderId,
+    trip: tripId,
+  })
+}
 export async function removeContract(id) {
   return await axios_normal.delete(`/delete/contracts/${id}/`)
 }
@@ -31,5 +38,5 @@ export async function getOrderProposals(id) {
 }
 
 export async function getOrderContracts(order: number) {
-  await axios_normal.get(`/contracts/orders/${order}/`)
+  return await axios_normal.get(`/contracts/orders/${order}/`)
 }

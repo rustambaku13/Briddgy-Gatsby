@@ -1,4 +1,7 @@
 import React from "react"
+import { defaultContracts } from "../types/contract"
+import { defaultOrders } from "../types/orders"
+import { defaultTrips } from "../types/trip"
 
 interface NagiationContextInterface {
   page:
@@ -15,3 +18,24 @@ interface NagiationContextInterface {
 export const NavigationContext = React.createContext<NagiationContextInterface>(
   { page: "home" }
 )
+
+export const TripPageState = React.createContext({
+  suggested: defaultOrders,
+  trip: null,
+  setSuggested: null,
+  proposals: defaultContracts,
+  setProposals: null,
+  contracts: defaultContracts,
+  setContracts: null,
+})
+export const OrderPageState = React.createContext({
+  suggested: defaultTrips,
+  contract: null,
+  setContract: null,
+  step: 0,
+  setStep: null,
+  order: null,
+  setSuggested: null,
+  proposals: defaultContracts,
+  setProposals: null,
+})

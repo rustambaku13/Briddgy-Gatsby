@@ -6,11 +6,19 @@ import UserStore from "./UserStore"
 import { useToast } from "@chakra-ui/toast"
 interface toOrderProposalContext {
   order: Order
+  callback?: any
   trip?: Trip
 }
 interface toTripProposalContext {
   order?: Order
   trip: Trip
+}
+interface alertDialogContext {
+  title: string
+  description: string
+  callback: any
+  yes: string
+  no: string
 }
 
 class LayoutStore {
@@ -18,6 +26,7 @@ class LayoutStore {
   phoneConfirmModalVisible: boolean = false
   toOrderProposalModalContext: toOrderProposalContext = null
   toTripProposalModalContext: toOrderProposalContext = null
+  alertDialogModalContext: alertDialogContext = null
   loginModalFormCallback: any = null
   constructor() {
     makeAutoObservable(this)
@@ -33,7 +42,7 @@ class LayoutStore {
     this.loginModalFormCallback = callback
   }
   // ****----ToOrderProposalModal-----****
-  get toOrderProposalModalVisible() {
+  get toOrderProposalModalActivate() {
     return !(this.toOrderProposalModalContext == null) //true
   }
   toOrderProposalModalOpen(context) {
@@ -48,13 +57,21 @@ class LayoutStore {
   get toTripProposalModalVisible() {
     return !(this.toTripProposalModalContext == null) //true
   }
-  toTripProposalModalOpen(context) {
+  toTripProposalModalOpen(context: toOrderProposalContext) {
     if (UserStore.me) {
       // If I am logged in go on and define it
       this.toTripProposalModalContext = context
     } else {
       navigate("/login")
     }
+  }
+
+  // ****----AlertDialogModal Stuff-----****
+  get alertDialogModalVisible() {
+    return !(this.alertDialogModalContext == null)
+  }
+  alertDialogModalOpen(context: alertDialogContext) {
+    this.alertDialogModalContext = context
   }
 
   toggleEmailConfirmModal() {

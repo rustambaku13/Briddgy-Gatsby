@@ -1,74 +1,232 @@
 import {
+  AspectRatio,
   Box,
   Button,
   Center,
   Flex,
   Heading,
+  HStack,
   Image,
-  Link,
+  Popover,
+  PopoverBody,
+  PopoverCloseButton,
+  PopoverContent,
+  PopoverHeader,
+  PopoverTrigger,
   Text,
+  VStack,
 } from "@chakra-ui/react"
 import { chakra } from "@chakra-ui/system"
-import React from "react"
-import { bmify } from "../../../api"
+import { Link } from "gatsby-plugin-intl"
+import moment from "moment"
+import React, { useContext, useState } from "react"
+import { bmify, FRONTEND_DATE_FORMAT } from "../../../api"
+import { acceptContract, removeContract } from "../../../api/contract"
+import { TripPageState } from "../../../providers/navPage"
 import { Contract } from "../../../types/contract"
+import { getCountryFromCode, tripCityAnywhere } from "../../../utils/misc"
+import { Avatar } from "../../Avatar/Avatar"
 import { ContractSteps } from "../../Misc/ContractSteps"
-//Proposal Card for Trip Page
+import { Rating } from "../../Misc/Rating"
+
 export const ToTripProposalCard = chakra(
-  ({ className, contract }: { className?: any; contract: Contract }) => {
+  ({
+    className,
+    contract,
+    acceptButton,
+    rejectButton,
+  }: {
+    className?: any
+    contract: Contract
+    acceptButton
+    rejectButton
+  }) => {
     return (
-      <Box
-        px={3}
-        my={8}
-        py={5}
-        cursor="pointer"
-        transition="0.3s ease"
-        _hover={{ bg: "blueAlpha.100" }}
-      >
-        <Heading fontSize="lg" mb={5}>
-          {contract.order.title}
-        </Heading>
-        <Flex h="85px">
-          <Center mr={5} p={3} bg="gray.100" h="85px" w="85px">
-            <Image
-              maxW="100%"
-              maxH="100%"
-              w="75px"
-              src={bmify(contract.order.orderimage?.[0])}
+      <VStack alignItems="flex-start" spacing={3} py={4} w="100%">
+        <Flex alignItems="center" w="100%">
+          <Avatar mr={2} user={contract.order.owner} />
+          <Box>
+            <Text>{`${contract.order.owner.first_name} ${contract.order.owner.last_name}`}</Text>
+            <Rating
+              fontSize="400"
+              readonly
+              rating={contract.order.owner.rating}
             />
-          </Center>
-          <Flex
-            alignItems="center"
-            justifyContent="space-between"
-            flex={1}
-            h="100%"
-          >
-            <Box>
-              <Link
-                d="block"
-                href={contract.order.order_url}
-                mb={3}
-                color="blue.400"
-              >
-                {contract.order.host}
-              </Link>
-              <Text variant="secondary">${contract.order.item_price}</Text>
-            </Box>
-            <Box>
-              <Text mb={3} variant="secondary">
-                Reward
-              </Text>
-              <Text fontWeight="600" variant="secondary">
-                ${contract.price_bid}
-              </Text>
-            </Box>
-            <Button size="sm" variant="primary">
-              Message
-            </Button>
-          </Flex>
+          </Box>
+          <Text variant="light" textAlign="right" fontSize="400" flex={1}>
+            Proposed {moment(contract.dateSigned).fromNow()}
+          </Text>
         </Flex>
-        <ContractSteps contract={contract} />
-      </Box>
+        <Flex>
+          <AspectRatio
+            mr={3}
+            ratio={1}
+            borderWidth="1px"
+            borderRadius="base"
+            w="4.5em"
+          >
+            <Image src={bmify(contract.order.orderimage?.[0])} />
+          </AspectRatio>
+          <Box flex={1}>
+            <Link to={`/orders/${contract.order.id}`}>
+              <Text className="clamp-1" fontWeight="700" as="h3">
+                {contract.order.title}
+              </Text>
+            </Link>
+            <Link to={contract.order.order_url}>
+              <Text variant="light">
+                Buy From{" "}
+                <Text as="span" color="blue.400">
+                  {contract.order.host}
+                </Text>
+              </Text>
+            </Link>
+            <Text variant="light">
+              Product price{" "}
+              <Text as="span" color="text.dark">
+                ${contract.order.item_price}
+              </Text>
+            </Text>
+          </Box>
+        </Flex>
+        <Text variant="light">
+          From{" "}
+          <Text as="span" color="text.dark">
+            {tripCityAnywhere(contract.order.src.details[0].en.city)},{" "}
+            {getCountryFromCode(contract.order.src.countryCode)}
+          </Text>{" "}
+          To{" "}
+          <Text as="span" color="text.dark">
+            {tripCityAnywhere(contract.order.dest.details[0].en.city)},{" "}
+            {getCountryFromCode(contract.order.dest.countryCode)}
+          </Text>
+        </Text>
+        <Text fontSize="500" variant="light" textAlign="right">
+          Your reward{" "}
+          <Text as="strong" color="text.dark" fontSize="700" fontWeight="700">
+            ${contract.price_bid}
+          </Text>
+        </Text>
+        <HStack w="100%" spacing={6}>
+          {rejectButton}
+          {acceptButton}
+        </HStack>
+      </VStack>
     )
   }
 )
+
+export const ToTripProposalCardWithAccept = (props: { contract: Contract }) => {
+  const context = useContext(TripPageState)
+  const [rejectLoading, setRejectLoading] = useState(false)
+  const [acceptLoading, setAcceptLoading] = useState(false)
+  const acceptHandler = () => {
+    setAcceptLoading(true)
+    acceptContract(props.contract.order.id, props.contract.trip.id)
+      .then(() => {
+        context.proposals.results = context.proposals.results.filter(
+          (item: Contract) => item.id != props.contract.id
+        )
+        context.proposals.count--
+        props.contract.state = "SET"
+        context.contracts.results.unshift(props.contract)
+        context.contracts.count++
+        context.setProposals({ ...context.proposals })
+      })
+      .finally(() => {
+        setAcceptLoading(false)
+      })
+  }
+  const rejectHandler = () => {
+    setRejectLoading(true)
+    removeContract(props.contract.id)
+      .then(() => {
+        context.proposals.results = context.proposals.results.filter(
+          (item: Contract) => item.id != props.contract.id
+        )
+        context.proposals.count--
+        context.setProposals({ ...context.proposals })
+      })
+      .finally(() => {
+        setRejectLoading(false)
+      })
+  }
+  return (
+    <ToTripProposalCard
+      {...props}
+      rejectButton={
+        <Button
+          onClick={rejectHandler}
+          isLoading={rejectLoading}
+          color="danger.base"
+          borderColor="danger.base"
+          flex="1"
+          size="sm"
+          variant="outline"
+        >
+          Cancel
+        </Button>
+      }
+      acceptButton={
+        <Button
+          onClick={acceptHandler}
+          isLoading={acceptLoading}
+          flex={1}
+          size="sm"
+          variant="success"
+        >
+          Accept
+        </Button>
+      }
+    />
+  )
+}
+
+export const ToTripProposalCardNoAccept = props => {
+  const context = useContext(TripPageState)
+  const [loading, setLoading] = useState(false)
+  const rejectHandler = () => {
+    setLoading(true)
+    removeContract(props.contract.id)
+      .then(() => {
+        context.proposals.results = context.proposals.results.filter(
+          (item: Contract) => item.id != props.contract.id
+        )
+        context.proposals.count--
+        context.setProposals({ ...context.proposals })
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }
+  return (
+    <ToTripProposalCard
+      {...props}
+      rejectButton={
+        <Button
+          onClick={rejectHandler}
+          isLoading={loading}
+          color="danger.base"
+          borderColor="danger.base"
+          flex="1"
+          size="sm"
+          variant="outline"
+        >
+          Cancel
+        </Button>
+      }
+      acceptButton={
+        <Button
+          flex={1}
+          size="sm"
+          variant="outline"
+          borderWidth="1px"
+          borderColor="outline.base"
+          disabled
+        >
+          Pending
+        </Button>
+      }
+    />
+  )
+}

@@ -3,6 +3,11 @@ export default {
   baseStyle: {
     fontWeight: 400,
     borderRadius: "base",
+    _hover: {
+      _disabled: {
+        bg: "",
+      },
+    },
   },
   // Styles for the size variations
   sizes: {

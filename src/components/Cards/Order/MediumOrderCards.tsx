@@ -17,13 +17,16 @@ import {
 } from "@chakra-ui/react"
 import { Link } from "gatsby-plugin-intl"
 import moment from "moment"
-import React from "react"
+import React, { useContext } from "react"
 import { Rating } from "../../Misc/Rating"
 import { bmify, FRONTEND_DATE_FORMAT } from "../../../api"
 import { Order } from "../../../types/orders"
 import { getCountryFromCode, trimCityEmpty } from "../../../utils/misc"
 import { CurvedArrowRight } from "../../../icons/CurvedArrowRight"
 import { Avatar } from "../../Avatar/Avatar"
+import LayoutStore from "../../../store/LayoutStore"
+import { TripPageState } from "../../../providers/navPage"
+import { getTripProposals } from "../../../api/contract"
 
 // This page is all about medium sized order compoentns
 
@@ -43,16 +46,21 @@ const OrderStatus = chakra(
     )
   }
 )
+/**
+ * MediumOrderCard is general view
+ * @argument {children} the name of the main button
+ * @argument {callback} the main button click callback
+ */
 const MediumOrderCard = chakra(
   ({
     className,
     orderData,
     children,
-    status,
+    callback,
   }: {
     className?: any
     orderData: Order
-    status?: any
+    callback: any
     children?: any
   }) => {
     return (
@@ -146,12 +154,13 @@ const MediumOrderCard = chakra(
                     </Text>
                   </Box>
                   <Button
+                    onClick={callback}
                     d={["none", "block"]}
                     mt="auto"
                     variant="primary_dark"
                     w="100%"
                   >
-                    Make Offer
+                    {children}
                   </Button>
                 </VStack>
               </Flex>
@@ -178,13 +187,15 @@ const MediumOrderCard = chakra(
                   </Text>
                 </Text>
               </Box>
+              {children}
               <Button
+                onClick={callback}
                 d={["block", "none"]}
                 mb={4}
                 variant="primary_dark"
                 w="100%"
               >
-                Make Offer
+                {children}
               </Button>
               <HStack alignItems="center" w="100%">
                 <Text color="text.medium" as="span">{`${trimCityEmpty(
@@ -215,11 +226,37 @@ const MediumOrderCard = chakra(
 )
 
 export const MyMediumOrderCard = props => {
+  return <MediumOrderCard {...props}>View More</MediumOrderCard>
+}
+
+export const PublicMediumOrderCardProposal = props => {
+  const context = useContext(TripPageState)
+  const callback = () => {
+    context.suggested.results = context.suggested.results.filter(
+      item => item.id != props.orderData.id
+    )
+    context.suggested.count--
+    getTripProposals(context.trip.id).then(e => {
+      context.setProposals(e.data)
+    })
+  }
+  const modalContext = {
+    trip: context.trip,
+    order: props.orderData,
+    callback,
+  }
+
   return (
-    <MediumOrderCard {...props}>
-      <Button mt="auto" variant="primary" w="100%">
-        View Order
-      </Button>
+    <MediumOrderCard
+      callback={e => {
+        e.preventDefault()
+        e.stopPropagation()
+        LayoutStore.toOrderProposalModalOpen(modalContext)
+      }}
+      status={null}
+      {...props}
+    >
+      Make Offer
     </MediumOrderCard>
   )
 }
@@ -227,9 +264,7 @@ export const MyMediumOrderCard = props => {
 export const PublicMediumOrderCard = props => {
   return (
     <MediumOrderCard status={null} {...props}>
-      <Button mt="auto" variant="primary" w="100%">
-        View Order
-      </Button>
+      View Order
     </MediumOrderCard>
   )
 }

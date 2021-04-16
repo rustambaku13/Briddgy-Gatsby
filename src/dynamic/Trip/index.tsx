@@ -12,10 +12,15 @@ import { observer } from "mobx-react-lite"
 import React, { useEffect, useState } from "react"
 import { getTripContracts, getTripProposals } from "../../api/contract"
 import { getSuggestedOrders, getTrip, getTrips } from "../../api/trip"
+import { PublicMediumOrderCardProposal } from "../../components/Cards/Order/MediumOrderCards"
 import { BigTripCard } from "../../components/Cards/Trip/BigTripCard"
 import { CollapsableTripCard } from "../../components/Cards/Trip/CollapsableTripCard"
 import { PublicMediumTripCard } from "../../components/Cards/Trip/MediumTripCards"
-import { ToTripProposalCard } from "../../components/Cards/Trip/toTripProposalCard"
+import {
+  ToTripProposalCardNoAccept,
+  ToTripProposalCardWithAccept,
+} from "../../components/Cards/Trip/toTripProposalCard"
+import { TripContractsStateCard } from "../../components/Cards/Trip/TripContractsStateCard"
 import Footer from "../../components/Footer"
 import { Empty } from "../../components/Misc/Empty"
 import { Loader } from "../../components/Misc/Loader"
@@ -25,30 +30,29 @@ import { BottomNavbar } from "../../components/Navbar/BottomNavbar"
 import { CardIcon } from "../../icons/Card"
 import CheckIcon from "../../icons/Check"
 import { DeliveryBoxIcon } from "../../icons/DeliveryBox"
-import { NavigationContext } from "../../providers/navPage"
+import { NavigationContext, TripPageState } from "../../providers/navPage"
 import UserStore from "../../store/UserStore"
 import { Contracts, defaultContracts } from "../../types/contract"
 import { defaultOrders, Orders } from "../../types/orders"
 import { defaultTrips, Trip, Trips } from "../../types/trip"
+
 const MyTripPage = ({ trip }: { trip: Trip }) => {
   // useAuthHook(user => !user)
-  const [suggested, setSuggested]: [Orders, any] = useState({
-    ...defaultOrders,
-    loading: true,
-  })
-
+  const [suggested, setSuggested]: [Orders, any] = useState(defaultOrders)
   const [proposals, setProposals]: [Contracts, any] = useState(defaultContracts)
   const [contracts, setContracts]: [Contracts, any] = useState(defaultContracts)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    getSuggestedOrders(trip.id).then(e => {
-      setSuggested(e.data)
-    })
-    getTripProposals(trip.id).then(e => {
-      setProposals(e.data)
-    })
-    getTripContracts(trip.id).then(e => {
-      setContracts(e.data)
+    Promise.all([
+      getSuggestedOrders(trip.id),
+      getTripProposals(trip.id),
+      getTripContracts(trip.id),
+    ]).then(e => {
+      setSuggested(e[0].data)
+      setProposals(e[1].data)
+      setContracts(e[2].data)
+      setLoading(false)
     })
   }, [trip])
   if (!trip) {
@@ -79,146 +83,99 @@ const MyTripPage = ({ trip }: { trip: Trip }) => {
           </Steps>
         </Container>
       </Container>
-      <Container
-        minH="calc(100vh - 200px)"
-        bg="outline.light"
-        py={5}
-        as="section"
-        minW="full"
+      <TripPageState.Provider
+        value={{
+          trip,
+          proposals,
+          setProposals,
+          suggested,
+          setSuggested,
+          contracts,
+          setContracts,
+        }}
       >
-        <HStack
-          alignItems="flex-start"
-          spacing={6}
-          w="100%"
-          maxW="container.xxl"
-          mx="auto"
+        <Container
+          minH="calc(100vh - 200px)"
+          bg="outline.light"
+          py={5}
+          as="section"
+          minW="full"
         >
-          <Box flex={2}>
-            <Box mb={10} bg="white" borderRadius="xl" borderWidth="1px" p={6}>
-              <Heading mb={4} as="h1" fontSize="600" fontWeight="700">
-                Trip Summary
-              </Heading>
-              <CollapsableTripCard trip={trip} />
-            </Box>
-            <Heading mb={4} as="h1" fontSize="600" fontWeight="700">
-              Suggested orders
-            </Heading>
-            {suggested.results.map(order => {
-              return <PublicMediumTripCard orderData={order} />
-            })}
-            {suggested.loading ? <Loader /> : null}
-            {!suggested.loading && suggested.count == 0 ? (
-              <Empty text="No Suggested Orders" />
-            ) : null}
-          </Box>
-          <Box flex={3}>
-            <Box mb={10} bg="white" borderRadius="xl" borderWidth="1px" p={6}>
-              <Heading mb={4} as="h1" fontSize="600" fontWeight="700">
-                Proposals
-              </Heading>
-              {proposals.results.map((contract, index) => {
-                return (
-                  <>
-                    <ToTripProposalCard contract={contract} />
-                    {index < proposals.results.length - 1 ? <Divider /> : null}
-                  </>
-                )
-              })}
-              {!proposals.loading && proposals.count == 0 ? (
-                <Empty text="No Proposals yet" />
-              ) : null}
-            </Box>
-            <Box mb={10} bg="white" borderRadius="xl" borderWidth="1px" p={6}>
-              <Heading mb={4} as="h1" fontSize="600" fontWeight="700">
-                Contracts
-              </Heading>
-              {contracts.results.map((contract, index) => {
-                return (
-                  <>
-                    <ToTripProposalCard contract={contract} />
-                    {index < contracts.results.length - 1 ? <Divider /> : null}
-                  </>
-                )
-              })}
-              {!contracts.loading && contracts.count == 0 ? (
-                <Empty text="No Contracts yet" />
-              ) : null}
-            </Box>
-          </Box>
-        </HStack>
-      </Container>
-      {/* <Container
-        minH="calc(100vh - 55px)"
-        px={16}
-        bg="blueAlpha.100"
-        pt={8}
-        as="section"
-        minW="full"
-      >
-        <Flex>
-          <Box mr={10} flex={1}>
-            <BigTripCard trip={trip} />
-            <SimpleGrid spacing={5} mt={5} columns={[1, 1, 1, 2]}>
-              <TripStatsCard trip={trip} />
-              <Box p={5} bg="white" borderRadius="3xl" borderWidth="1px">
-                <LightBulbIcon float="left" fontSize="xl" />
-                <Text variant="secondary">
-                  All orders have been paid for and your money is 100%
-                  guaranteed. Buy and deliver and earn your rewards{" "}
-                </Text>
+          <HStack
+            alignItems="flex-start"
+            spacing={6}
+            maxW="container.xxl"
+            mx="auto"
+          >
+            <Box w="50%">
+              <Box mb={10} bg="white" borderRadius="xl" borderWidth="1px" p={6}>
+                <Heading mb={4} as="h1" fontSize="600" fontWeight="700">
+                  Trip Summary
+                </Heading>
+                <CollapsableTripCard trip={trip} />
               </Box>
-            </SimpleGrid>
-            <Divider my="50px" />
-            <Heading as="h3" fontSize="2xl">
-              Suggested Orders
-            </Heading>
-            {suggested.results.map(order => {
-              return <PublicMediumOrderCard orderData={order} />
-            })}
-            {suggested.loading ? <Loader /> : null}
-            {!suggested.loading && suggested.count == 0 ? (
-              <Empty text="No Suggested Orders" />
-            ) : null}
-          </Box>
-          <Box flex={1}>
-            <Box
-              overflow="hidden"
-              mb="30px"
-              bg="white"
-              px={8}
-              py={12}
-              borderWidth="1px"
-              borderRadius="3xl"
-            >
-              <Heading px={3} mb={8} fontSize="2xl">
-                Active
+              <Heading mb={4} as="h1" fontSize="600" fontWeight="700">
+                Suggested orders
               </Heading>
-              {contracts.results.map((contract, index) => {
-                return (
-                  <>
-                    <TripContractsStateCard contract={contract} />
-                    {index < contracts.results.length - 1 ? <Divider /> : null}
-                  </>
-                )
-              })}
+              <VStack mt={6} spacing={6}>
+                {suggested.results.map((order, index) => {
+                  return <PublicMediumOrderCardProposal orderData={order} />
+                })}
+                {loading ? <Loader /> : null}
+                {!loading && suggested.count == 0 ? (
+                  <Empty text="No Suggested Orders" />
+                ) : null}
+              </VStack>
             </Box>
-
-            <Box bg="white" px={8} py={12} borderWidth="1px" borderRadius="3xl">
-              <Heading mb={5} fontSize="2xl">
-                Proposals
-              </Heading>
-              {proposals.results.map((contract, index) => {
-                return (
-                  <>
-                    <TripProposalsCard contract={contract} />
-                    {index < contracts.results.length - 1 ? <Divider /> : null}
-                  </>
-                )
-              })}
+            <Box w="50%">
+              <Box mb={10} bg="white" borderRadius="xl" borderWidth="1px" p={6}>
+                <Heading mb={4} as="h1" fontSize="600" fontWeight="700">
+                  Deals
+                </Heading>
+                {contracts.results.map((contract, index) => {
+                  return (
+                    <>
+                      <TripContractsStateCard contract={contract} />
+                      {index < contracts.results.length - 1 ? (
+                        <Divider />
+                      ) : null}
+                    </>
+                  )
+                })}
+                {loading ? <Loader /> : null}
+                {!loading && contracts.count == 0 ? (
+                  <Empty text="No Contracts yet" />
+                ) : null}
+              </Box>
+              <Box mb={10} bg="white" borderRadius="xl" borderWidth="1px" p={6}>
+                <Heading mb={4} as="h1" fontSize="600" fontWeight="700">
+                  Proposals
+                </Heading>
+                <VStack mt={6} spacing={6}>
+                  {proposals.results.map((contract, index) => {
+                    return (
+                      <>
+                        {contract.IsTravelerAccepted ? (
+                          <ToTripProposalCardNoAccept contract={contract} />
+                        ) : (
+                          <ToTripProposalCardWithAccept contract={contract} />
+                        )}
+                        {index < proposals.results.length - 1 ? (
+                          <Divider />
+                        ) : null}
+                      </>
+                    )
+                  })}
+                </VStack>
+                {loading ? <Loader /> : null}
+                {!loading && proposals.count == 0 ? (
+                  <Empty text="No Proposals yet" />
+                ) : null}
+              </Box>
             </Box>
-          </Box>
-        </Flex>
-      </Container> */}
+          </HStack>
+        </Container>
+      </TripPageState.Provider>
     </>
   )
 }
@@ -278,7 +235,7 @@ const SpecificTripPage = observer(({ tripId }) => {
       })
       .finally(() => {})
   }, [tripId])
-  if (!UserStore.complete || !trip) return null
+  if (!UserStore.complete || !trip) return <Loader />
   if (trip.owner.id == UserStore.me?.id) {
     return <MyTripPage trip={trip} />
   }

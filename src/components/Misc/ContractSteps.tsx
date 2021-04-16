@@ -1,49 +1,39 @@
-import { Box, HStack } from "@chakra-ui/layout"
+import { Box, Flex, HStack } from "@chakra-ui/layout"
+import { chakra } from "@chakra-ui/system"
 import React from "react"
 import { Contract, Contracts } from "../../types/contract"
 
-const stateOrdering = ["BID", "SET", "SIN", "FRZ", "GRB", "DLV", "FIN"]
+const stateOrdering = ["BID", "SET", "FRZ", "GRB", "DLV", "FIN"]
 
-export const ContractSteps = ({ contract }: { contract: Contract }) => {
-  const step = stateOrdering.indexOf(contract.state)
+export const ContractSteps = chakra(
+  ({ contract, className }: { contract: Contract; className?: any }) => {
+    const step = stateOrdering.indexOf(contract.state) + 1
 
-  return (
-    <HStack spacing={0}>
-      <Box borderBottom="4px" borderColor="blue.900" px={5} py={5}>
-        Proposed
-      </Box>
-      <Box
-        borderBottom="4px"
-        borderColor={step >= 1 ? "blue.900" : "gray.200"}
-        px={5}
-        py={5}
+    return (
+      <HStack
+        pb={3}
+        mt={3}
+        style={{ "--count": "5" }}
+        className="contract-steps"
+        spacing={3}
       >
-        Accepted
-      </Box>
-      <Box
-        borderBottom="4px"
-        borderColor={step >= 2 ? "blue.900" : "gray.200"}
-        px={5}
-        py={5}
-      >
-        Paid
-      </Box>
-      <Box
-        borderBottom="4px"
-        borderColor={step >= 3 ? "blue.900" : "gray.200"}
-        px={5}
-        py={5}
-      >
-        Bought
-      </Box>
-      <Box
-        borderBottom="4px"
-        borderColor={step >= 4 ? "blue.900" : "gray.200"}
-        px={5}
-        py={5}
-      >
-        Delivered
-      </Box>
-    </HStack>
-  )
-}
+        <Box>Proposed</Box>
+        <Box>Accepted</Box>
+        <Box>Paid</Box>
+        <Box>Bought</Box>
+        <Box>Delivered</Box>{" "}
+        <Box
+          as="span"
+          pos="absolute"
+          bottom="0px"
+          style={{ margin: "0px" }}
+          left="0px"
+          h="3px"
+          width="100%"
+          bg="outline.light"
+        ></Box>
+        <li style={{ "--step": step }}></li>{" "}
+      </HStack>
+    )
+  }
+)

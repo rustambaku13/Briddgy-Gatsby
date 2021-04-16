@@ -10,6 +10,7 @@ import { MakeProposaltoOrderModal } from "../Modals/MakeProposaltoOrderModal"
 import MyOrderPage from "../../dynamic/Order"
 import { LoginModalForm } from "../Modals/LoginModalForm"
 import { MakeProposaltoTripModal } from "../Modals/MakeProposaltoTripModal"
+import { AreYouSure } from "../Modals/AreYouSure"
 
 export default ({ children }) => {
   return (
@@ -18,7 +19,7 @@ export default ({ children }) => {
       <PhoneNumberVerifyModal />
       <MakeProposaltoOrderModal />
       <MakeProposaltoTripModal />
-
+      <AreYouSure />
       <LoginModalForm />
       <Router>
         <MyTripPage path="/trips/:tripId" />
