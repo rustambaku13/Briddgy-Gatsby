@@ -91,86 +91,87 @@ export const MakeProposaltoTripModal = observer(() => {
   }
   return (
     <Modal isOpen={LayoutStore.toTripProposalModalVisible} onClose={closeModal}>
-      <ModalOverlay></ModalOverlay>
-      <ModalContent
-        onSubmit={handleSubmit(proposalHandler)}
-        as="form"
-        w="full"
-        maxW="container.sm"
-      >
-        <ModalHeader>
-          You have {filteredOrders.results.length} suitable Orders
-        </ModalHeader>
-        <ModalCloseButton />
-        <ModalBody fontSize="sm">
-          <Text
-            w="100%"
-            px={2}
-            bg="lilaPurple.light"
-            mb={8}
-            py={5}
-            borderRadius="md"
-          >
-            <LightBulbIcon float="left" fontSize="500" />
-            Select the orders that would like to offer for this trip
-          </Text>
-          {filteredOrders.loading ? <Loader mx="auto" /> : null}
-          <CheckboxGroup
-            onChange={e => {
-              if (e.length) {
-                setSelectedData([e[e.length - 1]])
-                return
-              }
+      <form onSubmit={handleSubmit(proposalHandler)}>
+        <ModalOverlay></ModalOverlay>
+        <ModalContent maxW="container.sm">
+          <ModalHeader>
+            You have {filteredOrders.results.length} suitable Orders
+          </ModalHeader>
+          <ModalCloseButton />
+          <ModalBody fontSize="sm">
+            <Text
+              w="100%"
+              px={2}
+              bg="lilaPurple.light"
+              mb={8}
+              py={5}
+              borderRadius="md"
+            >
+              <LightBulbIcon float="left" fontSize="500" />
+              Select the orders that would like to offer for this trip
+            </Text>
+            {filteredOrders.loading ? <Loader mx="auto" /> : null}
+            <CheckboxGroup
+              onChange={e => {
+                if (e.length) {
+                  setSelectedData([e[e.length - 1]])
+                  return
+                }
 
-              setSelectedData(e)
-            }}
-            value={selectedData}
-          >
-            {filteredOrders.results.map((order: Order, index) => (
-              <div key={order.id}>
-                <HStack my={2} spacing={4}>
-                  <Checkbox outline="none" value={`${index}`} variant="light" />
-                  <AspectRatio
-                    h="16"
-                    bg="outline.light"
-                    borderRadius="base"
-                    w="16"
-                  >
-                    <Image
-                      maxW="100%"
-                      maxH="100%"
-                      src={bmify(order.orderimage[0])}
+                setSelectedData(e)
+              }}
+              value={selectedData}
+            >
+              {filteredOrders.results.map((order: Order, index) => (
+                <div key={order.id}>
+                  <HStack my={2} spacing={4}>
+                    <Checkbox
+                      outline="none"
+                      value={`${index}`}
+                      variant="light"
                     />
-                  </AspectRatio>
+                    <AspectRatio
+                      h="16"
+                      bg="outline.light"
+                      borderRadius="base"
+                      w="16"
+                    >
+                      <Image
+                        maxW="100%"
+                        maxH="100%"
+                        src={bmify(order.orderimage[0])}
+                      />
+                    </AspectRatio>
 
-                  <Link
-                    style={{ flex: 1 }}
-                    className="clamp-2"
-                    to="/profile?page=orders"
-                  >
-                    <Text wordBreak="break-word">{order.title}</Text>
-                  </Link>
+                    <Link
+                      style={{ flex: 1 }}
+                      className="clamp-2"
+                      to="/profile?page=orders"
+                    >
+                      <Text wordBreak="break-word">{order.title}</Text>
+                    </Link>
 
-                  <Text ml="auto" as="strong">
-                    ${order.item_price}
-                  </Text>
-                </HStack>
-                <Divider my={5} />
-              </div>
-            ))}
-          </CheckboxGroup>
-        </ModalBody>
-        <ModalFooter>
-          <Button
-            isDisabled={selectedData.length == 0}
-            isLoading={loading}
-            type="submit"
-            variant="success"
-          >
-            Offer Now
-          </Button>
-        </ModalFooter>
-      </ModalContent>
+                    <Text ml="auto" as="strong">
+                      ${order.item_price}
+                    </Text>
+                  </HStack>
+                  <Divider my={5} />
+                </div>
+              ))}
+            </CheckboxGroup>
+          </ModalBody>
+          <ModalFooter>
+            <Button
+              isDisabled={selectedData.length == 0}
+              isLoading={loading}
+              type="submit"
+              variant="success"
+            >
+              Offer Now
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </form>
     </Modal>
   )
 })

@@ -359,59 +359,6 @@ const Home = ({ data }) => {
 
 export const query = graphql`
   query {
-    # products_vertical: allMarkdownRemark(
-    #   filter: {
-    #     fields: { sourceName: { eq: "products" } }
-    #     frontmatter: { vertical: { eq: true } }
-    #   }
-    #   limit: 2
-    # ) {
-    #   edges {
-    #     node {
-    #       frontmatter {
-    #         title
-    #         date
-    #         store
-    #         vertical
-    #         price
-    #         image {
-    #           childImageSharp {
-    #             fluid(maxWidth: 800) {
-    #               ...GatsbyImageSharpFluid
-    #             }
-    #           }
-    #         }
-    #         templateKey
-    #         description
-    #         featuredpost
-    #         color
-    #       }
-    #     }
-    #   }
-    # }
-    # products_horizontal: markdownRemark(
-    #   fields: { sourceName: { eq: "products" } }
-    #   frontmatter: { vertical: { eq: false } }
-    # ) {
-    #   frontmatter {
-    #     title
-    #     date
-    #     store
-    #     vertical
-    #     price
-    #     image {
-    #       childImageSharp {
-    #         fluid(maxWidth: 800) {
-    #           ...GatsbyImageSharpFluid
-    #         }
-    #       }
-    #     }
-    #     templateKey
-    #     description
-    #     featuredpost
-    #     color
-    #   }
-    # }
     landing_image: file(relativePath: { eq: "landing_image.jpg" }) {
       childImageSharp {
         fluid {

@@ -1,8 +1,71 @@
-import { chakra, Center, Text, LinkBox } from "@chakra-ui/react"
+import {
+  chakra,
+  Center,
+  Text,
+  LinkBox,
+  Box,
+  Heading,
+  Flex,
+} from "@chakra-ui/react"
 import React from "react"
 import Img from "gatsby-image"
 import { LinkOverlay } from "../../Misc/LinkOverlay"
-export const FaqElement = chakra(({ img, className, text, to }) => {
+import { Link } from "gatsby-plugin-intl"
+import { graphql, StaticQuery } from "gatsby"
+import { ChevronRightIcon } from "../../../icons/ChevronRight"
+
+export const FaqElement = chakra(({ topic, title, img }) => {
+  return (
+    <StaticQuery
+      query={graphql`
+        query {
+          popular: allMarkdownRemark(
+            filter: { frontmatter: { templateKey: { eq: "faq" } } }
+          ) {
+            nodes {
+              frontmatter {
+                title
+                templateKey
+                language
+                popular
+                slug
+                topic
+              }
+              html
+              timeToRead
+              fileAbsolutePath
+            }
+          }
+        }
+      `}
+      render={data => {
+        const filtered = data.popular.nodes.filter(faq => {
+          return faq.frontmatter.topic == topic
+        })
+
+        return (
+          <Flex alignItems="center" flexDir="column">
+            <Img fixed={img.childImageSharp.fixed} />
+            <Heading fontWeight="bold" my={8} fontSize="700" as="h2">
+              {title}
+            </Heading>
+            {filtered.map(item => (
+              <>
+                <Text variant="light" _hover={{ color: "tealBlue.base" }}>
+                  <Link to={`/faq/post/${item.frontmatter.slud}`}>
+                    {item.frontmatter.title}
+                  </Link>
+                  <ChevronRightIcon />
+                </Text>
+              </>
+            ))}
+          </Flex>
+        )
+      }}
+    />
+  )
+})
+export const FaqElements = chakra(({ key, title, className, text, to }) => {
   return (
     <LinkBox
       flexDir="column"

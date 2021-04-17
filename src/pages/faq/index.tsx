@@ -6,6 +6,7 @@ import NavbarDefault from "../../components/Navbar"
 import {
   Box,
   Container,
+  Divider,
   Flex,
   Heading,
   HStack,
@@ -34,80 +35,71 @@ const FaqPage = ({ data }) => {
           content="Help Center and FAQ page. Briddgy postless, peer-to-peer delivery platform. Worldwide shopping with fastest and cheapest delivery. Travel with minimum costs and earn money."
         />
       </Helmet>
-      <NavigationContext.Provider value={{ page: "orders" }}>
+      <NavigationContext.Provider value={{ page: "faq" }}>
         <NavbarDefault />
         <BottomNavbar />
       </NavigationContext.Provider>
-      <Container as="section" bg="tealBlue.base" py={16} maxW="full">
-        <Heading
-          color="white"
-          mb={6}
-          textAlign="center"
-          fontWeight="700"
-          fontSize="hb4"
-        >
-          Hi! How can we help you
-        </Heading>
-        <Box maxW="640px" mx="auto">
-          <InputGroup
-            borderWidth="1px"
-            borderRadius="base"
-            overflow="hidden"
-            size="lg"
-            variant="filled"
-          >
-            <Input borderRadius="base" placeholder="Seach your questions" />
-            <InputRightElement bg="tealBlue.base" color="white">
-              <IconButton
-                variant="unstyled"
-                aria-label="search"
-                bg="tealBlue.base"
-                icon={<SearchIcon />}
+
+      <Container as="section" bg="outline.light" py={[16, "100px"]} maxW="full">
+        <Container maxW="container.xxl">
+          <Heading mb={10} fontWeight="700" fontSize="hb4">
+            How can we help?
+          </Heading>
+          <Box maxW="640px">
+            <InputGroup
+              borderWidth="1px"
+              borderRadius="base"
+              overflow="hidden"
+              size="lg"
+              variant="filled"
+            >
+              <Input
+                bg="white"
+                borderRadius="base"
+                placeholder="Seach your questions"
               />
-            </InputRightElement>
-            {/* <InputRightAddon right={} /> */}
-          </InputGroup>
-        </Box>
+              <InputRightElement bg="tealBlue.base" color="white">
+                <IconButton
+                  variant="unstyled"
+                  aria-label="search"
+                  bg="tealBlue.base"
+                  icon={<SearchIcon />}
+                />
+              </InputRightElement>
+            </InputGroup>
+          </Box>
+        </Container>
       </Container>
-      <Box
-        bg="outline.light"
-        as="section"
-        w="full"
-        mb={[20, 20, "150px"]}
-        py={16}
-      >
-        <Heading mb={10} fontSize="hb3" fontWeight="700" textAlign="center">
-          Topics
-        </Heading>
+      <Box bg="white" as="section" w="full" py={16}>
         <SimpleGrid
-          spacing={5}
+          spacingX={8}
+          spacingY={12}
           p={3}
-          columns={[1, 2, 3, 3]}
+          columns={[1, 2, 3, 4]}
           maxW="container.xxl"
           flexWrap="wrap"
           mx="auto"
         >
           <FaqElement
-            to="/faq/get_started"
-            text="Get Started"
             img={data.rocket}
-          />
-          <FaqElement to="/faq/general" text="General" img={data.home} />
-          <FaqElement
-            to="/faq/travelers"
-            text="For Travelers"
-            img={data.travelers}
+            topic="get_started"
+            title="Get Started"
           />
           <FaqElement
-            to="/faq/orderers"
-            text="For Orderers"
             img={data.orderers}
+            topic="orderer"
+            title="For Travelers"
           />
-          <FaqElement to="/faq/payment" text="Payment" img={data.payment} />
-          <FaqElement to="/faq/tips" text="Tips" img={data.tips} />
+          <FaqElement
+            img={data.travelers}
+            topic="traveler"
+            title="For Orderers"
+          />
+          <FaqElement img={data.payment} topic="payment" title="Payment" />
         </SimpleGrid>
       </Box>
-      <Box mb={[20, 20, "150px"]} w="100%" as="section">
+      <Divider my={[12]} />
+      <Box pt={10} pb={[20, 20, "150px"]} w="100%" as="section">
         <Container h="100%" maxW="container.lg">
           <Heading mb={10} fontSize="hb3" fontWeight="700" textAlign="center">
             Popular
