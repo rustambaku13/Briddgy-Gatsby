@@ -170,7 +170,7 @@ collections:
       - { label: "Body", name: "body", widget: "markdown" }
       - {
           label: "Section",
-          name: "tag",
+          name: "topic",
           widget: "select",
           options:
             [

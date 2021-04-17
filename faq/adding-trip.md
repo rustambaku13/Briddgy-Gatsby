@@ -3,8 +3,9 @@ templateKey: faq
 popular: true
 language: en
 title: Adding Trip
-tag: traveler
+topic: traveler
 ---
+
 Adding a trip on Briddgy is very fast and easy.
 
 1. Navigate to the "Travel and Earn" page.
@@ -12,8 +13,6 @@ Adding a trip on Briddgy is very fast and easy.
 3. Fill in the date of the trip and press the "Add Trip" button.
 4. Specify the free baggage space and details (if any).
 5. Press on the "Add Trip" button.
-
-
 
 That's it! Now that your trip is on Briddgy you can start earning money by traveling.
 

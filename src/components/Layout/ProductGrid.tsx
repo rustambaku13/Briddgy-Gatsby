@@ -32,7 +32,6 @@ export const ProductGrid = () => {
               templateKey
               description
               featuredpost
-              tag
               color
             }
           }
@@ -61,7 +60,6 @@ export const ProductGrid = () => {
                   templateKey
                   description
                   featuredpost
-                  tag
                   color
                 }
               }

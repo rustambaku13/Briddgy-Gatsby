@@ -399,7 +399,7 @@ const MyTripsSections = observer(() => {
   }, [])
   if (UserStore.trips.loading)
     return (
-      <Box py={3} maxW="container.lg" mx="auto">
+      <Box py={3} maxW="container.md" mx="auto">
         <Loader mx="auto" />
       </Box>
     )

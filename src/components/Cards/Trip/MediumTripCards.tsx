@@ -67,9 +67,8 @@ const MediumTripCard = chakra(
                 {moment(trip.date).format(FRONTEND_DATE_FORMAT)}
               </Text>
             </Flex>
-            <Divider my={4} />
+            <Divider my={3} />
             <Flex
-              mb={2}
               alignItems="center"
               pos="relative"
               justifyContent="space-between"
@@ -81,11 +80,11 @@ const MediumTripCard = chakra(
                 pos="absolute"
               />
               <Box>
-                <Text mb={1} fontSize="400" variant="light">
+                <Text fontSize="400" variant="light">
                   From
                 </Text>
 
-                <Text fontWeight="700" fontSize={[600, 700]} mb={1}>
+                <Text fontWeight="700" fontSize={[600, 700]}>
                   {tripCityAnywhere(trip.src.details[0].en.city)}
                 </Text>
                 <Text fontSize={[500, 600]} variant="secondary">
@@ -98,12 +97,7 @@ const MediumTripCard = chakra(
                   To
                 </Text>
 
-                <Text
-                  fontWeight="700"
-                  fontSize={[600, 700]}
-                  textAlign="right"
-                  mb={1}
-                >
+                <Text fontWeight="700" fontSize={[600, 700]} textAlign="right">
                   {tripCityAnywhere(trip.dest.details[0].en.city)}
                 </Text>
                 <Text

@@ -43,6 +43,13 @@ module.exports = {
         path: `${__dirname}/blog`,
       },
     },
+    // {
+    //   resolve: `gatsby-source-filesystem`,
+    //   options: {
+    //     name: "faqs",
+    //     path: `${__dirname}/faq`,
+    //   },
+    // },
     {
       resolve: `gatsby-source-filesystem`,
       options: {
@@ -50,6 +57,7 @@ module.exports = {
         path: `${__dirname}/tag`,
       },
     },
+
     `gatsby-plugin-sharp`,
     `gatsby-transformer-sharp`,
 
