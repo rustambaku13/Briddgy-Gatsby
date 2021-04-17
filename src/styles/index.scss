@@ -453,6 +453,7 @@ html {
 
 .link-overlay {
   position: static !important;
+
   &:before {
     content: "";
     cursor: inherit;

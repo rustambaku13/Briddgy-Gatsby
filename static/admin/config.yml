@@ -108,6 +108,7 @@ collections:
           widget: "hidden",
           default: "blog",
         }
+      - { label: "Slug URL", name: "slug", widget: "hidden", default: "/" }
       - {
           label: "Language(ISO 639-1 format)",
           name: "language",
@@ -154,6 +155,7 @@ collections:
           widget: "hidden",
           default: "faq",
         }
+      - { label: "Slug URL", name: "slug", widget: "hidden", default: "/" }
       - {
           label: "Popular question",
           name: "popular",

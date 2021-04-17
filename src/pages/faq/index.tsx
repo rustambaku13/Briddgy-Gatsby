@@ -18,10 +18,12 @@ import {
   InputRightAddon,
   InputRightElement,
 } from "@chakra-ui/input"
+import Footer from "../../components/Footer"
 import { SearchIcon } from "../../icons/Search"
 import { IconButton } from "@chakra-ui/button"
 import { graphql } from "gatsby"
 import { FaqElement } from "../../components/Cards/Faq/FaqElement"
+import { PopularFaq } from "../../components/Layout/PopularFaq"
 
 const FaqPage = ({ data }) => {
   return (
@@ -97,13 +99,15 @@ const FaqPage = ({ data }) => {
         <FaqElement to="/faq/payment" text="Payment" img={data.payment} />
         <FaqElement to="/faq/tips" text="Tips" img={data.tips} />
       </SimpleGrid>
-      <Box w="100%" as="section">
-        <Container h="100%" maxW="container.xl">
+      <Box mb={20} w="100%" as="section">
+        <Container h="100%" maxW="container.lg">
           <Heading mb={10} fontSize="hb3" fontWeight="700" textAlign="center">
             Popular
           </Heading>
+          <PopularFaq />
         </Container>
       </Box>
+      <Footer />
     </>
   )
 }
