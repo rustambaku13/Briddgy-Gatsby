@@ -35,7 +35,9 @@ grid-column-end:span 2;}
 2. Fill in the "**From**" and "**To**" fields to show the source and destination details of your trip.
 3. Fill in the date of the trip and press the "**Add Trip**" button.
 4. Specify the free **baggage** space and **details** (if any).
-5. Press on the "**Add Trip**" button.
+5. Press on the "**Add Trip**" button
+
+<br/><br/>
 
 ### That's it! Now that your trip is on Briddgy you can start earning money by traveling.
 
