@@ -47,7 +47,9 @@ grid-column-end:span 2;}
 
 <div class='text-secondary'>
 
-That's it! Now that your trip is on Briddgy you can start earning money by traveling.<br/>
+That's it! Now that your trip is on Briddgy you can start earning money by traveling.
+
+<br/>
 
 Just contact the orderers and start your amazing journey :)
 
