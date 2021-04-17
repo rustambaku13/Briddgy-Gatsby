@@ -19,6 +19,7 @@ export const PopularFaq = chakra(({ className }) => {
                 templateKey
                 language
                 popular
+                slug
                 topic
               }
               html

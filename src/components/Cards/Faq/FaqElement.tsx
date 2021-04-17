@@ -7,6 +7,7 @@ export const FaqElement = chakra(({ img, className, text, to }) => {
     <LinkBox
       flexDir="column"
       py={12}
+      bg="white"
       _hover={{
         bg: "outline.light",
       }}

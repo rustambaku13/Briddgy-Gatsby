@@ -35,6 +35,40 @@ html {
 /* ==========================================================================
    PAGES
    ========================================================================== */
+
+.briddgy-faq-grid {
+  @media screen and (max-width: 640px) {
+    display: block !important;
+  }
+  grid-column-gap: 3rem;
+  color: #02090b;
+  grid-row-gap: 2rem;
+  font-size: 1.25rem;
+  .text-secondary {
+    color: #3a4139;
+  }
+  img {
+    margin: 0 auto;
+  }
+  h1 {
+    font-size: 2.25rem;
+  }
+  h2 {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+  h3 {
+    font-size: 1.75rem;
+  }
+  h4 {
+    font-size: 1.5rem;
+  }
+  ol,
+  ul {
+    padding-left: 2rem;
+  }
+}
+
 .landing-header {
   position: relative;
   overflow-x: hidden;

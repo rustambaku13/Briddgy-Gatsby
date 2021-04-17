@@ -13,6 +13,7 @@ interface NagiationContextInterface {
     | "profile" // Profile Page My or Someones
     | "travel" // Travel add Trip
     | "order" // Order add order
+    | "faq" // Faq Page
 }
 
 export const NavigationContext = React.createContext<NagiationContextInterface>(

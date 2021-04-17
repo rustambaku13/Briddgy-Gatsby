@@ -13,7 +13,7 @@ export const FaqLinkCard = ({ data }) => {
       py={3}
       px={2}
     >
-      <LinkOverlay to="/trips/">
+      <LinkOverlay to={`/faq/post/${data.frontmatter.slug}`}>
         <Text _hover={{ color: "tealBlue.base" }}>
           {data.frontmatter.title}
         </Text>

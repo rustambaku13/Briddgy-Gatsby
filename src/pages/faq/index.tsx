@@ -69,37 +69,45 @@ const FaqPage = ({ data }) => {
           </InputGroup>
         </Box>
       </Container>
-      <SimpleGrid
-        mb={[20, 20, "150px"]}
-        spacing={5}
-        p={3}
-        columns={[1, 2, 3, 6]}
-        py={16}
-        maxW="container.xxl"
-        flexWrap="wrap"
-        mx="auto"
+      <Box
+        bg="outline.light"
         as="section"
+        w="full"
+        mb={[20, 20, "150px"]}
+        py={16}
       >
-        <FaqElement
-          to="/faq/get_started"
-          text="Get Started"
-          img={data.rocket}
-        />
-        <FaqElement to="/faq/general" text="General" img={data.home} />
-        <FaqElement
-          to="/faq/travelers"
-          text="For Travelers"
-          img={data.travelers}
-        />
-        <FaqElement
-          to="/faq/orderers"
-          text="For Orderers"
-          img={data.orderers}
-        />
-        <FaqElement to="/faq/payment" text="Payment" img={data.payment} />
-        <FaqElement to="/faq/tips" text="Tips" img={data.tips} />
-      </SimpleGrid>
-      <Box mb={20} w="100%" as="section">
+        <Heading mb={10} fontSize="hb3" fontWeight="700" textAlign="center">
+          Topics
+        </Heading>
+        <SimpleGrid
+          spacing={5}
+          p={3}
+          columns={[1, 2, 3, 3]}
+          maxW="container.xxl"
+          flexWrap="wrap"
+          mx="auto"
+        >
+          <FaqElement
+            to="/faq/get_started"
+            text="Get Started"
+            img={data.rocket}
+          />
+          <FaqElement to="/faq/general" text="General" img={data.home} />
+          <FaqElement
+            to="/faq/travelers"
+            text="For Travelers"
+            img={data.travelers}
+          />
+          <FaqElement
+            to="/faq/orderers"
+            text="For Orderers"
+            img={data.orderers}
+          />
+          <FaqElement to="/faq/payment" text="Payment" img={data.payment} />
+          <FaqElement to="/faq/tips" text="Tips" img={data.tips} />
+        </SimpleGrid>
+      </Box>
+      <Box mb={[20, 20, "150px"]} w="100%" as="section">
         <Container h="100%" maxW="container.lg">
           <Heading mb={10} fontSize="hb3" fontWeight="700" textAlign="center">
             Popular
