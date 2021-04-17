@@ -37,6 +37,10 @@ grid-column-end:span 2;}
 4. Specify the free **baggage** space and **details** (if any).
 5. Press on the "**Add Trip**" button.
 
+### That's it! Now that your trip is on Briddgy you can start earning money by traveling.
+
+### Just contact the orderers and start your amazing journey :)
+
 </div>
 
 <div>
@@ -45,12 +49,6 @@ grid-column-end:span 2;}
 
 </div>
 
-<div class="text-center span-2">
 
-### That's it! Now that your trip is on Briddgy you can start earning money by traveling.
-
-### Just contact the orderers and start your amazing journey :)
-
-</div>
 
 </div>
