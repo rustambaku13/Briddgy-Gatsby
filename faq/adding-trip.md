@@ -11,6 +11,12 @@ topic: traveler
 display:grid;
 grid-template-columns:repeat(2, 1fr);
 }
+
+.text-secondary{
+
+
+
+}
 .col-2{
 grid-column-start: 2;
 }
@@ -39,9 +45,13 @@ grid-column-end:span 2;}
 
 <br/><br/>
 
-### That's it! Now that your trip is on Briddgy you can start earning money by traveling.
+<div class='text-secondary'>
 
-### Just contact the orderers and start your amazing journey :)
+That's it! Now that your trip is on Briddgy you can start earning money by traveling.<br/>
+
+Just contact the orderers and start your amazing journey :)
+
+</div>
 
 </div>
 
