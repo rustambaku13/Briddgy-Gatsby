@@ -29,7 +29,7 @@ grid-column-end:span 2;}
 <div class="briddgy-faq-grid">
 <div>
 
-## Adding a trip on Briddgy is very fast and easy    
+## **Adding a trip on Briddgy is very fast and easy**    
 
 1. Navigate to the "Travel and Earn" page.
 2. Fill in the "From" and "To" fields to show the source and destination details of your trip.
