@@ -6,6 +6,28 @@ language: en
 title: Adding Order
 topic: orderer
 ---
+<style>
+.briddgy-faq-grid{
+display:grid;
+grid-template-columns:repeat(2, 1fr);
+}
+.col-2{
+grid-column-start: 2;
+}
+.text-center{
+text-align:center;
+}
+.span-2{
+grid-column-end:span 2;
+}
+
+
+</style>
+
+<div class="briddgy-faq-grid">
+
+<div>
+
 Adding an order to Briddgy is pretty simple.
 
 First, **navigate to the "Create Order" page** ([Briddgy | Create Order](https://www.briddgy.com/order)).
@@ -23,4 +45,9 @@ In the "Order Summary" page, **check the correctness** of your order. Now you ca
 
 You have created the order, and travelers can see it. **Great!** Now you can contact the travelers and it will be delivered to you. 😎
 
+</div>
+<div class='col-2' height='50px'>
+
 ![Adding order to Briddgy](/assets/add_order.gif "Adding order to Briddgy")
+</div>
+</div>
