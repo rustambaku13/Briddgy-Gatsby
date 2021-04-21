@@ -37,7 +37,6 @@ import { defaultOrders, Orders } from "../../types/orders"
 import { defaultTrips, Trip, Trips } from "../../types/trip"
 
 const MyTripPage = ({ trip }: { trip: Trip }) => {
-  // useAuthHook(user => !user)
   const [suggested, setSuggested]: [Orders, any] = useState(defaultOrders)
   const [proposals, setProposals]: [Contracts, any] = useState(defaultContracts)
   const [contracts, setContracts]: [Contracts, any] = useState(defaultContracts)
@@ -107,7 +106,7 @@ const MyTripPage = ({ trip }: { trip: Trip }) => {
             maxW="container.xxl"
             mx="auto"
           >
-            <Box w="50%">
+            <Box w={["100%", "100%", "100%", "50%"]}>
               <Box mb={10} bg="white" borderRadius="xl" borderWidth="1px" p={6}>
                 <Heading mb={4} as="h1" fontSize="600" fontWeight="700">
                   Trip Summary
@@ -127,7 +126,7 @@ const MyTripPage = ({ trip }: { trip: Trip }) => {
                 ) : null}
               </VStack>
             </Box>
-            <Box w="50%">
+            <Box w={["100%", "100%", "100%", "50%"]}>
               <Box mb={10} bg="white" borderRadius="xl" borderWidth="1px" p={6}>
                 <Heading mb={4} as="h1" fontSize="600" fontWeight="700">
                   Deals

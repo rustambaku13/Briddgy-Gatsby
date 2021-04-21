@@ -5,7 +5,11 @@ export async function loginUser(
   username: String,
   password: String
 ): Promise<AxiosResponse<string>> {
-  return axios_normal.post(`/auth/`, { username, password, deviceToken: "" })
+  return axios_normal.post(`/main/api/auth/`, {
+    username,
+    password,
+    deviceToken: "",
+  })
 }
 
 export async function createUser({
@@ -15,7 +19,7 @@ export async function createUser({
   last_name,
   lang = "en",
 }): Promise<AxiosResponse<User>> {
-  return axios_normal.post(`/users/`, {
+  return axios_normal.post(`/main/api/users/`, {
     first_name,
     last_name,
     email,
@@ -26,17 +30,17 @@ export async function createUser({
   })
 }
 export async function getMyDetails(): Promise<User> {
-  return axios_normal.get(`/users/me/`)
+  return axios_normal.get(`/main/api/users/me/`)
 }
 
 export async function askForPhoneCode(phone) {
-  return await axios_normal.post(`/request/phone/`, {
+  return await axios_normal.post(`/main/api/request/phone/`, {
     phone,
   })
 }
 
 export async function verifyPhoneNumber(verification_phone) {
-  return await axios_normal.post(`/verify/phone/`, {
+  return await axios_normal.post(`/main/api/verify/phone/`, {
     verification_phone,
   })
 }

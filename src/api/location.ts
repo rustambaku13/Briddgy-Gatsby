@@ -1,6 +1,5 @@
-import { axios_normal } from "./index"
-import { ApiLocation, Locations } from "./../types/location"
-import axios, { AxiosPromise, AxiosResponse } from "axios"
+import axios, { AxiosResponse } from "axios"
+import { ApiLocation } from "./../types/location"
 // export async function searchLocation(
 //   searchText: string,
 //   locale: string = "en"

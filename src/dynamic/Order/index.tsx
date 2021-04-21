@@ -2,6 +2,7 @@ import {
   Box,
   Container,
   Divider,
+  Flex,
   Heading,
   HStack,
   TabPanel,
@@ -33,6 +34,7 @@ import { Loader } from "../../components/Misc/Loader"
 import { Step, Steps } from "../../components/Misc/Steps"
 import NavbarDefault from "../../components/Navbar"
 import { BottomNavbar } from "../../components/Navbar/BottomNavbar"
+import { PaymentCard } from "../../components/Cards/Payment/PaymentCard"
 import { CardIcon } from "../../icons/Card"
 import CheckIcon from "../../icons/Check"
 import { DeliveryBoxIcon } from "../../icons/DeliveryBox"
@@ -41,9 +43,12 @@ import UserStore from "../../store/UserStore"
 import { Contract, Contracts, defaultContracts } from "../../types/contract"
 import { defaultOrders, Order, Orders } from "../../types/orders"
 import { Trips } from "../../types/trip"
+import { Hint } from "../../components/Misc/Hint"
+import { StripeIcon } from "../../icons/Stripe"
 
 const MyOrderSecondPage = ({ loading }) => {
   const context = useContext(OrderPageState)
+
   if (!context.contract) return null
   return (
     <Container
@@ -60,13 +65,18 @@ const MyOrderSecondPage = ({ loading }) => {
         mx="auto"
       >
         <Box w="50%">
-          <Box mb={10} bg="white" borderRadius="xl" borderWidth="1px" p={6}>
+          <Box mb={5} bg="white" borderRadius="xl" borderWidth="1px" p={6}>
             <Heading mb={4} as="h1" fontSize="600" fontWeight="700">
               Order Summary
             </Heading>
             <CollapsableOrderCard orderData={context.order} />
           </Box>
-          <Box mb={10} bg="white" borderRadius="xl" borderWidth="1px" p={6}>
+          <Hint
+            py={5}
+            borderRadius="xl"
+            text="We are going to freeze your money untill you get your item. After receiving your product the money is going to be transfered to your deliverer upon your confirmation"
+          />
+          {/* <Box mb={10} bg="white" borderRadius="xl" borderWidth="1px" p={6}>
             <Heading mb={4} as="h1" fontSize="600" fontWeight="700">
               Deliverer
             </Heading>
@@ -75,13 +85,15 @@ const MyOrderSecondPage = ({ loading }) => {
               borderWidth="0px"
               trip={context.contract.trip}
             />
-          </Box>
+          </Box> */}
         </Box>
         <Box w="50%">
-          <Box mb={10} bg="white" borderRadius="xl" borderWidth="1px" p={6}>
-            <Heading mb={4} as="h1" fontSize="600" fontWeight="700">
+          <Box mb={5} bg="white" borderRadius="xl" borderWidth="1px" p={6}>
+            <Heading mb={8} as="h1" fontSize="600" fontWeight="700">
               Payment Summary
             </Heading>
+
+            <PaymentCard />
           </Box>
         </Box>
       </HStack>
@@ -241,6 +253,7 @@ const MyOrderPage = ({ order }: { order: Order }) => {
             </TabPanel>
           </TabPanels>
         </Tabs>
+        <Footer />
       </OrderPageState.Provider>
     </>
   )

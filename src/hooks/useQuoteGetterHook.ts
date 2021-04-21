@@ -5,8 +5,6 @@ export const useQuoteGetterHook = (item_price = 0, reward, condition) => {
   const [prices, setPrices]: [any, any] = useState({ loading: true })
 
   useEffect(() => {
-    console.log("salam", item_price, reward, condition)
-
     if (condition) {
       setTimeout(function () {
         setPrices({
