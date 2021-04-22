@@ -35,7 +35,7 @@ export const BigOrderCard = chakra(
           preview: bmify(img),
         }))
       )
-    }, [])
+    }, [orderData])
     return (
       <Box
         w="100%"

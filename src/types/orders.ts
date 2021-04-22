@@ -14,9 +14,9 @@ export interface Order {
   owner: User
   is_active: boolean
   contract_price: number | null
-  price: number
+  price: string
   order_type: "P" | "B"
-  item_price: number
+  item_price: string
   order_url: string
 
   orderimage: string[]

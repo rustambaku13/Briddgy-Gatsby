@@ -44,21 +44,10 @@ const Home = ({ data }) => {
         minH="700px"
         py="60px"
         w="100%"
-        mb={"120px"}
+        mb={[20]}
         as="main"
         className="landing-header"
       >
-        {/* <Img
-          className="overlay"
-          alt="Travel and Earn"
-          fixed={data.overlay.childImageSharp.fixed}
-        />
-        <Img
-          alt="Travel and Earn"
-          className="overlay"
-          fixed={data.overlay.childImageSharp.fixed}
-        /> */}
-
         <Box>
           <Heading
             mb={12}
@@ -78,25 +67,29 @@ const Home = ({ data }) => {
           </Text>
           <Flex>
             <Box px={3} mx="auto">
-              <Button
-                mb={5}
-                w={["100%", "auto"]}
-                bg="tealBlue.base"
-                mr={4}
-                variant="primary"
-                size="lg"
-              >
-                Order with Briddgy
-              </Button>
-              <Button
-                color="text.dark"
-                mb={5}
-                w={["100%", "auto"]}
-                variant="outline"
-                size="lg"
-              >
-                Travel with Briddgy
-              </Button>
+              <Link to="/order">
+                <Button
+                  mb={5}
+                  w={["100%", "auto"]}
+                  bg="tealBlue.base"
+                  mr={4}
+                  variant="primary"
+                  size="lg"
+                >
+                  Order with Briddgy
+                </Button>
+              </Link>
+              <Link to="/travel">
+                <Button
+                  color="text.dark"
+                  mb={5}
+                  w={["100%", "auto"]}
+                  variant="outline"
+                  size="lg"
+                >
+                  Travel with Briddgy
+                </Button>
+              </Link>
             </Box>
           </Flex>
         </Box>
@@ -143,7 +136,9 @@ const Home = ({ data }) => {
                   </Center>
                 </Box>
                 <Text color="oxfordBlue.base" textAlign="right">
-                  <Link to="how_to">How to start earning with Briddgy?</Link>
+                  <Link to="/faq/post/adding-trip">
+                    How to start earning with Briddgy?
+                  </Link>
                 </Text>
               </Flex>
             </Box>
@@ -186,7 +181,7 @@ const Home = ({ data }) => {
                   rewardsAvailable="10,302"
                   tripsCount="100"
                   ordersCount="300"
-                  img={data.az.childImageSharp.fluid}
+                  img={data.az.childImageSharp.fixed}
                 />
               </SwiperSlide>
               <SwiperSlide>
@@ -196,7 +191,7 @@ const Home = ({ data }) => {
                   rewardsAvailable="15,302"
                   tripsCount="200"
                   ordersCount="350"
-                  img={data.ru.childImageSharp.fluid}
+                  img={data.ru.childImageSharp.fixed}
                 />
               </SwiperSlide>
               <SwiperSlide>
@@ -206,7 +201,7 @@ const Home = ({ data }) => {
                   rewardsAvailable="10,302"
                   tripsCount="100"
                   ordersCount="300"
-                  img={data.tr.childImageSharp.fluid}
+                  img={data.tr.childImageSharp.fixed}
                 />
               </SwiperSlide>
               <SwiperSlide>
@@ -216,7 +211,7 @@ const Home = ({ data }) => {
                   rewardsAvailable="10,302"
                   tripsCount="100"
                   ordersCount="300"
-                  img={data.en.childImageSharp.fluid}
+                  img={data.en.childImageSharp.fixed}
                 />
               </SwiperSlide>
             </Swiper>
@@ -299,7 +294,9 @@ const Home = ({ data }) => {
                   </Center>
                 </Flex>
                 <Text mt={8} color="oxfordBlue.base">
-                  <Link to="how_to">How to order with Briddgy?</Link>
+                  <Link to="faq/post/adding-order">
+                    How to order with Briddgy?
+                  </Link>
                 </Text>
               </Flex>
             </Box>
@@ -396,29 +393,29 @@ export const query = graphql`
     }
     az: file(relativePath: { eq: "azerbaijan.jpg" }) {
       childImageSharp {
-        fluid {
-          ...GatsbyImageSharpFluid
+        fixed(height: 400, cropFocus: CENTER, width: 300) {
+          ...GatsbyImageSharpFixed
         }
       }
     }
     ru: file(relativePath: { eq: "russia.jpg" }) {
       childImageSharp {
-        fluid {
-          ...GatsbyImageSharpFluid
+        fixed(height: 400, cropFocus: CENTER, width: 300) {
+          ...GatsbyImageSharpFixed
         }
       }
     }
     tr: file(relativePath: { eq: "turkey.jpg" }) {
       childImageSharp {
-        fluid {
-          ...GatsbyImageSharpFluid
+        fixed(height: 400, cropFocus: CENTER, width: 300) {
+          ...GatsbyImageSharpFixed
         }
       }
     }
     en: file(relativePath: { eq: "england.jpg" }) {
       childImageSharp {
-        fluid {
-          ...GatsbyImageSharpFluid
+        fixed(height: 400, cropFocus: CENTER, width: 300) {
+          ...GatsbyImageSharpFixed
         }
       }
     }

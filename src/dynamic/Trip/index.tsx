@@ -22,6 +22,7 @@ import {
 } from "../../components/Cards/Trip/toTripProposalCard"
 import { TripContractsStateCard } from "../../components/Cards/Trip/TripContractsStateCard"
 import Footer from "../../components/Footer"
+import Helmet from "react-helmet"
 import { Empty } from "../../components/Misc/Empty"
 import { Loader } from "../../components/Misc/Loader"
 import { Step, Steps } from "../../components/Misc/Steps"
@@ -35,13 +36,14 @@ import UserStore from "../../store/UserStore"
 import { Contracts, defaultContracts } from "../../types/contract"
 import { defaultOrders, Orders } from "../../types/orders"
 import { defaultTrips, Trip, Trips } from "../../types/trip"
+import { getCountryFromCode, tripCityAnywhere } from "../../utils/misc"
 
 const MyTripPage = ({ trip }: { trip: Trip }) => {
   const [suggested, setSuggested]: [Orders, any] = useState(defaultOrders)
   const [proposals, setProposals]: [Contracts, any] = useState(defaultContracts)
   const [contracts, setContracts]: [Contracts, any] = useState(defaultContracts)
   const [loading, setLoading] = useState(true)
-
+  const [step, setStep] = useState(-1)
   useEffect(() => {
     Promise.all([
       getSuggestedOrders(trip.id),
@@ -52,13 +54,74 @@ const MyTripPage = ({ trip }: { trip: Trip }) => {
       setProposals(e[1].data)
       setContracts(e[2].data)
       setLoading(false)
+      if (e[2].data.count) {
+      }
     })
   }, [trip])
   if (!trip) {
     return <Loader />
   }
+
+  const rightPart = (
+    <>
+      <Box mb={10} bg="white" borderRadius="xl" borderWidth="1px" p={6}>
+        <Heading mb={4} as="h1" fontSize="600" fontWeight="700">
+          Deals
+        </Heading>
+        {contracts.results.map((contract, index) => {
+          return (
+            <>
+              <TripContractsStateCard contract={contract} />
+              {index < contracts.results.length - 1 ? <Divider /> : null}
+            </>
+          )
+        })}
+        {loading ? <Loader /> : null}
+        {!loading && contracts.count == 0 ? (
+          <Empty text="No Contracts yet" />
+        ) : null}
+      </Box>
+      <Box mb={10} bg="white" borderRadius="xl" borderWidth="1px" p={6}>
+        <Heading mb={4} as="h1" fontSize="600" fontWeight="700">
+          Proposals
+        </Heading>
+        <VStack mt={6} spacing={6}>
+          {proposals.results.map((contract, index) => {
+            return (
+              <>
+                {contract.IsTravelerAccepted ? (
+                  <ToTripProposalCardNoAccept contract={contract} />
+                ) : (
+                  <ToTripProposalCardWithAccept contract={contract} />
+                )}
+                {index < proposals.results.length - 1 ? <Divider /> : null}
+              </>
+            )
+          })}
+        </VStack>
+        {loading ? <Loader /> : null}
+        {!loading && proposals.count == 0 ? (
+          <Empty text="No Proposals yet" />
+        ) : null}
+      </Box>
+    </>
+  )
+
   return (
     <>
+      <Helmet
+        title={`Briddgy | ${tripCityAnywhere(
+          trip.src.details[0].en.city
+        )}, ${getCountryFromCode(trip.src.countryCode)} - ${tripCityAnywhere(
+          trip.dest.details[0].en.city
+        )}, ${getCountryFromCode(trip.dest.countryCode)}`}
+        defer={false}
+      >
+        <meta
+          name="description"
+          content={`My Trip information. Briddgy postless, peer-to-peer delivery platform. Worldwide shopping with fastest and cheapest delivery. Travel with minimum costs and earn money.`}
+        />
+      </Helmet>
       <NavigationContext.Provider value={{ page: "trips" }}>
         <NavbarDefault />
         <BottomNavbar />
@@ -66,19 +129,31 @@ const MyTripPage = ({ trip }: { trip: Trip }) => {
       <Container bg="white" py={5} as="section" minW="full">
         <Container maxW="container.lg">
           <Steps>
-            <Step step={1} title="Deal Settled" icon={<CheckIcon />}></Step>
-            <Step step={2} title="Payment Made" icon={<CardIcon />}></Step>
             <Step
-              step={3}
-              title="Delivery Complete"
-              icon={<DeliveryBoxIcon />}
+              selected={step}
+              step={0}
+              title="Deal Settled"
+              icon={<CheckIcon />}
             ></Step>
             <Step
+              selected={step}
+              step={1}
+              title="Payment Made"
+              icon={<CardIcon />}
+            ></Step>
+            <Step
+              selected={step}
+              step={2}
+              title="Delivery Complete"
+              icon={<DeliveryBoxIcon />}
+              last
+            ></Step>
+            {/* <Step
               last
               step={4}
               title="Payment Transfered"
               icon={<CheckIcon />}
-            ></Step>
+            ></Step> */}
           </Steps>
         </Container>
       </Container>
@@ -106,13 +181,14 @@ const MyTripPage = ({ trip }: { trip: Trip }) => {
             maxW="container.xxl"
             mx="auto"
           >
-            <Box w={["100%", "100%", "100%", "50%"]}>
+            <Box w={["100%", "100%", "50%"]}>
               <Box mb={10} bg="white" borderRadius="xl" borderWidth="1px" p={6}>
                 <Heading mb={4} as="h1" fontSize="600" fontWeight="700">
                   Trip Summary
                 </Heading>
                 <CollapsableTripCard trip={trip} />
               </Box>
+              <Box d={["block", "block", "none"]}>{rightPart}</Box>
               <Heading mb={4} as="h1" fontSize="600" fontWeight="700">
                 Suggested orders
               </Heading>
@@ -126,51 +202,8 @@ const MyTripPage = ({ trip }: { trip: Trip }) => {
                 ) : null}
               </VStack>
             </Box>
-            <Box w={["100%", "100%", "100%", "50%"]}>
-              <Box mb={10} bg="white" borderRadius="xl" borderWidth="1px" p={6}>
-                <Heading mb={4} as="h1" fontSize="600" fontWeight="700">
-                  Deals
-                </Heading>
-                {contracts.results.map((contract, index) => {
-                  return (
-                    <>
-                      <TripContractsStateCard contract={contract} />
-                      {index < contracts.results.length - 1 ? (
-                        <Divider />
-                      ) : null}
-                    </>
-                  )
-                })}
-                {loading ? <Loader /> : null}
-                {!loading && contracts.count == 0 ? (
-                  <Empty text="No Contracts yet" />
-                ) : null}
-              </Box>
-              <Box mb={10} bg="white" borderRadius="xl" borderWidth="1px" p={6}>
-                <Heading mb={4} as="h1" fontSize="600" fontWeight="700">
-                  Proposals
-                </Heading>
-                <VStack mt={6} spacing={6}>
-                  {proposals.results.map((contract, index) => {
-                    return (
-                      <>
-                        {contract.IsTravelerAccepted ? (
-                          <ToTripProposalCardNoAccept contract={contract} />
-                        ) : (
-                          <ToTripProposalCardWithAccept contract={contract} />
-                        )}
-                        {index < proposals.results.length - 1 ? (
-                          <Divider />
-                        ) : null}
-                      </>
-                    )
-                  })}
-                </VStack>
-                {loading ? <Loader /> : null}
-                {!loading && proposals.count == 0 ? (
-                  <Empty text="No Proposals yet" />
-                ) : null}
-              </Box>
+            <Box w="50%" d={["none", "none", "block"]}>
+              {rightPart}
             </Box>
           </HStack>
         </Container>
@@ -182,15 +215,33 @@ const PublicPage = ({ trip }) => {
   const [similarTrips, setSimilarTrips]: [Trips, any] = useState(defaultTrips)
   const [loading, setLoading] = useState(false)
   useEffect(() => {
+    setLoading(true)
     getTrips({})
       .then(data => {
+        data.data.results = data.data.results.filter(item => item.id != trip.id)
+
         setSimilarTrips(data.data)
       })
       .catch(() => {})
-      .finally(() => {})
+      .finally(() => {
+        setLoading(false)
+      })
   }, [])
   return (
     <>
+      <Helmet
+        title={`Briddgy | ${tripCityAnywhere(
+          trip.src.details[0].en.city
+        )}, ${getCountryFromCode(trip.src.countryCode)} - ${tripCityAnywhere(
+          trip.dest.details[0].en.city
+        )}, ${getCountryFromCode(trip.dest.countryCode)}`}
+        defer={false}
+      >
+        <meta
+          name="description"
+          content={`View available trip. Briddgy postless, peer-to-peer delivery platform. Worldwide shopping with fastest and cheapest delivery. Travel with minimum costs and earn money.`}
+        />
+      </Helmet>
       <NavigationContext.Provider value={{ page: "trips" }}>
         <NavbarDefault />
         <BottomNavbar />
@@ -204,9 +255,14 @@ const PublicPage = ({ trip }) => {
           Similar Trips
         </Heading>
         <Text mb={10} textAlign="center" variant="light" fontSize="600">
-          Baku, Azerbaijan - Ankara, Turkey
+          {tripCityAnywhere(trip.src.details[0].en.city)},{" "}
+          {getCountryFromCode(trip.src.countryCode)} -{" "}
+          {tripCityAnywhere(trip.dest.details[0].en.city)},{" "}
+          {getCountryFromCode(trip.dest.countryCode)}
         </Text>
-        {loading ? null : similarTrips.results.length ? (
+        {loading ? (
+          <Loader />
+        ) : similarTrips.results.length ? (
           <VStack w="100%" mx="auto" py={9} spacing={10}>
             {similarTrips.results.map((trip: Trip) => (
               <PublicMediumTripCard mx="auto" trip={trip} />

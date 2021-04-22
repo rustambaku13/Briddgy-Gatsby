@@ -2,7 +2,6 @@ import {
   Box,
   Container,
   Divider,
-  Flex,
   Heading,
   HStack,
   TabPanel,
@@ -17,24 +16,25 @@ import React, { useContext, useEffect, useState } from "react"
 import { getOrderContracts, getOrderProposals } from "../../api/contract"
 import { getOrder, getOrders, getSuggestedTrips } from "../../api/order"
 import { BigOrderCard } from "../../components/Cards/Order/BigOrderCard"
-import { CollapsableOrderCard } from "../../components/Cards/Order/CollapsableOrderCard"
+import Helmet from "react-helmet"
+import {
+  CollapsableOrderCard,
+  CollapsableOrderCardwTrip,
+} from "../../components/Cards/Order/CollapsableOrderCard"
 import { PublicMediumOrderCard } from "../../components/Cards/Order/MediumOrderCards"
 import {
   ToOrderProposalCardNoAccept,
   ToOrderProposalCardWithAccept,
 } from "../../components/Cards/Order/toOrderProposalCard"
-import {
-  PublicMediumTripCard,
-  PublicMediumTripCardMessage,
-  PublicMediumTripCardProposal,
-} from "../../components/Cards/Trip/MediumTripCards"
+import { PaymentCard } from "../../components/Cards/Payment/PaymentCard"
+import { PublicMediumTripCardProposal } from "../../components/Cards/Trip/MediumTripCards"
 import Footer from "../../components/Footer"
 import { Empty } from "../../components/Misc/Empty"
+import { Hint } from "../../components/Misc/Hint"
 import { Loader } from "../../components/Misc/Loader"
 import { Step, Steps } from "../../components/Misc/Steps"
 import NavbarDefault from "../../components/Navbar"
 import { BottomNavbar } from "../../components/Navbar/BottomNavbar"
-import { PaymentCard } from "../../components/Cards/Payment/PaymentCard"
 import { CardIcon } from "../../icons/Card"
 import CheckIcon from "../../icons/Check"
 import { DeliveryBoxIcon } from "../../icons/DeliveryBox"
@@ -43,8 +43,6 @@ import UserStore from "../../store/UserStore"
 import { Contract, Contracts, defaultContracts } from "../../types/contract"
 import { defaultOrders, Order, Orders } from "../../types/orders"
 import { Trips } from "../../types/trip"
-import { Hint } from "../../components/Misc/Hint"
-import { StripeIcon } from "../../icons/Stripe"
 
 const MyOrderSecondPage = ({ loading }) => {
   const context = useContext(OrderPageState)
@@ -60,34 +58,25 @@ const MyOrderSecondPage = ({ loading }) => {
     >
       <HStack
         alignItems="flex-start"
-        spacing={6}
+        flexWrap={["wrap", "wrap", "nowrap"]}
+        spacing={[0, 0, 6]}
         maxW="container.xxl"
         mx="auto"
       >
-        <Box w="50%">
+        <Box w={["100%", "100%", "50%"]}>
           <Box mb={5} bg="white" borderRadius="xl" borderWidth="1px" p={6}>
             <Heading mb={4} as="h1" fontSize="600" fontWeight="700">
               Order Summary
             </Heading>
-            <CollapsableOrderCard orderData={context.order} />
+            <CollapsableOrderCardwTrip contract={context.contract} />
           </Box>
           <Hint
             py={5}
             borderRadius="xl"
             text="We are going to freeze your money untill you get your item. After receiving your product the money is going to be transfered to your deliverer upon your confirmation"
           />
-          {/* <Box mb={10} bg="white" borderRadius="xl" borderWidth="1px" p={6}>
-            <Heading mb={4} as="h1" fontSize="600" fontWeight="700">
-              Deliverer
-            </Heading>
-            <PublicMediumTripCardMessage
-              p={[0, 0, 0]}
-              borderWidth="0px"
-              trip={context.contract.trip}
-            />
-          </Box> */}
         </Box>
-        <Box w="50%">
+        <Box w={["100%", "100%", "50%"]}>
           <Box mb={5} bg="white" borderRadius="xl" borderWidth="1px" p={6}>
             <Heading mb={8} as="h1" fontSize="600" fontWeight="700">
               Payment Summary
@@ -103,7 +92,33 @@ const MyOrderSecondPage = ({ loading }) => {
 
 const MyOrderFirstPage = ({ loading }) => {
   const context = useContext(OrderPageState)
-
+  const proposals = (
+    <Box mb={10} bg="white" borderRadius="xl" borderWidth="1px" p={6}>
+      <Heading mb={4} as="h1" fontSize="600" fontWeight="700">
+        Proposals
+      </Heading>
+      <VStack mt={6} spacing={6}>
+        {context.proposals.results.map((contract, index) => {
+          return (
+            <>
+              {contract.IsOrdererAccepted ? (
+                <ToOrderProposalCardNoAccept contract={contract} />
+              ) : (
+                <ToOrderProposalCardWithAccept contract={contract} />
+              )}
+              {index < context.proposals.results.length - 1 ? (
+                <Divider />
+              ) : null}
+            </>
+          )
+        })}
+      </VStack>
+      {loading ? <Loader /> : null}
+      {!loading && context.proposals.count == 0 ? (
+        <Empty text="No Proposals yet" />
+      ) : null}
+    </Box>
+  )
   return (
     <Container
       minH="calc(100vh - 200px)"
@@ -118,13 +133,14 @@ const MyOrderFirstPage = ({ loading }) => {
         maxW="container.xxl"
         mx="auto"
       >
-        <Box w="50%">
+        <Box w={["100%", "100%", "50%"]}>
           <Box mb={10} bg="white" borderRadius="xl" borderWidth="1px" p={6}>
             <Heading mb={4} as="h1" fontSize="600" fontWeight="700">
               Order Summary
             </Heading>
             <CollapsableOrderCard orderData={context.order} />
           </Box>
+          <Box d={["block", "block", "none"]}>{proposals}</Box>
           <Heading mb={4} as="h1" fontSize="600" fontWeight="700">
             Suggested trips
           </Heading>
@@ -138,32 +154,8 @@ const MyOrderFirstPage = ({ loading }) => {
             ) : null}
           </VStack>
         </Box>
-        <Box w="50%">
-          <Box mb={10} bg="white" borderRadius="xl" borderWidth="1px" p={6}>
-            <Heading mb={4} as="h1" fontSize="600" fontWeight="700">
-              Proposals
-            </Heading>
-            <VStack mt={6} spacing={6}>
-              {context.proposals.results.map((contract, index) => {
-                return (
-                  <>
-                    {contract.IsOrdererAccepted ? (
-                      <ToOrderProposalCardNoAccept contract={contract} />
-                    ) : (
-                      <ToOrderProposalCardWithAccept contract={contract} />
-                    )}
-                    {index < context.proposals.results.length - 1 ? (
-                      <Divider />
-                    ) : null}
-                  </>
-                )
-              })}
-            </VStack>
-            {loading ? <Loader /> : null}
-            {!loading && context.proposals.count == 0 ? (
-              <Empty text="No Proposals yet" />
-            ) : null}
-          </Box>
+        <Box w={"50%"} d={["none", "none", "block"]}>
+          {proposals}
         </Box>
       </HStack>
     </Container>
@@ -201,6 +193,12 @@ const MyOrderPage = ({ order }: { order: Order }) => {
 
   return (
     <>
+      <Helmet title={`Briddgy | ${order.title}`} defer={false}>
+        <meta
+          name="description"
+          content={`View my order. Briddgy postless, peer-to-peer delivery platform. Worldwide shopping with fastest and cheapest delivery. Travel with minimum costs and earn money.`}
+        />
+      </Helmet>
       <NavigationContext.Provider value={{ page: "orders" }}>
         <NavbarDefault />
         <BottomNavbar />
@@ -217,14 +215,14 @@ const MyOrderPage = ({ order }: { order: Order }) => {
             <Step
               selected={step}
               step={1}
-              title="Payment Made"
+              title="Make Payment"
               icon={<CardIcon />}
             ></Step>
             <Step
               selected={step}
               step={2}
               last
-              title="Delivery Complete"
+              title="Receive Item"
               icon={<DeliveryBoxIcon />}
             ></Step>
           </Steps>
@@ -264,15 +262,27 @@ const PublicPage = ({ order }: { order: Order }) => {
   )
   const [loading, setLoading] = useState(false)
   useEffect(() => {
+    setLoading(true)
     getOrders({})
       .then(data => {
+        data.data.results = data.data.results.filter(
+          item => item.id != order.id
+        )
         setSimilarOrders(data.data)
       })
       .catch(() => {})
-      .finally(() => {})
-  }, [])
+      .finally(() => {
+        setLoading(false)
+      })
+  }, [order])
   return (
     <>
+      <Helmet title={`Briddgy | ${order.title}`} defer={false}>
+        <meta
+          name="description"
+          content={`View available order. Briddgy postless, peer-to-peer delivery platform. Worldwide shopping with fastest and cheapest delivery. Travel with minimum costs and earn money.`}
+        />
+      </Helmet>
       <NavigationContext.Provider value={{ page: "orders" }}>
         <NavbarDefault />
         <BottomNavbar />
@@ -288,7 +298,9 @@ const PublicPage = ({ order }: { order: Order }) => {
         <Text mb={10} textAlign="center" variant="light" fontSize="600">
           Baku, Azerbaijan - Ankara, Turkey
         </Text>
-        {loading ? null : similarOrders.results.length ? (
+        {loading ? (
+          <Loader />
+        ) : similarOrders.results.length ? (
           <VStack w="100%" mx="auto" py={9} spacing={10}>
             {similarOrders.results.map((order: Order) => (
               <PublicMediumOrderCard mx="auto" orderData={order} />
@@ -314,9 +326,9 @@ const SpecificOrderPage = observer(({ orderId }) => {
         navigate("/404")
       })
       .finally(() => {})
-  }, [])
+  }, [orderId])
 
-  if (!UserStore.complete || !order) return null
+  if (!UserStore.complete || !order) return <Loader />
   if (order.owner.id == UserStore.me?.id) {
     return <MyOrderPage order={order} />
   }

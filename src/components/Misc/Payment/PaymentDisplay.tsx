@@ -30,7 +30,7 @@ export const PaymentDisplay = chakra(
               </Text>
             </Text>
             <Text mb={5} variant="secondary">
-              Traveler's Reward{" "}
+              Traveler's reward{" "}
               <Text as="span" float="right">
                 ${reward}
               </Text>

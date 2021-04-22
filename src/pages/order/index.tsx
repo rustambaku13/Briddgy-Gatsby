@@ -14,18 +14,16 @@ import Img from "gatsby-image"
 import { Link } from "gatsby-plugin-intl"
 import React from "react"
 import { Helmet } from "react-helmet"
-import { useForm } from "react-hook-form"
 import { BlogLinkCard } from "../../components/Cards/Blog/BlogLinkCard"
 import { TestimonialLinkCard } from "../../components/Cards/Testimonial/TestimonialLinkCard"
 import Footer from "../../components/Footer"
-import { HowToEarnMoney } from "../../components/Layout/HowToEarnMoney"
+import { HowToOrder } from "../../components/Layout/HowToOrder"
 import { ProductGrid } from "../../components/Layout/ProductGrid"
 import { OrderNavbar } from "../../components/Navbar"
 import { BottomNavbar } from "../../components/Navbar/BottomNavbar"
 import SupportIcon from "../../icons/Support"
 import { NavigationContext } from "../../providers/navPage"
 const AddOrder = ({ data }) => {
-  const { register, handleSubmit, errors } = useForm()
   return (
     <>
       <Helmet title="Briddgy | Create Order" defer={false}>
@@ -117,7 +115,7 @@ const AddOrder = ({ data }) => {
           />
         </Grid>
       </Container>
-      <HowToEarnMoney />
+      <HowToOrder />
       <Container mb={[20, 20, "150px"]} pt={8} maxW="full" as="section">
         <Heading mb={10} fontSize="hb3" fontWeight="700" textAlign="center">
           Why our shoppers love Briddgy
@@ -175,7 +173,7 @@ const AddOrder = ({ data }) => {
             </Box>
           </Stack>
           <LinkBox mt={16} mx="auto" w="300px">
-            <Link to="/order">
+            <Link to="/faq">
               <Button
                 leftIcon={<SupportIcon />}
                 mx="auto"

@@ -3,7 +3,7 @@ import { Orders } from "../types/orders"
 import { Trip, Trips } from "../types/trip"
 import { Locations } from "./../types/location"
 import { axios_normal } from "./index"
-export async function getTrips(params = {}): Promise<AxiosResponse<Locations>> {
+export async function getTrips(params = {}): Promise<AxiosResponse<Trips>> {
   return axios_normal.get(`/trip-order/api/trips/`, { params })
 }
 export async function getMyTrips(page = 1): Promise<AxiosResponse<Trips>> {

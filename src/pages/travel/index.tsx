@@ -85,7 +85,7 @@ const AddTrip = ({ data }: PageProps) => {
               <br /> Make deliveries and earn money!{" "}
             </Text>
             <Text color="white">
-              <Link to="/">
+              <Link to="/faq/post/adding-trip">
                 <BulletTriangleIcon /> How to earn with Briddgy?
               </Link>
             </Text>
@@ -107,13 +107,6 @@ const AddTrip = ({ data }: PageProps) => {
               _selected={{ fontWeight: "600" }}
             >
               Popular
-            </Tab>
-            <Tab
-              pl={0}
-              _focus={{ border: "none" }}
-              _selected={{ fontWeight: "600" }}
-            >
-              Recomendations
             </Tab>
             <Tab
               isDisabled={true}
@@ -170,7 +163,7 @@ const AddTrip = ({ data }: PageProps) => {
                     rewardsAvailable="10,302"
                     tripsCount="100"
                     ordersCount="300"
-                    img={data.az.childImageSharp.fluid}
+                    img={data.az.childImageSharp.fixed}
                   />
                 </SwiperSlide>
                 <SwiperSlide>
@@ -180,7 +173,7 @@ const AddTrip = ({ data }: PageProps) => {
                     rewardsAvailable="15,302"
                     tripsCount="200"
                     ordersCount="350"
-                    img={data.ru.childImageSharp.fluid}
+                    img={data.ru.childImageSharp.fixed}
                   />
                 </SwiperSlide>
                 <SwiperSlide>
@@ -190,7 +183,7 @@ const AddTrip = ({ data }: PageProps) => {
                     rewardsAvailable="10,302"
                     tripsCount="100"
                     ordersCount="300"
-                    img={data.tr.childImageSharp.fluid}
+                    img={data.tr.childImageSharp.fixed}
                   />
                 </SwiperSlide>
                 <SwiperSlide>
@@ -200,7 +193,7 @@ const AddTrip = ({ data }: PageProps) => {
                     rewardsAvailable="10,302"
                     tripsCount="100"
                     ordersCount="300"
-                    img={data.en.childImageSharp.fluid}
+                    img={data.en.childImageSharp.fixed}
                   />
                 </SwiperSlide>
               </Swiper>
@@ -287,7 +280,7 @@ const AddTrip = ({ data }: PageProps) => {
             </Box>
           </Stack>
           <LinkBox mt={16} mx="auto" w="300px">
-            <Link to="/order">
+            <Link to="/faq">
               <Button
                 leftIcon={<SupportIcon />}
                 mx="auto"
@@ -317,29 +310,29 @@ export const query = graphql`
     }
     az: file(relativePath: { eq: "azerbaijan.jpg" }) {
       childImageSharp {
-        fluid {
-          ...GatsbyImageSharpFluid
+        fixed(height: 400, cropFocus: CENTER, width: 300) {
+          ...GatsbyImageSharpFixed
         }
       }
     }
     ru: file(relativePath: { eq: "russia.jpg" }) {
       childImageSharp {
-        fluid {
-          ...GatsbyImageSharpFluid
+        fixed(height: 400, cropFocus: CENTER, width: 300) {
+          ...GatsbyImageSharpFixed
         }
       }
     }
     tr: file(relativePath: { eq: "turkey.jpg" }) {
       childImageSharp {
-        fluid {
-          ...GatsbyImageSharpFluid
+        fixed(height: 400, cropFocus: CENTER, width: 300) {
+          ...GatsbyImageSharpFixed
         }
       }
     }
     en: file(relativePath: { eq: "england.jpg" }) {
       childImageSharp {
-        fluid {
-          ...GatsbyImageSharpFluid
+        fixed(height: 400, cropFocus: CENTER, width: 300) {
+          ...GatsbyImageSharpFixed
         }
       }
     }

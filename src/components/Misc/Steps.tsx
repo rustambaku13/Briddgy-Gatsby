@@ -29,7 +29,7 @@ export const Step = ({
       <VStack w={last ? "auto" : "100%"} alignItems="stretch" spacing={1}>
         <Flex w="100%" alignItems="center">
           <Center
-            mr={2}
+            mr={3}
             color="outline.base"
             fontSize="500"
             transition=".5s ease"
@@ -53,7 +53,7 @@ export const Step = ({
                 transition=".5s .5s ease"
                 bg="crayolaGreen.base"
                 h="100%"
-                maxW="0px"
+                maxW="0%"
                 w="100%"
               ></Box>
             </Box>
@@ -74,7 +74,7 @@ export const Step = ({
       <VStack w={last ? "auto" : "100%"} alignItems="stretch" spacing={1}>
         <Flex w="100%" alignItems="center">
           <Center
-            mr={2}
+            mr={3}
             transition=".5s ease"
             color="crayolaGreen.base"
             fontSize="500"
@@ -99,7 +99,7 @@ export const Step = ({
                 transition=".5s .5s ease"
                 h="100%"
                 w="100%"
-                maxW="50%"
+                maxW="0%"
               ></Box>
             </Box>
           )}
@@ -119,7 +119,7 @@ export const Step = ({
     <VStack w={last ? "auto" : "100%"} alignItems="stretch" spacing={1}>
       <Flex w="100%" alignItems="center">
         <Center
-          mr={2}
+          mr={3}
           transition=".5s ease"
           color="white"
           fontSize="500"
@@ -163,7 +163,7 @@ export const Step = ({
 export const Steps = chakra(
   ({ children, className }: { className?: any; children: any[] }) => {
     return (
-      <HStack alignItems="stretch" spacing={6} className={className} w="100%">
+      <HStack alignItems="stretch" spacing={3} className={className} w="100%">
         {children}
       </HStack>
     )

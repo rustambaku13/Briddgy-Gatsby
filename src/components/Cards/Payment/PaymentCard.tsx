@@ -57,8 +57,8 @@ export const PaymentCard = () => {
   return (
     <>
       <PaymentDisplay p={0} borderRadius="0" bg="white" {...prices} />
-      <Text mt={8} as="h3" variant="secondary">
-        Estimated Total{" "}
+      <Text mt={5} as="h3" variant="secondary">
+        Total{" "}
         <Text
           as="span"
           mt="-8px"

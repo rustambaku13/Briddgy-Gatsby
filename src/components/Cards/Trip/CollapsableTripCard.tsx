@@ -1,24 +1,24 @@
 import {
-  AspectRatio,
-  Box,
-  Flex,
-  VStack,
-  Img,
-  Text,
-  HStack,
-  Divider,
   Accordion,
-  AccordionItem,
   AccordionButton,
   AccordionIcon,
+  AccordionItem,
   AccordionPanel,
+  AspectRatio,
+  Box,
+  Button,
+  Divider,
+  HStack,
+  Img,
+  Text,
+  VStack,
 } from "@chakra-ui/react"
 import { chakra } from "@chakra-ui/system"
+import plane from "../../../images/planeicon.svg"
 import moment from "moment"
 import React from "react"
-import { bmify, FRONTEND_DATE_FORMAT } from "../../../api"
+import { FRONTEND_DATE_FORMAT } from "../../../api"
 import TripIcon from "../../../icons/Trip"
-import { Order } from "../../../types/orders"
 import { Trip } from "../../../types/trip"
 import { getCountryFromCode, tripCityAnywhere } from "../../../utils/misc"
 
@@ -27,8 +27,8 @@ export const CollapsableTripCard = chakra(
     return (
       <VStack className={className} alignItems="stretch" spacing={5} w="100%">
         <HStack spacing={2} w="100%">
-          <AspectRatio ratio={1} flex="0 0 80px">
-            <TripIcon />
+          <AspectRatio ratio={1} flex="0 0 4rem">
+            <Img src={plane} alt="Plane " />
           </AspectRatio>
           <Box>
             <Text
@@ -37,6 +37,7 @@ export const CollapsableTripCard = chakra(
               color="text.medium"
               fontWeight="700"
               as="h2"
+              h="3rem"
             >
               {tripCityAnywhere(trip.src.details[0].en.city)},{" "}
               {getCountryFromCode(trip.src.countryCode)} -{" "}
@@ -54,12 +55,28 @@ export const CollapsableTripCard = chakra(
             <h2>
               <AccordionButton>
                 <Box flex="1" textAlign="left">
-                  Description
+                  Trip Details
                 </Box>
                 <AccordionIcon />
               </AccordionButton>
             </h2>
-            <AccordionPanel pb={4}>{trip.description}</AccordionPanel>
+            <AccordionPanel pb={4}>
+              <Box mb={5}>
+                <Text as="label" variant="light">
+                  Description
+                </Text>
+                <Text>{trip.description}</Text>
+              </Box>
+              <Box mb={5}>
+                <Text as="label" variant="light">
+                  Weight Limit
+                </Text>
+                <Text>{trip.weight_limit} kg</Text>
+              </Box>
+              <Button w="100%" mb={5} variant="danger">
+                Remove Order
+              </Button>
+            </AccordionPanel>
           </AccordionItem>
         </Accordion>
       </VStack>

@@ -115,6 +115,9 @@ export const AddTripForm = chakra(({ className }: { className?: any }) => {
       borderRadius={["md", "md", "lg"]}
       p={3}
       onSubmit={handleSubmit(() => {
+        const { dest_id, src_id } = getValues()
+        if (!dest_id || !src_id) return false
+
         setModalOpen(true)
       })}
       className={className}

@@ -62,7 +62,6 @@ export const LocationAutoComplete = chakra(
         e.currentTarget.getAttribute("title"),
         e.currentTarget.getAttribute("data-type"),
       ]
-      console.log(title, id)
 
       if (type == "city") {
         // City was selected

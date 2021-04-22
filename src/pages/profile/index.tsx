@@ -183,6 +183,7 @@ const PersonalDetailsSection = observer(() => {
 })
 
 const EarnCreditsSection = () => {
+  const { register, handleSubmit, errors } = useForm()
   const code = useRef(null)
   const [copied, setCopied] = useState(false)
   function copy(e) {
@@ -195,7 +196,7 @@ const EarnCreditsSection = () => {
     <Box py={3} maxW="container.lg" mx="auto">
       <Box mx="auto" maxW="500px" p={0}>
         <FriendsInvite fontSize="300px" w="300px" mt="40px" mx="auto" />
-        <Heading my={8} textAlign="center" fontSize="3xl">
+        <Heading my={8} textAlign="center" fontSize="hb1">
           Invite your friends and get discounts
         </Heading>
         <Box w="100%">
@@ -242,7 +243,7 @@ const EarnCreditsSection = () => {
           >
             <Box
               float="left"
-              _hover={{ bg: "gray.100" }}
+              _hover={{ bg: "outline.light" }}
               transition=".2s ease-in-out"
               textAlign="initial"
               px={4}
@@ -280,36 +281,15 @@ const EarnCreditsSection = () => {
             </Box>
           </Button>
         </Box>
-      </Box>
-    </Box>
-  )
-}
-const RedeemCreditsSection = () => {
-  const { register, handleSubmit, errors } = useForm()
-  return (
-    <Box py={3} maxW="container.lg" mx="auto">
-      <Box mx="auto" maxW="500px" p={0}>
-        <Flex mt="40px" w="100%" flexWrap="nowrap">
-          <Heading fontSize={["4xl", "5xl"]} flex="0 0 auto">
-            Enter your <br />{" "}
-            <Text color="blue.400">
-              Promo <br />
-              Code
-            </Text>
-          </Heading>
-          <Discount flex="1" mt="40px" mx="auto" />
-        </Flex>
-
-        <Text my={5} variant="secondary" textAlign="center">
-          If you have a promo code, enter it below and get a discount
-        </Text>
-
+        <Divider my={5} />
+        <Heading my={8} textAlign="center" fontSize="hb1">
+          Or use your friends promo code and save
+        </Heading>
         <Box
-          float="left"
           as="form"
           onSubmit={handleSubmit(() => null)}
-          bg="gray.100"
-          _hover={{ boxShadow: "md" }}
+          bg="white"
+          _hover={{ bg: "outline.light" }}
           transition=".2s ease-in-out"
           textAlign="initial"
           px={4}
@@ -323,6 +303,7 @@ const RedeemCreditsSection = () => {
           <Input
             textTransform="uppercase"
             placeholder="Enter promo code"
+            bg="transparent"
             ref={register({
               required: "Please enter the promo code",
               maxLength: {
@@ -357,6 +338,78 @@ const RedeemCreditsSection = () => {
     </Box>
   )
 }
+// const RedeemCreditsSection = () => {
+//   return (
+//     <Box py={3} maxW="container.lg" mx="auto">
+//       <Box mx="auto" maxW="500px" p={0}>
+//         {/* <Flex mt="40px" w="100%" flexWrap="nowrap">
+//           <Heading fontSize={["4xl", "5xl"]} flex="0 0 auto">
+//             Enter your <br />{" "}
+//             <Text color="blue.400">
+//               Promo <br />
+//               Code
+//             </Text>
+//           </Heading>
+//           <Discount flex="1" mt="40px" mx="auto" />
+//         </Flex>
+
+//         <Text my={5} variant="secondary" textAlign="center">
+//           If you have a promo code, enter it below and get a discount
+//         </Text> */}
+
+//         <Box
+//           float="left"
+//           as="form"
+//           onSubmit={handleSubmit(() => null)}
+//           bg="gray.100"
+//           _hover={{ boxShadow: "md" }}
+//           transition=".2s ease-in-out"
+//           textAlign="initial"
+//           px={4}
+//           py={2}
+//           borderWidth="1px"
+//           borderRadius="lg"
+//           w="100%"
+//           fontWeight="400"
+//           pos="relative"
+//         >
+//           <Input
+//             textTransform="uppercase"
+//             placeholder="Enter promo code"
+//             ref={register({
+//               required: "Please enter the promo code",
+//               maxLength: {
+//                 value: 5,
+//                 message: "Promo Code should be 5 characters",
+//               },
+//               minLength: {
+//                 value: 5,
+//                 message: "Promo Code should be 5 characters",
+//               },
+//             })}
+//             fontSize={["xl", "2xl"]}
+//             name="code"
+//             h="70px"
+//             border="none"
+//           />
+//           <Button
+//             zIndex="1"
+//             pos="absolute"
+//             right={4}
+//             top="18px"
+//             px={5}
+//             type="submit"
+//             size="lg"
+//             variant="primary"
+//           >
+//             Redeem
+//           </Button>
+//         </Box>
+//         <Text color="red.500">{errors.code?.message}</Text>
+//       </Box>
+//     </Box>
+//   )
+// }
 
 const MyOrdersSection = observer(() => {
   useEffect(() => {
@@ -483,14 +536,6 @@ const PAGE_INDEX_MAPPER = {
   redeem: 3,
   promo: 4,
 }
-// // TO DO: Make INDEX_PAGE_MAPPER Dynamic from the PAGE_INDEX_MAPPER
-// const INDEX_PAGE_MAPPER = {
-//   0: "profile",
-//   1: "trips",
-//   2: "orders",
-//   3: "redeem",
-//   4: "promo",
-// }
 
 const MyProfilePage = observer(({ location }) => {
   useAuthHook(user => user == false, "/login")
@@ -507,7 +552,7 @@ const MyProfilePage = observer(({ location }) => {
       <Helmet title="Briddgy | My Profile" defer={false}>
         <meta
           name="description"
-          content="Briddgy postless, peer-to-peer delivery platform. Worldwide shopping with fastest and cheapest delivery. Travel with minimum costs and earn money."
+          content="My Profile. Briddgy postless, peer-to-peer delivery platform. Worldwide shopping with fastest and cheapest delivery. Travel with minimum costs and earn money."
         />
       </Helmet>
       <NavigationContext.Provider value={{ page: "profile" }}>
@@ -538,7 +583,7 @@ const MyProfilePage = observer(({ location }) => {
             <li className="presentation-slider" role="presentation"></li>
           </TabList>
           <TabPanels>
-            <TabPanel px={0} pt="40px">
+            <TabPanel px={0}>
               <PersonalDetailsSection />
             </TabPanel>
             <TabPanel px={0}>
@@ -546,9 +591,6 @@ const MyProfilePage = observer(({ location }) => {
             </TabPanel>
             <TabPanel px={0}>
               <MyOrdersSection />
-            </TabPanel>
-            <TabPanel px={0}>
-              <RedeemCreditsSection />
             </TabPanel>
             <TabPanel px={0}>
               <EarnCreditsSection />

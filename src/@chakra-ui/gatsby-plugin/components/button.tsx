@@ -32,6 +32,13 @@ export default {
         backgroundPosition: "50% 50%",
       },
     },
+    danger: {
+      bg: "danger.base",
+      color: "white",
+      _hover: {
+        bg: "danger.dark",
+      },
+    },
     success: {
       bgGradient: "linear(-40deg,success.base ,crayolaGreen.base )",
       backgroundSize: "150% 150%",

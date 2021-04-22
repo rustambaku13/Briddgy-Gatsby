@@ -12,18 +12,43 @@ import {
   AccordionButton,
   AccordionIcon,
   AccordionPanel,
+  Center,
+  Link,
+  Button,
 } from "@chakra-ui/react"
 import { chakra } from "@chakra-ui/system"
-import React from "react"
-import { bmify } from "../../../api"
+import moment from "moment"
+import React, { useEffect, useState } from "react"
+import { bmify, FRONTEND_DATE_FORMAT } from "../../../api"
+import { Contract } from "../../../types/contract"
 import { Order } from "../../../types/orders"
+import { getCountryFromCode, trimCityEmpty } from "../../../utils/misc"
+import { Avatar } from "../../Avatar/Avatar"
+import { ImageViewer } from "../../Misc/ImageThumbnailViewer"
+import { Rating } from "../../Misc/Rating"
 
 export const CollapsableOrderCard = chakra(
-  ({ className, orderData }: { className?: any; orderData: Order }) => {
+  ({
+    className,
+    orderData,
+    children,
+  }: {
+    className?: any
+    orderData: Order
+    children?: any
+  }) => {
+    const [images, setImages] = useState([])
+    useEffect(() => {
+      setImages(
+        orderData.orderimage.map(img => ({
+          preview: bmify(img),
+        }))
+      )
+    }, [])
     return (
       <VStack alignItems="stretch" spacing={5} w="100%">
         <HStack spacing={2} w="100%">
-          <AspectRatio ratio={1} flex="0 0 80px">
+          <AspectRatio ratio={1} flex="0 0 4.5rem">
             <Img
               alt="Product Image"
               float="left"
@@ -33,6 +58,7 @@ export const CollapsableOrderCard = chakra(
           <Box>
             <Text
               className="clamp-2"
+              h="3rem"
               fontSize="600"
               color="text.medium"
               fontWeight="700"
@@ -46,7 +72,7 @@ export const CollapsableOrderCard = chakra(
           </Box>
         </HStack>
         <Divider />
-        <Accordion mt={0} allowToggle>
+        <Accordion defaultIndex={1} mt={0} allowToggle>
           <AccordionItem>
             <h2>
               <AccordionButton>
@@ -57,30 +83,137 @@ export const CollapsableOrderCard = chakra(
               </AccordionButton>
             </h2>
             <AccordionPanel pb={4}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
+              <ImageViewer images={images}>
+                <Flex>
+                  <ImageViewer.ImageThumbnails h={10} w={10} />
+                  <AspectRatio ratio={1} w="250px">
+                    <ImageViewer.LargeImage />
+                  </AspectRatio>
+                </Flex>
+              </ImageViewer>
+              <Box my={5}>
+                <Text as="label" variant="light">
+                  Traveler's Reward
+                </Text>
+                <Text>${orderData.price}</Text>
+              </Box>
+              <Box mb={5}>
+                <Text as="label" variant="light">
+                  Buy From
+                </Text>
+                <Text>
+                  <Link href={orderData.order_url} color="warning.dark">
+                    {orderData.host}
+                  </Link>
+                </Text>
+              </Box>
+              <Box mb={5}>
+                <Text as="label" variant="light">
+                  Deliver
+                </Text>
+                <Text>
+                  <Text as="span" variant="secondary">
+                    From{" "}
+                  </Text>
+                  {`${trimCityEmpty(
+                    orderData.src.details[0].en.city
+                  )}${getCountryFromCode(orderData.src.countryCode)}`}{" "}
+                  <Text as="span" variant="secondary">
+                    to{" "}
+                  </Text>
+                  {`${trimCityEmpty(
+                    orderData.dest.details[0].en.city
+                  )}${getCountryFromCode(orderData.dest.countryCode)}`}
+                </Text>
+              </Box>
+              <Box mb={5}>
+                <Text as="label" variant="light">
+                  Description
+                </Text>{" "}
+                <Text>{orderData.description}</Text>
+              </Box>
+              <Box mb={5}>
+                <Text as="label" variant="light">
+                  Item Weight
+                </Text>{" "}
+                <Text>{orderData.weight} kg</Text>
+              </Box>
+              {/* <Button w="100%" mb={5} variant="outline">
+                Edit Order
+              </Button> */}
+              <Button w="100%" mb={5} variant="danger">
+                Cancel Deal
+              </Button>
             </AccordionPanel>
           </AccordionItem>
-          <AccordionItem>
-            <h2>
-              <AccordionButton>
-                <Box flex="1" textAlign="left">
-                  Deliverer Details
-                </Box>
-                <AccordionIcon />
-              </AccordionButton>
-            </h2>
-            <AccordionPanel pb={4}>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat.
-            </AccordionPanel>
-          </AccordionItem>
+          {children}
         </Accordion>
       </VStack>
+    )
+  }
+)
+
+export const CollapsableOrderCardwTrip = chakra(
+  ({ className, contract }: { className?: any; contract: Contract }) => {
+    useEffect(() => {
+      contract.order.price = contract.price_bid
+    }, [])
+    return (
+      <CollapsableOrderCard orderData={contract.order}>
+        <AccordionItem>
+          <h2>
+            <AccordionButton>
+              <Box flex="1" textAlign="left">
+                Delivery Details
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+          </h2>{" "}
+          <AccordionPanel pb={4}>
+            <Flex mb={5} alignItems="center" w="100%">
+              <Avatar mr={2} user={contract.trip.owner} />
+              <Box>
+                <Text>{`${contract.trip.owner.first_name} ${contract.trip.owner.last_name}`}</Text>
+                <Rating
+                  fontSize="400"
+                  readonly
+                  rating={contract.trip.owner.rating}
+                />
+              </Box>
+            </Flex>
+            <Box mb={5}>
+              <Text as="label" variant="light">
+                Travel dates
+              </Text>
+              <Text>
+                {moment(contract.trip.date).format(FRONTEND_DATE_FORMAT)}
+              </Text>
+            </Box>
+            <Box mb={5}>
+              <Text as="label" variant="light">
+                Deliver
+              </Text>
+              <Text fontWeight="600">
+                <Text fontWeight="400" as="span" variant="secondary">
+                  From{" "}
+                </Text>
+                {`${trimCityEmpty(
+                  contract.trip.src.details[0].en.city
+                )}${getCountryFromCode(contract.trip.src.countryCode)}`}{" "}
+                <Text fontWeight="400" as="span" variant="secondary">
+                  to{" "}
+                </Text>
+                {`${trimCityEmpty(
+                  contract.trip.dest.details[0].en.city
+                )}${getCountryFromCode(contract.trip.dest.countryCode)}`}
+              </Text>
+            </Box>
+            <Button size="sm" variant="primary">
+              Message Traveler
+            </Button>
+          </AccordionPanel>
+        </AccordionItem>
+      </CollapsableOrderCard>
     )
   }
 )

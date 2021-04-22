@@ -23,48 +23,50 @@ export const AddTripDetailsModal = ({ isOpen, setOpen, callback }) => {
         setOpen(false)
       }}
     >
-      <ModalOverlay />
-      <ModalContent onSubmit={handleSubmit(callback)} as="form">
-        <ModalHeader fontSize="hb1">You are almost done</ModalHeader>
-        <ModalCloseButton />
-        <ModalBody>
-          <Text fontWeight="600" as="label">
-            Unused baggage
-          </Text>
-          <Text fontSize="400" variant="secondary">
-            How much baggage space you have left unused{" "}
-          </Text>
-          <Center>
-            <IncrementalNumberSelector
-              name="weight_limit"
-              parentRef={register()}
+      <form onSubmit={handleSubmit(callback)} as="form">
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader fontSize="hb1">You are almost done</ModalHeader>
+          <ModalCloseButton />
+          <ModalBody>
+            <Text fontWeight="600" as="label">
+              Unused baggage
+            </Text>
+            <Text fontSize="400" variant="secondary">
+              How much baggage space you have left unused{" "}
+            </Text>
+            <Center>
+              <IncrementalNumberSelector
+                name="weight_limit"
+                parentRef={register()}
+                my={5}
+              />
+            </Center>
+            <Text fontWeight="600" htmlFor="description" as="label">
+              Description
+            </Text>
+            <Text fontSize="400" variant="secondary">
+              Description of items you can carry, forbidden items and etc
+            </Text>
+            <Textarea
+              id="description"
+              ref={register()}
+              name="description"
               my={5}
-            />
-          </Center>
-          <Text fontWeight="600" htmlFor="description" as="label">
-            Description
-          </Text>
-          <Text fontSize="400" variant="secondary">
-            Description of items you can carry, forbidden items and etc
-          </Text>
-          <Textarea
-            id="description"
-            ref={register()}
-            name="description"
-            my={5}
-            fontSize="sm"
-            placeholder="I can carry electronics, documents and more. "
-            borderColor="blue.400"
-          ></Textarea>
-        </ModalBody>
+              fontSize="sm"
+              placeholder="I can carry electronics, documents and more. "
+              borderColor="blue.400"
+            ></Textarea>
+          </ModalBody>
 
-        <ModalFooter>
-          <Button variant="red_gradient" type="submit" mr="auto" px={10}>
-            Add Trip
-          </Button>
-          <Button variant="link">Skip & Check Tickets</Button>
-        </ModalFooter>
-      </ModalContent>
+          <ModalFooter>
+            <Button variant="red_gradient" type="submit" mr="auto" px={10}>
+              Add Trip
+            </Button>
+            <Button variant="link">Skip & Check Tickets</Button>
+          </ModalFooter>
+        </ModalContent>
+      </form>
     </Modal>
   )
 }

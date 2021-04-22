@@ -312,7 +312,7 @@ html {
     color: white;
     border: none;
     max-width: 1400px;
-    height: 200px;
+    height: 260px;
     max-height: 80px;
     > div {
       height: 80px;
@@ -376,7 +376,7 @@ html {
       transform: scale(0.35, 0.727273) translateY(-58px);
     }
     #expanded {
-      max-height: 200px;
+      max-height: 260px;
 
       #navbar_search_order {
         visibility: hidden;
@@ -547,5 +547,5 @@ html {
   -webkit-box-orient: vertical;
 }
 .full-width {
-  width: 100%;
+  width: 100% !important;
 }
