@@ -3,7 +3,7 @@ templateKey: faq
 slug: adding-order
 popular: true
 language: en
-title: Adding Order
+title: How to add Order
 topic: orderer
 ---
 <style>
