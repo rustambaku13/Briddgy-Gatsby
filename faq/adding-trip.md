@@ -3,7 +3,7 @@ templateKey: faq
 slug: adding-trip
 popular: true
 language: en
-title: Adding Trip in Briddgy
+title: How to add Trip
 topic: traveler
 ---
 <!--
