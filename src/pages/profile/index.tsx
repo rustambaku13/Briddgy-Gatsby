@@ -97,28 +97,6 @@ const PersonalDetailsSection = observer(() => {
               </Button>
             )}
           </Box>
-          {/* <Box>
-            <Text fontWeight="600" as="label">
-              Phone Number
-              <VerificationStatus
-                isVerified={UserStore.me.is_number_verified}
-              />
-            </Text>
-            <Text mt={1}>
-              {UserStore.me.phone ? UserStore.me.phone : <br />}
-            </Text>{" "}
-            {UserStore.me.is_photo_verified ? null : (
-              <Button
-                onClick={() => {
-                  LayoutStore.togglePhoneConfirmModal()
-                }}
-                variant="link"
-                color="blue.500"
-              >
-                Verify Now
-              </Button>
-            )}
-          </Box> */}
         </Flex>
       </Flex>
       <SimpleGrid columns={[1, 2]} spacing={22} my="50px">

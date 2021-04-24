@@ -184,7 +184,12 @@ const MyTripPage = ({ trip }: { trip: Trip }) => {
           as="section"
           minW="full"
         >
-          <Box maxW="container.xxl" mx="auto" as="section">
+          <Box
+            d={UserStore.me.is_stripe_verified == "C" ? "none" : "block"}
+            maxW="container.xxl"
+            mx="auto"
+            as="section"
+          >
             <Alert borderRadius="xl" bg="warning.light" mb={5} status="warning">
               <AlertIcon />
               <Box flex="1">
