@@ -1,7 +1,6 @@
 import { AxiosResponse } from "axios"
 import { Orders } from "../types/orders"
 import { Trip, Trips } from "../types/trip"
-import { Locations } from "./../types/location"
 import { axios_normal } from "./index"
 export async function getTrips(params = {}): Promise<AxiosResponse<Trips>> {
   return axios_normal.get(`/trip-order/api/trips/`, { params })
@@ -34,15 +33,19 @@ export async function getSuggestedOrders(
 
 export async function addTrip({
   date,
-  destination,
-  source,
+  dest_id,
+  dest_code,
+  src_id,
+  src_code,
   description,
   weight_limit,
 }) {
   return await axios_normal.post(`/trip-order/api/trips/`, {
     date: date,
-    destination,
-    source,
+    dest_id,
+    dest_code,
+    src_id,
+    src_code,
     description,
     weight_limit,
   })

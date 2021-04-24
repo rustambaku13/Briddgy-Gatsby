@@ -66,6 +66,7 @@ export const LocationAutoComplete = chakra(
       if (type == "city") {
         // City was selected
         setValue(name + "_id", id)
+        setValue(name + "_code", undefined)
         setValue(name, title)
       } else {
         // Country was selected

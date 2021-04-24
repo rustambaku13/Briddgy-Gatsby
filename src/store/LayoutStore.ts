@@ -4,6 +4,7 @@ import { makeAutoObservable } from "mobx"
 import { Trip } from "../types/trip"
 import UserStore from "./UserStore"
 import { useToast } from "@chakra-ui/toast"
+import { askForEmailCode } from "../api/user"
 interface toOrderProposalContext {
   order: Order
   callback?: any
@@ -22,15 +23,21 @@ interface alertDialogContext {
 }
 
 class LayoutStore {
-  emailConfirmModalVisible: boolean = false
   phoneConfirmModalVisible: boolean = false
+  completeProfileModalVisible: boolean = false
   toOrderProposalModalContext: toOrderProposalContext = null
   toTripProposalModalContext: toOrderProposalContext = null
   alertDialogModalContext: alertDialogContext = null
   loginModalFormCallback: any = null
+  emailModalFormCallback: any = null
   constructor() {
     makeAutoObservable(this)
   }
+  // ****----Complete Profile Modal-----****
+  completeProfileModalToggle() {
+    this.completeProfileModalVisible = !this.completeProfileModalVisible
+  }
+
   // ****----Login Modal-----****
   get loginModalFormVisible() {
     return !(this.loginModalFormCallback == null) //true
@@ -74,8 +81,18 @@ class LayoutStore {
     this.alertDialogModalContext = context
   }
 
-  toggleEmailConfirmModal() {
-    this.emailConfirmModalVisible = !this.emailConfirmModalVisible
+  // ****----Email Confirm Stuff-----****
+  emailConfirmModalOpen(callback) {
+    this.emailModalFormCallback = callback
+    if (this.emailModalFormCallback) {
+      askForEmailCode()
+    }
+  }
+  emailConfirmModalClose() {
+    this.emailModalFormCallback = null
+  }
+  get emailConfirmModalVisible() {
+    return !(this.emailModalFormCallback == null) //true
   }
 
   togglePhoneConfirmModal() {

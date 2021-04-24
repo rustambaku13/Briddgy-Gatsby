@@ -34,26 +34,28 @@ export async function getSuggestedTrips(
 export async function addOrder({
   price,
   title,
-  destination,
-  source,
+  src_id,
+  src_code,
+  dest_code,
+  dest_id,
   description,
   weight,
   order_url,
   item_price,
   host,
-  order_type,
 }) {
   return await axios_normal.post(`/trip-order/api/orders/`, {
     price,
     title,
-    destination,
-    source,
+    dest_id,
+    src_id,
     description,
     weight,
     order_url,
+    src_code,
+    dest_code,
     host,
     item_price,
-    order_type,
   })
 }
 

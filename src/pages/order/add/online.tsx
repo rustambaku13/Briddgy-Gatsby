@@ -60,7 +60,7 @@ const pageFields = {
   ],
 }
 
-const Summary = ({ files, pageChange, back, page }) => {
+const Summary = ({ files, pageChange, back, page, adding }) => {
   const { register, errors, watch, getValues, formState } = useFormContext()
   const item_price = watch("item_price")
   const price = watch("price")
@@ -166,7 +166,7 @@ const Summary = ({ files, pageChange, back, page }) => {
             </Text>{" "}
             <Divider orientation="horizontal" my={5} />
             <Button
-              isLoading={formState.isSubmitting}
+              isLoading={adding}
               w="100%"
               size="lg"
               type="submit"
@@ -214,7 +214,7 @@ const Itinerary = ({ files, pageChange, back }) => {
         <FormControl w="100%" mb={7}>
           <FormLabel>Deliver From</FormLabel>
           <LocationAutoComplete
-            name="source"
+            name="src"
             borderWidth="1px"
             borderRadius="lg"
             size="lg"
@@ -230,7 +230,7 @@ const Itinerary = ({ files, pageChange, back }) => {
         <FormControl w="100%" mb={7}>
           <FormLabel>Deliver To</FormLabel>
           <LocationAutoComplete
-            name="destination"
+            name="dest"
             borderWidth="1px"
             borderRadius="lg"
             size="lg"
@@ -489,20 +489,27 @@ const AddOrderPage = ({ location }: PageProps) => {
         })
     } catch (e) {}
   }
+  const checkEmail = () => {
+    if (UserStore.me.is_email_verified) addOrder()
+    else {
+      LayoutStore.emailConfirmModalOpen(addOrder)
+    }
+  }
+
   const pageChange = async data => {
     const success = await trigger(pageFields[page])
     if (success) {
       if (page == 2) {
         // Main Submit Handler
         data.files = files.current
-        data.host = new URL(data.url).host
+        data.host = new URL(data.order_url).host
         UserStore.save_new_order(data)
         if (UserStore.isLoggedIn) {
           // Can directly add order to profile
-          addOrder()
+          checkEmail()
           return
         }
-        LayoutStore.loginModalFormOpen(addOrder)
+        LayoutStore.loginModalFormOpen(checkEmail)
         return
       }
       const values = getValues(pageFields[page])
@@ -569,6 +576,7 @@ const AddOrderPage = ({ location }: PageProps) => {
                   <Summary
                     page={page}
                     back={back}
+                    adding={adding}
                     pageChange={pageChange}
                     files={files}
                   />

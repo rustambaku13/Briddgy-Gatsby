@@ -39,8 +39,18 @@ export async function askForPhoneCode(phone) {
   })
 }
 
+export async function askForEmailCode() {
+  return await axios_normal.get(`/main/api/request/email/`)
+}
+
 export async function verifyPhoneNumber(verification_phone) {
   return await axios_normal.post(`/main/api/verify/phone/`, {
     verification_phone,
+  })
+}
+
+export async function verifyEmail(key) {
+  return await axios_normal.post(`/main/api/request/verify/`, {
+    key,
   })
 }

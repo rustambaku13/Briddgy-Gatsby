@@ -42,7 +42,7 @@ export default {
   warning: {
     dark: "#F08E38",
     base: "#F4B248",
-    light: "#FFFAEE",
+    light: "#fdeabc",
   },
   text: {
     dark: "#02090B",

@@ -12,12 +12,14 @@ import { navigate } from "gatsby-plugin-intl"
 import { flowResult } from "mobx"
 import React, { useState } from "react"
 import { FormProvider, useForm, useFormContext } from "react-hook-form"
+import { getOnboardingLink } from "../../api/payment"
 import { CalendarIcon } from "../../icons/Calendar"
 import { LocationIcon } from "../../icons/Location"
 import RotateIcon from "../../icons/Rotate"
 import { TripIcon } from "../../icons/Trip"
 import LayoutStore from "../../store/LayoutStore"
 import UserStore from "../../store/UserStore"
+import { Trip } from "../../types/trip"
 import { swapItinerary } from "../../utils/misc"
 import { DatePicker } from "../Inputs/DatePicker"
 import { LocationAutoComplete } from "../Inputs/LocationAutoComplete"
@@ -83,22 +85,31 @@ export const AddTripForm = chakra(({ className }: { className?: any }) => {
     // Actually adding the trip, of course if the user is logged in
     setLoading(true)
     flowResult(UserStore.saveNewTrip())
+      .then((e: Trip) => {
+        navigate(`/trips/${e.id}`)
+      })
       .then(e => {
-        navigate("/profile?page=trips")
+        console.log(e)
       })
       .finally(() => {
         setLoading(false)
       })
   }
+  const checkEmail = () => {
+    if (UserStore.me.is_email_verified) addTrip()
+    else {
+      LayoutStore.emailConfirmModalOpen(addTrip)
+    }
+  }
   const finalSub = data => {
     UserStore.save_new_trip({ ...data, ...getValues() })
     setModalOpen(false)
     if (UserStore.isLoggedIn) {
-      addTrip()
+      checkEmail()
       // Add the trip and redirect
       return
     }
-    LayoutStore.loginModalFormOpen(addTrip)
+    LayoutStore.loginModalFormOpen(checkEmail)
   }
 
   return (

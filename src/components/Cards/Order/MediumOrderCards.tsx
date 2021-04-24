@@ -187,7 +187,7 @@ const MediumOrderCard = chakra(
                   </Text>
                 </Text>
               </Box>
-              {children}
+
               <Button
                 onClick={callback}
                 d={["block", "none"]}

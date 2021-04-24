@@ -7,11 +7,13 @@ import {
   getMyOrders,
   uploadFilestoOrder,
 } from "../api/order"
+import { createNewAccount } from "../api/payment"
 import { addTrip, emailSuggestedOrderers, getMyTrips } from "../api/trip"
 import {
   createUser,
   getMyDetails,
   loginUser,
+  verifyEmail,
   verifyPhoneNumber,
 } from "../api/user"
 import { Trips } from "../types/trip"
@@ -107,53 +109,53 @@ class UserStore {
     this.new_trip = tripData
   }
   *saveNewTrip() {
-    try {
-      // Trip 1
+    // Trip 1
 
-      if (this.new_trip == null) {
-        throw Error("New Trip is not defined")
-      }
+    if (this.new_trip == null) {
+      throw Error("New Trip is not defined")
+    }
+    const { data } = yield addTrip({
+      ...this.new_trip,
+      date: this.new_trip.date1,
+    })
+    const trip1 = data
+    let trip2 = null
+    // Email Suggested and refactor
+    // emailSuggestedOrderers(this.new_trip.source, this.new_trip.destination)
+    trip1.destination = trip1.destinationDetails
+    trip1.source = trip1.sourceDetails
+
+    // Second Trip
+    if (this.new_trip.date2) {
+      const tmp_src = this.new_trip.source
+      this.new_trip.source = this.new_trip.destination
+      this.new_trip.destination = tmp_src
       const { data } = yield addTrip({
         ...this.new_trip,
-        date: this.new_trip.date1,
+        date: this.new_trip.date2,
       })
-      const trip1 = data
-      let trip2 = null
-      // Email Suggested and refactor
-      emailSuggestedOrderers(this.new_trip.source, this.new_trip.destination)
-      trip1.destination = trip1.destinationDetails
-      trip1.source = trip1.sourceDetails
+      trip2 = data
+      // emailSuggestedOrderers(this.new_trip.destination, this.new_trip.source)
+      trip2.destination = trip1.destinationDetails
+      trip2.source = trip1.sourceDetails
+    }
 
-      // Second Trip
-      if (this.new_trip.date2) {
-        const tmp_src = this.new_trip.source
-        this.new_trip.source = this.new_trip.destination
-        this.new_trip.destination = tmp_src
-        const { data } = yield addTrip({
-          ...this.new_trip,
-          date: this.new_trip.date2,
-        })
-        trip2 = data
-        emailSuggestedOrderers(this.new_trip.destination, this.new_trip.source)
-        trip2.destination = trip1.destinationDetails
-        trip2.source = trip1.sourceDetails
-      }
+    this.new_trip = null
+    // Add to state
+    if (this.trips.loading) return trip1
+    if (trip2) {
+      // We have second Trip
+      this.trips.results.unshift(trip1)
+      this.trips.results.unshift(trip2)
+      this.trips.count += 2
+    } else {
+      // We don't have second trip
+      this.trips.results.unshift(trip1)
 
-      this.new_trip = null
-      // Add to state
-      if (this.trips.loading) return
-      if (trip2) {
-        // We have second Trip
-        this.trips.results.unshift(trip1)
-        this.trips.results.unshift(trip2)
-        this.trips.count += 2
-      } else {
-        // We don't have second trip
-        this.trips.results.unshift(trip1)
+      this.trips.count++
+    }
 
-        this.trips.count++
-      }
-    } catch (e) {}
+    return trip1
   }
   *sign_up(props: {
     first_name: string
@@ -164,12 +166,16 @@ class UserStore {
     try {
       const { data } = yield createUser(props)
       yield flowResult(this.login(props.email, props.password))
-      LayoutStore.toggleEmailConfirmModal()
+      LayoutStore.emailConfirmModalOpen(() => {})
 
       return data
     } catch (err) {
       throw err
     }
+  }
+  *createStripeAccount(country) {
+    yield createNewAccount(country)
+    this.me.is_stripe_verified = "I"
   }
   *logout() {
     // Set all default states, remove the token, remove AuthHeader from axios
@@ -187,6 +193,14 @@ class UserStore {
       const { data } = yield verifyPhoneNumber(code)
       this.me.is_number_verified = true
       this.me.phone = phone
+    } catch (err) {
+      throw err
+    }
+  }
+  *verifyEmail(key) {
+    try {
+      const { data } = yield verifyEmail(key)
+      this.me.is_email_verified = true
     } catch (err) {
       throw err
     }

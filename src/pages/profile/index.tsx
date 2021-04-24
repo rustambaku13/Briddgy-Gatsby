@@ -84,9 +84,20 @@ const PersonalDetailsSection = observer(() => {
               E-Mail
               <VerificationStatus isVerified={UserStore.me.is_email_verified} />
             </Text>
-            <Text mt={1}>{UserStore.me.email}</Text>
+            <Text mt={1}>{UserStore.me.email} </Text>
+            {UserStore.me.is_email_verified ? null : (
+              <Button
+                onClick={() => {
+                  LayoutStore.emailConfirmModalOpen(() => {})
+                }}
+                variant="link"
+                color="blue.500"
+              >
+                Resend Code
+              </Button>
+            )}
           </Box>
-          <Box>
+          {/* <Box>
             <Text fontWeight="600" as="label">
               Phone Number
               <VerificationStatus
@@ -94,21 +105,20 @@ const PersonalDetailsSection = observer(() => {
               />
             </Text>
             <Text mt={1}>
-              {UserStore.me.phone ? (
-                UserStore.me.phone
-              ) : (
-                <Button
-                  onClick={() => {
-                    LayoutStore.togglePhoneConfirmModal()
-                  }}
-                  variant="link"
-                  color="blue.500"
-                >
-                  Verify Now
-                </Button>
-              )}
-            </Text>
-          </Box>
+              {UserStore.me.phone ? UserStore.me.phone : <br />}
+            </Text>{" "}
+            {UserStore.me.is_photo_verified ? null : (
+              <Button
+                onClick={() => {
+                  LayoutStore.togglePhoneConfirmModal()
+                }}
+                variant="link"
+                color="blue.500"
+              >
+                Verify Now
+              </Button>
+            )}
+          </Box> */}
         </Flex>
       </Flex>
       <SimpleGrid columns={[1, 2]} spacing={22} my="50px">
@@ -338,78 +348,6 @@ const EarnCreditsSection = () => {
     </Box>
   )
 }
-// const RedeemCreditsSection = () => {
-//   return (
-//     <Box py={3} maxW="container.lg" mx="auto">
-//       <Box mx="auto" maxW="500px" p={0}>
-//         {/* <Flex mt="40px" w="100%" flexWrap="nowrap">
-//           <Heading fontSize={["4xl", "5xl"]} flex="0 0 auto">
-//             Enter your <br />{" "}
-//             <Text color="blue.400">
-//               Promo <br />
-//               Code
-//             </Text>
-//           </Heading>
-//           <Discount flex="1" mt="40px" mx="auto" />
-//         </Flex>
-
-//         <Text my={5} variant="secondary" textAlign="center">
-//           If you have a promo code, enter it below and get a discount
-//         </Text> */}
-
-//         <Box
-//           float="left"
-//           as="form"
-//           onSubmit={handleSubmit(() => null)}
-//           bg="gray.100"
-//           _hover={{ boxShadow: "md" }}
-//           transition=".2s ease-in-out"
-//           textAlign="initial"
-//           px={4}
-//           py={2}
-//           borderWidth="1px"
-//           borderRadius="lg"
-//           w="100%"
-//           fontWeight="400"
-//           pos="relative"
-//         >
-//           <Input
-//             textTransform="uppercase"
-//             placeholder="Enter promo code"
-//             ref={register({
-//               required: "Please enter the promo code",
-//               maxLength: {
-//                 value: 5,
-//                 message: "Promo Code should be 5 characters",
-//               },
-//               minLength: {
-//                 value: 5,
-//                 message: "Promo Code should be 5 characters",
-//               },
-//             })}
-//             fontSize={["xl", "2xl"]}
-//             name="code"
-//             h="70px"
-//             border="none"
-//           />
-//           <Button
-//             zIndex="1"
-//             pos="absolute"
-//             right={4}
-//             top="18px"
-//             px={5}
-//             type="submit"
-//             size="lg"
-//             variant="primary"
-//           >
-//             Redeem
-//           </Button>
-//         </Box>
-//         <Text color="red.500">{errors.code?.message}</Text>
-//       </Box>
-//     </Box>
-//   )
-// }
 
 const MyOrdersSection = observer(() => {
   useEffect(() => {
@@ -480,7 +418,7 @@ const MyTripsSections = observer(() => {
               <MyMediumTripCard trip={trip} />
             ))
           ) : (
-            <Empty />
+            <Empty text="No Upcoming Trips" />
           )}
         </VStack>
         <Divider my={8} />
@@ -493,14 +431,14 @@ const MyTripsSections = observer(() => {
               <MyMediumTripCard trip={trip} />
             ))
           ) : (
-            <Empty />
+            <Empty text="No past Trips" />
           )}
         </VStack>
       </Box>
     )
   }
   return (
-    <Box py={3} maxW="container.lg" mx="auto">
+    <Box py={3} maxW="container.md" mx="auto">
       <Flex alignItems="center">
         <Heading flexGrow={1} fontSize="2xl">
           Past Trips: {UserStore.passedTrips.length}
@@ -509,7 +447,7 @@ const MyTripsSections = observer(() => {
           <Button
             ml="auto"
             flexGrow={0}
-            variant="primary"
+            variant="primary_dark"
             leftIcon={<TripIcon />}
           >
             Add Trip

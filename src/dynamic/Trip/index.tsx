@@ -37,11 +37,20 @@ import { Contracts, defaultContracts } from "../../types/contract"
 import { defaultOrders, Orders } from "../../types/orders"
 import { defaultTrips, Trip, Trips } from "../../types/trip"
 import { getCountryFromCode, tripCityAnywhere } from "../../utils/misc"
+import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
+} from "@chakra-ui/alert"
+import { Button } from "@chakra-ui/button"
+import LayoutStore from "../../store/LayoutStore"
 
 const MyTripPage = ({ trip }: { trip: Trip }) => {
   const [suggested, setSuggested]: [Orders, any] = useState(defaultOrders)
   const [proposals, setProposals]: [Contracts, any] = useState(defaultContracts)
   const [contracts, setContracts]: [Contracts, any] = useState(defaultContracts)
+
   const [loading, setLoading] = useState(true)
   const [step, setStep] = useState(-1)
   useEffect(() => {
@@ -175,6 +184,28 @@ const MyTripPage = ({ trip }: { trip: Trip }) => {
           as="section"
           minW="full"
         >
+          <Box maxW="container.xxl" mx="auto" as="section">
+            <Alert borderRadius="xl" bg="warning.light" mb={5} status="warning">
+              <AlertIcon />
+              <Box flex="1">
+                <AlertTitle>Welcome {UserStore.me.first_name}!</AlertTitle>
+                <AlertDescription display="block">
+                  In order to start making deals please complete your traveler
+                  profile
+                </AlertDescription>
+              </Box>
+            </Alert>
+            <Button
+              onClick={() => {
+                LayoutStore.completeProfileModalToggle()
+              }}
+              ml="auto"
+              mb={5}
+              variant="primary"
+            >
+              Complete Profile
+            </Button>
+          </Box>
           <HStack
             alignItems="flex-start"
             spacing={6}

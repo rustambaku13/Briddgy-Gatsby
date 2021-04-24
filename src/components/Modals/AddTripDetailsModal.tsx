@@ -23,7 +23,7 @@ export const AddTripDetailsModal = ({ isOpen, setOpen, callback }) => {
         setOpen(false)
       }}
     >
-      <form onSubmit={handleSubmit(callback)} as="form">
+      <form onSubmit={handleSubmit(callback)}>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader fontSize="hb1">You are almost done</ModalHeader>
@@ -60,10 +60,10 @@ export const AddTripDetailsModal = ({ isOpen, setOpen, callback }) => {
           </ModalBody>
 
           <ModalFooter>
-            <Button variant="red_gradient" type="submit" mr="auto" px={10}>
+            <Button variant="link">Support countries</Button>
+            <Button variant="red_gradient" type="submit" ml="auto" px={10}>
               Add Trip
             </Button>
-            <Button variant="link">Skip & Check Tickets</Button>
           </ModalFooter>
         </ModalContent>
       </form>

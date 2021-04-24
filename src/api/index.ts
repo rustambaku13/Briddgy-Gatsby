@@ -4,7 +4,7 @@ export const bmify = src => `${BASE_MEDIA}/${src}`
 export const BACKEND_DATE_FORMAT = "YYYY-MM-DD"
 export const FRONTEND_DATE_FORMAT = "DD MMM, YYYY"
 export const axios_normal = axios.create({
-  // baseURL: "https://backend.briddgy.com/api",
+  // baseURL: "http://localhost:8002/",
   baseURL: "https://backend.briddgy.com",
   timeout: 30000,
 })

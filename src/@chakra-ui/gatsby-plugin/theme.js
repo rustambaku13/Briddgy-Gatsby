@@ -11,6 +11,7 @@ import sizes from "./grid"
 import Menu from "./Menu"
 import Modal from "./Modal"
 import shadows from "./BoxShadow"
+import Alert from "./Alert"
 import Accordion from "./Accordion"
 import Tabs from "./Tabs"
 const overrides = {
@@ -31,6 +32,7 @@ const overrides = {
     FormLabel,
     Button,
     Accordion,
+    Alert,
     Menu,
     Heading,
     Tabs,

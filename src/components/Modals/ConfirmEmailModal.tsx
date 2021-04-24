@@ -1,20 +1,61 @@
 import {
   Box,
+  Button,
   Heading,
+  HStack,
+  Input,
   Modal,
   ModalBody,
   ModalCloseButton,
   ModalContent,
   ModalOverlay,
+  PinInput,
+  PinInputField,
   Text,
+  useToast,
 } from "@chakra-ui/react"
 import { graphql, StaticQuery } from "gatsby"
 import Img from "gatsby-image"
+import { flowResult } from "mobx"
 import { observer } from "mobx-react-lite"
-import React from "react"
+import React, { useState } from "react"
+import { useForm } from "react-hook-form"
 import LayoutStore from "../../store/LayoutStore"
+import UserStore from "../../store/UserStore"
 export const ConfirmEmailModal = observer(() => {
-  let isOpen = LayoutStore.emailConfirmModalVisible
+  const {
+    register,
+    getValues,
+    handleSubmit,
+    watch,
+    errors,
+    setError,
+  } = useForm()
+  const [value, setValue] = useState()
+  const toast = useToast()
+  const isOpen = LayoutStore.emailConfirmModalVisible
+  const [loading, setLoading] = useState(false)
+  const submit = ({ key }) => {
+    setLoading(true)
+    flowResult(UserStore.verifyEmail(key))
+      .then(() => {
+        LayoutStore.emailModalFormCallback()
+        LayoutStore.emailConfirmModalClose()
+        toast({
+          title: "Email was confirmed",
+          description: "Confirm your phone number and shop online",
+          status: "success",
+          duration: 3000,
+          isClosable: true,
+        })
+      })
+      .catch(() => {
+        setError("key", { message: "Please enter a correct code" })
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }
   return (
     <StaticQuery
       query={graphql`
@@ -34,7 +75,7 @@ export const ConfirmEmailModal = observer(() => {
           <Modal
             isOpen={isOpen}
             onClose={() => {
-              LayoutStore.toggleEmailConfirmModal()
+              LayoutStore.emailConfirmModalClose()
             }}
           >
             <ModalOverlay />
@@ -48,7 +89,7 @@ export const ConfirmEmailModal = observer(() => {
                   />
                 </Box>
                 <Heading
-                  color="blue.400"
+                  color="tealBlue.base"
                   mb="5"
                   fontSize="3xl"
                   textAlign="center"
@@ -61,10 +102,58 @@ export const ConfirmEmailModal = observer(() => {
                   fontSize="md"
                   variant="secondary"
                 >
-                  Your account has been successfuly registered. To confirm your
-                  request please confirm check your email for validation
-                  request!
+                  To confirm your request please confirm check your email for
+                  validation request!
                 </Text>
+                <Box w="100%" onSubmit={handleSubmit(submit)} as="form">
+                  <input
+                    type="hidden"
+                    value={value}
+                    name="key"
+                    ref={register({
+                      required: "Please enter the 4-digit code",
+                      maxLength: {
+                        value: 4,
+                        message: "The code should contain 4 digits",
+                      },
+                      minLength: {
+                        value: 4,
+                        message: "The code should contain 4 digits",
+                      },
+                    })}
+                  />
+                  <Box mx="auto">
+                    <HStack justifyContent="center">
+                      <PinInput
+                        value={value}
+                        onChange={setValue}
+                        isInvalid={errors.code}
+                        size="lg"
+                      >
+                        <PinInputField />
+                        <PinInputField />
+                        <PinInputField />
+                        <PinInputField />
+                      </PinInput>
+                    </HStack>
+                  </Box>
+                  <Box w="100%" mt={3}>
+                    {" "}
+                    <Text textAlign="center" color="red.400">
+                      {errors.key?.message}
+                    </Text>
+                  </Box>
+                  <Box w="100%" maxW="300px" mt={3} mx="auto">
+                    <Button
+                      isLoading={loading}
+                      type="submit"
+                      w="100%"
+                      variant="primary"
+                    >
+                      Verify my Email
+                    </Button>
+                  </Box>
+                </Box>
               </ModalBody>
             </ModalContent>
           </Modal>

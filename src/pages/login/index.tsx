@@ -107,7 +107,7 @@ const Login = ({ data }: PageProps) => {
                     message: "Password should contain at least 6 characters",
                   },
                 })}
-                placeholder="***"
+                placeholder="******"
                 type="password"
                 name="password"
               />

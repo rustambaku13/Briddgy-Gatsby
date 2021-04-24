@@ -10,6 +10,7 @@ export interface User {
   is_number_verified: boolean
   is_email_verified: boolean
   is_photo_verified: boolean
+  is_stripe_verified: "U" | "I" | "C"
   tinode_user_id: string
   last_online: string
   phone: string

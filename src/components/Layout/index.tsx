@@ -11,6 +11,7 @@ import MyOrderPage from "../../dynamic/Order"
 import { LoginModalForm } from "../Modals/LoginModalForm"
 import { MakeProposaltoTripModal } from "../Modals/MakeProposaltoTripModal"
 import { AreYouSure } from "../Modals/AreYouSure"
+import { CompleteProfileModal } from "../Modals/completeProfileModal"
 
 export default ({ children }) => {
   return (
@@ -19,6 +20,7 @@ export default ({ children }) => {
       <PhoneNumberVerifyModal />
       <MakeProposaltoOrderModal />
       <MakeProposaltoTripModal />
+      <CompleteProfileModal />
       <AreYouSure />
       <LoginModalForm />
       <Router>
