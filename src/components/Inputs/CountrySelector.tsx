@@ -9,7 +9,7 @@ export const CountrySelector = ({ register }) => {
       placeholder="Country"
     >
       <option value="US">United States</option>
-      <option value="UK">United Kingdom</option>
+      <option value="GB">United Kingdom</option>
       <option value="MX">Mexico</option>
     </Select>
   )

@@ -16,6 +16,7 @@ interface toTripProposalContext {
 }
 interface alertDialogContext {
   title: string
+  success?: boolean
   description: string
   callback: any
   yes: string
@@ -23,7 +24,6 @@ interface alertDialogContext {
 }
 
 class LayoutStore {
-  phoneConfirmModalVisible: boolean = false
   completeProfileModalVisible: boolean = false
   toOrderProposalModalContext: toOrderProposalContext = null
   toTripProposalModalContext: toOrderProposalContext = null
@@ -55,7 +55,9 @@ class LayoutStore {
   toOrderProposalModalOpen(context) {
     if (UserStore.me) {
       // If I am logged in go on and define it
-      this.toOrderProposalModalContext = context
+      if (UserStore.me.is_stripe_verified == "C")
+        this.toOrderProposalModalContext = context
+      else this.completeProfileModalVisible = true
     } else {
       navigate("/login")
     }
@@ -93,10 +95,6 @@ class LayoutStore {
   }
   get emailConfirmModalVisible() {
     return !(this.emailModalFormCallback == null) //true
-  }
-
-  togglePhoneConfirmModal() {
-    this.phoneConfirmModalVisible = !this.phoneConfirmModalVisible
   }
 }
 

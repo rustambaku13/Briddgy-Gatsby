@@ -1,3 +1,5 @@
+import { Contract } from "./../types/contract"
+import { AxiosResponse } from "axios"
 import { axios_normal } from "."
 
 export async function addContract({
@@ -24,6 +26,18 @@ export async function acceptContract(orderId, tripId) {
     trip: tripId,
   })
 }
+
+export async function itemGrabbed(contract_id) {
+  return await axios_normal.post(
+    `trip-order/api/grab/contracts/${contract_id}/`
+  )
+}
+export async function itemDelivered(contract_id) {
+  return await axios_normal.post(
+    `trip-order/api/deliver/contracts/${contract_id}/`
+  )
+}
+
 export async function removeContract(id) {
   return await axios_normal.delete(`/trip-order/api/delete/contracts/${id}/`)
 }
@@ -37,6 +51,8 @@ export async function getOrderProposals(id) {
   return await axios_normal.get(`/trip-order/api/proposals/orders/${id}/`)
 }
 
-export async function getOrderContracts(order: number) {
+export async function getOrderContracts(
+  order: number
+): Promise<AxiosResponse<Contract>> {
   return await axios_normal.get(`/trip-order/api/contracts/orders/${order}/`)
 }

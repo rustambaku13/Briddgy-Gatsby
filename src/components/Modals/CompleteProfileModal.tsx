@@ -21,6 +21,7 @@ import { IncrementalNumberSelector } from "../Inputs/IncrementalNumberSelector"
 import { Loader } from "../Misc/Loader"
 import UserStore from "../../store/UserStore"
 import { getOnboardingLink } from "../../api/payment"
+import { Hint } from "../Misc/Hint"
 export const CompleteProfileModal = observer(() => {
   const {
     register,
@@ -35,15 +36,11 @@ export const CompleteProfileModal = observer(() => {
   useEffect(() => {
     if (page == 1 && LayoutStore.completeProfileModalVisible) {
       getOnboardingLink().then(e => {
-        // console.log(e)
-
         window.location.href = e.data.url
       })
     }
   }, [page, LayoutStore.completeProfileModalVisible])
   useEffect(() => {
-    console.log(UserStore.me)
-
     if (UserStore.me?.is_stripe_verified == "I") setPage(1)
   }, [LayoutStore.completeProfileModalVisible])
   const createAccount = ({ country }) => {
@@ -73,6 +70,10 @@ export const CompleteProfileModal = observer(() => {
             <ModalHeader fontSize="hb1">Complete Traveler Profile</ModalHeader>
             <ModalCloseButton />
             <ModalBody>
+              <Hint
+                bg="lilaPurple.light"
+                text="Complete your traveler profile in order to make sure that we can make payouts to you"
+              />
               <Text mb={2} fontWeight="600" as="label">
                 Country
               </Text>

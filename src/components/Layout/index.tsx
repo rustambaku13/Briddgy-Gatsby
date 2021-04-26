@@ -1,23 +1,20 @@
 import { Box } from "@chakra-ui/layout"
-import React, { useEffect } from "react"
-import { ConfirmEmailModal } from "../Modals/ConfirmEmailModal"
-import { PhoneNumberVerifyModal } from "../Modals/PhoneNumberVerifyModal"
-import { BottomNavbarDefault } from "../Navbar"
 import { Router } from "@reach/router"
+import React from "react"
+import MyOrderPage from "../../dynamic/Order"
 import MyTripPage from "../../dynamic/Trip"
 import "../../store/UserStore"
-import { MakeProposaltoOrderModal } from "../Modals/MakeProposaltoOrderModal"
-import MyOrderPage from "../../dynamic/Order"
-import { LoginModalForm } from "../Modals/LoginModalForm"
-import { MakeProposaltoTripModal } from "../Modals/MakeProposaltoTripModal"
 import { AreYouSure } from "../Modals/AreYouSure"
-import { CompleteProfileModal } from "../Modals/completeProfileModal"
+import { CompleteProfileModal } from "../Modals/CompleteProfileModal"
+import { ConfirmEmailModal } from "../Modals/ConfirmEmailModal"
+import { LoginModalForm } from "../Modals/LoginModalForm"
+import { MakeProposaltoOrderModal } from "../Modals/MakeProposaltoOrderModal"
+import { MakeProposaltoTripModal } from "../Modals/MakeProposaltoTripModal"
 
 export default ({ children }) => {
   return (
     <>
       <ConfirmEmailModal />
-      <PhoneNumberVerifyModal />
       <MakeProposaltoOrderModal />
       <MakeProposaltoTripModal />
       <CompleteProfileModal />

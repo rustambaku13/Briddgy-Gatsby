@@ -2,32 +2,25 @@ import {
   AspectRatio,
   Box,
   Button,
-  Center,
   Flex,
-  Heading,
   HStack,
   Image,
-  Popover,
-  PopoverBody,
-  PopoverCloseButton,
-  PopoverContent,
-  PopoverHeader,
-  PopoverTrigger,
   Text,
   VStack,
 } from "@chakra-ui/react"
+import UserStore from "../../../store/UserStore"
 import { chakra } from "@chakra-ui/system"
 import { Link } from "gatsby-plugin-intl"
 import moment from "moment"
 import React, { useContext, useState } from "react"
-import { bmify, FRONTEND_DATE_FORMAT } from "../../../api"
+import { bmify } from "../../../api"
 import { acceptContract, removeContract } from "../../../api/contract"
 import { TripPageState } from "../../../providers/navPage"
 import { Contract } from "../../../types/contract"
 import { getCountryFromCode, tripCityAnywhere } from "../../../utils/misc"
 import { Avatar } from "../../Avatar/Avatar"
-import { ContractSteps } from "../../Misc/ContractSteps"
 import { Rating } from "../../Misc/Rating"
+import LayoutStore from "../../../store/LayoutStore"
 
 export const ToTripProposalCard = chakra(
   ({
@@ -121,6 +114,10 @@ export const ToTripProposalCardWithAccept = (props: { contract: Contract }) => {
   const [rejectLoading, setRejectLoading] = useState(false)
   const [acceptLoading, setAcceptLoading] = useState(false)
   const acceptHandler = () => {
+    if (UserStore.me.is_stripe_verified != "C") {
+      LayoutStore.completeProfileModalToggle()
+      return
+    }
     setAcceptLoading(true)
     acceptContract(props.contract.order.id, props.contract.trip.id)
       .then(() => {

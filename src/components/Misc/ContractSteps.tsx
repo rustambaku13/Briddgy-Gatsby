@@ -12,8 +12,9 @@ export const ContractSteps = chakra(
     return (
       <HStack
         pb={3}
-        mt={3}
+        mt={4}
         style={{ "--count": "5" }}
+        fontSize={[400, 400, 500]}
         className="contract-steps"
         spacing={3}
       >

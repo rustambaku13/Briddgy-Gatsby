@@ -13,17 +13,18 @@ import {
 import { chakra } from "@chakra-ui/system"
 import { Link } from "gatsby-plugin-intl"
 import { CrossIcon } from "../../../icons/Cross"
-import React, { useContext } from "react"
+import React, { useContext, useState } from "react"
 import { bmify } from "../../../api"
 import { Contract } from "../../../types/contract"
 import { ContractSteps } from "../../Misc/ContractSteps"
 import LayoutStore from "../../../store/LayoutStore"
-import { removeContract } from "../../../api/contract"
+import { itemGrabbed, removeContract } from "../../../api/contract"
 import { TripPageState } from "../../../providers/navPage"
 
 export const TripContractsStateCard = chakra(
   ({ className, contract }: { className?: any; contract: Contract }) => {
     const context = useContext(TripPageState)
+    const [loading, setLoading] = useState(false)
     const cancelHandler = async () => {
       await removeContract(contract.id)
       context.contracts.results = context.contracts.results.filter(
@@ -31,6 +32,40 @@ export const TripContractsStateCard = chakra(
       )
       context.contracts.count--
       context.setContracts({ ...context.contracts })
+    }
+    const grabHandler = () => {
+      setLoading(true)
+      itemGrabbed(contract.id)
+        .then(() => {
+          contract.state = "GRB"
+          context.setContracts({ ...context.contracts })
+        })
+        .finally(() => {
+          setLoading(false)
+        })
+    }
+    const ButtonSwitch = () => {
+      switch (contract.state) {
+        case "FRZ":
+          return (
+            <Button
+              isLoading={loading}
+              onClick={grabHandler}
+              size="sm"
+              variant="success"
+            >
+              Product Grabbed
+            </Button>
+          )
+          break
+
+        default:
+          return (
+            <Button isLoading={loading} size="sm" variant="primary">
+              Send message
+            </Button>
+          )
+      }
     }
 
     return (
@@ -91,9 +126,7 @@ export const TripContractsStateCard = chakra(
               </Text>
             </Text>
           </Box>
-          <Button size="sm" variant="primary">
-            Send message
-          </Button>
+          <ButtonSwitch />
         </Flex>
         <ContractSteps w="100%" contract={contract} />
       </Box>

@@ -97,6 +97,30 @@ const PersonalDetailsSection = observer(() => {
               </Button>
             )}
           </Box>
+          <Box mb={[3, 0]} mr={14}>
+            <Text fontWeight="600" as="label">
+              Traveler Profile
+              <VerificationStatus
+                isVerified={UserStore.me.is_stripe_verified == "C"}
+              />
+            </Text>
+
+            {UserStore.me.is_stripe_verified == "C" ? (
+              <Text mt={1}>
+                <br />
+              </Text>
+            ) : (
+              <Button
+                onClick={() => {
+                  LayoutStore.completeProfileModalToggle()
+                }}
+                variant="link"
+                color="blue.500"
+              >
+                Complete Now
+              </Button>
+            )}
+          </Box>
         </Flex>
       </Flex>
       <SimpleGrid columns={[1, 2]} spacing={22} my="50px">

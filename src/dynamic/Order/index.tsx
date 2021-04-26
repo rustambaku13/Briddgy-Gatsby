@@ -1,5 +1,6 @@
 import {
   Box,
+  Button,
   Container,
   Divider,
   Heading,
@@ -10,13 +11,19 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react"
+import { Elements } from "@stripe/react-stripe-js"
+import { loadStripe } from "@stripe/stripe-js"
 import { navigate } from "gatsby-link"
 import { observer } from "mobx-react-lite"
 import React, { useContext, useEffect, useState } from "react"
-import { getOrderContracts, getOrderProposals } from "../../api/contract"
-import { getOrder, getOrders, getSuggestedTrips } from "../../api/order"
-import { BigOrderCard } from "../../components/Cards/Order/BigOrderCard"
 import Helmet from "react-helmet"
+import {
+  getOrderContracts,
+  getOrderProposals,
+  itemDelivered,
+} from "../../api/contract"
+import { getOrder, getSuggestedTrips } from "../../api/order"
+import { BigOrderCard } from "../../components/Cards/Order/BigOrderCard"
 import {
   CollapsableOrderCard,
   CollapsableOrderCardwTrip,
@@ -32,17 +39,121 @@ import Footer from "../../components/Footer"
 import { Empty } from "../../components/Misc/Empty"
 import { Hint } from "../../components/Misc/Hint"
 import { Loader } from "../../components/Misc/Loader"
-import { Step, Steps } from "../../components/Misc/Steps"
+import { StepsContainer } from "../../components/Misc/Steps"
 import NavbarDefault from "../../components/Navbar"
 import { BottomNavbar } from "../../components/Navbar/BottomNavbar"
 import { CardIcon } from "../../icons/Card"
 import CheckIcon from "../../icons/Check"
 import { DeliveryBoxIcon } from "../../icons/DeliveryBox"
 import { NavigationContext, OrderPageState } from "../../providers/navPage"
+import LayoutStore from "../../store/LayoutStore"
 import UserStore from "../../store/UserStore"
 import { Contract, Contracts, defaultContracts } from "../../types/contract"
-import { defaultOrders, Order, Orders } from "../../types/orders"
+import { defaultOrders, Order } from "../../types/orders"
 import { Trips } from "../../types/trip"
+const stripePromise = loadStripe(
+  "pk_test_51Htr6JGfJpinijwgZ0o2g7zbJNN9ayprpLtKsv2SpyO5f8pn849rn1EApeCVID7C7mUo4jUjEcYJ4Z2SthL0TcIB00L0hynXAX"
+)
+
+const MyOrderThridPage = ({ loading }) => {
+  const context = useContext(OrderPageState)
+  const [step, setStep] = useState(0)
+  const [isLoading, setLoading] = useState(false)
+  useEffect(() => {
+    if (context.contract?.state == "GRB") setStep(1)
+    else if (context.contract?.state == "DLV") setStep(2)
+    else if (context.contract?.state == "FIN") setStep(3)
+  }, [context.contract])
+  const deliveredHandler = async () => {
+    setLoading(true)
+    itemDelivered(context.contract.id)
+      .then(() => {
+        context.contract.state = "FIN"
+        context.setContract({ ...context.contract })
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }
+  if (!context.contract) return null
+  return (
+    <Container
+      minH="calc(100vh - 100px)"
+      bg="outline.light"
+      py={5}
+      as="section"
+      minW="full"
+    >
+      <HStack
+        alignItems="flex-start"
+        flexWrap={["wrap", "wrap", "nowrap"]}
+        spacing={[0, 0, 6]}
+        maxW="container.xxl"
+        mx="auto"
+      >
+        <Box w={["100%", "100%", "50%"]}>
+          <Box mb={5} bg="white" borderRadius="xl" borderWidth="1px" p={6}>
+            <Heading mb={4} as="h1" fontSize="600" fontWeight="700">
+              Order Summary
+            </Heading>
+            <CollapsableOrderCardwTrip contract={context.contract} />
+          </Box>
+        </Box>
+        <Box w={["100%", "100%", "50%"]}>
+          <Box mb={5} bg="white" borderRadius="xl" borderWidth="1px" p={6}>
+            <Heading mb={8} as="h1" fontSize="600" fontWeight="700">
+              Tracking Summary
+            </Heading>
+
+            <StepsContainer
+              selected={step}
+              horizontal={false}
+              items={[
+                {
+                  title: "Product Grabbed",
+                  description:
+                    "The traveler has bought the product with his money",
+                  icon: <DeliveryBoxIcon />,
+                },
+                {
+                  title: "Product Delivered",
+                  description: "Confirm that your have received the product",
+                  children: (
+                    <Button
+                      isLoading={isLoading}
+                      onClick={() => {
+                        LayoutStore.alertDialogModalOpen({
+                          title: "Confirm delivery",
+                          success: true,
+                          yes: "Yes",
+                          callback: deliveredHandler,
+                          no: "No",
+                          description:
+                            "Do you confirm the delivery of the product? ",
+                        })
+                      }}
+                      isDisabled={step != 1}
+                      variant="success"
+                      size="sm"
+                    >
+                      Confirm Delivery
+                    </Button>
+                  ),
+                  icon: <CheckIcon />,
+                },
+                {
+                  title: "Money Transfered",
+                  description: "Traveler has received the money",
+                  icon: <CardIcon />,
+                },
+              ]}
+            />
+          </Box>
+        </Box>
+      </HStack>
+    </Container>
+  )
+}
 
 const MyOrderSecondPage = ({ loading }) => {
   const context = useContext(OrderPageState)
@@ -81,8 +192,9 @@ const MyOrderSecondPage = ({ loading }) => {
             <Heading mb={8} as="h1" fontSize="600" fontWeight="700">
               Payment Summary
             </Heading>
-
-            <PaymentCard />
+            <Elements stripe={stripePromise}>
+              <PaymentCard />
+            </Elements>
           </Box>
         </Box>
       </HStack>
@@ -174,7 +286,8 @@ const MyOrderPage = ({ order }: { order: Order }) => {
       getOrderContracts(order.id)
         .then(e => {
           setContract(e.data)
-          setStep(1)
+          if (e.data.state == "SET") setStep(1)
+          else setStep(2)
         })
         .finally(() => {
           setLoading(false)
@@ -204,29 +317,25 @@ const MyOrderPage = ({ order }: { order: Order }) => {
         <BottomNavbar />
       </NavigationContext.Provider>
       <Container bg="white" py={5} as="section" minW="full">
-        <Container maxW="container.lg">
-          <Steps>
-            <Step
-              selected={step}
-              step={0}
-              title="Deal Settled"
-              icon={<CheckIcon />}
-            ></Step>
-            <Step
-              selected={step}
-              step={1}
-              title="Make Payment"
-              icon={<CardIcon />}
-            ></Step>
-            <Step
-              selected={step}
-              step={2}
-              last
-              title="Receive Item"
-              icon={<DeliveryBoxIcon />}
-            ></Step>
-          </Steps>
-        </Container>
+        <Box mx="auto" maxW="container.lg">
+          <StepsContainer
+            selected={step}
+            items={[
+              {
+                title: "Deal Settled",
+                icon: <CheckIcon />,
+              },
+              {
+                title: "Make Payment",
+                icon: <CardIcon />,
+              },
+              {
+                title: "Receive Item",
+                icon: <DeliveryBoxIcon />,
+              },
+            ]}
+          />
+        </Box>
       </Container>
       <OrderPageState.Provider
         value={{
@@ -248,6 +357,9 @@ const MyOrderPage = ({ order }: { order: Order }) => {
             </TabPanel>
             <TabPanel p={0}>
               <MyOrderSecondPage loading={loading} />
+            </TabPanel>
+            <TabPanel p={0}>
+              <MyOrderThridPage loading={loading} />
             </TabPanel>
           </TabPanels>
         </Tabs>

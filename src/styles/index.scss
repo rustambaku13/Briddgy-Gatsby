@@ -509,6 +509,54 @@ html {
 .testimonial {
 }
 
+.steps {
+  .step {
+    > div {
+      padding: 0 1rem;
+    }
+  }
+
+  .slider {
+    height: 3px;
+    top: calc(20% - 1px);
+    width: 100%;
+    div {
+      transform-origin: left;
+      transform: scaleX(calc(var(--selected) / var(--count)));
+      transition: 1s ease-in-out;
+    }
+  }
+}
+.steps-vertical {
+  flex-direction: column;
+
+  .step {
+    margin-bottom: 3rem;
+    display: flex;
+    align-items: flex-start;
+    > div:first-child {
+      margin-right: 1rem;
+    }
+    > div {
+      padding: 0.5rem 0rem;
+    }
+  }
+  .step:last-child {
+    margin-bottom: 0px;
+    align-items: flex-end;
+  }
+  .slider {
+    width: 3px;
+    height: 100%;
+    left: 1.25rem;
+    div {
+      transform-origin: top;
+      transform: scaleY(calc(var(--selected) / var(--count)));
+      transition: 1s ease-in-out;
+    }
+  }
+}
+
 .contract-steps {
   position: relative;
   > div {

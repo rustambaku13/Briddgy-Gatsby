@@ -25,7 +25,7 @@ import Footer from "../../components/Footer"
 import Helmet from "react-helmet"
 import { Empty } from "../../components/Misc/Empty"
 import { Loader } from "../../components/Misc/Loader"
-import { Step, Steps } from "../../components/Misc/Steps"
+import { Step, Steps, StepsContainer } from "../../components/Misc/Steps"
 import NavbarDefault from "../../components/Navbar"
 import { BottomNavbar } from "../../components/Navbar/BottomNavbar"
 import { CardIcon } from "../../icons/Card"
@@ -87,7 +87,7 @@ const MyTripPage = ({ trip }: { trip: Trip }) => {
         })}
         {loading ? <Loader /> : null}
         {!loading && contracts.count == 0 ? (
-          <Empty text="No Contracts yet" />
+          <Empty text="No Deals yet" />
         ) : null}
       </Box>
       <Box mb={10} bg="white" borderRadius="xl" borderWidth="1px" p={6}>
@@ -136,35 +136,25 @@ const MyTripPage = ({ trip }: { trip: Trip }) => {
         <BottomNavbar />
       </NavigationContext.Provider>
       <Container bg="white" py={5} as="section" minW="full">
-        <Container maxW="container.lg">
-          <Steps>
-            <Step
-              selected={step}
-              step={0}
-              title="Deal Settled"
-              icon={<CheckIcon />}
-            ></Step>
-            <Step
-              selected={step}
-              step={1}
-              title="Payment Made"
-              icon={<CardIcon />}
-            ></Step>
-            <Step
-              selected={step}
-              step={2}
-              title="Delivery Complete"
-              icon={<DeliveryBoxIcon />}
-              last
-            ></Step>
-            {/* <Step
-              last
-              step={4}
-              title="Payment Transfered"
-              icon={<CheckIcon />}
-            ></Step> */}
-          </Steps>
-        </Container>
+        <Box mx="auto" maxW="container.lg">
+          <StepsContainer
+            selected={step}
+            items={[
+              {
+                title: "Deal Settled",
+                icon: <CheckIcon />,
+              },
+              {
+                title: "Make Payment",
+                icon: <CardIcon />,
+              },
+              {
+                title: "Receive Item",
+                icon: <DeliveryBoxIcon />,
+              },
+            ]}
+          />
+        </Box>
       </Container>
       <TripPageState.Provider
         value={{
@@ -243,6 +233,7 @@ const MyTripPage = ({ trip }: { trip: Trip }) => {
             </Box>
           </HStack>
         </Container>
+        <Footer />
       </TripPageState.Provider>
     </>
   )

@@ -52,7 +52,12 @@ export const AreYouSure = observer(() => {
               isLoading={loading}
               onClick={onSubmit}
               color="white"
-              bg="danger.base"
+              variant="success"
+              bg={
+                LayoutStore.alertDialogModalContext?.success
+                  ? ""
+                  : "danger.base"
+              }
               ml={3}
             >
               {LayoutStore.alertDialogModalContext?.yes}

@@ -2,12 +2,10 @@ import { Order } from "./orders"
 import { Trip } from "./trip"
 
 export interface Contract {
-  IsOrdererAccepted: boolean
-  IsTravelerAccepted: boolean
   dateSigned: string
   id: number
-  owner1: number
-  owner2: number
+  traveler: number
+  orderer: number
   price_bid: string
   item_price: string | null
   total_price: string | null
