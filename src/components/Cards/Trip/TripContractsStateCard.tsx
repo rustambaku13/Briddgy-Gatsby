@@ -9,6 +9,7 @@ import {
   Image,
   Text,
   IconButton,
+  VStack,
 } from "@chakra-ui/react"
 import { chakra } from "@chakra-ui/system"
 import { Link } from "gatsby-plugin-intl"
@@ -35,7 +36,7 @@ export const TripContractsStateCard = chakra(
     }
     const grabHandler = () => {
       setLoading(true)
-      itemGrabbed(contract.id)
+      return itemGrabbed(contract.id)
         .then(() => {
           contract.state = "GRB"
           context.setContracts({ ...context.contracts })
@@ -48,20 +49,49 @@ export const TripContractsStateCard = chakra(
       switch (contract.state) {
         case "FRZ":
           return (
-            <Button
-              isLoading={loading}
-              onClick={grabHandler}
-              size="sm"
-              variant="success"
-            >
-              Product Grabbed
-            </Button>
+            <VStack alignItems="flex-end" mt={3}>
+              <Button
+                flex="0 0 auto"
+                w="100%"
+                isLoading={loading}
+                size="sm"
+                variant="outline"
+                color="tealBlue.base"
+              >
+                Send message
+              </Button>
+              <Button
+                flex="0 0 auto"
+                ml="auto"
+                isLoading={loading}
+                onClick={() => {
+                  LayoutStore.alertDialogModalOpen({
+                    title: "Product Purchased",
+                    yes: "Yes",
+                    success: true,
+                    callback: grabHandler,
+                    no: "No",
+                    description:
+                      "Do you confirm that you have purchased the item?",
+                  })
+                }}
+                size="sm"
+                variant="success"
+              >
+                Product Purchased
+              </Button>
+            </VStack>
           )
           break
 
         default:
           return (
-            <Button isLoading={loading} size="sm" variant="primary">
+            <Button
+              isLoading={loading}
+              size="sm"
+              variant="outline"
+              color="tealBlue.base"
+            >
               Send message
             </Button>
           )

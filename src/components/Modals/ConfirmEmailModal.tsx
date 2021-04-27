@@ -20,6 +20,7 @@ import { flowResult } from "mobx"
 import { observer } from "mobx-react-lite"
 import React, { useState } from "react"
 import { useForm } from "react-hook-form"
+import { askForEmailCode } from "../../api/user"
 import LayoutStore from "../../store/LayoutStore"
 import UserStore from "../../store/UserStore"
 export const ConfirmEmailModal = observer(() => {
@@ -35,6 +36,17 @@ export const ConfirmEmailModal = observer(() => {
   const toast = useToast()
   const isOpen = LayoutStore.emailConfirmModalVisible
   const [loading, setLoading] = useState(false)
+  const resendCode = () => {
+    askForEmailCode().then(() => {
+      toast({
+        title: "New Email has beed sent",
+        description: "Confirm your email with newly sent code",
+        status: "success",
+        duration: 3000,
+        isClosable: true,
+      })
+    })
+  }
   const submit = ({ key }) => {
     setLoading(true)
     flowResult(UserStore.verifyEmail(key))
@@ -143,6 +155,7 @@ export const ConfirmEmailModal = observer(() => {
                       {errors.key?.message}
                     </Text>
                   </Box>
+
                   <Box w="100%" maxW="300px" mt={3} mx="auto">
                     <Button
                       isLoading={loading}
@@ -152,6 +165,16 @@ export const ConfirmEmailModal = observer(() => {
                     >
                       Verify my Email
                     </Button>
+                    <Text my={3} variant="secondary">
+                      Didn't receive an email{" "}
+                      <Button
+                        onClick={resendCode}
+                        variant="link"
+                        color="blue.500"
+                      >
+                        Resend Code
+                      </Button>
+                    </Text>
                   </Box>
                 </Box>
               </ModalBody>

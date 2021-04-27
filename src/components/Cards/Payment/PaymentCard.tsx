@@ -75,7 +75,7 @@ export const PaymentCard = () => {
       if (payload.error) {
         setError(`Payment failed ${payload.error.message}`)
       } else {
-        context.contract.state == "FRZ"
+        context.contract.state = "FRZ"
         context.setStep(2)
         setError(null)
         setSucceeded(true)

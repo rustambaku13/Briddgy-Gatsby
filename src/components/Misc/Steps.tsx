@@ -198,9 +198,10 @@ const StepElement = (step: StepItemInterface) => {
     <Box className="step" zIndex={1}>
       <Box d={step.last ? "block" : "inline-block"} bg="white">
         <Center
-          color={isComplete ? "crayolaGreen.base" : "outline.base"}
+          color={isComplete ? "white" : "outline.base"}
           fontSize="500"
           transition=".5s ease"
+          bg={isComplete ? "crayolaGreen.base" : "white"}
           borderColor={isComplete ? "crayolaGreen.base" : "outline.base"}
           borderWidth="1px"
           borderRadius="50%"

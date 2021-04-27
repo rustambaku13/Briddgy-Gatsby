@@ -98,7 +98,7 @@ const MyTripPage = ({ trip }: { trip: Trip }) => {
           {proposals.results.map((contract, index) => {
             return (
               <>
-                {contract.IsTravelerAccepted ? (
+                {contract.traveler ? (
                   <ToTripProposalCardNoAccept contract={contract} />
                 ) : (
                   <ToTripProposalCardWithAccept contract={contract} />

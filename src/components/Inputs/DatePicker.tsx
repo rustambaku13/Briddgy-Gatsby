@@ -30,7 +30,7 @@ export const DatePicker = chakra(
       to: null,
     }) // If one way is false
     const [selectedDate, setSelectedDate] = useState(null) // If one way is true
-    const [oneWay, setOneWay] = useState(false)
+    const [oneWay, setOneWay] = useState(true)
     let from,
       to = undefined
     if (oneWay) {

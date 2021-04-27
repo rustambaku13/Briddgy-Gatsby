@@ -92,8 +92,8 @@ const SignUp = ({ data }: PageProps) => {
           borderColor="gray.200"
           borderWidth="1px"
         >
-          <Box bg="blue.300" flex="1"></Box>
-          <Box px={10} py={8} minW="400px" flex="1">
+          <Box bg="blue.300" d={["none", "none", "block"]} flex="1"></Box>
+          <Box px={5} py={10} minW="400px" flex="1">
             <Text variant="secondary" textAlign="right">
               Already have an account?{" "}
               <Text as="span" color="blue.400" fontWeight="600">
@@ -109,7 +109,7 @@ const SignUp = ({ data }: PageProps) => {
               as="form"
               onSubmit={handleSubmit(formSubmit)}
             >
-              <FormControl mb={7}>
+              <FormControl gridColumn={["span 2", "span 1"]} mb={7}>
                 <FormLabel>Name</FormLabel>
                 <Input
                   size="md"
@@ -122,7 +122,7 @@ const SignUp = ({ data }: PageProps) => {
                   {errors.first_name?.message}
                 </Text>
               </FormControl>
-              <FormControl mb={7}>
+              <FormControl gridColumn={["span 2", "span 1"]} mb={7}>
                 <FormLabel>Surname</FormLabel>
                 <Input
                   ref={register({ required: "Last Name is required" })}
@@ -156,7 +156,7 @@ const SignUp = ({ data }: PageProps) => {
                       message: "Password should contain at least 6 characters",
                     },
                   })}
-                  placeholder="***"
+                  placeholder="******"
                   type="password"
                   name="password"
                 />

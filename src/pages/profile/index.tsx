@@ -19,6 +19,7 @@ import {
   TabPanel,
   TabPanels,
   Tabs,
+  Tag,
   Text,
 } from "@chakra-ui/react"
 import { Link } from "gatsby-plugin-intl"
@@ -80,46 +81,48 @@ const PersonalDetailsSection = observer(() => {
             fontSize="3xl"
           >{`${UserStore.me.first_name} ${UserStore.me.last_name}`}</Heading>
           <Box mb={[3, 0]} mr={14}>
-            <Text fontWeight="600" as="label">
-              E-Mail
-              <VerificationStatus isVerified={UserStore.me.is_email_verified} />
+            <Text>
+              <Text as="label" fontWeight="600">
+                E-Mail
+              </Text>{" "}
+              &nbsp;
+              {UserStore.me.email} &nbsp;
+              {UserStore.me.is_email_verified ? (
+                <Tag ml={2} fontSize="xs" colorScheme="green">
+                  Verfied
+                </Tag>
+              ) : (
+                <Button
+                  onClick={() => {
+                    LayoutStore.emailConfirmModalOpen(() => {})
+                  }}
+                  variant="link"
+                  color="blue.500"
+                >
+                  Verify Email
+                </Button>
+              )}
             </Text>
-            <Text mt={1}>{UserStore.me.email} </Text>
-            {UserStore.me.is_email_verified ? null : (
-              <Button
-                onClick={() => {
-                  LayoutStore.emailConfirmModalOpen(() => {})
-                }}
-                variant="link"
-                color="blue.500"
-              >
-                Resend Code
-              </Button>
-            )}
-          </Box>
-          <Box mb={[3, 0]} mr={14}>
-            <Text fontWeight="600" as="label">
-              Traveler Profile
-              <VerificationStatus
-                isVerified={UserStore.me.is_stripe_verified == "C"}
-              />
+            <Text>
+              <Text as="label" fontWeight="600">
+                Traveler Profile
+              </Text>{" "}
+              {UserStore.me.is_stripe_verified == "C" ? (
+                <Tag ml={2} fontSize="xs" colorScheme="green">
+                  Verfied
+                </Tag>
+              ) : (
+                <Button
+                  onClick={() => {
+                    LayoutStore.completeProfileModalToggle()
+                  }}
+                  variant="link"
+                  color="blue.500"
+                >
+                  Complete Profile
+                </Button>
+              )}
             </Text>
-
-            {UserStore.me.is_stripe_verified == "C" ? (
-              <Text mt={1}>
-                <br />
-              </Text>
-            ) : (
-              <Button
-                onClick={() => {
-                  LayoutStore.completeProfileModalToggle()
-                }}
-                variant="link"
-                color="blue.500"
-              >
-                Complete Now
-              </Button>
-            )}
           </Box>
         </Flex>
       </Flex>

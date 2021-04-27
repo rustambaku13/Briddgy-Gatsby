@@ -136,6 +136,11 @@ export const MyMediumTripCard = props => {
 export const PublicMediumTripCard = props => {
   return <MediumTripCard {...props}>Make Offer</MediumTripCard>
 }
+/**
+ * Normal Public Medium Trip Card but with Make Proposal Button
+ * @param props
+ * @returns
+ */
 export const PublicMediumTripCardProposal = (props: {
   className?: any
   trip: Trip

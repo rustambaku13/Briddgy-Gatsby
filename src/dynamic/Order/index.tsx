@@ -22,7 +22,7 @@ import {
   getOrderProposals,
   itemDelivered,
 } from "../../api/contract"
-import { getOrder, getSuggestedTrips } from "../../api/order"
+import { getOrder, getOrders, getSuggestedTrips } from "../../api/order"
 import { BigOrderCard } from "../../components/Cards/Order/BigOrderCard"
 import {
   CollapsableOrderCard,
@@ -45,11 +45,12 @@ import { BottomNavbar } from "../../components/Navbar/BottomNavbar"
 import { CardIcon } from "../../icons/Card"
 import CheckIcon from "../../icons/Check"
 import { DeliveryBoxIcon } from "../../icons/DeliveryBox"
+import { StarIcon } from "../../icons/Star"
 import { NavigationContext, OrderPageState } from "../../providers/navPage"
 import LayoutStore from "../../store/LayoutStore"
 import UserStore from "../../store/UserStore"
 import { Contract, Contracts, defaultContracts } from "../../types/contract"
-import { defaultOrders, Order } from "../../types/orders"
+import { defaultOrders, Order, Orders } from "../../types/orders"
 import { Trips } from "../../types/trip"
 const stripePromise = loadStripe(
   "pk_test_51Htr6JGfJpinijwgZ0o2g7zbJNN9ayprpLtKsv2SpyO5f8pn849rn1EApeCVID7C7mUo4jUjEcYJ4Z2SthL0TcIB00L0hynXAX"
@@ -129,7 +130,7 @@ const MyOrderThridPage = ({ loading }) => {
                           callback: deliveredHandler,
                           no: "No",
                           description:
-                            "Do you confirm the delivery of the product? ",
+                            "Do you confirm the delivery of the product? Please notice that after confirmation the money is going to be transfered to the traveler ",
                         })
                       }}
                       isDisabled={step != 1}
@@ -142,9 +143,9 @@ const MyOrderThridPage = ({ loading }) => {
                   icon: <CheckIcon />,
                 },
                 {
-                  title: "Money Transfered",
-                  description: "Traveler has received the money",
-                  icon: <CardIcon />,
+                  title: "Leave a Review",
+                  description: "Drop an honest review for the traveler",
+                  icon: <StarIcon />,
                 },
               ]}
             />
@@ -213,7 +214,7 @@ const MyOrderFirstPage = ({ loading }) => {
         {context.proposals.results.map((contract, index) => {
           return (
             <>
-              {contract.IsOrdererAccepted ? (
+              {contract.orderer ? (
                 <ToOrderProposalCardNoAccept contract={contract} />
               ) : (
                 <ToOrderProposalCardWithAccept contract={contract} />

@@ -18,8 +18,11 @@ import {
 } from "@chakra-ui/react"
 import { chakra } from "@chakra-ui/system"
 import moment from "moment"
-import React, { useEffect, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { bmify, FRONTEND_DATE_FORMAT } from "../../../api"
+import { removeContract } from "../../../api/contract"
+import { OrderPageState } from "../../../providers/navPage"
+import LayoutStore from "../../../store/LayoutStore"
 import { Contract } from "../../../types/contract"
 import { Order } from "../../../types/orders"
 import { getCountryFromCode, trimCityEmpty } from "../../../utils/misc"
@@ -32,10 +35,12 @@ export const CollapsableOrderCard = chakra(
     className,
     orderData,
     children,
+    buttons,
   }: {
     className?: any
     orderData: Order
     children?: any
+    buttons?: any
   }) => {
     const [images, setImages] = useState([])
     useEffect(() => {
@@ -52,7 +57,7 @@ export const CollapsableOrderCard = chakra(
             <Img
               alt="Product Image"
               float="left"
-              src={bmify(orderData.orderimage)}
+              src={bmify(orderData.orderimage[0])}
             />
           </AspectRatio>
           <Box>
@@ -138,12 +143,13 @@ export const CollapsableOrderCard = chakra(
                 </Text>{" "}
                 <Text>{orderData.weight} kg</Text>
               </Box>
-              {/* <Button w="100%" mb={5} variant="outline">
-                Edit Order
-              </Button> */}
-              <Button w="100%" mb={5} variant="danger">
-                Cancel Deal
-              </Button>
+              {buttons ? (
+                buttons
+              ) : (
+                <Button w="100%" mb={5} variant="danger">
+                  Delete Order
+                </Button>
+              )}
             </AccordionPanel>
           </AccordionItem>
           {children}
@@ -155,11 +161,46 @@ export const CollapsableOrderCard = chakra(
 
 export const CollapsableOrderCardwTrip = chakra(
   ({ className, contract }: { className?: any; contract: Contract }) => {
+    const context = useContext(OrderPageState)
+    const [loading, setLoading] = useState(false)
     useEffect(() => {
       contract.order.price = contract.price_bid
     }, [])
+    const cancelHandler = async () => {
+      try {
+        setLoading(true)
+        await removeContract(contract.id)
+        context.setContract(null)
+        context.setStep(0)
+      } finally {
+        setLoading(false)
+      }
+    }
+    let buttons = <></>
+    if (contract.state == "SET") {
+      buttons = (
+        <Button
+          onClick={() => {
+            LayoutStore.alertDialogModalOpen({
+              title: "Cancel Deal",
+              yes: "Yes",
+              callback: cancelHandler,
+              no: "No",
+              description: "Are you sure you want to cancel the deal? ",
+            })
+          }}
+          isLoading={loading}
+          w="100%"
+          mb={5}
+          variant="danger"
+        >
+          Cancel Deal
+        </Button>
+      )
+    }
+
     return (
-      <CollapsableOrderCard orderData={contract.order}>
+      <CollapsableOrderCard buttons={buttons} orderData={contract.order}>
         <AccordionItem>
           <h2>
             <AccordionButton>

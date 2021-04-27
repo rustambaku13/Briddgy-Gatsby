@@ -86,9 +86,6 @@ class LayoutStore {
   // ****----Email Confirm Stuff-----****
   emailConfirmModalOpen(callback) {
     this.emailModalFormCallback = callback
-    if (this.emailModalFormCallback) {
-      askForEmailCode()
-    }
   }
   emailConfirmModalClose() {
     this.emailModalFormCallback = null

@@ -10,6 +10,7 @@ import {
 import { createNewAccount } from "../api/payment"
 import { addTrip, emailSuggestedOrderers, getMyTrips } from "../api/trip"
 import {
+  askForEmailCode,
   createUser,
   getMyDetails,
   loginUser,
@@ -96,7 +97,7 @@ class UserStore {
       data.source = data.sourceDetails
       data.orderimage = imageResult.data.name
       this.new_order = null
-      // Append if not loaded orders
+      // Append if loadedd orders
       if (this.orders.loading == false) {
         this.orders.results.unshift(data)
         this.orders.count++
@@ -121,7 +122,7 @@ class UserStore {
     const trip1 = data
     let trip2 = null
     // Email Suggested and refactor
-    // emailSuggestedOrderers(this.new_trip.source, this.new_trip.destination)
+    emailSuggestedOrderers(this.new_trip.source, this.new_trip.destination)
     trip1.destination = trip1.destinationDetails
     trip1.source = trip1.sourceDetails
 
@@ -135,7 +136,7 @@ class UserStore {
         date: this.new_trip.date2,
       })
       trip2 = data
-      // emailSuggestedOrderers(this.new_trip.destination, this.new_trip.source)
+      emailSuggestedOrderers(this.new_trip.destination, this.new_trip.source)
       trip2.destination = trip1.destinationDetails
       trip2.source = trip1.sourceDetails
     }
@@ -167,7 +168,7 @@ class UserStore {
       const { data } = yield createUser(props)
       yield flowResult(this.login(props.email, props.password))
       LayoutStore.emailConfirmModalOpen(() => {})
-
+      askForEmailCode()
       return data
     } catch (err) {
       throw err

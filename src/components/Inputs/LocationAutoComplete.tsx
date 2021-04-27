@@ -29,7 +29,7 @@ let a = null
  * @method <selecthandler> // Populate hidden input fields on selecting the option
  */
 export const LocationAutoComplete = chakra(
-  ({ className, name, size, placeholder }) => {
+  ({ className, name, size, placeholder, error_msg }) => {
     const { register, setValue } = useFormContext()
     const [hidden, setHidden] = useState(true)
     const [searching, setSearching] = useState(false)
@@ -68,6 +68,7 @@ export const LocationAutoComplete = chakra(
         setValue(name + "_id", id)
         setValue(name + "_code", undefined)
         setValue(name, title)
+        setValue(name + "_input", title)
       } else {
         // Country was selected
       }
@@ -82,12 +83,17 @@ export const LocationAutoComplete = chakra(
             autoComplete="off"
             onChange={searchHandler}
             type="search"
+            name={name + "_input"}
             ref={register()}
-            name={name}
             border="none"
             placeholder={placeholder}
           />
           <input type="hidden" ref={register()} name={name + "_id"} />
+          <input
+            type="hidden"
+            ref={register({ required: error_msg })}
+            name={name}
+          />
           <input type="hidden" ref={register()} name={name + "_code"} />
         </InputGroup>
         <Box

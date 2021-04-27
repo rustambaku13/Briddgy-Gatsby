@@ -103,7 +103,7 @@ const MediumOrderCard = chakra(
                   <Img
                     alt="Product Image"
                     float="left"
-                    src={bmify(orderData.orderimage)}
+                    src={bmify(orderData.orderimage[0])}
                   />
                 </AspectRatio>
                 <VStack overflow="hidden" flex={1} h="100%">

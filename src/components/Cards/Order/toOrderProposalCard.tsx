@@ -42,13 +42,13 @@ export const ToOrderProposalCard = chakra(
     return (
       <VStack alignItems="flex-start" spacing={3} py={4} w="100%">
         <Flex alignItems="center" w="100%">
-          <Avatar mr={2} user={contract.order.owner} />
+          <Avatar mr={2} user={contract.trip.owner} />
           <Box>
-            <Text>{`${contract.order.owner.first_name} ${contract.order.owner.last_name}`}</Text>
+            <Text>{`${contract.trip.owner.first_name} ${contract.trip.owner.last_name}`}</Text>
             <Rating
               fontSize="400"
               readonly
-              rating={contract.order.owner.rating}
+              rating={contract.trip.owner.rating}
             />
           </Box>
           <Text variant="light" textAlign="right" fontSize="400" flex={1}>
@@ -57,7 +57,7 @@ export const ToOrderProposalCard = chakra(
         </Flex>
 
         <Text variant="light">
-          Traveling on
+          Traveling on &nbsp;
           <Text as="span" color="blue.400">
             {moment(contract.trip.date).format(FRONTEND_DATE_FORMAT)}
           </Text>

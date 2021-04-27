@@ -31,9 +31,10 @@ import { axios_normal } from "../../../api"
 import Footer from "../../../components/Footer"
 import { GroupImageUploader } from "../../../components/Inputs/ImageUploader"
 import { LocationAutoComplete } from "../../../components/Inputs/LocationAutoComplete"
+import { Hint } from "../../../components/Misc/Hint"
 import { ImageViewer } from "../../../components/Misc/ImageThumbnailViewer"
 import { PaymentDisplay } from "../../../components/Misc/Payment/PaymentDisplay"
-import { Step, Steps } from "../../../components/Misc/Steps"
+import { Step, Steps, StepsContainer } from "../../../components/Misc/Steps"
 import NavbarDefault from "../../../components/Navbar"
 import { BottomNavbar } from "../../../components/Navbar/BottomNavbar"
 import { usePopulateQueryHook } from "../../../hooks/usePopulateQueryHook"
@@ -47,8 +48,25 @@ import UserStore from "../../../store/UserStore"
 
 const pageFields = {
   0: ["host", "title", "description", "price", "item_price", "weight", "files"],
-}
+  1: [
+    "host",
+    "title",
+    "description",
+    "price",
+    "item_price",
+    "weight",
+    "files",
+    "src",
+    "src_id",
+    "src_code",
+    "src_input",
 
+    "dest",
+    "dest_id",
+    "dest_code",
+    "dest_input",
+  ],
+}
 const Summary = ({ files, pageChange, back, page, adding }) => {
   const { register, errors, watch, getValues, formState } = useFormContext()
   const item_price = watch("item_price")
@@ -107,25 +125,19 @@ const Summary = ({ files, pageChange, back, page, adding }) => {
           canceled.
         </Text>
       </Box>
-      <Box flex={["0 0 100%", "0 0 100%", "0 0 300px"]}>
+      <Box flex={["0 0 100%", "0 0 100%", "0 0 400px"]}>
         <Box w="100%">
-          <Box
-            borderRadius="base"
-            mb={3}
-            p={3}
-            bg="white"
-            borderWidth="1px"
-            as="aside"
-          >
-            <LightBulbIcon float="right" fontSize="xl" />
-            <Text variant="secondary">
-              We do not charge money untill you have a settled deal with a
-              traveler. Publish your order and starting contacting travelers
-            </Text>
-          </Box>
+          <Hint
+            text="We do not charge money untill you have a settled deal with a
+              traveler. Publish your order and starting contacting travelers"
+          />
+
           <Box w="100%" borderRadius="base" p={3} bg="white" borderWidth="1px">
-            <Text fontSize="600" fontWeight="600" mb={5}>
+            <Text fontSize="600" fontWeight="600" mb={3}>
               {getValues("title")}
+            </Text>{" "}
+            <Text fontSize="400" variant="secondary" mb={5}>
+              {getValues("description")}
             </Text>{" "}
             <Divider orientation="horizontal" my={5} />
             <Text mb={5}>
@@ -140,17 +152,29 @@ const Summary = ({ files, pageChange, back, page, adding }) => {
                 ${item_price}
               </Text>
             </Text>{" "}
+            <Text mb={5}>
+              Traveler's Reward
+              <Text
+                mt="-7px"
+                fontSize="700"
+                fontWeight="600"
+                float="right"
+                as="span"
+              >
+                ${price}
+              </Text>
+            </Text>{" "}
             <Divider orientation="horizontal" my={5} />
             <Text mb={5}>
               Deliver From
               <Text float="right" as="span">
-                {getValues(["source_name"].toString())}
+                {getValues(["src"].toString())}
               </Text>
             </Text>{" "}
             <Text mb={5}>
               Deliver To
               <Text float="right" as="span">
-                {getValues(["destination_name"].toString())}
+                {getValues(["dest"].toString())}
               </Text>
             </Text>{" "}
             <Divider orientation="horizontal" my={5} />
@@ -161,7 +185,7 @@ const Summary = ({ files, pageChange, back, page, adding }) => {
               type="submit"
               variant="primary"
             >
-              Connect with travelers
+              Publish & connect with travelers
             </Button>
             <Button mt={5} onClick={back} size="lg" variant="link">
               <ChevronLeftIcon /> Back
@@ -176,8 +200,7 @@ const Summary = ({ files, pageChange, back, page, adding }) => {
 const Itinerary = ({ files, pageChange, back }) => {
   const { register, errors, watch, getValues } = useFormContext()
   const item_price = watch("item_price")
-  const price = watch("price")
-  const weight = watch("weight")
+
   return (
     <>
       <Box
@@ -204,16 +227,14 @@ const Itinerary = ({ files, pageChange, back }) => {
           <FormLabel>Deliver From</FormLabel>
           <LocationAutoComplete
             name="src"
+            error_msg="Source City is required"
             borderWidth="1px"
             borderRadius="lg"
             size="lg"
             placeholder="City or Country"
-            parentRef={register({
-              required: "Source City is required",
-            })}
           />
           <Text color="danger.base" as="small">
-            {errors.origin?.message}
+            {errors.src?.message}
           </Text>
         </FormControl>
         <FormControl w="100%" mb={7}>
@@ -221,44 +242,22 @@ const Itinerary = ({ files, pageChange, back }) => {
           <LocationAutoComplete
             name="dest"
             borderWidth="1px"
+            error_msg="Destination City is required"
             borderRadius="lg"
             size="lg"
             placeholder="City or Country"
-            parentRef={register({
-              required: "Destination City is required",
-            })}
           />
           <Text color="danger.base" as="small">
-            {errors.destination?.message}
+            {errors.dest?.message}
           </Text>
         </FormControl>
       </Box>
       <Box flex={["0 0 100%", "0 0 100%", "0 0 300px"]}>
         <Box w="100%" borderRadius="base" p={3} bg="white" borderWidth="1px">
-          <Text fontSize="600" fontWeight="600" mb={5}>
-            {getValues("title")}
-          </Text>{" "}
-          <Divider orientation="horizontal" my={5} />{" "}
-          <Text mb={5}>
-            Product price{" "}
-            <Text
-              mt="-7px"
-              fontSize="700"
-              fontWeight="600"
-              float="right"
-              as="span"
-            >
-              ${item_price}
-            </Text>
-          </Text>{" "}
-          <Divider orientation="horizontal" my={5} />
-          <Text variant="secondary">
-            Please fill in the details of your order
-          </Text>
-          <Divider orientation="horizontal" my={5} />
           <Button onClick={pageChange} w="100%" size="lg" variant="primary">
             Next
           </Button>
+
           <Button mt={5} onClick={back} size="lg" variant="link">
             <ChevronLeftIcon /> Back
           </Button>
@@ -402,13 +401,14 @@ const ProductDetails = ({ pageChange, files }) => {
 
       <Box flex={["0 0 100%", "0 0 100%", "0 0 300px"]} a>
         <Box w="100%" borderRadius="base" p={3} bg="white" borderWidth="1px">
-          <Text variant="secondary">
-            Please fill in the details of your order
-          </Text>
-          <Divider orientation="horizontal" my={5} />
           <Button onClick={pageChange} w="100%" size="lg" variant="primary">
             Next
           </Button>
+
+          <Divider orientation="horizontal" my={5} />
+          <Text variant="secondary">
+            Please fill in the details of your order
+          </Text>
         </Box>
       </Box>
     </>
@@ -490,28 +490,26 @@ const AddOrderPage = ({ location }: PageProps) => {
         <NavbarDefault />
         <BottomNavbar />
       </NavigationContext.Provider>
-      <Container maxW="full" as="section">
-        <Steps py={8} maxW="container.lg" mx="auto">
-          <Step
-            icon={<PlaneIcon />}
+      <Container bg="white" py={5} maxW="full" as="section">
+        <Box mx="auto" maxW="container.lg">
+          <StepsContainer
             selected={page}
-            step={0}
-            title="Product details"
-          ></Step>
-          <Step
-            icon={<PlaneIcon />}
-            selected={page}
-            step={1}
-            title="Delivery details"
-          ></Step>
-          <Step
-            last
-            icon={<PlaneIcon />}
-            selected={page}
-            step={2}
-            title="Summary"
-          ></Step>
-        </Steps>
+            items={[
+              {
+                title: "Product details",
+                icon: <PlaneIcon />,
+              },
+              {
+                title: "Delivery details",
+                icon: <PlaneIcon />,
+              },
+              {
+                title: "Summary",
+                icon: <PlaneIcon />,
+              },
+            ]}
+          />
+        </Box>
       </Container>
       <Container
         as="section"
