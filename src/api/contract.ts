@@ -27,6 +27,13 @@ export async function acceptContract(orderId, tripId) {
   })
 }
 
+export async function dropReview(contract_id, data) {
+  return await axios_normal.post(
+    `trip-order/api/review/contracts/${contract_id}/`,
+    data
+  )
+}
+
 export async function itemGrabbed(contract_id) {
   return await axios_normal.post(
     `trip-order/api/grab/contracts/${contract_id}/`

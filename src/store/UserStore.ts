@@ -5,6 +5,7 @@ import {
   addOrder,
   emailSuggestedTravellers,
   getMyOrders,
+  getMyReviews,
   uploadFilestoOrder,
 } from "../api/order"
 import { createNewAccount } from "../api/payment"
@@ -13,10 +14,13 @@ import {
   askForEmailCode,
   createUser,
   getMyDetails,
+  getNotifications,
   loginUser,
   verifyEmail,
   verifyPhoneNumber,
 } from "../api/user"
+import { Notifications } from "../types/notification"
+import { Reviews } from "../types/review"
 import { Trips } from "../types/trip"
 import { compressAndReturn } from "../utils/compression"
 import { axios_normal } from "./../api/index"
@@ -32,7 +36,9 @@ class UserStore {
   new_order: any = null
   new_trip: any = null
   orders: Orders = { loading: true, results: [], count: 0 }
+  reviews: Reviews = { loading: true, results: [], count: 0 }
   trips: Trips = { loading: true, results: [], count: 0 }
+  notifications: Notifications = { loading: true, results: [], count: 0 }
 
   get isLoggedIn() {
     return this.me != null
@@ -65,6 +71,24 @@ class UserStore {
       this.orders.loading = true
       const { data } = yield getMyOrders(page)
       this.orders = data
+    } catch (e) {
+      console.error("Failed to Fetch my orders")
+    }
+  }
+  *fetchNotification(page = 1) {
+    try {
+      this.notifications.loading = true
+      const { data } = yield getNotifications()
+      this.notifications = data
+    } catch (e) {
+      console.error("Failed to Fetch my orders")
+    }
+  }
+  *fetchMyReviews(page = 1) {
+    try {
+      this.reviews.loading = true
+      const { data } = yield getMyReviews(page)
+      this.reviews = data
     } catch (e) {
       console.error("Failed to Fetch my orders")
     }

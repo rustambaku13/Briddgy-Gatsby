@@ -312,7 +312,10 @@ html {
     color: white;
     border: none;
     max-width: 1400px;
-    height: 260px;
+    height: 200px;
+    @media screen and (max-width: 768px) {
+      height: 260px;
+    }
     max-height: 80px;
     > div {
       height: 80px;
@@ -576,6 +579,29 @@ html {
     transform-origin: left;
     transition: 0.2s ease-in-out;
     transform: scaleX(calc(1 / var(--count) * var(--step)));
+  }
+}
+
+.notification {
+  &:focus-within > div {
+    display: block;
+  }
+  .list {
+    position: absolute;
+    transition: 0.3s ease-in-out all;
+    width: 350px;
+    max-width: 100vw;
+    min-height: 50px;
+    top: 100%;
+    right: -30px;
+    transition: 0.2s ease-in-out;
+    display: none;
+    max-height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 9999;
+
+    outline: none;
   }
 }
 

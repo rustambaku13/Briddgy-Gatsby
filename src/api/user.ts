@@ -54,3 +54,7 @@ export async function verifyEmail(key) {
     key,
   })
 }
+
+export async function getNotifications() {
+  return await axios_normal.get("/main/api/notifications/readAll")
+}

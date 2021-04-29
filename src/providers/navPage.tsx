@@ -1,5 +1,5 @@
 import React from "react"
-import { defaultContracts } from "../types/contract"
+import { defaultContracts, Contract } from "../types/contract"
 import { defaultOrders } from "../types/orders"
 import { defaultTrips } from "../types/trip"
 
@@ -11,9 +11,12 @@ interface NagiationContextInterface {
     | "orders" // Orders Page or specific Order page
     | "trips" // Trips page or specific Trip Page
     | "profile" // Profile Page My or Someones
+    | "profile-trip" // Profile Page My or Someones
+    | "profile-order" // Profile Page My or Someones
     | "travel" // Travel add Trip
     | "order" // Order add order
     | "faq" // Faq Page
+    | "message" // Chat Page
 }
 
 export const NavigationContext = React.createContext<NagiationContextInterface>(

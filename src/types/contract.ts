@@ -1,4 +1,5 @@
 import { Order } from "./orders"
+import { Review } from "./review"
 import { Trip } from "./trip"
 
 export interface Contract {
@@ -12,6 +13,7 @@ export interface Contract {
   state: "BID" | "SET" | "SIN" | "FRZ" | "GRB" | "DLV" | "FIN"
   trip: Trip
   order: Order
+  review: Review | null
 }
 export interface Contracts {
   count: number

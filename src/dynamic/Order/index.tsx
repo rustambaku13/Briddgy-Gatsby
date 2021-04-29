@@ -34,6 +34,8 @@ import {
   ToOrderProposalCardWithAccept,
 } from "../../components/Cards/Order/toOrderProposalCard"
 import { PaymentCard } from "../../components/Cards/Payment/PaymentCard"
+import { ReviewUserCard } from "../../components/Cards/Review/ReviewUserCard"
+import { ReviewCard } from "../../components/Cards/Review/ReviewCard"
 import { PublicMediumTripCardProposal } from "../../components/Cards/Trip/MediumTripCards"
 import Footer from "../../components/Footer"
 import { Empty } from "../../components/Misc/Empty"
@@ -62,8 +64,9 @@ const MyOrderThridPage = ({ loading }) => {
   const [isLoading, setLoading] = useState(false)
   useEffect(() => {
     if (context.contract?.state == "GRB") setStep(1)
-    else if (context.contract?.state == "DLV") setStep(2)
-    else if (context.contract?.state == "FIN") setStep(3)
+    if (context.contract?.state == "FIN" || context.contract?.state == "DLV") {
+      setStep(2)
+    }
   }, [context.contract])
   const deliveredHandler = async () => {
     setLoading(true)
@@ -99,6 +102,24 @@ const MyOrderThridPage = ({ loading }) => {
             </Heading>
             <CollapsableOrderCardwTrip contract={context.contract} />
           </Box>
+          {context.contract.review ? (
+            <ReviewCard
+              mb={5}
+              bg="white"
+              borderRadius="xl"
+              borderWidth="1px"
+              p={6}
+              review={context.contract.review}
+            />
+          ) : (
+            <ReviewUserCard
+              mb={5}
+              bg="white"
+              borderRadius="xl"
+              borderWidth="1px"
+              p={6}
+            />
+          )}
         </Box>
         <Box w={["100%", "100%", "50%"]}>
           <Box mb={5} bg="white" borderRadius="xl" borderWidth="1px" p={6}>
@@ -287,8 +308,10 @@ const MyOrderPage = ({ order }: { order: Order }) => {
       getOrderContracts(order.id)
         .then(e => {
           setContract(e.data)
-          if (e.data.state == "SET") setStep(1)
-          else setStep(2)
+          if (e.data.state == "BID") setStep(0)
+          else if (e.data.state == "SET") setStep(1)
+          else if (e.data.state == "FRZ") setStep(2)
+          else setStep(3)
         })
         .finally(() => {
           setLoading(false)
@@ -358,6 +381,9 @@ const MyOrderPage = ({ order }: { order: Order }) => {
             </TabPanel>
             <TabPanel p={0}>
               <MyOrderSecondPage loading={loading} />
+            </TabPanel>
+            <TabPanel p={0}>
+              <MyOrderThridPage loading={loading} />
             </TabPanel>
             <TabPanel p={0}>
               <MyOrderThridPage loading={loading} />

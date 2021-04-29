@@ -2,7 +2,6 @@ import {
   Avatar,
   Box,
   Button,
-  Center,
   Flex,
   IconButton,
   Image,
@@ -13,18 +12,17 @@ import {
   MenuItem,
   MenuList,
   Text,
-  useRadioGroup,
 } from "@chakra-ui/react"
 import { Link, navigate } from "gatsby-plugin-intl"
 import { observer } from "mobx-react-lite"
 import React, { useContext, useEffect, useRef, useState } from "react"
 import { bmify } from "../../api"
 import { ChevronDownIcon } from "../../icons/ChevronDown"
-import { HomeIcon } from "../../icons/Home"
-import LoginIcon from "../../icons/Login"
 import LogoutIcon from "../../icons/Logout"
+import { NotificationDropdown } from "../Misc/Notification"
 import OrderIcon from "../../icons/Order"
 import { PlaneIcon } from "../../icons/Plane"
+import { DeliveryBoxIcon } from "../../icons/DeliveryBox"
 import ProfileIcon from "../../icons/Profile"
 import SupportIcon from "../../icons/Support"
 import TripIcon from "../../icons/Trip"
@@ -33,7 +31,6 @@ import { NavigationContext } from "../../providers/navPage"
 import UserStore from "../../store/UserStore"
 import { AddOrderNavigationMenu } from "../Form/AddOrderForm"
 import { AddTripFormNavigationMenu } from "../Form/AddTripForm"
-import { BottomNavigationItem } from "./BottomNavbar/BottomNavigationItem"
 let mouseListener = null
 
 //  ******  Normal Navbars  *******
@@ -116,13 +113,9 @@ const AuthorizedNavbar = () => {
           />
         </Box>
         <Flex ml={3} alignItems="center" flexShrink={0} h="100%">
-          <LinkBox>
+          <LinkBox mr={[2, 3, 4]}>
             <Link id="create_trip" to="/travel">
-              <Text
-                d={["none", "none", "none", "block"]}
-                mr={4}
-                fontWeight="7gat00"
-              >
+              <Text d={["none", "none", "none", "block"]} fontWeight="7gat00">
                 <PlaneIcon mt="-2px" fontSize="600" color="cherryRed.base" />{" "}
                 <Text
                   as="span"
@@ -135,17 +128,16 @@ const AuthorizedNavbar = () => {
 
               <IconButton
                 variant="outline"
-                color="black"
+                color="text.medium"
                 bg="white"
                 w="40px"
                 d={{ md: "block", lg: "none" }}
                 aria-label="Create Order"
-                icon={<TripIcon fontSize="20px" />}
-                mr={3}
+                icon={<PlaneIcon fontSize="18px" />}
               ></IconButton>
             </Link>
           </LinkBox>
-          <LinkBox mr={[2, 2, 4]}>
+          <LinkBox mr={[2, 3, 4]}>
             <Link id="create_order" to="/order">
               <Button
                 fontWeight="600"
@@ -160,12 +152,11 @@ const AuthorizedNavbar = () => {
                 variant="primary_gradient"
                 w="40px"
                 aria-label="Create Order"
-                icon={<OrderIcon fontSize="20px" />}
-                mr={3}
+                icon={<DeliveryBoxIcon fontSize="18px" />}
               ></IconButton>
             </Link>
           </LinkBox>
-
+          <NotificationDropdown />
           <Menu
             isOpen={open}
             onOpen={() => {
@@ -204,6 +195,23 @@ const AuthorizedNavbar = () => {
                 </MenuItem>
               </Link>
               <MenuDivider />
+              <Link to="/orders">
+                <MenuItem
+                  d={["block", "block", "none"]}
+                  icon={<OrderIcon fontSize="lg" />}
+                >
+                  Public Orders
+                </MenuItem>
+              </Link>
+              <Link to="/trips">
+                <MenuItem
+                  d={["block", "block", "none"]}
+                  icon={<TripIcon fontSize="lg" />}
+                >
+                  Public Trips
+                </MenuItem>
+              </Link>
+              <MenuDivider d={["block", "block", "none"]} />
               <MenuItem icon={<SupportIcon fontSize="lg" color="blue.600" />}>
                 Help Center
               </MenuItem>

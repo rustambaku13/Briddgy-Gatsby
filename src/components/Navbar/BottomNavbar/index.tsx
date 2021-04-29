@@ -1,38 +1,12 @@
-import {
-  Avatar,
-  Box,
-  Button,
-  Center,
-  Flex,
-  IconButton,
-  Image,
-  LinkBox,
-  Menu,
-  MenuButton,
-  MenuDivider,
-  MenuItem,
-  MenuList,
-  Text,
-  useRadioGroup,
-} from "@chakra-ui/react"
-import { Link, navigate } from "gatsby-plugin-intl"
+import { Box } from "@chakra-ui/react"
 import { observer } from "mobx-react-lite"
-import React, { useContext, useEffect, useRef, useState } from "react"
-import { bmify } from "../../../api"
-import { ChevronDownIcon } from "../../../icons/ChevronDown"
+import React from "react"
 import { HomeIcon } from "../../../icons/Home"
 import LoginIcon from "../../../icons/Login"
-import LogoutIcon from "../../../icons/Logout"
 import OrderIcon from "../../../icons/Order"
-import { PlaneIcon } from "../../../icons/Plane"
 import ProfileIcon from "../../../icons/Profile"
-import SupportIcon from "../../../icons/Support"
 import TripIcon from "../../../icons/Trip"
-import logo from "../../../images/icon_opaque.png"
-import { NavigationContext } from "../../../providers/navPage"
 import UserStore from "../../../store/UserStore"
-import { AddOrderNavigationMenu } from "../../Form/AddOrderForm"
-import { AddTripFormNavigationMenu } from "../../Form/AddTripForm"
 import { BottomNavigationItem } from "./BottomNavigationItem"
 const AuthorizedBottomNavbar = () => {
   return (
@@ -53,29 +27,29 @@ const AuthorizedBottomNavbar = () => {
       w="100%"
     >
       <BottomNavigationItem
-        to="/"
-        text="Home"
-        contextKeys={["home"]}
-        icon={<HomeIcon />}
-        w="25%"
-      ></BottomNavigationItem>
-      <BottomNavigationItem
-        to="/trips"
-        text="Trips"
-        contextKeys={["trips"]}
+        to="/profile?page=trips"
+        text="My Trips"
+        contextKeys={["profile-trip"]}
         icon={<TripIcon />}
         w="25%"
       ></BottomNavigationItem>
       <BottomNavigationItem
-        to="/orders"
-        text="Orders"
-        contextKeys={["orders"]}
+        to="/profile?page=orders"
+        text="My Orders"
+        contextKeys={["profile-order"]}
+        icon={<OrderIcon />}
+        w="25%"
+      ></BottomNavigationItem>
+      <BottomNavigationItem
+        to="/messages"
+        text="Messages"
+        contextKeys={["messages"]}
         icon={<OrderIcon />}
         w="25%"
       ></BottomNavigationItem>
       <BottomNavigationItem
         w="25%"
-        to="/login"
+        to="/profile?page=profile"
         contextKeys={["profile"]}
         icon={<ProfileIcon />}
         text="Profile"

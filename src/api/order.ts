@@ -3,6 +3,7 @@ import { Trips } from "./../types/trip"
 import { AxiosResponse } from "axios"
 import { Orders } from "../types/orders"
 import { axios_normal } from "./index"
+import { Reviews } from "../types/review"
 export async function getOrders(params = {}): Promise<AxiosResponse<Orders>> {
   return axios_normal.get(`/trip-order/api/orders/`, { params })
 }
@@ -11,6 +12,11 @@ export async function getOrder(id): Promise<AxiosResponse<Order>> {
 }
 export async function getMyOrders(page = 1): Promise<AxiosResponse<Orders>> {
   return await axios_normal.get(`/trip-order/api/my/orders/`, {
+    params: { page },
+  })
+}
+export async function getMyReviews(page = 1): Promise<AxiosResponse<Reviews>> {
+  return await axios_normal.get(`/main/api/users/my/reviews/`, {
     params: { page },
   })
 }

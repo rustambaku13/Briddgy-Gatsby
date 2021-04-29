@@ -49,7 +49,12 @@ import UserStore from "../../store/UserStore"
 import { Order } from "../../types/orders"
 import Footer from "../../components/Footer"
 import { Trip } from "../../types/trip"
+import { Review } from "../../types/review"
+import { ReviewCard } from "../../components/Cards/Review/ReviewCard"
 const PersonalDetailsSection = observer(() => {
+  useEffect(() => {
+    if (UserStore.reviews.loading) UserStore.fetchMyReviews()
+  }, [])
   return (
     <Box py={3} maxW="container.lg" mx="auto">
       <Flex>
@@ -178,21 +183,27 @@ const PersonalDetailsSection = observer(() => {
         </Flex>
       </SimpleGrid>
       <Divider my={5} />
-      <Heading as="h2" fontSize="2xl">
-        My Reviews{" "}
-        <Circle
-          h="35px"
-          w="35px"
-          p={1}
-          fontSize="xl"
-          borderRadius="50%"
-          bg="blue.500"
-          color="white"
-          display="inline-flex"
-        >
-          10
-        </Circle>
-      </Heading>
+      <Box maxW="container.md" mx="auto">
+        <Heading flexGrow={1} fontSize="2xl">
+          My Reviews: {UserStore.reviews.count}
+        </Heading>
+        {UserStore.reviews.loading ? (
+          <Loader />
+        ) : (
+          <VStack mt={8} spacing={8}>
+            {UserStore.reviews.results.map((review: Review) => (
+              <ReviewCard
+                bg="white"
+                p={5}
+                borderWidth="1px"
+                borderRadius="base"
+                w="100%"
+                review={review}
+              />
+            ))}
+          </VStack>
+        )}
+      </Box>
     </Box>
   )
 })
@@ -484,11 +495,16 @@ const MyProfilePage = observer(({ location }) => {
   useAuthHook(user => user == false, "/login")
   const data = usePopulateQueryHook(location)
   const [openTab, setOpenTab] = useState(0)
+  const [profileKey, setProfileKey] = useState("profile")
   useEffect(() => {
     if (data?.page) {
       setOpenTab(PAGE_INDEX_MAPPER[data.page])
     }
   }, [data])
+  useEffect(() => {
+    if (location.search.includes("trip")) setProfileKey("profile-trip")
+    if (location.search.includes("order")) setProfileKey("profile-order")
+  }, [location.search])
   if (UserStore.isLoggedIn == false) return null
   return (
     <>
@@ -498,7 +514,7 @@ const MyProfilePage = observer(({ location }) => {
           content="My Profile. Briddgy postless, peer-to-peer delivery platform. Worldwide shopping with fastest and cheapest delivery. Travel with minimum costs and earn money."
         />
       </Helmet>
-      <NavigationContext.Provider value={{ page: "profile" }}>
+      <NavigationContext.Provider value={{ page: profileKey }}>
         <NavbarDefault />
         <BottomNavbar />
       </NavigationContext.Provider>
