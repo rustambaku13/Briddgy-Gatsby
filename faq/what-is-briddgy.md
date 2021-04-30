@@ -3,7 +3,7 @@ templateKey: faq
 slug: what-is-briddgy
 popular: true
 language: en
-title: How Briddgy Works
+title: How Briddgy works
 topic: get_started
 ---
 <!-- Guidelines for making a new FAQ POST
