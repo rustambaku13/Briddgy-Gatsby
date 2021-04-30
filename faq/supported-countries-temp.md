@@ -1,9 +1,9 @@
 ---
 templateKey: faq
 slug: supported-countries-temp
-popular: false
+popular: true
 language: en
-title: Supported countries for payouts
+title: "Supported countries for payouts "
 topic: payment
 ---
 <!-- Guidelines for making a new FAQ POST
