@@ -1,9 +1,9 @@
 ---
 templateKey: faq
-slug: ""
+slug: where-do-i-collect-my-order
 popular: false
 language: en
-title: Where do I collect my order.
+title: Where do I collect my order
 topic: orderer
 ---
 For safety and security reasons, we encourage our travelers and orderers to meet and public places, but it is up to both of them to choose a suitable location 👌
