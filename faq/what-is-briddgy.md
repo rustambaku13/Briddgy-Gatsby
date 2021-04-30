@@ -1,9 +1,9 @@
 ---
 templateKey: faq
-slug: ""
+slug: what-is-briddgy
 popular: true
 language: en
-title: What is Briddgy
+title: How Briddgy Works
 topic: get_started
 ---
 <!-- Guidelines for making a new FAQ POST
