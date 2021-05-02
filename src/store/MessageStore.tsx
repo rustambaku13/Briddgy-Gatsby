@@ -40,7 +40,7 @@ class MessageStore {
     makeAutoObservable(this, { tinode: false })
     if (!isSSR) {
       import("tinode-sdk").then(data => {
-        const Tinode = data.default
+        Tinode = data.default
         this.tinode = new Tinode(APP_NAME, HOST, API_KEY, "wss", true, "web")
 
         // Bindings
