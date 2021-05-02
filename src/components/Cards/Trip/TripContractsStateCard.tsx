@@ -21,6 +21,7 @@ import { ContractSteps } from "../../Misc/ContractSteps"
 import LayoutStore from "../../../store/LayoutStore"
 import { itemGrabbed, removeContract } from "../../../api/contract"
 import { TripPageState } from "../../../providers/navPage"
+import { SendMessage } from "../../Misc/SendMessageButton"
 
 export const TripContractsStateCard = chakra(
   ({ className, contract }: { className?: any; contract: Contract }) => {
@@ -50,16 +51,16 @@ export const TripContractsStateCard = chakra(
         case "FRZ":
           return (
             <VStack alignItems="flex-end" mt={3}>
-              <Button
+              <SendMessage
                 flex="0 0 auto"
                 w="100%"
-                isLoading={loading}
+                user={contract.order.owner}
                 size="sm"
                 variant="outline"
                 color="tealBlue.base"
               >
                 Send message
-              </Button>
+              </SendMessage>
               <Button
                 flex="0 0 auto"
                 ml="auto"
@@ -86,14 +87,15 @@ export const TripContractsStateCard = chakra(
 
         default:
           return (
-            <Button
-              isLoading={loading}
+            <SendMessage
+              flex="0 0 auto"
               size="sm"
+              user={contract.order.owner}
               variant="outline"
               color="tealBlue.base"
             >
               Send message
-            </Button>
+            </SendMessage>
           )
       }
     }

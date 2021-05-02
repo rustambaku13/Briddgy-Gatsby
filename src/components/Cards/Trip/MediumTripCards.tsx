@@ -198,13 +198,3 @@ export const PublicMediumTripCardProposal = (props: {
     </MediumTripCard>
   )
 }
-
-export const PublicMediumTripCardMessage = (props: {
-  className?: any
-  trip: Trip
-  children: any
-  callback: any
-  loading: boolean
-}) => {
-  return <MediumTripCard {...props}>Send Message</MediumTripCard>
-}

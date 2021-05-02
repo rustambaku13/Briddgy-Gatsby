@@ -31,6 +31,8 @@ import { NavigationContext } from "../../providers/navPage"
 import UserStore from "../../store/UserStore"
 import { AddOrderNavigationMenu } from "../Form/AddOrderForm"
 import { AddTripFormNavigationMenu } from "../Form/AddTripForm"
+import ChatIcon from "../../icons/Chat"
+import { Messages } from "../Misc/Message"
 let mouseListener = null
 
 //  ******  Normal Navbars  *******
@@ -113,8 +115,8 @@ const AuthorizedNavbar = () => {
           />
         </Box>
         <Flex ml={3} alignItems="center" flexShrink={0} h="100%">
-          <LinkBox mr={[2, 3, 4]}>
-            <Link id="create_trip" to="/travel">
+          <LinkBox id="create_trip" mr={[2, 3, 4]}>
+            <Link to="/travel">
               <Text d={["none", "none", "none", "block"]} fontWeight="7gat00">
                 <PlaneIcon mt="-2px" fontSize="600" color="cherryRed.base" />{" "}
                 <Text
@@ -137,8 +139,8 @@ const AuthorizedNavbar = () => {
               ></IconButton>
             </Link>
           </LinkBox>
-          <LinkBox mr={[2, 3, 4]}>
-            <Link id="create_order" to="/order">
+          <LinkBox id="create_order" mr={[2, 3, 4]}>
+            <Link to="/order">
               <Button
                 fontWeight="600"
                 d={["none", "none", "none", "inline-flex"]}
@@ -157,6 +159,11 @@ const AuthorizedNavbar = () => {
             </Link>
           </LinkBox>
           <NotificationDropdown />
+          <LinkBox d={["none", "none", "block"]} mr={[2, 3, 4]}>
+            <Link to="/messages">
+              <Messages />
+            </Link>
+          </LinkBox>
           <Menu
             isOpen={open}
             onOpen={() => {

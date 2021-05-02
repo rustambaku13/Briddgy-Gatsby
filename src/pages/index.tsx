@@ -4,7 +4,6 @@ import {
   Center,
   Container,
   Flex,
-  Grid,
   Heading,
   Text,
 } from "@chakra-ui/react"
@@ -14,7 +13,6 @@ import { Link } from "gatsby-plugin-intl"
 import React from "react"
 import { Helmet } from "react-helmet"
 import { Swiper, SwiperSlide } from "swiper/react"
-import { ProductCard } from "../components/Cards/Order/Product"
 import { TravelDestinationCard } from "../components/Cards/Trip/TravelDestination"
 import Footer from "../components/Footer"
 import { ProductGrid } from "../components/Layout/ProductGrid"

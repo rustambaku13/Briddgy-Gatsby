@@ -25,3 +25,16 @@ export async function searchLocation(
     },
   })
 }
+
+export async function getCountries(
+  lang: string = "en"
+): Promise<AxiosResponse<[ApiLocation]>> {
+  return axios.get(`https://referential.p.rapidapi.com/v1/country`, {
+    headers,
+    params: {
+      lang,
+      fields: "iso_a2,",
+    },
+  })
+}
+getCountries().then(console.log)

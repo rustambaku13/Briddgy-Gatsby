@@ -1,4 +1,11 @@
 import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
+} from "@chakra-ui/alert"
+import { Button } from "@chakra-ui/button"
+import {
   Box,
   Container,
   Divider,
@@ -10,6 +17,7 @@ import {
 import { navigate } from "gatsby-link"
 import { observer } from "mobx-react-lite"
 import React, { useEffect, useState } from "react"
+import Helmet from "react-helmet"
 import { getTripContracts, getTripProposals } from "../../api/contract"
 import { getSuggestedOrders, getTrip, getTrips } from "../../api/trip"
 import { PublicMediumOrderCardProposal } from "../../components/Cards/Order/MediumOrderCards"
@@ -22,29 +30,21 @@ import {
 } from "../../components/Cards/Trip/toTripProposalCard"
 import { TripContractsStateCard } from "../../components/Cards/Trip/TripContractsStateCard"
 import Footer from "../../components/Footer"
-import Helmet from "react-helmet"
 import { Empty } from "../../components/Misc/Empty"
 import { Loader } from "../../components/Misc/Loader"
-import { Step, Steps, StepsContainer } from "../../components/Misc/Steps"
+import { StepsContainer } from "../../components/Misc/Steps"
 import NavbarDefault from "../../components/Navbar"
 import { BottomNavbar } from "../../components/Navbar/BottomNavbar"
 import { CardIcon } from "../../icons/Card"
 import CheckIcon from "../../icons/Check"
 import { DeliveryBoxIcon } from "../../icons/DeliveryBox"
 import { NavigationContext, TripPageState } from "../../providers/navPage"
+import LayoutStore from "../../store/LayoutStore"
 import UserStore from "../../store/UserStore"
 import { Contracts, defaultContracts } from "../../types/contract"
 import { defaultOrders, Orders } from "../../types/orders"
 import { defaultTrips, Trip, Trips } from "../../types/trip"
 import { getCountryFromCode, tripCityAnywhere } from "../../utils/misc"
-import {
-  Alert,
-  AlertDescription,
-  AlertIcon,
-  AlertTitle,
-} from "@chakra-ui/alert"
-import { Button } from "@chakra-ui/button"
-import LayoutStore from "../../store/LayoutStore"
 
 const MyTripPage = ({ trip }: { trip: Trip }) => {
   const [suggested, setSuggested]: [Orders, any] = useState(defaultOrders)

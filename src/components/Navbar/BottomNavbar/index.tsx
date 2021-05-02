@@ -7,6 +7,7 @@ import OrderIcon from "../../../icons/Order"
 import ProfileIcon from "../../../icons/Profile"
 import TripIcon from "../../../icons/Trip"
 import UserStore from "../../../store/UserStore"
+import { MessageIconWithBadge } from "../../Misc/Message"
 import { BottomNavigationItem } from "./BottomNavigationItem"
 const AuthorizedBottomNavbar = () => {
   return (
@@ -43,8 +44,8 @@ const AuthorizedBottomNavbar = () => {
       <BottomNavigationItem
         to="/messages"
         text="Messages"
-        contextKeys={["messages"]}
-        icon={<OrderIcon />}
+        contextKeys={["message"]}
+        icon={<MessageIconWithBadge />}
         w="25%"
       ></BottomNavigationItem>
       <BottomNavigationItem

@@ -44,17 +44,20 @@ export const NotificationDropdown = observer(() => {
   return (
     <Box pos="relative" className="notification" mr={[2, 3, 4]}>
       <IconButton
+        variant="outline"
+        w="40px"
         onClick={() => {
           setHidden(false)
         }}
+        outline="none"
         aria-label="notification icon"
-        bg="lilaPurple.light"
-        color="lilaPurple.dark"
+        bg="white"
+        borderWidth="1px"
+        borderColor="tealBlue.base"
+        color="tealBlue.base"
         icon={<BellIcon />}
       ></IconButton>
       <Box
-        // hidden={hidden}
-        // visibility={hidden ? "hidden" : "visible"}
         opacity={hidden ? 0 : 1}
         tabIndex={0}
         className="list"
@@ -73,6 +76,9 @@ export const NotificationDropdown = observer(() => {
             icon={<RefreshIcon />}
             color="tealBlue.base"
             variant="link"
+            onClick={() => {
+              UserStore.fetchNotification()
+            }}
             size="sm"
           >
             Load more
@@ -87,7 +93,7 @@ export const NotificationDropdown = observer(() => {
           ))
         )}
 
-        {!UserStore.notifications.next ? (
+        {UserStore.notifications.next ? (
           <>
             <Divider my={2} />
             <Flex justifyContent="center" w="100%">

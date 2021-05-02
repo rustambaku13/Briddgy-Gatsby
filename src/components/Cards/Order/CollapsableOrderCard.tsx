@@ -29,6 +29,7 @@ import { getCountryFromCode, trimCityEmpty } from "../../../utils/misc"
 import { Avatar } from "../../Avatar/Avatar"
 import { ImageViewer } from "../../Misc/ImageThumbnailViewer"
 import { Rating } from "../../Misc/Rating"
+import { SendMessage } from "../../Misc/SendMessageButton"
 
 export const CollapsableOrderCard = chakra(
   ({
@@ -249,9 +250,9 @@ export const CollapsableOrderCardwTrip = chakra(
                 )}${getCountryFromCode(contract.trip.dest.countryCode)}`}
               </Text>
             </Box>
-            <Button size="sm" variant="primary">
+            <SendMessage user={contract.trip.owner} size="sm" variant="primary">
               Message Traveler
-            </Button>
+            </SendMessage>
           </AccordionPanel>
         </AccordionItem>
       </CollapsableOrderCard>
