@@ -3,6 +3,7 @@ import { observer } from "mobx-react-lite"
 import React from "react"
 import MessageStore from "../../store/MessageStore"
 import { Avatar } from "../Avatar/Avatar"
+import { Empty } from "../Misc/Empty"
 import { LinkOverlay } from "../Misc/LinkOverlay"
 import { Loader } from "../Misc/Loader"
 const RoomItem = observer(({ room }) => {
@@ -50,11 +51,20 @@ export const RoomList = chakra(
         flex={["0 0 100%", "0 0 100%", "0 0 300px"]}
       >
         {MessageStore.isChatReady ? (
-          MessageStore.chatList.map(room => (
-            <>
-              <RoomItem room={room} />
-            </>
-          ))
+          MessageStore.chatList.length ? (
+            MessageStore.chatList.map(room => (
+              <>
+                <RoomItem room={room} />
+              </>
+            ))
+          ) : (
+            <Empty
+              maxW="250px"
+              mt={5}
+              subText="Please settle a deal and start messaging"
+              text="No messages yet"
+            />
+          )
         ) : (
           <Loader />
         )}
