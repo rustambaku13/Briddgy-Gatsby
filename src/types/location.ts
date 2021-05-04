@@ -13,7 +13,8 @@ export interface Location {
 export interface ApiLocation {
   value: string
   key: string
-  iso_a2: string
+  iso_a2?: string
+  iso_a3?: string
 }
 
 export const defaultLocations = {

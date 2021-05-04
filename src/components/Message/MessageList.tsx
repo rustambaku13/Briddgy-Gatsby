@@ -71,6 +71,12 @@ const ChatMessage = ({
       className={sideClass}
       as="li"
     >
+      {" "}
+      {avatarDisplay ? (
+        <Avatar h="12" w="12" user={userFrom} />
+      ) : (
+        <Box w="12" h="12"></Box>
+      )}
       <Box
         h="auto"
         pos="relative"
@@ -85,11 +91,6 @@ const ChatMessage = ({
           <ReceiveMarkers timestamp={timestamp} received={received} />
         ) : null}
       </Box>
-      {avatarDisplay ? (
-        <Avatar h="12" w="12" user={userFrom} />
-      ) : (
-        <Box w="12" h="12"></Box>
-      )}
     </HStack>
   )
 }

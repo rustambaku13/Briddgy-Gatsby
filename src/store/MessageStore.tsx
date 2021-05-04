@@ -214,7 +214,7 @@ class MessageStore {
   // Check if topic is cached and move to setter at the bottom
   handleStartTopicRequest(topicName) {
     // Check if topic is indeed new. If not, launch it.
-
+    debugger
     if (topicName && this.tinode.isTopicCached(topicName)) {
       this.setTopicSelected = topicName
       return

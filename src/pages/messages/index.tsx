@@ -13,8 +13,8 @@ import { NavigationContext } from "../../providers/navPage"
 import MessageStore from "../../store/MessageStore"
 const MessagesSelected = ({ selectedRoom }) => {
   useEffect(() => {
-    if (!selectedRoom) return
-    debugger
+    if (!selectedRoom || selectedRoom.length == 0) return
+
     MessageStore.handleStartTopicRequest(selectedRoom)
     return () => {
       if (MessageStore.topicSelected) {
