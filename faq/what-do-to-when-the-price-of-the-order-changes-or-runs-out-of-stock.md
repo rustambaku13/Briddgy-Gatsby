@@ -1,9 +1,9 @@
 ---
 templateKey: faq
-slug: ""
+slug: what-do-to-when-the-price-of-the-order-changes-or-runs-out-of-stock
 popular: true
 language: en
-title: What do to when the price of the order changes or runs out of stock
+title: Price of the order changed or run out of stock
 topic: traveler
 ---
 It is considered the best to purchase the order as soon as possible to prevent the cases when the price of order changes or it runs out of stock.
