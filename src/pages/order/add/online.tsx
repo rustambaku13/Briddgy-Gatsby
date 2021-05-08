@@ -29,11 +29,13 @@ import { Link, navigate } from "gatsby-plugin-intl"
 import { flowResult } from "mobx"
 import React, { useEffect, useRef, useState } from "react"
 import { FormProvider, useForm, useFormContext } from "react-hook-form"
+import { fetchScraperData } from "../../../api/order"
 import Footer from "../../../components/Footer"
 import { GroupImageUploader } from "../../../components/Inputs/ImageUploader"
 import { LocationAutoComplete } from "../../../components/Inputs/LocationAutoComplete"
 import { Hint } from "../../../components/Misc/Hint"
 import { ImageViewer } from "../../../components/Misc/ImageThumbnailViewer"
+import { Loader } from "../../../components/Misc/Loader"
 import { PaymentDisplay } from "../../../components/Misc/Payment/PaymentDisplay"
 import { StepsContainer } from "../../../components/Misc/Steps"
 import NavbarDefault from "../../../components/Navbar"
@@ -49,7 +51,7 @@ import LayoutStore from "../../../store/LayoutStore"
 import UserStore from "../../../store/UserStore"
 
 const pageFields = {
-  0: [
+  1: [
     "order_url",
     "title",
     "description",
@@ -58,7 +60,7 @@ const pageFields = {
     "weight",
     "files",
   ],
-  1: [
+  2: [
     "order_url",
     "title",
     "description",
@@ -68,13 +70,9 @@ const pageFields = {
     "files",
     "src",
     "src_id",
-    "src_code",
-    "src_input",
 
     "dest",
     "dest_id",
-    "dest_code",
-    "dest_input",
   ],
 }
 
@@ -82,7 +80,7 @@ const Summary = ({ files, pageChange, back, page, adding }) => {
   const { register, errors, watch, getValues, formState } = useFormContext()
   const item_price = watch("item_price")
   const price = watch("price")
-  const quote = useQuoteGetterHook(item_price, price, page == 2)
+  const quote = useQuoteGetterHook(item_price, price, page == 3)
 
   return (
     <>
@@ -99,7 +97,7 @@ const Summary = ({ files, pageChange, back, page, adding }) => {
         <Heading mb={8} fontSize="hb1">
           3. Order Summary
         </Heading>
-        <ImageViewer images={files.current}>
+        <ImageViewer images={files}>
           <Flex>
             <ImageViewer.ImageThumbnails />
             <Center flexGrow={1}>
@@ -278,11 +276,23 @@ const Itinerary = ({ files, pageChange, back }) => {
   )
 }
 
-const ProductDetails = ({ pageChange, files }) => {
+const ProductDetails = ({ pageChange, files, setFiles, fetchScraper }) => {
   const { register, errors, watch, getValues } = useFormContext()
   const item_price = watch("item_price")
   const price = watch("price")
   const weight = watch("weight")
+  const [scraping, setScraping] = useState(false)
+  const [disabled, setDisabled] = useState(true)
+  const reScrape = () => {
+    const url = getValues("order_url")
+    if (url) {
+      setScraping(true)
+      fetchScraper(url).finally(() => {
+        setScraping(false)
+        setDisabled(true)
+      })
+    }
+  }
   return (
     <>
       <Box
@@ -301,7 +311,11 @@ const ProductDetails = ({ pageChange, files }) => {
         <FormControl w="100%" mb={7}>
           <FormLabel>Product Images</FormLabel>
           <InputGroup>
-            <GroupImageUploader files={files} maxCount={3} />
+            <GroupImageUploader
+              setFiles={setFiles}
+              files={files}
+              maxCount={3}
+            />
           </InputGroup>
           <Text color="danger.base" as="small">
             {errors.files?.message}
@@ -311,6 +325,9 @@ const ProductDetails = ({ pageChange, files }) => {
           <FormLabel>Product URL</FormLabel>
           <InputGroup size="lg">
             <Input
+              onChange={e => {
+                setDisabled(false)
+              }}
               ref={register({
                 required: "Product URL is required",
                 validate: s => {
@@ -328,7 +345,10 @@ const ProductDetails = ({ pageChange, files }) => {
               p={0}
               children={
                 <IconButton
+                  isDisabled={disabled}
+                  onClick={reScrape}
                   borderRadius="none"
+                  isLoading={scraping}
                   h="100%"
                   w="100%"
                   aria-label="Refresh"
@@ -450,7 +470,8 @@ const ProductDetails = ({ pageChange, files }) => {
 const AddOrderPage = ({ location }: PageProps) => {
   const [page, setPage] = useState(0)
   const [adding, setAdding] = useState(false) // Order is being added
-  const files = useRef([])
+  // const files = useRef([])
+  const [files, setFiles] = useState([])
   const methods = useForm()
   const {
     register,
@@ -464,6 +485,37 @@ const AddOrderPage = ({ location }: PageProps) => {
 
   const data = usePopulateQueryHook(location)
 
+  const imageFromUrl = url => {
+    return fetch(url)
+      .then(res => res.blob())
+      .then(blob => {
+        //@ts-ignore
+        blob.preview = url
+        //@ts-ignore
+        blob.status = "done"
+        setFiles([blob])
+      })
+  }
+  const fetchScraper = async url => {
+    return fetchScraperData(url)
+      .then(({ data }) => {
+        const [title, price, img] = data.result
+
+        setValue("title", title)
+        price.length > 0 ? setValue("item_price", price) : null
+        return img
+      })
+      .then(imageFromUrl)
+      .catch(() => {
+        setPage(1)
+      })
+      .finally(() => {
+        setPage(1)
+      })
+
+    // console.log(url)
+  }
+
   useEffect(() => {
     // When the query params change so we populate fields accordingly
     for (const [key, value] of Object.entries(data)) {
@@ -472,6 +524,13 @@ const AddOrderPage = ({ location }: PageProps) => {
     }
     setPage(parseInt(data?.page || 0))
   }, [data])
+
+  useEffect(() => {
+    const a = new URLSearchParams(location.search)
+    const url = a.get("order_url")
+
+    fetchScraper(url)
+  }, [])
 
   const back = () => {
     setPage(page - 1)
@@ -499,7 +558,7 @@ const AddOrderPage = ({ location }: PageProps) => {
   const pageChange = async data => {
     const success = await trigger(pageFields[page])
     if (success) {
-      if (page == 2) {
+      if (page == 3) {
         // Main Submit Handler
         data.files = files.current
         data.host = new URL(data.order_url).host
@@ -544,27 +603,6 @@ const AddOrderPage = ({ location }: PageProps) => {
             ]}
           />
         </Box>
-        {/* <Steps py={8} maxW="container.lg" mx="auto">
-          <Step
-            icon={<PlaneIcon />}
-            selected={page}
-            step={0}
-            title="Product details"
-          ></Step>
-          <Step
-            icon={<PlaneIcon />}
-            selected={page}
-            step={1}
-            title="Delivery details"
-          ></Step>
-          <Step
-            last
-            icon={<PlaneIcon />}
-            selected={page}
-            step={2}
-            title="Summary"
-          ></Step>
-        </Steps> */}
       </Container>
       <Container
         as="section"
@@ -582,7 +620,15 @@ const AddOrderPage = ({ location }: PageProps) => {
             <Tabs index={page}>
               <TabPanels>
                 <TabPanel px={0} display="flex" flexWrap="wrap">
-                  <ProductDetails files={files} pageChange={pageChange} />
+                  <Loader />
+                </TabPanel>
+                <TabPanel px={0} display="flex" flexWrap="wrap">
+                  <ProductDetails
+                    fetchScraper={fetchScraper}
+                    files={files}
+                    setFiles={setFiles}
+                    pageChange={pageChange}
+                  />
                 </TabPanel>
                 <TabPanel px={0} display="flex" flexWrap="wrap">
                   <Itinerary

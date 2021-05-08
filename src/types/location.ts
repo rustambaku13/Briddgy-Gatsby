@@ -1,20 +1,20 @@
 export interface Location {
-  countryCode: string
-  id: string
-  details: [
-    {
-      en: {
-        city: string
-        country: string
-      }
-    }
-  ]
-}
-export interface ApiLocation {
-  value: string
-  key: string
-  iso_a2?: string
-  iso_a3?: string
+  _id: {
+    $oid: string
+  }
+  type: "CITY" | "COUNTRY"
+  country: string
+  city?: string
+  translations: {
+    ru: string
+    es: string
+    pt: string
+  }
+  translations_country?: {
+    ru: string
+    es: string
+    pt: string
+  }
 }
 
 export const defaultLocations = {

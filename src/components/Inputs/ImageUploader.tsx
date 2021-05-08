@@ -82,29 +82,25 @@ const ImageDisplayer = ({ file, setFiles }) => {
   )
 }
 
-export const GroupImageUploader = ({ maxCount = 4, files }) => {
-  const [innerfiles, setFiles] = useState([])
+export const GroupImageUploader = ({ maxCount = 4, files, setFiles }) => {
   const { register, setValue, getValues } = useFormContext()
-  // console.log(methods)
-  useEffect(() => {
-    files.current = innerfiles
-  }, [innerfiles])
+
   return (
     <>
       <HStack flexWrap="wrap">
         <input
           type="hidden"
-          value={innerfiles.length}
+          value={files.length}
           name="files"
           multiple
           ref={register({
             min: { value: 1, message: "Please upload at least 1 image" },
           })}
         />
-        {innerfiles.map(file => (
+        {files.map(file => (
           <ImageDisplayer setFiles={setFiles} file={file} />
         ))}
-        {innerfiles.length <= maxCount ? (
+        {files.length <= maxCount ? (
           <ImageUploader setFiles={setFiles} />
         ) : null}
       </HStack>

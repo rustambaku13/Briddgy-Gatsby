@@ -68,3 +68,11 @@ export async function addOrder({
 export async function uploadFilestoOrder(files) {
   return await axios_normal.put(`/trip-order/api/fileupload/orderimage/`, files)
 }
+
+export async function fetchScraperData(url) {
+  return await axios_normal.get(`/scraper`, {
+    params: {
+      q: url,
+    },
+  })
+}

@@ -12,44 +12,11 @@ import React, { useState } from "react"
 import { useForm, FormProvider, useFormContext } from "react-hook-form"
 import { searchLocation } from "../../api/location"
 import { LocationIcon } from "../../icons/Location"
-import { ApiLocation, Location } from "../../types/location"
+import { Location } from "../../types/location"
 import { getCountryFromCode, trimCityEmpty } from "../../utils/misc"
+import { CountryFlagsLazy } from "../Misc/CountryFlagsLazy"
 
 let a = null
-// export const CountryDecode = ({ countryCode }) => {
-//   return (
-//     <StaticQuery
-//       query={graphql`
-//         query {
-//           allCountry {
-//             nodes {
-//               key
-//               iso_a3
-//               value
-//             }
-//           }
-//         }
-//       `}
-//       render={data => {
-//         const country = data.allCountry.nodes.filter(
-//           country => country.key == countryCode
-//         )
-//         console.log(country)
-
-//         return ""
-//       }}
-//     />
-//   )
-// }
-
-const MAX_COUNTRIES_PER_REQUEST = 10
-const searchFromArray = (countries: any[], prefix) => {
-  return countries
-    .filter((country: { value: string }) => {
-      return country.value.toLowerCase().startsWith(prefix.toLowerCase())
-    })
-    .slice(0, MAX_COUNTRIES_PER_REQUEST)
-}
 /**
  *
  * This is location autocomplete that is used everywhere
@@ -62,7 +29,7 @@ const searchFromArray = (countries: any[], prefix) => {
  * @method <fetchData> // Actually fetch api and populate the results
  * @method <selecthandler> // Populate hidden input fields on selecting the option
  */
-const LocationAutoCompleteInner = chakra(
+export const LocationAutoComplete = chakra(
   ({ className, name, size, placeholder, error_msg, countries }) => {
     const { register, setValue } = useFormContext()
 
@@ -72,16 +39,12 @@ const LocationAutoCompleteInner = chakra(
     const fetchData = value => {
       searchLocation(value)
         .then(({ data }) => {
+          console.log(data)
+
+          setResults(data)
           return data
         })
-        .then(data => {
-          const countriesData = searchFromArray(countries, value)
-          setResults([...countriesData, ...data])
-        })
-        .catch(() => {
-          const countriesData = searchFromArray(countries, value)
-          setResults([...countriesData])
-        })
+
         .finally(() => {
           setSearching(false)
         })
@@ -90,7 +53,6 @@ const LocationAutoCompleteInner = chakra(
       setHidden(true)
       setValue(name, undefined)
       setValue(name + "_id", undefined)
-      setValue(name + "_code", undefined)
     }
     const searchHandler = ({ target: { value } }) => {
       if (value.length && hidden) setHidden(false)
@@ -107,19 +69,10 @@ const LocationAutoCompleteInner = chakra(
         e.currentTarget.getAttribute("title"),
         e.currentTarget.getAttribute("data-type"),
       ]
-      if (type == "city") {
-        // City was selected
-        setValue(name + "_id", id)
-        setValue(name + "_code", undefined)
-        setValue(name, title)
-        // setValue(name + "_input", title)
-      } else {
-        // Country was selected
-        setValue(name + "_id", undefined)
-        setValue(name + "_code", id)
-        setValue(name, title)
-        // setValue(name + "_input", title)
-      }
+
+      setValue(name + "_id", id)
+      setValue(name, title)
+      // setValue(name + "_input", title)
       document.activeElement.blur()
     }
     return (
@@ -137,7 +90,6 @@ const LocationAutoCompleteInner = chakra(
             placeholder={placeholder}
           />
           <input type="hidden" ref={register()} name={name + "_id"} />
-          <input type="hidden" ref={register()} name={name + "_code"} />
         </InputGroup>
         <Box
           hidden={hidden}
@@ -154,25 +106,7 @@ const LocationAutoCompleteInner = chakra(
               <Spinner />
             </Flex>
           ) : (
-            results.map((location: ApiLocation) => {
-              if (location.iso_a3) {
-                return (
-                  <Box
-                    as="button"
-                    fontSize="1em"
-                    type="button"
-                    onClick={selectHandler}
-                    data-type="country"
-                    value={location.key}
-                    key={location.key}
-                    title={`${location.value}`}
-                  >
-                    <LocationIcon />
-                    <Text as="h5">{location.value}</Text>
-                  </Box>
-                )
-              }
-              const country = getCountryFromCode(location.iso_a2, countries)
+            results.map((location: Location, index) => {
               return (
                 <Box
                   as="button"
@@ -180,17 +114,18 @@ const LocationAutoCompleteInner = chakra(
                   type="button"
                   onClick={selectHandler}
                   data-type="city"
-                  value={location.key}
-                  key={location.key}
-                  title={`${trimCityEmpty(location.value)}${country}`}
+                  value={location._id.$oid}
+                  key={index}
+                  title={`${trimCityEmpty(location.city)}${location.country}`}
                 >
                   <LocationIcon />
                   <Text as="h5">
-                    {trimCityEmpty(location.value)}
+                    {trimCityEmpty(location.city)}
                     <Text ml="auto" as="span" variant="secondary">
-                      {country}
+                      {location.country}
                     </Text>
                   </Text>
+                  <CountryFlagsLazy />
                 </Box>
               )
             })
@@ -200,27 +135,3 @@ const LocationAutoCompleteInner = chakra(
     )
   }
 )
-
-export const LocationAutoComplete = props => {
-  return (
-    <StaticQuery
-      query={graphql`
-        query {
-          allCountry {
-            nodes {
-              key
-              iso_a3
-              value
-            }
-          }
-        }
-      `}
-      render={data => (
-        <LocationAutoCompleteInner
-          countries={data.allCountry.nodes}
-          {...props}
-        />
-      )}
-    />
-  )
-}

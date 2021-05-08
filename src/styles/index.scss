@@ -443,6 +443,10 @@ html {
   &:focus-within > div {
     display: block;
   }
+  .flag-autocomplete {
+    height: 15px;
+    margin-left: auto;
+  }
 }
 .tabs {
   position: relative;

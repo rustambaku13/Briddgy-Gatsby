@@ -112,21 +112,22 @@ class UserStore {
       const formData: FormData = yield compressAndReturn(this.new_order.files)
       formData.append("order_id", data.id)
       const imageResult = yield uploadFilestoOrder(formData)
-      emailSuggestedTravellers(
-        this.new_order.source,
-        this.new_order.destination
-      ) // Can be finished async
+
       // Reshape some stuff
       data.destination = data.destinationDetails
       data.source = data.sourceDetails
       data.orderimage = imageResult.data.name
-      this.new_order = null
+
       // Append if loadedd orders
       if (this.orders.loading == false) {
         this.orders.results.unshift(data)
         this.orders.count++
       }
-
+      this.new_order = null
+      emailSuggestedTravellers(
+        this.new_order.source,
+        this.new_order.destination
+      ) // Can be finished async
       return data
     } catch (e) {}
   }
