@@ -1,6 +1,0 @@
-2021/05/08-13:38:04.108 4e29 Creating DB /home/rustambaku13/Documents/Briddgy/GatsbyBriddgy/~/chromeTemp/Default/IndexedDB/https_ytdt0.csb.app_0.indexeddb.leveldb since it was missing.
-2021/05/08-13:38:04.118 4e29 Reusing MANIFEST /home/rustambaku13/Documents/Briddgy/GatsbyBriddgy/~/chromeTemp/Default/IndexedDB/https_ytdt0.csb.app_0.indexeddb.leveldb/MANIFEST-000001
-2021/05/08-15:02:46.956 6249 Level-0 table #5: started
-2021/05/08-15:02:46.958 6249 Level-0 table #5: 3501 bytes OK
-2021/05/08-15:02:46.961 6249 Delete type=0 #3
-2021/05/08-15:02:46.961 6249 Manual compaction at level-0 from (begin) .. (end); will stop at (end)
