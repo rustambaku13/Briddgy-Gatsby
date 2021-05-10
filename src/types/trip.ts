@@ -1,5 +1,6 @@
 import { User } from "./user"
 import { Location } from "./location"
+import moment from "moment"
 export interface Trip {
   id: number
   date: string

@@ -1,0 +1,6 @@
+2021/05/08-19:48:11.095 7e74 Creating DB /home/rustambaku13/Documents/Briddgy/GatsbyBriddgy/~/chromeTemp/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb since it was missing.
+2021/05/08-19:48:11.100 7e74 Reusing MANIFEST /home/rustambaku13/Documents/Briddgy/GatsbyBriddgy/~/chromeTemp/Default/IndexedDB/https_web.whatsapp.com_0.indexeddb.leveldb/MANIFEST-000001
+2021/05/08-19:48:44.141 7e74 Level-0 table #5: started
+2021/05/08-19:48:44.143 7e74 Level-0 table #5: 19548 bytes OK
+2021/05/08-19:48:44.145 7e74 Delete type=0 #3
+2021/05/08-19:48:44.145 7e74 Manual compaction at level-0 from (begin) .. (end); will stop at (end)

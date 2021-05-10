@@ -88,7 +88,7 @@ const MediumOrderCard = chakra(
                   />
                 </Box>
                 <Text variant="light" textAlign="right" fontSize="400" flex={1}>
-                  {moment(orderData.date).format(FRONTEND_DATE_FORMAT)}
+                  {orderData.date}
                 </Text>
               </Flex>
               <Divider my={4} />
@@ -199,12 +199,12 @@ const MediumOrderCard = chakra(
               </Button>
               <HStack alignItems="center" w="100%">
                 <Text color="text.medium" as="span">{`${trimCityEmpty(
-                  orderData.src.details[0].en.city
-                )}${getCountryFromCode(orderData.src.countryCode)}`}</Text>
+                  orderData.src.city
+                )}${orderData.src.country}`}</Text>
                 <CurvedArrowRight color="text.light" />
                 <Text color="text.medium" as="span">{`${trimCityEmpty(
-                  orderData.dest.details[0].en.city
-                )}${getCountryFromCode(orderData.dest.countryCode)}`}</Text>
+                  orderData.dest.city
+                )}${orderData.dest.country}`}</Text>
                 <Text fontSize="500" variant="light" flex={1} textAlign="right">
                   Traveler's reward{" "}
                   <Text

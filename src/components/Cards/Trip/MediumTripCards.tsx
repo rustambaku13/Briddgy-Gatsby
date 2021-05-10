@@ -64,7 +64,7 @@ const MediumTripCard = chakra(
                 fontSize="400"
                 flex={1}
               >
-                {moment(trip.date).format(FRONTEND_DATE_FORMAT)}
+                {trip.date}
               </Text>
             </Flex>
             <Divider my={3} />
@@ -85,10 +85,10 @@ const MediumTripCard = chakra(
                 </Text>
 
                 <Text fontWeight="700" fontSize={[600, 700]}>
-                  {tripCityAnywhere(trip.src.details[0].en.city)}
+                  {tripCityAnywhere(trip.src.city)}
                 </Text>
                 <Text fontSize={[500, 600]} variant="secondary">
-                  {getCountryFromCode(trip.src.countryCode)}
+                  {trip.src.country}
                 </Text>
               </Box>
 
@@ -98,14 +98,14 @@ const MediumTripCard = chakra(
                 </Text>
 
                 <Text fontWeight="700" fontSize={[600, 700]} textAlign="right">
-                  {tripCityAnywhere(trip.dest.details[0].en.city)}
+                  {tripCityAnywhere(trip.dest.city)}
                 </Text>
                 <Text
                   fontSize={[500, 600]}
                   variant="secondary"
                   textAlign="right"
                 >
-                  {getCountryFromCode(trip.dest.countryCode)}
+                  {trip.dest.country}
                 </Text>
               </Box>
             </Flex>

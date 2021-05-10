@@ -2,19 +2,31 @@ import { Order } from "./../types/orders"
 import { Trips } from "./../types/trip"
 import { AxiosResponse } from "axios"
 import { Orders } from "../types/orders"
-import { axios_normal } from "./index"
+import { axios_normal, FRONTEND_DATE_FORMAT } from "./index"
 import { Reviews } from "../types/review"
+import moment from "moment"
 export async function getOrders(params = {}): Promise<AxiosResponse<Orders>> {
-  return axios_normal.get(`/trip-order/api/orders/`, { params })
+  const data = await axios_normal.get(`/trip-order/api/orders/`, { params })
+  data.data.results.map((item: Order) => {
+    item.date = moment(item.date).format(FRONTEND_DATE_FORMAT)
+  })
+  return data
 }
 export async function getOrder(id): Promise<AxiosResponse<Order>> {
-  return await axios_normal.get(`/trip-order/api/orders/${id}/`)
+  const data = await axios_normal.get(`/trip-order/api/orders/${id}/`)
+  data.data.date = moment(data.data.date).format(FRONTEND_DATE_FORMAT)
+  return data
 }
 export async function getMyOrders(page = 1): Promise<AxiosResponse<Orders>> {
-  return await axios_normal.get(`/trip-order/api/my/orders/`, {
+  const data = await axios_normal.get(`/trip-order/api/my/orders/`, {
     params: { page },
   })
+  data.data.results.map((item: Order) => {
+    item.date = moment(item.date).format(FRONTEND_DATE_FORMAT)
+  })
+  return data
 }
+
 export async function getMyReviews(page = 1): Promise<AxiosResponse<Reviews>> {
   return await axios_normal.get(`/main/api/users/my/reviews/`, {
     params: { page },

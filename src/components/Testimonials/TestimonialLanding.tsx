@@ -93,52 +93,45 @@ export const TestimonialLanding = ({}) => {
       </Box>
       <TabPanels w="100%" as="article" maxW="600px">
         <TabPanel>
-          <Text as="h3" fontSize="2xl" fontWeight="600">
-            Not bad
+          <Text as="h3" fontSize="hb1" fontWeight="600">
+            Camila Ravelet
           </Text>
-          <Text variant="secondary">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book. It has survived not
-            only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged. It was popularised in the 1960s
-            with the release of Letraset sheets containing Lorem Ipsum passages,
-            and more recently with desktop publishing software like Aldus
-            PageMaker including versions of Lorem Ipsum.
+          <Rating fontSize="hb1" readonly rating={5} />
+          <Text mt={3} variant="secondary">
+            I am seven and a half moths of pregnant and cannot wait to have my
+            baby boy in my arms. I discovered Grabr through social media and I
+            thought it was a great Idea, so I decided to try it. Everything
+            worked out, so I will continue ordering items for my baby. My first
+            order was a Kiddy Care Diaper Bag Backpack Multi Function, and I am
+            so happy that I paid half of what it sells for on MercadoLibre.
           </Text>
         </TabPanel>
         <TabPanel>
-          <Text as="h3" fontSize="2xl" fontWeight="600">
-            Ayse Ceren
+          <Text as="h3" fontSize="hb1" fontWeight="600">
+            Emmanuelle Tamaru
           </Text>
-          <Rating fontSize="2xl" readonly rating={3} />
-          <Text variant="secondary">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book. It has survived not
-            only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged. It was popularised in the 1960s
-            with the release of Letraset sheets containing Lorem Ipsum passages,
-            and more recently with desktop publishing software like Aldus
-            PageMaker including versions of Lorem Ipsum.
+          <Rating fontSize="hb1" readonly rating={5} />
+          <Text mt={3} variant="secondary">
+            Do you know how a child looks when she get candy before lunch?
+            That’s me today with my new YSL purse. I got it from Grabr app and I
+            was really surprised how cheaper It was! Even better is the
+            plataform purpose of connecting people that wants a product from
+            abroad to those that are traveling to their destination.
           </Text>
         </TabPanel>
         <TabPanel>
-          <Text as="h3" fontSize="2xl" fontWeight="600">
-            It was a great experience
+          <Text as="h3" fontSize="hb1" fontWeight="600">
+            Ksenia Sokolyanskaya
           </Text>
-          <Text variant="secondary">
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industry's standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book. It has survived not
-            only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged. It was popularised in the 1960s
-            with the release of Letraset sheets containing Lorem Ipsum passages,
-            and more recently with desktop publishing software like Aldus
-            PageMaker including versions of Lorem Ipsum.
+          <Rating fontSize="hb1" readonly rating={5} />
+          <Text variant="secondary" mt={3}>
+            It was a real trouble finding Arizona Beverages in Russia. We have
+            this drink in Russia, but in other flavors. Amazon only sells
+            packages of 30 cans. It would be more money saving to go to the US,
+            have an Arizona drink somewhere on Manhattan than bring 30kg to
+            Moscow. I found the item I needed in Kazahstan, but in a local shop
+            that does not ship to Moscow. Than Grabr came in handy. I got a
+            whole package of Watermelon Arizona cans delivered to me.
           </Text>
         </TabPanel>
       </TabPanels>

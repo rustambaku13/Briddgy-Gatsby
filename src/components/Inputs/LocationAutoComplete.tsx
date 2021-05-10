@@ -94,7 +94,7 @@ export const LocationAutoComplete = chakra(
         <Box
           hidden={hidden}
           tabIndex={0}
-          className="options-autocomplete"
+          className="options-autocomplete scrollbar"
           aria-autocomplete="list"
           bg="white"
           borderWidth="1px"
@@ -108,9 +108,11 @@ export const LocationAutoComplete = chakra(
           ) : (
             results.map((location: Location, index) => {
               return (
-                <Box
+                <Flex
+                  textAlign="center"
                   as="button"
                   fontSize="1em"
+                  alignItems="center"
                   type="button"
                   onClick={selectHandler}
                   data-type="city"
@@ -120,13 +122,16 @@ export const LocationAutoComplete = chakra(
                 >
                   <LocationIcon />
                   <Text as="h5">
-                    {trimCityEmpty(location.city)}
+                    {trimCityEmpty(location.city)}{" "}
                     <Text ml="auto" as="span" variant="secondary">
                       {location.country}
                     </Text>
                   </Text>
-                  <CountryFlagsLazy />
-                </Box>
+                  <CountryFlagsLazy
+                    code={location.code}
+                    country={location.country}
+                  />
+                </Flex>
               )
             })
           )}

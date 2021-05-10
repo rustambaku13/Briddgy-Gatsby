@@ -1,17 +1,28 @@
 import { AxiosResponse } from "axios"
+import moment from "moment"
 import { Orders } from "../types/orders"
 import { Trip, Trips } from "../types/trip"
-import { axios_normal } from "./index"
+import { axios_normal, FRONTEND_DATE_FORMAT } from "./index"
 export async function getTrips(params = {}): Promise<AxiosResponse<Trips>> {
-  return axios_normal.get(`/trip-order/api/trips/`, { params })
+  const data = await axios_normal.get(`/trip-order/api/trips/`, { params })
+  data.data.results.map((item: Trip) => {
+    item.date = moment(item.date).format(FRONTEND_DATE_FORMAT)
+  })
+  return data
 }
 export async function getMyTrips(page = 1): Promise<AxiosResponse<Trips>> {
-  return await axios_normal.get(`/trip-order/api/my/trips/`, {
+  const data = await axios_normal.get(`/trip-order/api/my/trips/`, {
     params: { page },
   })
+  data.data.results.map((item: Trip) => {
+    item.date = moment(item.date).format(FRONTEND_DATE_FORMAT)
+  })
+  return data
 }
 export async function getTrip(id): Promise<AxiosResponse<Trip>> {
-  return await axios_normal.get(`/trip-order/api/trips/${id}/`)
+  const data = await axios_normal.get(`/trip-order/api/trips/${id}/`)
+  data.data.date = moment(data.data.date).format(FRONTEND_DATE_FORMAT)
+  return data
 }
 
 export async function emailSuggestedOrderers(source_id, dest_id) {

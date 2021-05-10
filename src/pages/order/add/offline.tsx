@@ -88,7 +88,7 @@ const Summary = ({ files, pageChange, back, page, adding }) => {
         <Heading mb={8} fontSize="hb1">
           3. Order Summary
         </Heading>
-        <ImageViewer images={files.current}>
+        <ImageViewer images={files}>
           <Flex>
             <ImageViewer.ImageThumbnails />
             <Center flexGrow={1}>
@@ -267,7 +267,7 @@ const Itinerary = ({ files, pageChange, back }) => {
   )
 }
 
-const ProductDetails = ({ pageChange, files }) => {
+const ProductDetails = ({ pageChange, files, setFiles }) => {
   const { register, errors, watch, getValues } = useFormContext()
   const item_price = watch("item_price")
   const price = watch("price")
@@ -290,7 +290,11 @@ const ProductDetails = ({ pageChange, files }) => {
         <FormControl w="100%" mb={7}>
           <FormLabel>Product Images</FormLabel>
           <InputGroup>
-            <GroupImageUploader files={files} maxCount={3} />
+            <GroupImageUploader
+              setFiles={setFiles}
+              files={files}
+              maxCount={3}
+            />
           </InputGroup>
           <Text color="danger.base" as="small">
             {errors.files?.message}
@@ -418,7 +422,8 @@ const ProductDetails = ({ pageChange, files }) => {
 const AddOrderPage = ({ location }: PageProps) => {
   const [page, setPage] = useState(0)
   const [adding, setAdding] = useState(false) // Order is being added
-  const files = useRef([])
+
+  const [files, setFiles] = useState([])
   const methods = useForm()
   const {
     register,
@@ -527,7 +532,11 @@ const AddOrderPage = ({ location }: PageProps) => {
             <Tabs index={page}>
               <TabPanels>
                 <TabPanel px={0} display="flex" flexWrap="wrap">
-                  <ProductDetails files={files} pageChange={pageChange} />
+                  <ProductDetails
+                    files={files}
+                    setFiles={setFiles}
+                    pageChange={pageChange}
+                  />
                 </TabPanel>
                 <TabPanel px={0} display="flex" flexWrap="wrap">
                   <Itinerary

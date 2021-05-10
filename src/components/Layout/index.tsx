@@ -20,6 +20,10 @@ export default ({ children }) => {
       <CompleteProfileModal />
       <AreYouSure />
       <LoginModalForm />
+      <Box></Box>
+      <div id="top-progress">
+        <span className="progress-bar"></span>
+      </div>
       <Router>
         <MyTripPage path="/trips/:tripId" />
         <MyOrderPage path="/orders/:orderId" />

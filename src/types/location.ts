@@ -1,7 +1,9 @@
 export interface Location {
-  _id: {
+  _id?: {
     $oid: string
   }
+  pk: string
+  code: string
   type: "CITY" | "COUNTRY"
   country: string
   city?: string

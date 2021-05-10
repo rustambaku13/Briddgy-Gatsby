@@ -31,7 +31,7 @@ import {
 import { TripContractsStateCard } from "../../components/Cards/Trip/TripContractsStateCard"
 import Footer from "../../components/Footer"
 import { Empty } from "../../components/Misc/Empty"
-import { Loader } from "../../components/Misc/Loader"
+import { BigLoader, Loader } from "../../components/Misc/Loader"
 import { StepsContainer } from "../../components/Misc/Steps"
 import NavbarDefault from "../../components/Navbar"
 import { BottomNavbar } from "../../components/Navbar/BottomNavbar"
@@ -45,7 +45,6 @@ import { Contracts, defaultContracts } from "../../types/contract"
 import { defaultOrders, Orders } from "../../types/orders"
 import { defaultTrips, Trip, Trips } from "../../types/trip"
 import { getCountryFromCode, tripCityAnywhere } from "../../utils/misc"
-
 const MyTripPage = ({ trip }: { trip: Trip }) => {
   const [suggested, setSuggested]: [Orders, any] = useState(defaultOrders)
   const [proposals, setProposals]: [Contracts, any] = useState(defaultContracts)
@@ -238,7 +237,7 @@ const MyTripPage = ({ trip }: { trip: Trip }) => {
     </>
   )
 }
-const PublicPage = ({ trip }) => {
+const PublicPage = ({ trip }: { trip: Trip }) => {
   const [similarTrips, setSimilarTrips]: [Trips, any] = useState(defaultTrips)
   const [loading, setLoading] = useState(false)
   useEffect(() => {
@@ -257,11 +256,9 @@ const PublicPage = ({ trip }) => {
   return (
     <>
       <Helmet
-        title={`Briddgy | ${tripCityAnywhere(
-          trip.src.details[0].en.city
-        )}, ${getCountryFromCode(trip.src.countryCode)} - ${tripCityAnywhere(
-          trip.dest.details[0].en.city
-        )}, ${getCountryFromCode(trip.dest.countryCode)}`}
+        title={`Briddgy | ${tripCityAnywhere(trip.src.city)}, ${
+          trip.src.country
+        } - ${tripCityAnywhere(trip.dest.city)}, ${trip.dest.country}`}
         defer={false}
       >
         <meta
@@ -282,10 +279,8 @@ const PublicPage = ({ trip }) => {
           Similar Trips
         </Heading>
         <Text mb={10} textAlign="center" variant="light" fontSize="600">
-          {tripCityAnywhere(trip.src.details[0].en.city)},{" "}
-          {getCountryFromCode(trip.src.countryCode)} -{" "}
-          {tripCityAnywhere(trip.dest.details[0].en.city)},{" "}
-          {getCountryFromCode(trip.dest.countryCode)}
+          {tripCityAnywhere(trip.src.city)}, {trip.src.country} -{" "}
+          {tripCityAnywhere(trip.src.city)}, {trip.dest.country}
         </Text>
         {loading ? (
           <Loader />
@@ -317,7 +312,25 @@ const SpecificTripPage = observer(({ tripId }) => {
       })
       .finally(() => {})
   }, [tripId])
-  if (!UserStore.complete || !trip) return <Loader />
+  if (!UserStore.complete || !trip)
+    return (
+      <>
+        <Helmet title={`Briddgy | Trip Page`} defer={false}>
+          <meta
+            name="description"
+            content={`View available trip. Briddgy postless, peer-to-peer delivery platform. Worldwide shopping with fastest and cheapest delivery. Travel with minimum costs and earn money.`}
+          />
+        </Helmet>
+        <NavigationContext.Provider value={{ page: "trips" }}>
+          <NavbarDefault />
+          <BottomNavbar />
+        </NavigationContext.Provider>
+        <Box py={10} h="100%" w="100vw">
+          <BigLoader />
+        </Box>
+        <Footer />
+      </>
+    )
   if (trip.owner.id == UserStore.me?.id) {
     return <MyTripPage trip={trip} />
   }

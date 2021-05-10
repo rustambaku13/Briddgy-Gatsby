@@ -62,16 +62,12 @@ export const BigTripCard = chakra(
           />
         </Box>
         <Heading fontWeight="700" fontSize={["hb1", "hb2"]} as="h2">
-          {tripCityAnywhere(trip.src.details[0].en.city)},{" "}
-          {getCountryFromCode(trip.src.countryCode)}
+          {tripCityAnywhere(trip.src.city)}, {trip.src.country}
         </Heading>
         <Heading fontWeight="700" fontSize={["hb1", "hb2"]} as="h2">
-          {tripCityAnywhere(trip.dest.details[0].en.city)},
-          {getCountryFromCode(trip.dest.countryCode)}
+          {tripCityAnywhere(trip.dest.city)},{trip.dest.country}
         </Heading>
-        <Text fontWeight="700">
-          {moment(trip.date).format(FRONTEND_DATE_FORMAT)}
-        </Text>
+        <Text fontWeight="700">{trip.date}</Text>
         <Text variant="lighter">{trip.description}</Text>
         <Flex flexWrap="wrap" alignItems="center" w="100%">
           <Avatar mr={2} user={trip.owner} />

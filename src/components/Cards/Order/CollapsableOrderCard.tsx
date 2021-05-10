@@ -121,15 +121,15 @@ export const CollapsableOrderCard = chakra(
                   <Text as="span" variant="secondary">
                     From{" "}
                   </Text>
-                  {`${trimCityEmpty(
-                    orderData.src.details[0].en.city
-                  )}${getCountryFromCode(orderData.src.countryCode)}`}{" "}
+                  {`${trimCityEmpty(orderData.src.city)}${
+                    orderData.src.country
+                  }`}{" "}
                   <Text as="span" variant="secondary">
                     to{" "}
                   </Text>
-                  {`${trimCityEmpty(
-                    orderData.dest.details[0].en.city
-                  )}${getCountryFromCode(orderData.dest.countryCode)}`}
+                  {`${trimCityEmpty(orderData.dest.city)}${
+                    orderData.dest.country
+                  }`}
                 </Text>
               </Box>
               <Box mb={5}>
@@ -227,9 +227,7 @@ export const CollapsableOrderCardwTrip = chakra(
               <Text as="label" variant="light">
                 Travel dates
               </Text>
-              <Text>
-                {moment(contract.trip.date).format(FRONTEND_DATE_FORMAT)}
-              </Text>
+              <Text>{contract.trip.date}</Text>
             </Box>
             <Box mb={5}>
               <Text as="label" variant="light">
@@ -239,15 +237,15 @@ export const CollapsableOrderCardwTrip = chakra(
                 <Text fontWeight="400" as="span" variant="secondary">
                   From{" "}
                 </Text>
-                {`${trimCityEmpty(
-                  contract.trip.src.details[0].en.city
-                )}${getCountryFromCode(contract.trip.src.countryCode)}`}{" "}
+                {`${trimCityEmpty(contract.trip.src.city)}${
+                  contract.trip.src.country
+                }`}{" "}
                 <Text fontWeight="400" as="span" variant="secondary">
                   to{" "}
                 </Text>
-                {`${trimCityEmpty(
-                  contract.trip.dest.details[0].en.city
-                )}${getCountryFromCode(contract.trip.dest.countryCode)}`}
+                {`${trimCityEmpty(contract.trip.dest.city)}${
+                  contract.trip.dest.country
+                }`}
               </Text>
             </Box>
             <SendMessage user={contract.trip.owner} size="sm" variant="primary">

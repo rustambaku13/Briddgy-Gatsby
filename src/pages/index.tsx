@@ -43,15 +43,14 @@ const Home = ({ data }) => {
       <BottomNavbar />
       <Container
         minH="700px"
-        py={[14, 14, "120px"]}
         w="100%"
         maxW="full"
         mb={[20]}
         as="main"
-        bgGradient="linear(to-t,crayolaGreen.base,tealBlue.dark)"
+        // bgGradient="linear(to-t,crayolaGreen.base,tealBlue.dark)"
         className="landing-header"
       >
-        <Box mx="auto" w="100%" maxW="container.xl">
+        <Box pl={[0, 0, 10]} pt={[14, 14, "120px"]} w="100%">
           <Heading
             color="white"
             mb={12}
@@ -61,16 +60,19 @@ const Home = ({ data }) => {
           >
             Save up to{" "}
             <TextAnimate
-              delay={5}
+              delay={8000}
               texts={["40%", "55%", "35%", "45%", "60%"]}
             />{" "}
             <br />
             by ordering from{" "}
-            <TextAnimate delay={4} texts={["USA", "UK", "China", "Germany"]} />
+            <TextAnimate
+              delay={4000}
+              texts={["USA", "UK", "China", "Germany"]}
+            />
             <br />
             delivered by traveler going to{" "}
             <TextAnimate
-              delay={3}
+              delay={2000}
               texts={[
                 "Argentina",
                 "Brazil",
@@ -85,11 +87,11 @@ const Home = ({ data }) => {
             We connect travelers and orderers, making delivery more accessible
           </Text>
           <Flex>
-            <Box px={3}>
+            <Box w="100%">
               <Link to="/order">
                 <Button
                   mb={5}
-                  w={["100%", "auto"]}
+                  w={["100%", "100%", "auto"]}
                   mr={4}
                   variant="outline"
                   size="lg"
@@ -101,7 +103,7 @@ const Home = ({ data }) => {
                 <Button
                   color="text.dark"
                   mb={5}
-                  w={["100%", "auto"]}
+                  w={["100%", "100%", "auto"]}
                   variant="outline"
                   size="lg"
                 >
@@ -290,7 +292,7 @@ const Home = ({ data }) => {
               scrollbar={{ draggable: true }}
               spaceBetween={40}
               breakpoints={{
-                450: {
+                500: {
                   slidesPerView: 2,
                 },
                 768: {
@@ -376,13 +378,20 @@ const Home = ({ data }) => {
 
 export const query = graphql`
   query {
-    landing_image: file(relativePath: { eq: "landing_image.jpg" }) {
-      childImageSharp {
-        fluid {
-          ...GatsbyImageSharpFluid
-        }
-      }
-    }
+    # landing_plane: file(relativePath: { eq: "langin-plane.png" }) {
+    #   childImageSharp {
+    #     fluid {
+    #       ...GatsbyImageSharpFluid
+    #     }
+    #   }
+    # }
+    # shopping_map: file(relativePath: { eq: "landing_image.jpg" }) {
+    #   childImageSharp {
+    #     fluid {
+    #       ...GatsbyImageSharpFluid
+    #     }
+    #   }
+    # }
     overlay: file(relativePath: { eq: "landing-overlay.png" }) {
       childImageSharp {
         fixed(width: 500) {
@@ -397,7 +406,7 @@ export const query = graphql`
         }
       }
     }
-    image2: file(relativePath: { eq: "shopping_woman.png" }) {
+    image2: file(relativePath: { eq: "shopping_man.jpg" }) {
       childImageSharp {
         fluid {
           ...GatsbyImageSharpFluid

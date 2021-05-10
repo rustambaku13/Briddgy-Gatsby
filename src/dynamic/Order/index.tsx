@@ -40,7 +40,7 @@ import { PublicMediumTripCardProposal } from "../../components/Cards/Trip/Medium
 import Footer from "../../components/Footer"
 import { Empty } from "../../components/Misc/Empty"
 import { Hint } from "../../components/Misc/Hint"
-import { Loader } from "../../components/Misc/Loader"
+import { BigLoader, Loader } from "../../components/Misc/Loader"
 import { StepsContainer } from "../../components/Misc/Steps"
 import NavbarDefault from "../../components/Navbar"
 import { BottomNavbar } from "../../components/Navbar/BottomNavbar"
@@ -467,7 +467,26 @@ const SpecificOrderPage = observer(({ orderId }) => {
       .finally(() => {})
   }, [orderId])
 
-  if (!UserStore.complete || !order) return <Loader />
+  if (!UserStore.complete || !order) {
+    return (
+      <>
+        <Helmet title={`Briddgy | Order Page`} defer={false}>
+          <meta
+            name="description"
+            content={`View available order. Briddgy postless, peer-to-peer delivery platform. Worldwide shopping with fastest and cheapest delivery. Travel with minimum costs and earn money.`}
+          />
+        </Helmet>
+        <NavigationContext.Provider value={{ page: "orders" }}>
+          <NavbarDefault />
+          <BottomNavbar />
+        </NavigationContext.Provider>
+        <Box py={10} h="100%" w="100vw">
+          <BigLoader />
+        </Box>
+        <Footer />
+      </>
+    )
+  }
   if (order.owner.id == UserStore.me?.id) {
     return <MyOrderPage order={order} />
   }

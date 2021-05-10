@@ -10,17 +10,17 @@ import {
 } from "@chakra-ui/react"
 import React from "react"
 import { StepCircle } from "../Misc/StepCircle"
-import card from "../../images/debit-cardicon.svg"
-import earth from "../../images/earthicon.svg"
+import url from "../../images/url.svg"
+import pay from "../../images/secure_payment.svg"
 import note from "../../images/noteicon.svg"
-import plane from "../../images/planeicon.svg"
+import receive from "../../images/receive.svg"
 import { Link } from "gatsby-plugin-intl"
 
 export const HowToOrder = () => {
   return (
     <Container py="60px" mb={[20, 20, "150px"]} maxW="full" as="section">
       <Heading mb="80px" fontSize="hb3" fontWeight="700" textAlign="center">
-        How to Shop for anywhere with low costs
+        How to Shop abroad using Briddgy
       </Heading>
       <SimpleGrid
         spacing={25}
@@ -37,7 +37,7 @@ export const HowToOrder = () => {
             w="120px"
             step={1}
           >
-            <CImg alt="Add Trip" height="60px" width="60px" src={earth} />
+            <CImg alt="Add Trip" height="60px" width="60px" src={url} />
           </StepCircle>
           <Heading
             mb={5}
@@ -46,11 +46,10 @@ export const HowToOrder = () => {
             fontWeight="700"
             as="h4"
           >
-            Add Trip
+            Add Order
           </Heading>
           <Text variant="secondary" textAlign="center">
-            Start by adding your trip information to see requested orders. It
-            only takes 1 minute
+            Enter the URL or the name of the item that you want from abroad
           </Text>
         </Box>
         <Box>
@@ -71,10 +70,11 @@ export const HowToOrder = () => {
             fontWeight="700"
             as="h4"
           >
-            Make offers
+            Make/receive offers
           </Heading>
           <Text variant="secondary" textAlign="center">
-            Offer delivery offers to the orderers, contact and chat with them.
+            Make offers to travelers or wait for travelers to contact you to
+            bring your order.
           </Text>
         </Box>
         <Box>
@@ -86,12 +86,7 @@ export const HowToOrder = () => {
             h="120px"
             w="120px"
           >
-            <CImg
-              alt="Buy and deliver"
-              height="60px"
-              width="60px"
-              src={plane}
-            />
+            <CImg alt="Buy and deliver" height="60px" width="60px" src={pay} />
           </StepCircle>
           <Heading
             mb={5}
@@ -100,11 +95,10 @@ export const HowToOrder = () => {
             fontWeight="700"
             as="h4"
           >
-            Buy and deliver
+            Secure payment
           </Heading>
           <Text variant="secondary" textAlign="center">
-            Depending on the order type you might need to buy & deliver or
-            simply grab & deliver the porduct.
+            Secure the payment for the product price and travelers reward
           </Text>
         </Box>
         <Box>
@@ -116,7 +110,7 @@ export const HowToOrder = () => {
             h="120px"
             w="120px"
           >
-            <CImg alt="Earn money" height="60px" width="60px" src={card} />
+            <CImg alt="Earn money" height="60px" width="60px" src={receive} />
           </StepCircle>
           <Heading
             mb={5}
@@ -125,17 +119,16 @@ export const HowToOrder = () => {
             fontWeight="700"
             as="h4"
           >
-            Earn money
+            Get your item
           </Heading>
           <Text variant="secondary" textAlign="center">
-            After you have delivered the item you are going to receive the
-            payment.
+            Meet with your traveler in a public place and get your item.
           </Text>
         </Box>
       </SimpleGrid>
 
       <LinkBox mt={16} mx="auto" w="300px">
-        <Link to="/travel">
+        <Link to="/order">
           <Button mx="auto" w="100%" variant="primary_dark">
             Order & Save
           </Button>

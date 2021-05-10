@@ -16,7 +16,7 @@ import {
 } from "@chakra-ui/react"
 import { graphql } from "gatsby"
 import { navigate } from "gatsby-plugin-intl"
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { Helmet } from "react-helmet"
 import { FormProvider, useForm } from "react-hook-form"
 import { getOrders } from "../../api/order"
@@ -34,14 +34,17 @@ import RotateIcon from "../../icons/Rotate"
 import { NavigationContext } from "../../providers/navPage"
 import { defaultOrders, Order, Orders } from "../../types/orders"
 import { filterObject, swapItinerary } from "../../utils/misc"
-const OrdersPage = ({ data, location }) => {
+import OrderPage from "../../dynamic/Order"
+import { Router } from "@reach/router"
+
+const MainOrdersPage = ({ data, location }) => {
   const methods = useForm()
   const { register, handleSubmit, setValue, getValues } = methods
   const [results, setResults]: [Orders, any] = useState(defaultOrders)
   const [loading, setLoading] = useState(true)
-  const updateFilters = () => {
-    // Function to refetch new page based on current form value
-    setLoading(true)
+  const page = useRef(1)
+
+  const getUrlParams = () => {
     const a = new URLSearchParams(location.search)
     const b = {}
     for (const [key, value] of a.entries()) {
@@ -49,8 +52,28 @@ const OrdersPage = ({ data, location }) => {
       setValue(key, value)
       b[key] = value
     }
+    return b
+  }
+
+  const updateFilters = () => {
+    // Function to refetch new page based on current form value
+    setLoading(true)
+    const b = getUrlParams()
     getOrders(b)
       .then(({ data }) => {
+        setResults(data)
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }
+  const nextBatch = () => {
+    page.current++
+    setLoading(true)
+    const b = getUrlParams()
+    getOrders({ ...b, page: page.current })
+      .then(({ data }) => {
+        data.results.unshift(...results.results)
         setResults(data)
       })
       .finally(() => {
@@ -61,6 +84,7 @@ const OrdersPage = ({ data, location }) => {
   const onSubmit = data => {
     const filteredData = filterObject(data)
     const searchParams = new URLSearchParams(filteredData)
+    page.current = 1
     navigate(`.?${searchParams.toString()}`)
   }
 
@@ -154,7 +178,7 @@ const OrdersPage = ({ data, location }) => {
           </Flex>
         </Box>
       </Container>
-      <Container minH="400px" pt="40px" as="section" maxW="full" bg="gray.100">
+      <Container minH="400px" py="40px" as="section" maxW="full" bg="gray.100">
         <Flex mx="auto" maxW="container.md" justifyContent="space-between">
           <Text color="text.medium">{results.count} ORDERS</Text>
           <Box>
@@ -197,19 +221,18 @@ const OrdersPage = ({ data, location }) => {
             </Menu>
           </Box>
         </Flex>
-        {loading ? null : results.results.length ? (
+        {results.results.length ? (
           <VStack maxW="container.md" w="100%" mx="auto" py={9} spacing={10}>
             {results.results.map((order: Order) => (
               <PublicMediumOrderCard mx="auto" orderData={order} />
             ))}
           </VStack>
-        ) : (
-          <Empty mb="50px" />
-        )}
+        ) : null}
+        {results.results.length == 0 && !loading ? <Empty mb="50px" /> : null}
         {loading ? <Loader mx="auto" /> : null}
         {loading == false && results.next != null ? (
           <Box w="200px" mx="auto">
-            <Button variant="outline" bg="white" w="200px">
+            <Button onClick={nextBatch} variant="outline" bg="white" w="200px">
               Load More
             </Button>
           </Box>
@@ -243,7 +266,14 @@ const OrdersPage = ({ data, location }) => {
     </FormProvider>
   )
 }
-
+const OrdersPage = props => {
+  return (
+    <Router prefix="/orders">
+      <MainOrdersPage default {...props} />
+      <OrderPage path="/:orderId" {...props} />
+    </Router>
+  )
+}
 export const query = graphql`
   query {
     testimonials: allMarkdownRemark(

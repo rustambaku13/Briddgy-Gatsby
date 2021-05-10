@@ -14,9 +14,10 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react"
+import { Router } from "@reach/router"
 import { graphql } from "gatsby"
 import { navigate } from "gatsby-plugin-intl"
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useRef, useState } from "react"
 import { Helmet } from "react-helmet"
 import { FormProvider, useForm } from "react-hook-form"
 import { getTrips } from "../../api/trip"
@@ -24,7 +25,7 @@ import { TestimonialLinkCard } from "../../components/Cards/Testimonial/Testimon
 import { PublicMediumTripCard } from "../../components/Cards/Trip/MediumTripCards"
 import Footer from "../../components/Footer"
 import { LocationAutoComplete } from "../../components/Inputs/LocationAutoComplete"
-import { HowToEarnMoney } from "../../components/Layout/HowToEarnMoney"
+import { HowToOrder } from "../../components/Layout/HowToOrder"
 import { Empty } from "../../components/Misc/Empty"
 import { Loader } from "../../components/Misc/Loader"
 import NavbarDefault from "../../components/Navbar"
@@ -34,6 +35,7 @@ import RotateIcon from "../../icons/Rotate"
 import { NavigationContext } from "../../providers/navPage"
 import { defaultTrips, Trip, Trips } from "../../types/trip"
 import { filterObject, swapItinerary } from "../../utils/misc"
+import TripPage from "../../dynamic/Trip"
 
 /**
  * Trip Page /trips
@@ -42,12 +44,14 @@ import { filterObject, swapItinerary } from "../../utils/misc"
  * @returns
  */
 
-const TripsPage = ({ data, location }) => {
+const MainTripsPage = ({ data, location }) => {
   const methods = useForm()
   const { register, handleSubmit, setValue } = methods
   const [results, setResults]: [Trips, any] = useState(defaultTrips)
   const [loading, setLoading] = useState(true)
-  const updateFilters = () => {
+  const page = useRef(1)
+
+  const getUrlParams = () => {
     const a = new URLSearchParams(location.search)
     const b = {}
     for (const [key, value] of a.entries()) {
@@ -55,6 +59,10 @@ const TripsPage = ({ data, location }) => {
       setValue(key, value)
       b[key] = value
     }
+    return b
+  }
+  const updateFilters = () => {
+    const b = getUrlParams()
     setLoading(true)
     getTrips(b)
       .then(({ data }) => {
@@ -64,12 +72,27 @@ const TripsPage = ({ data, location }) => {
         setLoading(false)
       })
   }
-  useEffect(updateFilters, [location])
+  const nextBatch = () => {
+    page.current++
+    setLoading(true)
+    const b = getUrlParams()
+    getTrips({ ...b, page: page.current })
+      .then(({ data }) => {
+        data.results.unshift(...results.results)
+        setResults(data)
+      })
+      .finally(() => {
+        setLoading(false)
+      })
+  }
+
   const onSubmit = data => {
     const filteredData = filterObject(data)
     const searchParams = new URLSearchParams(filteredData)
     navigate(`.?${searchParams.toString()}`)
   }
+
+  useEffect(updateFilters, [location])
   return (
     <FormProvider {...methods}>
       <Helmet title="Briddgy | Available Travelers" defer={false}>
@@ -159,7 +182,7 @@ const TripsPage = ({ data, location }) => {
           </Flex>
         </Box>
       </Container>
-      <Container minH="400px" pt="40px" as="section" maxW="full" bg="gray.100">
+      <Container minH="400px" py="40px" as="section" maxW="full" bg="gray.100">
         <Flex mx="auto" maxW="container.md" justifyContent="space-between">
           <Text variant="secondary">{results.count} TRIPS</Text>
           <Box>
@@ -202,26 +225,25 @@ const TripsPage = ({ data, location }) => {
             </Menu>
           </Box>
         </Flex>
-        {loading ? null : results.results.length ? (
+        {results.results.length ? (
           <VStack maxW="container.md" w="100%" mx="auto" py={9} spacing={10}>
             {results.results.map((trip: Trip) => (
               <PublicMediumTripCard mx="auto" trip={trip} />
             ))}
           </VStack>
-        ) : (
-          <Empty mb="50px" />
-        )}
+        ) : null}
+        {results.results.length == 0 && !loading ? <Empty mb="50px" /> : null}
         {loading ? <Loader mx="auto" /> : null}
         {loading == false && results.next != null ? (
           <Box w="200px" mx="auto">
-            <Button variant="outline" bg="white" w="200px">
+            <Button onClick={nextBatch} variant="outline" bg="white" w="200px">
               Load More
             </Button>
           </Box>
         ) : null}
       </Container>
 
-      <HowToEarnMoney />
+      <HowToOrder />
       <Container my="80px" pt={8} maxW="full" as="section">
         <Heading mb={10} fontSize="hb3" fontWeight="700" textAlign="center">
           Why our shoppers love Briddgy
@@ -247,6 +269,15 @@ const TripsPage = ({ data, location }) => {
 
       <Footer />
     </FormProvider>
+  )
+}
+
+const TripsPage = props => {
+  return (
+    <Router prefix="/trips">
+      <MainTripsPage default {...props} />
+      <TripPage path="/:tripId" {...props} />
+    </Router>
   )
 }
 
