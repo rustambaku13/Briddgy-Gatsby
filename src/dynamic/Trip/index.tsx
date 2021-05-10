@@ -118,11 +118,9 @@ const MyTripPage = ({ trip }: { trip: Trip }) => {
   return (
     <>
       <Helmet
-        title={`Briddgy | ${tripCityAnywhere(
-          trip.src.details[0].en.city
-        )}, ${getCountryFromCode(trip.src.countryCode)} - ${tripCityAnywhere(
-          trip.dest.details[0].en.city
-        )}, ${getCountryFromCode(trip.dest.countryCode)}`}
+        title={`Briddgy | ${tripCityAnywhere(trip.src.city)}, ${
+          trip.src.country
+        } - ${tripCityAnywhere(trip.dest.city)}, ${trip.dest.country}`}
         defer={false}
       >
         <meta

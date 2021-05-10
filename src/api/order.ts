@@ -5,16 +5,23 @@ import { Orders } from "../types/orders"
 import { axios_normal, FRONTEND_DATE_FORMAT } from "./index"
 import { Reviews } from "../types/review"
 import moment from "moment"
+import { getAffiliateLink } from "../utils/affiliate"
 export async function getOrders(params = {}): Promise<AxiosResponse<Orders>> {
   const data = await axios_normal.get(`/trip-order/api/orders/`, { params })
   data.data.results.map((item: Order) => {
     item.date = moment(item.date).format(FRONTEND_DATE_FORMAT)
+    if (item.order_url) {
+      item.order_url = getAffiliateLink(item.order_url)
+    }
   })
   return data
 }
 export async function getOrder(id): Promise<AxiosResponse<Order>> {
   const data = await axios_normal.get(`/trip-order/api/orders/${id}/`)
   data.data.date = moment(data.data.date).format(FRONTEND_DATE_FORMAT)
+  if (data.data.order_url) {
+    data.data.order_url = getAffiliateLink(data.data.order_url)
+  }
   return data
 }
 export async function getMyOrders(page = 1): Promise<AxiosResponse<Orders>> {
@@ -23,6 +30,9 @@ export async function getMyOrders(page = 1): Promise<AxiosResponse<Orders>> {
   })
   data.data.results.map((item: Order) => {
     item.date = moment(item.date).format(FRONTEND_DATE_FORMAT)
+    if (item.order_url) {
+      item.order_url = getAffiliateLink(item.order_url)
+    }
   })
   return data
 }

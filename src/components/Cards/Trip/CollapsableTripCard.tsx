@@ -39,13 +39,13 @@ export const CollapsableTripCard = chakra(
               as="h2"
               h="3rem"
             >
-              {tripCityAnywhere(trip.src.details[0].en.city)},{" "}
-              {getCountryFromCode(trip.src.countryCode)} -{" "}
-              {tripCityAnywhere(trip.dest.details[0].en.city)},
-              {getCountryFromCode(trip.dest.countryCode)}
+              {tripCityAnywhere(trip.src.city)},{" "}
+              {trip.src.country} -{" "}
+              {tripCityAnywhere(trip.dest.city)},
+              {trip.dest.country}
             </Text>
             <Text fontSize="500" color="text.medium" fontWeight="700" as="h2">
-              {moment(trip.date).format(FRONTEND_DATE_FORMAT)}
+              {trip.date}
             </Text>
           </Box>
         </HStack>

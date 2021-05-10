@@ -136,10 +136,10 @@ export const MakeProposaltoOrderModal = observer(() => {
             {page == 0
               ? `You have ${filteredTrips.results.length} suitable Trips`
               : `${trimCityEmpty(
-                  selectedTrip.current.src.details[0].en.city
-                )} ${selectedTrip.current.src.countryCode} - ${trimCityEmpty(
-                  selectedTrip.current.dest.details[0].en.city
-                )} ${selectedTrip.current.dest.countryCode}`}
+                  selectedTrip.current.src.city
+                )} ${selectedTrip.current.src.country} - ${trimCityEmpty(
+                  selectedTrip.current.dest.city
+                )} ${selectedTrip.current.dest.country}`}
           </ModalHeader>
           <ModalCloseButton />
           <ModalBody fontSize="sm">
@@ -163,12 +163,12 @@ export const MakeProposaltoOrderModal = observer(() => {
                     <div key={trip.id}>
                       <HStack my={2} spacing={4}>
                         <Text flex={1} variant="secondary">
-                          {trimCityEmpty(trip.src.details[0].en.city)}
-                          {trip.src.countryCode}
+                          {trimCityEmpty(trip.src.city)}
+                          {trip.src.country}
                         </Text>
                         <Text flex={1} variant="secondary">
-                          {trimCityEmpty(trip.dest.details[0].en.city)}
-                          {trip.dest.countryCode}
+                          {trimCityEmpty(trip.dest.city)}
+                          {trip.dest.country}
                         </Text>
                         <Text flex={1} variant="secondary">
                           {trip.weight_limit} kg
