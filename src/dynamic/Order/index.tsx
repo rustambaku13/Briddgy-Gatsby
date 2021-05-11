@@ -112,13 +112,13 @@ const MyOrderThridPage = ({ loading }) => {
               review={context.contract.review}
             />
           ) : (
-            <ReviewUserCard
-              mb={5}
-              bg="white"
-              borderRadius="xl"
-              borderWidth="1px"
-              p={6}
-            />
+            context.contract.state=='DLV' || context.contract.state=='FIN'?<ReviewUserCard
+            mb={5}
+            bg="white"
+            borderRadius="xl"
+            borderWidth="1px"
+            p={6}
+          />:null
           )}
         </Box>
         <Box w={["100%", "100%", "50%"]}>
@@ -142,6 +142,7 @@ const MyOrderThridPage = ({ loading }) => {
                   description: "Confirm that your have received the product",
                   children: (
                     <Button
+                      d={step==2?"none":"block"}
                       isLoading={isLoading}
                       onClick={() => {
                         LayoutStore.alertDialogModalOpen({

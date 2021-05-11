@@ -24,6 +24,10 @@ export async function getTrip(id): Promise<AxiosResponse<Trip>> {
   data.data.date = moment(data.data.date).format(FRONTEND_DATE_FORMAT)
   return data
 }
+export async function removeTrip(id){
+  return await axios_normal.delete(`/trip-order/api/trips/${id}/`)
+
+}
 
 export async function emailSuggestedOrderers(source_id, dest_id) {
   return await axios_normal.get(
@@ -51,7 +55,7 @@ export async function addTrip({
   description,
   weight_limit,
 }) {
-  return await axios_normal.post(`/trip-order/api/trips/`, {
+  const data= await axios_normal.post(`/trip-order/api/trips/`, {
     date: date,
     dest_id,
     dest_code,
@@ -60,4 +64,6 @@ export async function addTrip({
     description,
     weight_limit,
   })
+  data.data.date = moment(data.data.date).format(FRONTEND_DATE_FORMAT)
+  return data
 }

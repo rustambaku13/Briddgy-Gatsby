@@ -65,13 +65,13 @@ export const ToOrderProposalCard = chakra(
         <Text variant="light">
           From{" "}
           <Text as="span" color="text.dark">
-            {tripCityAnywhere(contract.trip.src.details[0].en.city)},{" "}
-            {getCountryFromCode(contract.trip.src.countryCode)}
+            {tripCityAnywhere(contract.trip.src.city)},{" "}
+            {contract.trip.src.country}
           </Text>{" "}
           To{" "}
           <Text as="span" color="text.dark">
-            {tripCityAnywhere(contract.trip.dest.details[0].en.city)},{" "}
-            {getCountryFromCode(contract.trip.dest.countryCode)}
+            {tripCityAnywhere(contract.trip.dest.city)},{" "}
+            {contract.trip.dest.country}
           </Text>
         </Text>
         <Text fontSize="500" variant="light" textAlign="right">

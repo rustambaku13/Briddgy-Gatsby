@@ -16,12 +16,32 @@ import { Link } from "gatsby-plugin-intl"
 import { CrossIcon } from "../../../icons/Cross"
 import React, { useContext, useState } from "react"
 import { bmify } from "../../../api"
-import { Contract } from "../../../types/contract"
+import { Contract, Contracts } from "../../../types/contract"
 import { ContractSteps } from "../../Misc/ContractSteps"
 import LayoutStore from "../../../store/LayoutStore"
 import { itemGrabbed, removeContract } from "../../../api/contract"
 import { TripPageState } from "../../../providers/navPage"
 import { SendMessage } from "../../Misc/SendMessageButton"
+import { Hint } from "../../Misc/Hint"
+
+const STATE_TEXT = (state)=>{
+  switch(state){
+    case "SET":
+      return "Deal has been settled. Waiting for orderer to make the payment"
+    case "FRZ":
+      return "Payment is received. Purchase the product and confirm it."
+    case "GRB":
+      return "Deliver the product and ask the orderer to confirm the delivery."
+    case "DLV":
+        return "You did great😃 Your will receive your payment in 1 week"
+    default:
+      return null
+  }
+
+
+}
+
+
 
 export const TripContractsStateCard = chakra(
   ({ className, contract }: { className?: any; contract: Contract }) => {
@@ -161,6 +181,9 @@ export const TripContractsStateCard = chakra(
           <ButtonSwitch />
         </Flex>
         <ContractSteps w="100%" contract={contract} />
+        <Hint d={STATE_TEXT(contract.state)?"block":"none"} text={STATE_TEXT(contract.state)}  textAlign='center' color='warning.dark' mt={2}>
+            
+        </Hint>
       </Box>
     )
   }

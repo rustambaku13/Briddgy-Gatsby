@@ -115,5 +115,24 @@ module.exports = {
         redirect: false,
       },
     },
+    {
+      resolve: `gatsby-plugin-manifest`,
+      options: {
+        name: `Briddgy | Your First Postless Delivery Platform `,
+        short_name: `Briddgy`,
+        start_url: `/`,
+        background_color: `#f7f0eb`,
+        theme_color: `#238BB3`,
+        display: `standalone`,
+        icon: `src/images/icon_opaque.png`
+        
+      },
+    },
+    {
+      resolve: `gatsby-plugin-offline`,
+      options: {
+        precachePages: [`/`,`/order`,`/travel`,`/faq*`],
+      },
+    },
   ],
 }

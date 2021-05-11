@@ -51,8 +51,8 @@ export const FaqElement = chakra(({ topic, title, img }) => {
             </Heading>
             {filtered.map(item => (
               <>
-                <Text variant="light" _hover={{ color: "tealBlue.base" }}>
-                  <Link to={`/faq/post/${item.frontmatter.slud}`}>
+                <Text textAlign='center' wordBreak='break-word' variant="light" _hover={{ color: "tealBlue.base" }}>
+                  <Link to={`/faq/post/${item.frontmatter.slug}`}>
                     {item.frontmatter.title}
                   </Link>
                   <ChevronRightIcon />

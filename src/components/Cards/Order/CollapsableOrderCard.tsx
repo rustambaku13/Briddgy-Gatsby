@@ -15,12 +15,15 @@ import {
   Center,
   Link,
   Button,
+  useToast,
 } from "@chakra-ui/react"
 import { chakra } from "@chakra-ui/system"
+import { navigate } from "gatsby-link"
 import moment from "moment"
 import React, { useContext, useEffect, useState } from "react"
 import { bmify, FRONTEND_DATE_FORMAT } from "../../../api"
 import { removeContract } from "../../../api/contract"
+import { remvoeOrder } from "../../../api/order"
 import { OrderPageState } from "../../../providers/navPage"
 import LayoutStore from "../../../store/LayoutStore"
 import { Contract } from "../../../types/contract"
@@ -43,6 +46,31 @@ export const CollapsableOrderCard = chakra(
     children?: any
     buttons?: any
   }) => {
+
+    const [loading,setLoading] = useState(false)
+    const toast = useToast()
+
+
+    const removeHandler = async ()=>{
+      setLoading(true)
+      return remvoeOrder(orderData.id).then(()=>{
+          navigate('/profile')
+      })
+      .catch(()=>{
+        toast({
+          title: "Failed to delete Order",
+          description: "Make sure to handle settled deals before deleting order",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        })
+      })
+      .finally(()=>{
+        setLoading(false)
+      })
+    }
+
+
     const [images, setImages] = useState([])
     useEffect(() => {
       setImages(
@@ -147,7 +175,15 @@ export const CollapsableOrderCard = chakra(
               {buttons ? (
                 buttons
               ) : (
-                <Button w="100%" mb={5} variant="danger">
+                <Button onClick={()=>{
+                  LayoutStore.alertDialogModalOpen({
+                    title: "Removing Trip",
+                    yes: "Remove",
+                    callback: removeHandler,
+                    no: "Cancel",
+                    description: "Are you sure you want to remove your trip?",
+                  })
+                }} w="100%" mb={5} variant="danger">
                   Delete Order
                 </Button>
               )}

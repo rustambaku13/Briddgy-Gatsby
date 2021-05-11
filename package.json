@@ -29,7 +29,9 @@
     "gatsby-image": "^2.11.0",
     "gatsby-plugin-intl": "^0.3.3",
     "gatsby-plugin-layout": "^1.10.0",
+    "gatsby-plugin-manifest": "^3.4.0",
     "gatsby-plugin-netlify-cms": "^4.10.0",
+    "gatsby-plugin-offline": "^4.4.0",
     "gatsby-plugin-react-helmet": "^4.1.0",
     "gatsby-plugin-sass": "^3.2.0",
     "gatsby-plugin-sharp": "^2.14.1",
@@ -55,7 +57,7 @@
     "react-rating": "^2.0.5",
     "react-with-direction": "^1.3.1",
     "sass": "^1.32.6",
-    "swiper": "^6.4.15",
+    "swiper": "^6.5.9",
     "tinode-sdk": "^0.16.10"
   },
   "devDependencies": {

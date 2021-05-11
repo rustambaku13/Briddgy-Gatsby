@@ -473,7 +473,7 @@ const AddOrderPage = ({ location }: PageProps) => {
     if (success) {
       if (page == 2) {
         // Main Submit Handler
-        data.files = files.current
+        data.files = files
         UserStore.save_new_order(data)
         if (UserStore.isLoggedIn) {
           // Can directly add order to profile

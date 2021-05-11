@@ -103,16 +103,13 @@ const AddOrder = ({ data }) => {
         </Heading>
 
         <Grid templateColumns="repeat(9, 1fr)" gap={[3, 5, 8]}>
-          <BlogLinkCard
+          {data.blogs.edges.map(blog=>(
+            <BlogLinkCard
             flexDir={["column", "column", "row"]}
             gridColumn={["1 / span 9"]}
-            blog={data.blogs.edges[0].node.frontmatter}
+            blog={blog.node.frontmatter}
           />
-          <BlogLinkCard
-            flexDir={["column", "column", "row"]}
-            gridColumn={["1 / span 9", "1 / span 9", "1 / span 9"]}
-            blog={data.blogs.edges[1].node.frontmatter}
-          />
+          ))}
         </Grid>
       </Container>
       <HowToOrder />
@@ -196,9 +193,9 @@ export const query = graphql`
     blogs: allMarkdownRemark(
       filter: {
         fields: { sourceName: { eq: "blogs" } }
-        frontmatter: { scoppe_tag: { eq: "Traveler" } }
+        frontmatter: { scoppe_tag: { eq: "Orderer" } }
       }
-      limit: 4
+      limit: 3
     ) {
       edges {
         node {

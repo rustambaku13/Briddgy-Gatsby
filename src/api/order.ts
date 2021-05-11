@@ -72,7 +72,7 @@ export async function addOrder({
   item_price,
   host,
 }) {
-  return await axios_normal.post(`/trip-order/api/orders/`, {
+  const data = await axios_normal.post(`/trip-order/api/orders/`, {
     price,
     title,
     dest_id,
@@ -85,6 +85,14 @@ export async function addOrder({
     host,
     item_price,
   })
+  
+  data.data.date = moment(data.data.date).format(FRONTEND_DATE_FORMAT)
+  return data
+}
+
+export async function remvoeOrder(id){
+  return await axios_normal.delete(`/trip-order/api/orders/${id}/`)
+
 }
 
 export async function uploadFilestoOrder(files) {

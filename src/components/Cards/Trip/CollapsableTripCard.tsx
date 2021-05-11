@@ -11,19 +11,42 @@ import {
   HStack,
   Img,
   Text,
-  VStack,
+  useToast,
+  VStack
 } from "@chakra-ui/react"
 import { chakra } from "@chakra-ui/system"
+import { navigate } from "gatsby-link"
+import React, { useState } from "react"
+import { removeTrip } from "../../../api/trip"
 import plane from "../../../images/planeicon.svg"
-import moment from "moment"
-import React from "react"
-import { FRONTEND_DATE_FORMAT } from "../../../api"
-import TripIcon from "../../../icons/Trip"
+import LayoutStore from "../../../store/LayoutStore"
 import { Trip } from "../../../types/trip"
-import { getCountryFromCode, tripCityAnywhere } from "../../../utils/misc"
+import { tripCityAnywhere } from "../../../utils/misc"
 
 export const CollapsableTripCard = chakra(
   ({ className, trip }: { className?: any; trip: Trip }) => {
+    const [loading,setLoading] = useState(false)
+    const toast = useToast()
+
+
+    const removeHandler = async ()=>{
+      setLoading(true)
+      return removeTrip(trip.id).then(()=>{
+          navigate('/profile')
+      })
+      .catch(()=>{
+        toast({
+          title: "Failed to delete Trip",
+          description: "Make sure to handle all your deals before deleteing your trip",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        })
+      })
+      .finally(()=>{
+        setLoading(false)
+      })
+    }
     return (
       <VStack className={className} alignItems="stretch" spacing={5} w="100%">
         <HStack spacing={2} w="100%">
@@ -73,8 +96,16 @@ export const CollapsableTripCard = chakra(
                 </Text>
                 <Text>{trip.weight_limit} kg</Text>
               </Box>
-              <Button w="100%" mb={5} variant="danger">
-                Remove Order
+              <Button onClick={()=>{
+                LayoutStore.alertDialogModalOpen({
+                  title: "Removing Trip",
+                  yes: "Remove",
+                  callback: removeHandler,
+                  no: "Cancel",
+                  description: "Are you sure you want to remove your trip?",
+                })
+              }} w="100%" mb={5} variant="danger">
+                Remove Trip
               </Button>
             </AccordionPanel>
           </AccordionItem>

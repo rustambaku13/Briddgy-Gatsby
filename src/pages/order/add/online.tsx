@@ -35,7 +35,7 @@ import { GroupImageUploader } from "../../../components/Inputs/ImageUploader"
 import { LocationAutoComplete } from "../../../components/Inputs/LocationAutoComplete"
 import { Hint } from "../../../components/Misc/Hint"
 import { ImageViewer } from "../../../components/Misc/ImageThumbnailViewer"
-import { Loader } from "../../../components/Misc/Loader"
+import { BigLoader, Loader } from "../../../components/Misc/Loader"
 import { PaymentDisplay } from "../../../components/Misc/Payment/PaymentDisplay"
 import { StepsContainer } from "../../../components/Misc/Steps"
 import NavbarDefault from "../../../components/Navbar"
@@ -70,7 +70,6 @@ const pageFields = {
     "files",
     "src",
     "src_id",
-
     "dest",
     "dest_id",
   ],
@@ -560,9 +559,10 @@ const AddOrderPage = ({ location }: PageProps) => {
     if (success) {
       if (page == 3) {
         // Main Submit Handler
-        data.files = files.current
+        data.files = files
         data.host = new URL(data.order_url).host
         UserStore.save_new_order(data)
+        
         if (UserStore.isLoggedIn) {
           // Can directly add order to profile
           checkEmail()
@@ -620,7 +620,12 @@ const AddOrderPage = ({ location }: PageProps) => {
             <Tabs index={page}>
               <TabPanels>
                 <TabPanel px={0} display="flex" flexWrap="wrap">
-                  <Loader />
+                  <Container>
+                  <BigLoader/>
+                  <Heading mt={5} fontSize='hb1' textAlign='center'>
+                    Getting required data
+                  </Heading>
+                  </Container>
                 </TabPanel>
                 <TabPanel px={0} display="flex" flexWrap="wrap">
                   <ProductDetails

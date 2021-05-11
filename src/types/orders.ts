@@ -10,10 +10,11 @@ export interface Order {
   dest: Location
   src: Location
   weight: number
+
   host: string
   owner: User
   is_active: boolean
-  contract_price: number | null
+  contract_price: string | null
   price: string
   order_type: "P" | "B"
   item_price: string

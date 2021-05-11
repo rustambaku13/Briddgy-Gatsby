@@ -8,8 +8,8 @@ export const compressAndReturn = files => {
   return new Promise((resolve, reject) => {
     files.forEach((f, ind) => {
       new Compressor(f.originFileObj || f, {
-        quality: 0.5,
-        maxWidth: 500,
+        quality: 0.4,
+        maxWidth:400,
         success(result) {
           //@ts-ignore
           formData.append("file", result, result.name)

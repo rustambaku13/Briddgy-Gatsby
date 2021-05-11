@@ -123,15 +123,15 @@ const Footer = () => {
               spacing={4}
               verticalAlign="bottom"
             >
-              <Link to="https://www.facebook.com/briddgyworld">
+              <a target="_blank" href="https://www.facebook.com/briddgyworld">
                 <Image width="28px" src={facebook} />
-              </Link>
-              <Link to="https://www.instagram.com/briddgyworld/">
+              </a>
+              <a target="_blank" href="https://www.instagram.com/briddgyworld/">
                 <Image width="28px" src={instagram} />
-              </Link>
-              <Link to="#">
+              </a>
+              <a target="_blank" href="#">
                 <Image width="28px" src={youtube} />
-              </Link>
+              </a>
             </HStack>
           </Flex>
         </SimpleGrid>

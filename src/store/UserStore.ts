@@ -106,7 +106,7 @@ class UserStore {
     this.new_order = orderData
   }
   *saveNewOrder() {
-    try {
+    
       if (this.new_order == null) throw Error("New Order is not defined")
       const { data } = yield addOrder(this.new_order)
       const formData: FormData = yield compressAndReturn(this.new_order.files)
@@ -114,8 +114,6 @@ class UserStore {
       const imageResult = yield uploadFilestoOrder(formData)
 
       // Reshape some stuff
-      data.destination = data.destinationDetails
-      data.source = data.sourceDetails
       data.orderimage = imageResult.data.name
 
       // Append if loadedd orders
@@ -123,20 +121,21 @@ class UserStore {
         this.orders.results.unshift(data)
         this.orders.count++
       }
-      this.new_order = null
+      
       emailSuggestedTravellers(
-        this.new_order.source,
-        this.new_order.destination
+        this.new_order.src_id,
+        this.new_order.dest_id
       ) // Can be finished async
+      this.new_order = null
       return data
-    } catch (e) {}
+    
   }
   save_new_trip(tripData) {
     this.new_trip = tripData
   }
   *saveNewTrip() {
     // Trip 1
-
+  
     if (this.new_trip == null) {
       throw Error("New Trip is not defined")
     }
@@ -145,25 +144,21 @@ class UserStore {
       date: this.new_trip.date1,
     })
     const trip1 = data
-    let trip2 = null
+    
     // Email Suggested and refactor
-    emailSuggestedOrderers(this.new_trip.source, this.new_trip.destination)
-    trip1.destination = trip1.destinationDetails
-    trip1.source = trip1.sourceDetails
-
+    emailSuggestedOrderers(this.new_trip.src_id, this.new_trip.dest_id)
     // Second Trip
+    let trip2 = null
     if (this.new_trip.date2) {
-      const tmp_src = this.new_trip.source
-      this.new_trip.source = this.new_trip.destination
-      this.new_trip.destination = tmp_src
+      const tmp_src = this.new_trip.src_id
+      this.new_trip.src_id = this.new_trip.dest_id
+      this.new_trip.dest_id = tmp_src
       const { data } = yield addTrip({
         ...this.new_trip,
         date: this.new_trip.date2,
       })
       trip2 = data
-      emailSuggestedOrderers(this.new_trip.destination, this.new_trip.source)
-      trip2.destination = trip1.destinationDetails
-      trip2.source = trip1.sourceDetails
+      emailSuggestedOrderers(this.new_trip.dest_id, this.new_trip.src_id)
     }
 
     this.new_trip = null

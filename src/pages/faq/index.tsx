@@ -45,7 +45,7 @@ const FaqPage = ({ data }) => {
           <Heading mb={10} fontWeight="700" fontSize="hb4">
             How can we help?
           </Heading>
-          <Box maxW="640px">
+          {/* <Box maxW="640px">
             <InputGroup
               borderWidth="1px"
               borderRadius="base"
@@ -67,7 +67,7 @@ const FaqPage = ({ data }) => {
                 />
               </InputRightElement>
             </InputGroup>
-          </Box>
+          </Box> */}
         </Container>
       </Container>
       <Box bg="white" as="section" w="full" py={16}>

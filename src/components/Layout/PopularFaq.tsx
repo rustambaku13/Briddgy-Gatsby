@@ -11,7 +11,7 @@ export const PopularFaq = chakra(({ className }) => {
       query={graphql`
         query {
           popular: allMarkdownRemark(
-            filter: { frontmatter: { templateKey: { eq: "faq" } } }
+            filter: {frontmatter: {templateKey: {eq: "faq"}, popular: {eq: true}}}
           ) {
             nodes {
               frontmatter {
