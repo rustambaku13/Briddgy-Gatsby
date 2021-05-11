@@ -125,7 +125,7 @@ module.exports = {
         theme_color: `#238BB3`,
         display: `standalone`,
         icon: `src/images/icon_opaque.png`,
-        cache_busting_mode: 'none'
+        // cache_busting_mode: 'none'
         
       },
     },
@@ -133,9 +133,9 @@ module.exports = {
       resolve: `gatsby-plugin-offline`,
       options: {
         // precachePages: [`/`,`/order`,`/travel`,`/faq*`],
-        workboxConfig: {
-          globPatterns: ['**/icon-path*']
-       }
+      //   workboxConfig: {
+      //     globPatterns: ['**/icon-path*']
+      //  }
       },
     },
   ],
