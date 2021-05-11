@@ -118,24 +118,24 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `Briddgy | Your First Postless Delivery Platform `,
+        name: `Briddgy | Smart shopping enabled by smart travelers. `,
         short_name: `Briddgy`,
         start_url: `/`,
         background_color: `#f7f0eb`,
         theme_color: `#238BB3`,
         display: `standalone`,
         icon: `src/images/icon_opaque.png`,
-        // cache_busting_mode: 'none'
+        cache_busting_mode: 'none'
         
       },
     },
     {
       resolve: `gatsby-plugin-offline`,
       options: {
-        // precachePages: [`/`,`/order`,`/travel`,`/faq*`],
-      //   workboxConfig: {
-      //     globPatterns: ['**/icon-path*']
-      //  }
+        precachePages: [`/`,`/order`,`/travel`,`/faq*`,'/trips','/orders','/profile'],
+        workboxConfig: {
+          globPatterns: ['**/icon-path*']
+       }
       },
     },
   ],
