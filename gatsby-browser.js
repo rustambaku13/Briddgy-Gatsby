@@ -77,7 +77,6 @@ export function wrapRootElement({ element }) {
           sizes="16x16"
           href="/favicon-16x16.png"
         />
-        <link rel="manifest" href="/manifest.json" />
         <meta name="msapplication-TileColor" content="#ffffff" />
         <meta http-equiv="content-language" content="en-us" />
       </Helmet>
