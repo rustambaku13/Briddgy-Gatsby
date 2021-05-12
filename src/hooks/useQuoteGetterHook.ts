@@ -1,21 +1,19 @@
 import React, { useEffect, useState } from "react"
-import { useDidUpdateEffect } from "./useDidUpdateEffect"
+import { getQuote } from "../api/order"
+import UserStore from '../store/UserStore'
 
 export const useQuoteGetterHook = (item_price = 0, reward, condition) => {
   const [prices, setPrices]: [any, any] = useState({ loading: true })
 
   useEffect(() => {
     if (condition) {
-      setTimeout(function () {
-        setPrices({
-          loading: false,
-          item_price: item_price,
-          reward: reward,
-          total: "200",
-          commision: "7.33",
-          transfer: "10.99",
-        })
-      }, 1000)
+      getQuote(item_price,reward,UserStore.me?.promo_balance || 0)
+      .then(({data})=>{
+        setPrices(data)
+      })
+      .catch(()=>{
+
+      })
     }
   }, [item_price, reward, condition])
 

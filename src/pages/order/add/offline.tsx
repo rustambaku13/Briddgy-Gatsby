@@ -58,13 +58,9 @@ const pageFields = {
     "files",
     "src",
     "src_id",
-    "src_code",
-    "src_input",
 
     "dest",
     "dest_id",
-    "dest_code",
-    "dest_input",
   ],
 }
 const Summary = ({ files, pageChange, back, page, adding }) => {

@@ -99,6 +99,11 @@ export async function uploadFilestoOrder(files) {
   return await axios_normal.put(`/trip-order/api/fileupload/orderimage/`, files)
 }
 
+export async function getQuote(item_price,reward,promo){
+  return await axios_normal.post(`/main/api/payment/quote/`,{item_price,reward,promo})
+}
+
+
 export async function fetchScraperData(url) {
   return await axios_normal.get(`/scraper`, {
     params: {

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react"
+import React, { useContext, useEffect, useState } from "react"
 import { OrderPageState } from "../../../providers/navPage"
 import { PaymentDisplay } from "../../Misc/Payment/PaymentDisplay"
 import logo from "../../../../static/assets/sgl.png"
@@ -23,9 +23,11 @@ import {
 } from "@stripe/react-stripe-js"
 
 import CheckIcon from "../../../icons/Check"
+import UserStore from '../../../store/UserStore'
 import { LockIcon } from "../../../icons/Lock"
 import { StripeIcon } from "../../../icons/Stripe"
 import { createPaymentIntent } from "../../../api/payment"
+import { getQuote } from "../../../api/order"
 
 const CARD_ELEMENT_OPTIONS = {
   style: {
@@ -36,8 +38,8 @@ const CARD_ELEMENT_OPTIONS = {
       "::placeholder": {
         color: "#aab7c4",
       },
+      invalid: {
     },
-    invalid: {
       color: "#fa755a",
       iconColor: "#fa755a",
     },
@@ -86,14 +88,19 @@ export const PaymentCard = () => {
       setLoading(false)
     }
   }
+
   const [prices, setPrices] = useState({
-    loading: false,
-    item_price: 150,
-    reward: 20,
-    total: "200",
-    commision: "7.33",
-    transfer: "10.99",
+    loading: true,
   })
+  useEffect(()=>{
+    getQuote(context.contract.item_price,context.contract.price_bid,UserStore.me?.promo_balance || 0).then(({data})=>{
+      setPrices(data)
+    })
+    .catch(()=>{
+      
+    })
+  },[])
+
   return (
     <>
       <PaymentDisplay p={0} borderRadius="0" bg="white" {...prices} />

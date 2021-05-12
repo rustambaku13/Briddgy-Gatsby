@@ -127,9 +127,9 @@ export const CollapsableOrderCard = chakra(
               </ImageViewer>
               <Box my={5}>
                 <Text as="label" variant="light">
-                  Traveler's Reward
+                  Item Price
                 </Text>
-                <Text>${orderData.price}</Text>
+                <Text>${orderData.item_price}</Text>
               </Box>
               <Box mb={5}>
                 <Text as="label" variant="light">
@@ -289,6 +289,38 @@ export const CollapsableOrderCardwTrip = chakra(
             </SendMessage>
           </AccordionPanel>
         </AccordionItem>
+        {contract.total_price?(
+          <AccordionItem>
+          <h2>
+            <AccordionButton>
+              <Box flex="1" textAlign="left">
+                Payment Details
+              </Box>
+              <AccordionIcon />
+            </AccordionButton>
+          </h2>
+          <AccordionPanel pb={4}>
+          <Box my={5}>
+                <Text as="label" variant="light">
+                  Traveler's Reward
+                </Text>
+                <Text>${contract.price_bid}</Text>
+              </Box>
+              <Box my={5}>
+                <Text as="label" variant="light">
+                  Item Price
+                </Text>
+                <Text>${contract.item_price}</Text>
+              </Box>
+              <Box my={5}>
+                <Text as="label" variant="light">
+                  Transfer Commisions
+                </Text>
+                <Text>${parseFloat(contract.total_price) - parseFloat(contract.price_bid) - parseFloat(contract.item_price)}</Text>
+              </Box>
+          </AccordionPanel>
+        </AccordionItem>
+        ):null}
       </CollapsableOrderCard>
     )
   }
