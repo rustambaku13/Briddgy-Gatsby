@@ -1,6 +1,8 @@
 import { Contract } from "./../types/contract"
 import { AxiosResponse } from "axios"
 import { axios_normal } from "."
+import { momentize } from "../utils/momentize"
+import { affiliatize } from "../utils/affiliate"
 
 export async function addContract({
   order,
@@ -49,17 +51,41 @@ export async function removeContract(id) {
   return await axios_normal.delete(`/trip-order/api/delete/contracts/${id}/`)
 }
 export async function getTripProposals(id) {
-  return await axios_normal.get(`/trip-order/api/proposals/trips/${id}/`)
+  const data =  await axios_normal.get(`/trip-order/api/proposals/trips/${id}/`)
+  data.data.results.forEach((item:Contract)=>{
+    momentize(item.order)
+    affiliatize(item.order)
+    momentize(item.trip)
+  })
+  return data
 }
 export async function getTripContracts(id) {
-  return await axios_normal.get(`/trip-order/api/contracts/trips/${id}/`)
+  const data =  await axios_normal.get(`/trip-order/api/contracts/trips/${id}/`)
+  data.data.results.forEach((item:Contract)=>{
+    momentize(item.order)
+    affiliatize(item.order)
+    momentize(item.trip)
+  })
+  return data
 }
 export async function getOrderProposals(id) {
-  return await axios_normal.get(`/trip-order/api/proposals/orders/${id}/`)
+  const data =  await axios_normal.get(`/trip-order/api/proposals/orders/${id}/`)
+  data.data.results.forEach((item:Contract)=>{
+    momentize(item.order)
+    affiliatize(item.order)
+    momentize(item.trip)
+  })
+  return data
 }
 
 export async function getOrderContracts(
   order: number
 ): Promise<AxiosResponse<Contract>> {
-  return await axios_normal.get(`/trip-order/api/contracts/orders/${order}/`)
+  const data= await axios_normal.get(`/trip-order/api/contracts/orders/${order}/`)
+  data.data.results.forEach((item:Contract)=>{
+    momentize(item.order)
+    affiliatize(item.order)
+    momentize(item.trip)
+  })
+  return data
 }

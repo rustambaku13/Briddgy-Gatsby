@@ -23,7 +23,8 @@ import { Notifications } from "../types/notification"
 import { Reviews } from "../types/review"
 import { Trips } from "../types/trip"
 import { compressAndReturn } from "../utils/compression"
-import { axios_normal } from "./../api/index"
+import { makeStaticUrl } from "../utils/makeStaticUrl"
+import { axios_normal, bmify } from "./../api/index"
 import { Orders } from "./../types/orders"
 import { Trip } from "./../types/trip"
 import { User } from "./../types/user"
@@ -65,7 +66,13 @@ class UserStore {
     }
     this.complete = true
   }
-
+  changeAvatarPic(url){
+    const bm_url = bmify(url)
+    this.me.avatarpic = bm_url
+    this.orders.results.forEach(item=>{item.owner.avatarpic=bm_url})
+    this.trips.results.forEach(item=>{item.owner.avatarpic=bm_url})
+    
+  }
   *fetchMyOrders(page = 1) {
     try {
       this.orders.loading = true

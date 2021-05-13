@@ -14,7 +14,7 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react"
-import { graphql } from "gatsby"
+import { graphql,withPrefix } from "gatsby"
 import { navigate } from "gatsby-plugin-intl"
 import React, { useEffect, useRef, useState } from "react"
 import { Helmet } from "react-helmet"
@@ -35,7 +35,8 @@ import { NavigationContext } from "../../providers/navPage"
 import { defaultOrders, Order, Orders } from "../../types/orders"
 import { filterObject, swapItinerary } from "../../utils/misc"
 import OrderPage from "../../dynamic/Order"
-import { Router } from "@reach/router"
+import { Router,Location } from "@reach/router"
+import { DynamicRouter } from "../../components/DynamicRouter"
 
 const MainOrdersPage = ({ data, location }) => {
   const methods = useForm()
@@ -266,14 +267,6 @@ const MainOrdersPage = ({ data, location }) => {
     </FormProvider>
   )
 }
-const OrdersPage = props => {
-  return (
-    <Router prefix="/orders">
-      <MainOrdersPage default {...props} />
-      <OrderPage path="/:orderId" {...props} />
-    </Router>
-  )
-}
 export const query = graphql`
   query {
     testimonials: allMarkdownRemark(
@@ -308,4 +301,4 @@ export const query = graphql`
     }
   }
 `
-export default OrdersPage
+export default MainOrdersPage

@@ -1,5 +1,4 @@
 import {
-  Badge,
   Box,
   Button,
   chakra,
@@ -8,21 +7,18 @@ import {
   LinkBox,
   LinkOverlay,
   Text,
-  useToast,
+  useToast
 } from "@chakra-ui/react"
 import { Link } from "gatsby-plugin-intl"
 import React, { useContext, useState } from "react"
-import { Rating } from "../../Misc/Rating"
-import { FRONTEND_DATE_FORMAT } from "../../../api"
-import { ChevronRightIcon } from "../../../icons/ChevronRight"
-import { PlaneIcon } from "../../../icons/Plane"
-import { Trip } from "../../../types/trip"
-import { getCountryFromCode, tripCityAnywhere } from "../../../utils/misc"
-import { Avatar } from "../../Avatar/Avatar"
-import moment from "moment"
 import { addContract, getOrderProposals } from "../../../api/contract"
+import { PlaneIcon } from "../../../icons/Plane"
 import { OrderPageState } from "../../../providers/navPage"
 import { Order } from "../../../types/orders"
+import { Trip } from "../../../types/trip"
+import { tripCityAnywhere } from "../../../utils/misc"
+import { Avatar } from "../../Avatar/Avatar"
+import { Rating } from "../../Misc/Rating"
 
 const MediumTripCard = chakra(
   ({

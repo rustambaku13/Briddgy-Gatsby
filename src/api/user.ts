@@ -1,6 +1,11 @@
+import { Order, Orders } from './../types/orders';
+import { Trip, Trips } from './../types/trip';
 import { User } from "./../types/user"
 import { AxiosResponse } from "axios"
-import { axios_normal } from "./index"
+import { axios_normal, bmify } from "./index"
+import { Reviews } from "../types/review"
+import { momentize } from '../utils/momentize';
+import { affiliatize } from '../utils/affiliate';
 export async function loginUser(
   username: String,
   password: String
@@ -29,8 +34,12 @@ export async function createUser({
     lang,
   })
 }
-export async function getMyDetails(): Promise<User> {
-  return axios_normal.get(`/main/api/users/me/`)
+
+
+export async function getMyDetails(): Promise<AxiosResponse<User>> {
+  const data= await axios_normal.get(`/main/api/users/me/`)
+  if(data.data.avatarpic)data.data.avatarpic = bmify(data.data.avatarpic)
+  return data
 }
 
 export async function askForPhoneCode(phone) {
@@ -56,5 +65,35 @@ export async function verifyEmail(key) {
 }
 
 export async function getNotifications() {
-  return await axios_normal.get("/main/api/notifications/readAll")
+  const data =  await axios_normal.get("/main/api/notifications/readAll")
+  data.data.results.forEach(item => {
+      momentize(item,"date_created")
+  });
+  return data
+}
+
+export async function avatarPicUpload(file) {
+  return await axios_normal.put(`/main/api/fileupload/userimage/`,file)
+}
+
+// Other Users 
+
+export async function getUserReviews(userId): Promise<Reviews> {
+  return axios_normal.get(`main/api/users/${userId}/reviews'`)
+}
+export async function getUserDetails(userId): Promise<User> {
+  return axios_normal.get(`main/api/users/${userId}/`)
+}
+export async function getUserTrips(userId): Promise<AxiosResponse<Trips>> {
+  const data =  await axios_normal.get(`trip-order/api/users/${userId}/trips/`)
+  data.data.results.forEach((item: Trip) => momentize(item))
+  return data
+}
+export async function getUserOrders(userId): Promise<AxiosResponse<Orders>> {
+  const data = await axios_normal.get(`trip-order/api/users/${userId}/orders/`)
+  data.data.results.forEach((item: Order) => {
+    momentize(item)
+    affiliatize(item)
+  })
+  return data
 }

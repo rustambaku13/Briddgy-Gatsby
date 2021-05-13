@@ -5,18 +5,17 @@ import {
   Container,
   Flex,
   Heading,
-  Text,
+  Text
 } from "@chakra-ui/react"
 import { graphql } from "gatsby"
 import Img from "gatsby-image"
 import { Link } from "gatsby-plugin-intl"
 import React from "react"
 import { Helmet } from "react-helmet"
-import { Swiper, SwiperSlide } from "swiper/react"
-import { TravelDestinationCard } from "../components/Cards/Trip/TravelDestination"
-import Footer from "../components/Footer"
-import { ProductGrid } from "../components/Layout/ProductGrid"
 import { TextAnimate } from "../components/Animations/TextAnimate"
+import Footer from "../components/Footer"
+import { DestinationSwiper } from "../components/Layout/DestinationSwiper"
+import { ProductGrid } from "../components/Layout/ProductGrid"
 import Navbar from "../components/Navbar"
 import { BottomNavbar } from "../components/Navbar/BottomNavbar"
 import { TestimonialLanding } from "../components/Testimonials"
@@ -25,8 +24,6 @@ import { ChevronRightIcon } from "../icons/ChevronRight"
 import { ClockIcon } from "../icons/Clock"
 import { HeartIcon } from "../icons/Heart"
 import { SmileIcon } from "../icons/Smile"
-import { DeliveryBoxIcon } from "../icons/DeliveryBox"
-import { PlaneIcon } from "../icons/Plane"
 const Home = ({ data }) => {
   return (
     <>
@@ -206,19 +203,19 @@ const Home = ({ data }) => {
 
           <ProductGrid />
 
-          <Text mt="40px" fontSize="2xl" textAlign="right">
+          <Text mt="50px" fontSize="hb1" textAlign="right">
             Check our{" "}
             <Link to="/advice">
               <Text
-                color="blue.400"
+                color="tealBlue.base"
                 variant="halfUnderline"
-                fontWeight={600}
+                fontWeight={700}
                 as="span"
               >
                 advice
               </Text>
             </Link>{" "}
-            for orderers
+            for travelers
           </Text>
         </Container>
       </Box>
@@ -286,65 +283,7 @@ const Home = ({ data }) => {
               </Link>
             </Text>
           </Text>
-          <Box pt="50px" w="100%">
-            <Swiper
-              pagination={{ clickable: true }}
-              scrollbar={{ draggable: true }}
-              spaceBetween={40}
-              breakpoints={{
-                500: {
-                  slidesPerView: 2,
-                },
-                768: {
-                  slidesPerView: 3,
-                },
-                1024: {
-                  slidesPerView: 4,
-                },
-              }}
-            >
-              <SwiperSlide>
-                <TravelDestinationCard
-                  destinationId={1}
-                  destinationName="Baku"
-                  rewardsAvailable="10,302"
-                  tripsCount="100"
-                  ordersCount="300"
-                  img={data.az.childImageSharp.fixed}
-                />
-              </SwiperSlide>
-              <SwiperSlide>
-                <TravelDestinationCard
-                  destinationId={1}
-                  destinationName="Moscow"
-                  rewardsAvailable="15,302"
-                  tripsCount="200"
-                  ordersCount="350"
-                  img={data.ru.childImageSharp.fixed}
-                />
-              </SwiperSlide>
-              <SwiperSlide>
-                <TravelDestinationCard
-                  destinationId={1}
-                  destinationName="Turkey"
-                  rewardsAvailable="10,302"
-                  tripsCount="100"
-                  ordersCount="300"
-                  img={data.tr.childImageSharp.fixed}
-                />
-              </SwiperSlide>
-              <SwiperSlide>
-                <TravelDestinationCard
-                  destinationId={1}
-                  destinationName="Turkey"
-                  rewardsAvailable="10,302"
-                  tripsCount="100"
-                  ordersCount="300"
-                  img={data.en.childImageSharp.fixed}
-                />
-              </SwiperSlide>
-            </Swiper>
-          </Box>
+            <DestinationSwiper/>
           <Text mt="50px" fontSize="hb1" textAlign="right">
             Check our{" "}
             <Link to="/advice">
@@ -417,34 +356,6 @@ export const query = graphql`
       childImageSharp {
         fluid {
           ...GatsbyImageSharpFluid
-        }
-      }
-    }
-    az: file(relativePath: { eq: "azerbaijan.jpg" }) {
-      childImageSharp {
-        fixed(height: 400, cropFocus: CENTER, width: 300) {
-          ...GatsbyImageSharpFixed
-        }
-      }
-    }
-    ru: file(relativePath: { eq: "russia.jpg" }) {
-      childImageSharp {
-        fixed(height: 400, cropFocus: CENTER, width: 300) {
-          ...GatsbyImageSharpFixed
-        }
-      }
-    }
-    tr: file(relativePath: { eq: "turkey.jpg" }) {
-      childImageSharp {
-        fixed(height: 400, cropFocus: CENTER, width: 300) {
-          ...GatsbyImageSharpFixed
-        }
-      }
-    }
-    en: file(relativePath: { eq: "england.jpg" }) {
-      childImageSharp {
-        fixed(height: 400, cropFocus: CENTER, width: 300) {
-          ...GatsbyImageSharpFixed
         }
       }
     }

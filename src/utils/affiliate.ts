@@ -1,3 +1,5 @@
+import { Order } from "../types/orders"
+
 const REF_REGEX = new RegExp("(.*)\/ref")
 const fillOurData = (url_obj)=>{
   url_obj.searchParams.set("linkCode", "ll1")
@@ -15,25 +17,37 @@ const amazonAffiliateLink = (url: URL) => {
     fillOurData(url)
     return url.toString()
     
-  } else{
-    // Normal
-    const reg = url.toString().match(REF_REGEX)
-    if(!reg)return url
+  } 
+  const reg = url.toString().match(REF_REGEX)
+  if(reg){
+    // Ref is at the end of the url
     const tmp_url =  new URL(reg[1])
     copyUrlParams(url.searchParams,tmp_url.searchParams)
     fillOurData(tmp_url)
     return tmp_url.toString()
   }
-
+  fillOurData(url)
+  return url.toString()
 }
 
 export const getAffiliateLink = (url:string)=>{
-  const url_obj = new URL(url)
+  try{
+    const url_obj = new URL(url)
   
   switch(url_obj.hostname){
     case "www.amazon.com":
       return amazonAffiliateLink(url_obj)
-    
+    default:
+      return url
   }
-  return url
+  }catch(e){
+    return url
+  }
+  
+}
+
+export const affiliatize = (order:Order)=>{
+  if(order.order_url){
+    order.order_url = getAffiliateLink(order.order_url)
+  }
 }

@@ -27,6 +27,7 @@ import { BlogLinkCard } from "../../components/Cards/Blog/BlogLinkCard"
 import { TestimonialLinkCard } from "../../components/Cards/Testimonial/TestimonialLinkCard"
 import { TravelDestinationCard } from "../../components/Cards/Trip/TravelDestination"
 import Footer from "../../components/Footer"
+import { DestinationSwiper } from "../../components/Layout/DestinationSwiper"
 import { HowToEarnMoney } from "../../components/Layout/HowToEarnMoney"
 import { TravelNavbar } from "../../components/Navbar"
 import { BottomNavbar } from "../../components/Navbar/BottomNavbar"
@@ -140,63 +141,7 @@ const AddTrip = ({ data }: PageProps) => {
 
           <TabPanels>
             <TabPanel px={0}>
-              <Swiper
-                pagination={{ clickable: true }}
-                scrollbar={{ draggable: true }}
-                spaceBetween={40}
-                breakpoints={{
-                  450: {
-                    slidesPerView: 2,
-                  },
-                  768: {
-                    slidesPerView: 3,
-                  },
-                  1024: {
-                    slidesPerView: 4,
-                  },
-                }}
-              >
-                <SwiperSlide>
-                  <TravelDestinationCard
-                    destinationId={1}
-                    destinationName="Baku"
-                    rewardsAvailable="10,302"
-                    tripsCount="100"
-                    ordersCount="300"
-                    img={data.az.childImageSharp.fixed}
-                  />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <TravelDestinationCard
-                    destinationId={1}
-                    destinationName="Moscow"
-                    rewardsAvailable="15,302"
-                    tripsCount="200"
-                    ordersCount="350"
-                    img={data.ru.childImageSharp.fixed}
-                  />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <TravelDestinationCard
-                    destinationId={1}
-                    destinationName="Turkey"
-                    rewardsAvailable="10,302"
-                    tripsCount="100"
-                    ordersCount="300"
-                    img={data.tr.childImageSharp.fixed}
-                  />
-                </SwiperSlide>
-                <SwiperSlide>
-                  <TravelDestinationCard
-                    destinationId={1}
-                    destinationName="Turkey"
-                    rewardsAvailable="10,302"
-                    tripsCount="100"
-                    ordersCount="300"
-                    img={data.en.childImageSharp.fixed}
-                  />
-                </SwiperSlide>
-              </Swiper>
+              <DestinationSwiper/>
             </TabPanel>
             <TabPanel>Recommendations</TabPanel>
             <TabPanel>Maps</TabPanel>

@@ -5,34 +5,29 @@ import { Orders } from "../types/orders"
 import { axios_normal, FRONTEND_DATE_FORMAT } from "./index"
 import { Reviews } from "../types/review"
 import moment from "moment"
-import { getAffiliateLink } from "../utils/affiliate"
+import { affiliatize, getAffiliateLink } from "../utils/affiliate"
+import { momentize } from "../utils/momentize"
 export async function getOrders(params = {}): Promise<AxiosResponse<Orders>> {
   const data = await axios_normal.get(`/trip-order/api/orders/`, { params })
-  data.data.results.map((item: Order) => {
-    item.date = moment(item.date).format(FRONTEND_DATE_FORMAT)
-    if (item.order_url) {
-      item.order_url = getAffiliateLink(item.order_url)
-    }
+  data.data.results.forEach((item: Order) => {
+    momentize(item)
+    affiliatize(item)
   })
   return data
 }
 export async function getOrder(id): Promise<AxiosResponse<Order>> {
   const data = await axios_normal.get(`/trip-order/api/orders/${id}/`)
-  data.data.date = moment(data.data.date).format(FRONTEND_DATE_FORMAT)
-  if (data.data.order_url) {
-    data.data.order_url = getAffiliateLink(data.data.order_url)
-  }
+  momentize(data.data)
+  affiliatize(data.data)
   return data
 }
 export async function getMyOrders(page = 1): Promise<AxiosResponse<Orders>> {
   const data = await axios_normal.get(`/trip-order/api/my/orders/`, {
     params: { page },
   })
-  data.data.results.map((item: Order) => {
-    item.date = moment(item.date).format(FRONTEND_DATE_FORMAT)
-    if (item.order_url) {
-      item.order_url = getAffiliateLink(item.order_url)
-    }
+  data.data.results.forEach((item: Order) => {
+    momentize(item)
+    affiliatize(item)
   })
   return data
 }
@@ -52,11 +47,15 @@ export async function getSuggestedTrips(
   id,
   owner?
 ): Promise<AxiosResponse<Trips>> {
-  return await axios_normal.get(`/trip-order/api/orders/${id}/suggestions/`, {
+  const data= await axios_normal.get(`/trip-order/api/orders/${id}/suggestions/`, {
     params: {
       owner,
     },
   })
+  data.data.results.forEach((item: Order) => {
+    momentize(item)
+  })
+  return data
 }
 
 export async function addOrder({

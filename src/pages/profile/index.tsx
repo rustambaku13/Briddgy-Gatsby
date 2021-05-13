@@ -9,6 +9,7 @@ import {
   SimpleGrid,
   VStack,
 } from "@chakra-ui/layout"
+
 import {
   Avatar,
   Button,
@@ -22,6 +23,7 @@ import {
   Tag,
   Text,
 } from "@chakra-ui/react"
+import { withPrefix } from 'gatsby'
 import { Link } from "gatsby-plugin-intl"
 import { observer } from "mobx-react-lite"
 import React, { useEffect, useRef, useState } from "react"
@@ -43,12 +45,15 @@ import { CheckIcon } from "../../icons/Check"
 import ClipboardIcon from "../../icons/Clipboard"
 import OrderIcon from "../../icons/Order"
 import { TripIcon } from "../../icons/Trip"
+import  SpecificProfilePage from '../../dynamic/Profile'
 import { NavigationContext } from "../../providers/navPage"
 import LayoutStore from "../../store/LayoutStore"
 import UserStore from "../../store/UserStore"
 import { Order } from "../../types/orders"
 import { Review } from "../../types/review"
 import { Trip } from "../../types/trip"
+import { Router } from "@reach/router"
+import { ImageChangeButton } from "../../components/Inputs/ImageChangeButton"
 const PersonalDetailsSection = observer(() => {
   useEffect(() => {
     if (UserStore.reviews.loading) UserStore.fetchMyReviews()
@@ -66,11 +71,9 @@ const PersonalDetailsSection = observer(() => {
             borderColor="gray.100"
             size="xl"
             boxShadow="inner"
-            src={bmify(UserStore.me.avatarpic)}
+            src={UserStore.me.avatarpic}
           />
-          <Button w="100%" variant="link" color="blue.500" mt={3}>
-            Change
-          </Button>
+          <ImageChangeButton/>
         </Flex>
         <Flex
           alignItems="center"
@@ -559,5 +562,6 @@ const MyProfilePage = observer(({ location }) => {
     </>
   )
 })
+
 
 export default MyProfilePage

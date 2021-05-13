@@ -66,7 +66,7 @@ const MediumOrderCard = chakra(
     return (
       <LinkBox w="100%">
         <LinkOverlay>
-          <Link className="medium-order-card" to={`/orders/${orderData.id}`}>
+          <Link className="medium-order-card" to={`/orders/${orderData.id}/`}>
             <Box
               w="100%"
               className={className}

@@ -3,6 +3,7 @@ import { Router } from "@reach/router"
 import React from "react"
 import MyOrderPage from "../../dynamic/Order"
 import MyTripPage from "../../dynamic/Trip"
+import SpecificProfilePage from "../../dynamic/Profile"
 import "../../store/UserStore"
 import { AreYouSure } from "../Modals/AreYouSure"
 import { CompleteProfileModal } from "../Modals/CompleteProfileModal"
@@ -27,6 +28,7 @@ export default ({ children }) => {
       <Router>
         <MyTripPage path="/trips/:tripId" />
         <MyOrderPage path="/orders/:orderId" />
+      <SpecificProfilePage path="/profile/:userId" />
         <Box default mb={["70px", "70px", 0]} w="100%" h="100%">
           {children}
         </Box>

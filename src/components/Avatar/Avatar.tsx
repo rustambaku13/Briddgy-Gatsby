@@ -6,7 +6,6 @@ import { User } from "../../types/user"
 
 export const Avatar = chakra(
   ({ className, user }: { className?: any; user: User }) => {
-    console.log(user)
 
     return (
       <Link to={`/profile/${user.id || user.public?.id}`}>

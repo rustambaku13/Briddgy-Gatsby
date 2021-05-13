@@ -219,9 +219,11 @@ const AuthorizedNavbar = () => {
                 </MenuItem>
               </Link>
               <MenuDivider d={["block", "block", "none"]} />
-              <MenuItem icon={<SupportIcon fontSize="lg" color="blue.600" />}>
+              <Link to="/faq">
+                <MenuItem icon={<SupportIcon fontSize="lg" color="blue.600" />}>
                 Help Center
-              </MenuItem>
+                </MenuItem>
+              </Link>
               <MenuItem
                 onClick={() => {
                   UserStore.logout()

@@ -272,14 +272,7 @@ const MainTripsPage = ({ data, location }) => {
   )
 }
 
-const TripsPage = props => {
-  return (
-    <Router prefix="/trips">
-      <MainTripsPage default {...props} />
-      <TripPage path="/:tripId" {...props} />
-    </Router>
-  )
-}
+
 
 export const query = graphql`
   query {
@@ -316,4 +309,4 @@ export const query = graphql`
     }
   }
 `
-export default TripsPage
+export default MainTripsPage
