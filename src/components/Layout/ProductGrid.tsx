@@ -22,6 +22,7 @@ export const ProductGrid = () => {
               store
               vertical
               price
+              url
               image {
                 childImageSharp {
                   fluid(cropFocus: CENTER, maxWidth: 500) {
@@ -50,6 +51,7 @@ export const ProductGrid = () => {
                   store
                   vertical
                   price
+                  url
                   image {
                     childImageSharp {
                       fluid(maxWidth: 800) {

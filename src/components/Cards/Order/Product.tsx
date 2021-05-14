@@ -1,7 +1,9 @@
-import { Box, Center, chakra, Flex, Heading, Text } from "@chakra-ui/react"
+import { Box, Center, chakra, Flex, Heading, LinkBox, Text } from "@chakra-ui/react"
 import Img from "gatsby-image"
+import { Link } from "gatsby-plugin-intl"
 import React from "react"
 import { Product } from "../../../types/product"
+import { LinkOverlay } from "../../Misc/LinkOverlay"
 
 export const ProductCard = chakra(
   ({ className, product }: { className?: any; product: Product }) => {
@@ -16,6 +18,7 @@ export const ProductCard = chakra(
         _hover={{ bg: "gray.100" }}
         flexDir="column"
       >
+        <Link to={`/order/add/online?order_url=${product.url}&title=${product.title}&item_price=${product.price}&description=${product.description}`}>
         <Box p={3}>
           <Heading className="clamp-2" fontSize="xl" as="h4" mb={1}>
             {product.title}
@@ -40,6 +43,7 @@ export const ProductCard = chakra(
             {product.price}$
           </Text>
         </Box>
+        </Link>
       </Flex>
     )
   }

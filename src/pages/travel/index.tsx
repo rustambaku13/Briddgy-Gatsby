@@ -6,6 +6,7 @@ import {
   Grid,
   Heading,
   IconButton,
+  Image,
   LinkBox,
   SimpleGrid,
   Stack,
@@ -93,7 +94,8 @@ const AddTrip = ({ data }: PageProps) => {
           </Box>
           <Box d={["none", "none", "block"]} flex={2}>
             <Box maxW="500px" ml="auto">
-              <Img alt="Worldwide " fluid={data.globe.childImageSharp.fluid} />
+              {/* <Img alt="Worldwide " fluid={data.globe.childImageSharp.fluid} /> */}
+              <Image zIndex={2} src="/preloader/travel_page.svg"/>
             </Box>
           </Box>
         </Container>
@@ -168,7 +170,7 @@ const AddTrip = ({ data }: PageProps) => {
       </Container>
       <Divider />
       <HowToEarnMoney />
-      <Container mb={[20, 20, "150px"]} pt={8} maxW="full" as="section">
+      {/* <Container mb={[20, 20, "150px"]} pt={8} maxW="full" as="section">
         <Heading mb={10} fontSize="hb3" fontWeight="700" textAlign="center">
           Why our shoppers love Briddgy
         </Heading>
@@ -189,7 +191,7 @@ const AddTrip = ({ data }: PageProps) => {
             testimonial={data.testimonials.edges[1].node.frontmatter}
           />
         </SimpleGrid>
-      </Container>
+      </Container> */}
       <Container bg="blue.50" py={8} as="section" maxW="full">
         <Heading mb={10} fontSize="hb3" fontWeight="700" textAlign="center">
           Frequently Asked Questions

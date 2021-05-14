@@ -4,6 +4,7 @@ import {
   Container,
   Grid,
   Heading,
+  Image,
   LinkBox,
   SimpleGrid,
   Stack,
@@ -77,10 +78,11 @@ const AddOrder = ({ data }) => {
           </Box>
           <Box d={["none", "none", "block"]} flex={2}>
             <Box maxW="500px" ml="auto">
-              <Img
+              {/* <Img
                 alt="E-Commerce"
                 fluid={data.ecommerce.childImageSharp.fluid}
-              />
+              /> */}
+              <Image zIndex={2} src="/preloader/order_page.svg"/>
             </Box>
           </Box>
         </Container>
@@ -113,7 +115,7 @@ const AddOrder = ({ data }) => {
         </Grid>
       </Container>
       <HowToOrder />
-      <Container mb={[20, 20, "150px"]} pt={8} maxW="full" as="section">
+      {/* <Container mb={[20, 20, "150px"]} pt={8} maxW="full" as="section">
         <Heading mb={10} fontSize="hb3" fontWeight="700" textAlign="center">
           Why our shoppers love Briddgy
         </Heading>
@@ -134,7 +136,7 @@ const AddOrder = ({ data }) => {
             testimonial={data.testimonials.edges[1].node.frontmatter}
           />
         </SimpleGrid>
-      </Container>
+      </Container> */}
       <Container bg="blue.50" py={8} as="section" maxW="full">
         <Heading mb={10} fontSize="hb3" fontWeight="700" textAlign="center">
           Frequently Asked Questions

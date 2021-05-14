@@ -79,17 +79,17 @@ const Footer = () => {
               About Us
             </Heading>
             <Text fontWeight="300" mb={3}>
-              <Link to="/">How it works?</Link>
+              <Link to="/faq/post/what-is-briddgy">How it works?</Link>
             </Text>
             <Text fontWeight="300" mb={3}>
               <Link to="/">Blogs</Link>
             </Text>
-            <Text fontWeight="300" mb={3}>
+            {/* <Text fontWeight="300" mb={3}>
               <Link to="/faq">Collections</Link>
             </Text>
             <Text fontWeight="300" mb={3}>
               <Link to="/">Testimonials</Link>
-            </Text>
+            </Text> */}
           </Box>
           <Box>
             <Heading fontSize="xl" mb={5} fontWeight="600" as="h3">
@@ -99,7 +99,7 @@ const Footer = () => {
               <Link to="/faq">Help Center</Link>
             </Text>
             <Text fontWeight="300" mb={3}>
-              <Link to="/">Contact Us</Link>
+              <Link to="">Contact Us</Link>
             </Text>
             <Text fontWeight="300" mb={3}>
               <Link to="/">Terms & Conditions</Link>

@@ -39,8 +39,6 @@ export const LocationAutoComplete = chakra(
     const fetchData = value => {
       searchLocation(value)
         .then(({ data }) => {
-          console.log(data)
-
           setResults(data)
           return data
         })
@@ -79,6 +77,7 @@ export const LocationAutoComplete = chakra(
       <Box pos="relative" className={className + " autocomplete"}>
         <InputGroup fontSize="inherit">
           <Input
+
             size={size}
             aria-haspopup="listbox"
             autoComplete="off"

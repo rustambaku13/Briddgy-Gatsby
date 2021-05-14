@@ -244,7 +244,7 @@ const MainTripsPage = ({ data, location }) => {
       </Container>
 
       <HowToOrder />
-      <Container my="80px" pt={8} maxW="full" as="section">
+      {/* <Container my="80px" pt={8} maxW="full" as="section">
         <Heading mb={10} fontSize="hb3" fontWeight="700" textAlign="center">
           Why our shoppers love Briddgy
         </Heading>
@@ -265,7 +265,7 @@ const MainTripsPage = ({ data, location }) => {
             testimonial={data.testimonials.edges[1].node.frontmatter}
           />
         </SimpleGrid>
-      </Container>
+      </Container> */}
 
       <Footer />
     </FormProvider>

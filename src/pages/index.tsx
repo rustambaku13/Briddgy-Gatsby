@@ -47,7 +47,7 @@ const Home = ({ data }) => {
         // bgGradient="linear(to-t,crayolaGreen.base,tealBlue.dark)"
         className="landing-header"
       >
-        <Box pl={[0, 0, 10]} pt={[14, 14, "120px"]} w="100%">
+        <Box pl={[0, 0, 10]} pt={[14, 14, "120px"]} maxW='900px' w="100%">
           <Heading
             color="white"
             mb={12}
@@ -301,7 +301,7 @@ const Home = ({ data }) => {
         </Container>
       </Box>
 
-      <Box w="100%" mb={[20, 20, "150px"]} as="section">
+      {/* <Box w="100%" mb={[20, 20, "150px"]} as="section">
         <Container h="100%" maxW="container.xl">
           <Heading mb="10" fontSize="hb3" fontWeight="700" textAlign="center">
             Why people love Briddgy &nbsp;
@@ -309,7 +309,7 @@ const Home = ({ data }) => {
           </Heading>
           <TestimonialLanding />
         </Container>
-      </Box>
+      </Box> */}
       <Footer />
     </>
   )
