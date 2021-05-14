@@ -810,6 +810,6 @@ Currently, Briddgy uses Stripe for the payouts to travelers.
 
 </ul></div>
  
-We are currently working on adding other countries to the list 😊
+We are currently working on adding other countries to the list😊
 
  </div>
