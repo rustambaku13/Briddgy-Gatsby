@@ -65,16 +65,28 @@ export async function verifyEmail(key) {
 }
 
 export async function getNotifications() {
-  const data =  await axios_normal.get("/main/api/notifications/readAll")
+  const data =  await axios_normal.get("/trip-order/api/notifications/readAll")
   data.data.results.forEach(item => {
       momentize(item,"date_created")
   });
   return data
 }
 
+export async function readnotifications() {
+  return  await axios_normal.post("/trip-order/api/notifications/readAll")
+  
+  
+}
+
 export async function avatarPicUpload(file) {
   return await axios_normal.put(`/main/api/fileupload/userimage/`,file)
 }
+
+export async function redeemPromoCode(code) {
+  return await axios_normal.post(`/main/api/promo/`,{code})
+}
+
+
 
 // Other Users 
 

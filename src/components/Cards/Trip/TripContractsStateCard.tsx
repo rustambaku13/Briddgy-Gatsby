@@ -41,7 +41,18 @@ const STATE_TEXT = (state)=>{
 
 }
 
-
+const cancelButtonDisplay = (contract:Contract)=>{
+  switch(contract.state){
+    case "BID":
+      return true
+    case "SET":
+      return true
+    case "FRZ":
+      return true
+    default:
+      return false
+  }
+}
 
 export const TripContractsStateCard = chakra(
   ({ className, contract }: { className?: any; contract: Contract }) => {
@@ -93,7 +104,7 @@ export const TripContractsStateCard = chakra(
                     callback: grabHandler,
                     no: "No",
                     description:
-                      "Do you confirm that you have purchased the item?",
+                      "Do you confirm that you have purchased the item? You can not cancel the deal once you have purchased the item",
                   })
                 }}
                 size="sm"
@@ -131,6 +142,7 @@ export const TripContractsStateCard = chakra(
             </Link>
           </Box>
           <IconButton
+            d={cancelButtonDisplay(contract)?"block":"none"}
             onClick={() => {
               LayoutStore.alertDialogModalOpen({
                 title: "Cancel Deal",

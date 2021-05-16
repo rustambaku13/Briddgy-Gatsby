@@ -54,6 +54,7 @@ import { Review } from "../../types/review"
 import { Trip } from "../../types/trip"
 import { Router } from "@reach/router"
 import { ImageChangeButton } from "../../components/Inputs/ImageChangeButton"
+import { RedeemPromo } from "../../components/Promo/RedeemPromo"
 const PersonalDetailsSection = observer(() => {
   useEffect(() => {
     if (UserStore.reviews.loading) UserStore.fetchMyReviews()
@@ -172,8 +173,7 @@ const PersonalDetailsSection = observer(() => {
               Normal Balance
             </Text>
             <Text fontSize="sm" variant="secondary">
-              Earn money by travelling and either withdraw or use on balance to
-              order something using Briddgy
+              Money that you can withdraw or use for your next purchase in Briddgy
             </Text>
           </Box>
           <Box ml={3} flex="0 0 auto">
@@ -209,7 +209,7 @@ const PersonalDetailsSection = observer(() => {
   )
 })
 
-const EarnCreditsSection = () => {
+const EarnCreditsSection = observer(() => {
   const { register, handleSubmit, errors } = useForm()
   const code = useRef(null)
   const [copied, setCopied] = useState(false)
@@ -309,62 +309,19 @@ const EarnCreditsSection = () => {
           </Button>
         </Box>
         <Divider my={5} />
-        <Heading my={8} textAlign="center" fontSize="hb1">
-          Or use your friends promo code and save
-        </Heading>
-        <Box
-          as="form"
-          onSubmit={handleSubmit(() => null)}
-          bg="white"
-          _hover={{ bg: "outline.light" }}
-          transition=".2s ease-in-out"
-          textAlign="initial"
-          px={4}
-          py={2}
-          borderWidth="1px"
-          borderRadius="lg"
-          w="100%"
-          fontWeight="400"
-          pos="relative"
-        >
-          <Input
-            textTransform="uppercase"
-            placeholder="Enter promo code"
-            bg="transparent"
-            ref={register({
-              required: "Please enter the promo code",
-              maxLength: {
-                value: 5,
-                message: "Promo Code should be 5 characters",
-              },
-              minLength: {
-                value: 5,
-                message: "Promo Code should be 5 characters",
-              },
-            })}
-            fontSize={["xl", "2xl"]}
-            name="code"
-            h="70px"
-            border="none"
-          />
-          <Button
-            zIndex="1"
-            pos="absolute"
-            right={4}
-            top="18px"
-            px={5}
-            type="submit"
-            size="lg"
-            variant="primary"
-          >
-            Redeem
-          </Button>
-        </Box>
-        <Text color="red.500">{errors.code?.message}</Text>
+        {UserStore.me.used_promo?null:(
+         <> <Heading my={8} textAlign="center" fontSize="hb1">
+         Or use your friends promo code and save
+       </Heading>
+       <RedeemPromo/>
+         </>
+        )}
+        
+        
       </Box>
     </Box>
   )
-}
+})
 
 const MyOrdersSection = observer(() => {
   useEffect(() => {
@@ -477,7 +434,7 @@ const MyTripsSections = observer(() => {
             <MyMediumTripCard trip={trip} />
           ))
         ) : (
-          <Empty />
+          <Empty text="No Trips"/>
         )}
       </VStack>
     </Box>

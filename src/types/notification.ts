@@ -4,7 +4,7 @@ export interface Notification {
   content_type: number
   date_created: string
   object_id: number
-  verb: "BID" | "SET" | "DEL" | "GRB" | "DLV" | "FIN" | "REV"
+  state: "BID" | "SET" | "DEL" | "GRB" | "DLV" | "FIN" | "REV"
   sender: User
 }
 

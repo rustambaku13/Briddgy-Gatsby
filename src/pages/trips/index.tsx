@@ -109,6 +109,7 @@ const MainTripsPage = ({ data, location }) => {
         <Box
           onSubmit={handleSubmit(onSubmit)}
           as="form"
+          autoComplete="off"
           maxW="container.lg"
           mx="auto"
         >
@@ -199,29 +200,16 @@ const MainTripsPage = ({ data, location }) => {
                   }}
                   type="radio"
                 >
-                  <MenuItemOption value="asc">Earliest Date</MenuItemOption>
-                  <MenuItemOption value="desc">Highest Weight</MenuItemOption>
-                  <MenuItemOption value="ranking">User Ranking</MenuItemOption>
+                  <MenuItemOption value="-date">Earliest Date</MenuItemOption>
+                  <MenuItemOption value="-weight_limit">Highest Capacity</MenuItemOption>
+                  <MenuItemOption value="-owner_rating">User Ranking</MenuItemOption>
                 </MenuOptionGroup>
               </MenuList>
               <input
                 type="hidden"
-                name="sort_by"
+                name="order_by"
                 ref={register({ required: false })}
               />
-            </Menu>
-
-            <Menu>
-              <MenuButton color="blue.400">
-                Filters <ChevronDownIcon />
-              </MenuButton>
-              <MenuList>
-                <MenuOptionGroup defaultValue="asc" type="radio">
-                  <MenuItemOption value="asc">Earliest Date</MenuItemOption>
-                  <MenuItemOption value="desc">Highest Weight</MenuItemOption>
-                  <MenuItemOption>User Ranking</MenuItemOption>
-                </MenuOptionGroup>
-              </MenuList>
             </Menu>
           </Box>
         </Flex>

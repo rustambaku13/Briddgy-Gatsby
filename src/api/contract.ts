@@ -82,10 +82,9 @@ export async function getOrderContracts(
   order: number
 ): Promise<AxiosResponse<Contract>> {
   const data= await axios_normal.get(`/trip-order/api/contracts/orders/${order}/`)
-  data.data.results.forEach((item:Contract)=>{
-    momentize(item.order)
-    affiliatize(item.order)
-    momentize(item.trip)
-  })
+  momentize(data.data.order)
+    affiliatize(data.data.order)
+    momentize(data.data.trip)
+
   return data
 }

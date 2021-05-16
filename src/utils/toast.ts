@@ -7,3 +7,12 @@ export const contractSuccessToast = toast => {
     isClosable: true,
   })
 }
+export const TOASTS = {
+  "DELETE_TRIP_FAIL":{
+    title: "Failed to delete Trip",
+    description: "Make sure to handle all your deals before deleting your trip",
+    status: "error",
+    duration: 5000,
+    isClosable: true,
+  }
+}

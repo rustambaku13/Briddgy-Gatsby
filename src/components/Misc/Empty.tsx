@@ -9,7 +9,7 @@ export const Empty = chakra(({ className, text, subText }) => {
         query {
           empty: file(relativePath: { eq: "empty.png" }) {
             childImageSharp {
-              fixed(width: 80, height: 80) {
+              fixed(width: 60, height: 60) {
                 ...GatsbyImageSharpFixed
               }
             }

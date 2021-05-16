@@ -1,53 +1,93 @@
 import {
+  Badge,
   Box,
-  Text,
-  Center,
-  Flex,
-  IconButton,
-  HStack,
-  Divider,
-  Button,
+
+
+
+
+
+
+  Button, Center,
+
+
+
+  Divider, Flex,
+
+  HStack, IconButton, Text
 } from "@chakra-ui/react"
+import { observer } from "mobx-react-lite"
 import React, { useEffect, useState } from "react"
-import { Notification } from "../../types/notification"
 import BellIcon from "../../icons/BellIcon"
 import { RefreshIcon } from "../../icons/Refresh"
-import { Loader } from "../Misc/Loader"
-import { Avatar } from "../Avatar/Avatar"
 import UserStore from "../../store/UserStore"
-import { observer } from "mobx-react-lite"
-import moment from "moment"
-import { FRONTEND_DATE_FORMAT } from "../../api"
+import { Notification } from "../../types/notification"
+import { BACKEND_CONTENT_TYPE } from "../../utils/contentType"
+import { Avatar } from "../Avatar/Avatar"
+import { Loader } from "../Misc/Loader"
 import { Empty } from "./Empty"
+import { LinkOverlay } from "./LinkOverlay"
 
-const Item = ({ notification }: { notification: Notification }) => {
-  switch(notification.verb){
-    case "BID":
-      return (
-        <HStack p={3} spacing={3} cursor="pointer" _hover={{ bg: "outline.light" }}>
+
+const NotificationCore = ({notification,text}:{notification:Notification,text:string})=>{
+  return(
+    <Box pos='relative' _hover={{ bg: "outline.light" }}>
+        <LinkOverlay   to={`/${BACKEND_CONTENT_TYPE[notification.content_type]}/${notification.object_id}`}>
+          <HStack p={3} spacing={3}  >
           <Center>
             <Avatar user={notification.sender} />
           </Center>
           <Box>
-            <Text color="text.dark">You order has been cancelled</Text>
+            <Text color="text.dark">{text}</Text>
             <Text as="small" variant="secondary">
               {notification.date_created}
             </Text>
-          </Box>
-        </HStack>
-      )
-
-  }
-  
+          </Box></HStack>
+        </LinkOverlay>
+        </Box>
+  )
 }
+
+const TEXTS = {
+  "BID":"You have a new proposal",
+  "SET":"Deal has been settled",
+  "GRB":"Traveler has grabbed your item",
+  "DLV":"Orderer has confirmed your deliver. Payout has started",
+  "DEL":"Deal has been canceled",
+
+}
+
+
+
+const NotificationIconWithBadge = observer(() => {
+  return (
+    <Box pos="relative">
+      <BellIcon fontSize="18px" />
+      <Badge
+        borderRadius="base"
+        bg="danger.base"
+        color="white"
+        fontWeight="500"
+        d={UserStore.me.unread_notifications > 0 ? "block" : "none"}
+        pos="absolute"
+        right="0"
+        top="0"
+        transform="translate(50%,-50%)"
+      >
+        {UserStore.me.unread_notifications > 99 ? 99 : UserStore.me.unread_notifications}
+      </Badge>
+    </Box>
+  )
+})
 
 export const NotificationDropdown = observer(() => {
   const [hidden, setHidden] = useState(true)
 
   useEffect(() => {
     if (hidden && UserStore.notifications.loading) UserStore.fetchNotification()
+    if(!hidden && !UserStore.notifications.loading) UserStore.readNotification()
   }, [hidden])
   return (
+    
     <Box pos="relative" className="notification" mr={[2, 3, 4]}>
       
       <IconButton
@@ -62,7 +102,7 @@ export const NotificationDropdown = observer(() => {
         borderWidth="1px"
         borderColor="tealBlue.base"
         color="tealBlue.base"
-        icon={<BellIcon />}
+        icon={<NotificationIconWithBadge />}
       ></IconButton>
       <Box
         opacity={hidden ? 0 : 1}
@@ -99,7 +139,7 @@ export const NotificationDropdown = observer(() => {
           <Loader />
         ) : (
           UserStore.notifications.results.length?UserStore.notifications.results.map(item => (
-            <Item notification={item} />
+            <NotificationCore notification={item} text={TEXTS[item.state]}/>
           )):<Empty text='No Notifications'/>
         )}
 

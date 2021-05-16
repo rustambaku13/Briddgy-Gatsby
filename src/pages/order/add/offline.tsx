@@ -106,7 +106,7 @@ const Summary = ({ files, pageChange, back, page, adding }) => {
             color="black"
             fontWeight="600"
           >
-            {quote.loading ? <Spinner /> : `$ ${quote.total}`}
+            {quote.loading ? <Spinner /> : `$ ${quote.total_after_stripe}`}
           </Text>
         </Text>
         <Divider my={5} />
@@ -399,7 +399,7 @@ const ProductDetails = ({ pageChange, files, setFiles }) => {
         </FormControl>
       </Box>
 
-      <Box flex={["0 0 100%", "0 0 100%", "0 0 300px"]} a>
+      <Box  flex={["0 0 100%", "0 0 100%", "0 0 300px"]} >
         <Box w="100%" borderRadius="base" p={3} bg="white" borderWidth="1px">
           <Button onClick={pageChange} w="100%" size="lg" variant="primary">
             Next

@@ -8,6 +8,8 @@ export const PaymentDisplay = chakra(
     item_price = 0,
     reward,
     total,
+    total_after_stripe,
+    stripe_balance_change,
     briddgy_fee,
     stripe_fee,
     loading,
@@ -41,10 +43,16 @@ export const PaymentDisplay = chakra(
                 ${briddgy_fee}
               </Text>
             </Text>
-            <Text variant="secondary">
+            <Text mb={5} variant="secondary">
               Bank & Trasfer
               <Text as="span" float="right">
                 ${stripe_fee}
+              </Text>
+            </Text>
+            <Text d={stripe_balance_change==0?"none":"block"} variant="secondary">
+              Used Balance
+              <Text as="span" color='success.base' float="right">
+                -${stripe_balance_change}
               </Text>
             </Text>
           </Box>

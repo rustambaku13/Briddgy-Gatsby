@@ -6,6 +6,7 @@ import React, { useState } from "react"
 import { useForm } from "react-hook-form"
 import AttachmentIcon from "../../icons/Attachment"
 import ChatIcon from "../../icons/Chat"
+import SendMessageIcon from "../../icons/SendMessage"
 import MessageStore, { KEYPRESS_DELAY } from "../../store/MessageStore"
 export const MessageBottomPanel = observer(() => {
   const { register, handleSubmit, setValue, formState } = useForm()
@@ -74,6 +75,7 @@ export const MessageBottomPanel = observer(() => {
         />
         <IconButton
           size="lg"
+          isDisabled={true}
           aria-label="Attachment"
           icon={<AttachmentIcon />}
         />
@@ -82,7 +84,7 @@ export const MessageBottomPanel = observer(() => {
           variant="success"
           size="lg"
           aria-label="Send Message"
-          icon={<ChatIcon />}
+          icon={<SendMessageIcon />}
         />
       </HStack>
     </Box>

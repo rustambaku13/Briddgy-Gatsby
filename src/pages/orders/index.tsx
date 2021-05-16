@@ -55,7 +55,8 @@ const MainOrdersPage = ({ data, location }) => {
     }
     return b
   }
-
+  console.log(location.search);
+  
   const updateFilters = () => {
     // Function to refetch new page based on current form value
     setLoading(true)
@@ -106,6 +107,7 @@ const MainOrdersPage = ({ data, location }) => {
         <Box
           onSubmit={handleSubmit(onSubmit)}
           as="form"
+          autoComplete="off"
           maxW="container.lg"
           mx="auto"
         >
@@ -190,35 +192,21 @@ const MainOrdersPage = ({ data, location }) => {
               <MenuList>
                 <MenuOptionGroup
                   onChange={value => {
-                    setValue("sort_by", value)
-
+                    setValue("order_by", value)
                     handleSubmit(onSubmit)()
                   }}
                   type="radio"
                 >
-                  <MenuItemOption value="asc">Earliest Date</MenuItemOption>
-                  <MenuItemOption value="desc">Highest Weight</MenuItemOption>
-                  <MenuItemOption value="ranking">User Ranking</MenuItemOption>
+                  <MenuItemOption value="-date">Earliest Date</MenuItemOption>
+                  <MenuItemOption value="-weight">Highest Weight</MenuItemOption>
+                  <MenuItemOption value="-owner__rating">User Ranking</MenuItemOption>
                 </MenuOptionGroup>
               </MenuList>
               <input
                 type="hidden"
-                name="sort_by"
+                name="order_by"
                 ref={register({ required: false })}
               />
-            </Menu>
-
-            <Menu>
-              <MenuButton color="blue.400">
-                Filters <ChevronDownIcon />
-              </MenuButton>
-              <MenuList>
-                <MenuOptionGroup defaultValue="asc" type="radio">
-                  <MenuItemOption value="asc">Earliest Date</MenuItemOption>
-                  <MenuItemOption value="desc">Highest Weight</MenuItemOption>
-                  <MenuItemOption>User Ranking</MenuItemOption>
-                </MenuOptionGroup>
-              </MenuList>
             </Menu>
           </Box>
         </Flex>

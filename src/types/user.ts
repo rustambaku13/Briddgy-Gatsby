@@ -2,7 +2,7 @@ export interface User {
   id: number
   first_name: string
   last_name: string
-  balance: number
+  balance: string
   avatarpic: string
   rating: number
   online: boolean
@@ -16,7 +16,7 @@ export interface User {
   phone: string
   ranking: number
   my_promo: string
-  promo_balance: number
+  promo_balance: string
   used_promo: boolean
   unread_notifications: number
 }

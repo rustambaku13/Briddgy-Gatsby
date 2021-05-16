@@ -179,6 +179,22 @@ html {
     }
   }
 }
+
+.terms{
+  h2{
+    font-size: 1.75rem;
+  }
+  h3{
+    font-size: 1.5rem;
+    padding-left:1rem;
+  }
+  p{
+    padding-left:1.5rem;
+  }
+  ol{
+    padding-left:inherit;
+  }
+}
 /* ==========================================================================
     LARGE COMPONENT STYLES 
    ========================================================================== */

@@ -316,7 +316,7 @@ export const CollapsableOrderCardwTrip = chakra(
                 <Text as="label" variant="light">
                   Transfer Commisions
                 </Text>
-                <Text>${parseFloat(contract.total_price) - parseFloat(contract.price_bid) - parseFloat(contract.item_price)}</Text>
+                <Text>${(parseFloat(contract.total_price) - parseFloat(contract.price_bid) - parseFloat(contract.item_price)).toFixed(2)}</Text>
               </Box>
           </AccordionPanel>
         </AccordionItem>

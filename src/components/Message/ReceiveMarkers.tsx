@@ -22,14 +22,14 @@ export const ReceiveMarkers = ({ received, timestamp }) => {
     // marker = <i className="material-icons small amber">warning</i> // yellow icon /!\
   } else if (received == Tinode.MESSAGE_STATUS_SENT) {
     marker = (
-      <Box as="i" fontSize="200">
+      <Box as="i" color="text.light" fontSize="200">
         <CheckIcon />
       </Box>
     )
   } else if (received == Tinode.MESSAGE_STATUS_READ) {
     marker = (
-      <Box as="i" fontSize="200" color="success.base">
-        <CheckIcon />
+      <Box as="i" color="success.light" fontSize="200" >
+        <CheckIcon  />
       </Box>
     ) // blue double checkmark
   }

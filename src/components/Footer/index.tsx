@@ -12,8 +12,10 @@ import React from "react"
 import logo from "../../images/icon_opaque.png"
 import instagram from "../../images/instagram.svg"
 import facebook from "../../images/facebook.svg"
+import UserStore from '../../store/UserStore'
 import youtube from "../../images/youtube.svg"
-const Footer = () => {
+import { observer } from "mobx-react-lite"
+const Footer = observer(() => {
   return (
     <Box
       bg="blueAlpha.100"
@@ -64,9 +66,15 @@ const Footer = () => {
             <Text fontWeight="300" mb={3}>
               <Link to="/">Home</Link>
             </Text>
+           {UserStore.isLoggedIn?(
             <Text fontWeight="300" mb={3}>
-              <Link to="/login">Login</Link>
-            </Text>
+            <Link to="/profile">Profile</Link>
+          </Text>
+           ):(
+            <Text fontWeight="300" mb={3}>
+            <Link to="/login">Login</Link>
+          </Text>
+           )}
             <Text fontWeight="300" mb={3}>
               <Link to="/trips">Trips</Link>
             </Text>
@@ -102,10 +110,10 @@ const Footer = () => {
               <Link to="">Contact Us</Link>
             </Text>
             <Text fontWeight="300" mb={3}>
-              <Link to="/">Terms & Conditions</Link>
+              <Link to="/terms">Terms & Conditions</Link>
             </Text>
             <Text fontWeight="300" mb={3}>
-              <Link to="/">Privacy Policy</Link>
+              <Link to="/terms">Privacy Policy</Link>
             </Text>
           </Box>
           <Flex flexDir="column">
@@ -129,9 +137,9 @@ const Footer = () => {
               <a target="_blank" href="https://www.instagram.com/briddgyworld/">
                 <Image width="28px" src={instagram} />
               </a>
-              <a target="_blank" href="#">
+              {/* <a target="_blank" href="#">
                 <Image width="28px" src={youtube} />
-              </a>
+              </a> */}
             </HStack>
           </Flex>
         </SimpleGrid>
@@ -143,5 +151,5 @@ const Footer = () => {
       </Box>
     </Box>
   )
-}
+})
 export default Footer

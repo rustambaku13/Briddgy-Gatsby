@@ -12,3 +12,6 @@ export async function createNewAccount(country): Promise<any> {
 export async function createPaymentIntent(contract_id): Promise<any> {
   return axios_normal.get(`main/api/payment/intent/create/${contract_id}/`)
 }
+export async function makeBalancePayment(contract_id):Promise<any>{
+  return axios_normal.post(`main/api/payment/intent/balance/${contract_id}/`)
+} 

@@ -175,7 +175,9 @@ const SignUp = ({ data }: PageProps) => {
                 <FormLabel display="inline-flex">
                   I have read and accepted the &nbsp;
                   <Text as="span" color="blue.500">
+                    <Link target="_blank"  to='/terms'>
                     Terms & Conditions
+                    </Link>
                   </Text>
                 </FormLabel>
               </FormControl>

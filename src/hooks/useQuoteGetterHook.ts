@@ -7,7 +7,7 @@ export const useQuoteGetterHook = (item_price = 0, reward, condition) => {
 
   useEffect(() => {
     if (condition) {
-      getQuote(item_price,reward,UserStore.me?.promo_balance || 0)
+      getQuote(item_price,reward,UserStore.me?.promo_balance || 0,UserStore.me?.balance)
       .then(({data})=>{
         setPrices(data)
       })

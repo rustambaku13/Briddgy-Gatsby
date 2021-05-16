@@ -16,12 +16,14 @@ const MessagesSelected = ({ selectedRoom }) => {
     if (!selectedRoom || selectedRoom.length == 0) return
 
     MessageStore.handleStartTopicRequest(selectedRoom)
+  }, [selectedRoom])
+  useEffect(()=>{
     return () => {
       if (MessageStore.topicSelected) {
         MessageStore.setTopicSelected = null
       }
     }
-  }, [selectedRoom])
+  },[])
   return (
     <>
       <Helmet title="Briddgy | Messages" defer={false}>

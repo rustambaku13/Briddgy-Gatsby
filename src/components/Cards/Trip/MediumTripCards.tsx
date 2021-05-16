@@ -4,8 +4,11 @@ import {
   chakra,
   Divider,
   Flex,
+  
+
   LinkBox,
-  LinkOverlay,
+  
+
   Text,
   useToast
 } from "@chakra-ui/react"
@@ -18,6 +21,7 @@ import { Order } from "../../../types/orders"
 import { Trip } from "../../../types/trip"
 import { tripCityAnywhere } from "../../../utils/misc"
 import { Avatar } from "../../Avatar/Avatar"
+import { LinkOverlay } from "../../Misc/LinkOverlay"
 import { Rating } from "../../Misc/Rating"
 
 const MediumTripCard = chakra(
@@ -36,7 +40,7 @@ const MediumTripCard = chakra(
   }) => {
     return (
       <LinkBox w="100%">
-        <LinkOverlay>
+        <LinkOverlay to={`/trips/${trip.id}`}>
           <Box
             w="100%"
             className={className}
@@ -46,7 +50,7 @@ const MediumTripCard = chakra(
             borderWidth="1px"
             borderRadius="lg"
           >
-            <Link to={"/trips"}></Link>
+          
             <Flex alignItems="center" w="100%">
               <Avatar mr={2} user={trip.owner} />
               <Box>

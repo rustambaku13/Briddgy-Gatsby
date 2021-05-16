@@ -214,7 +214,6 @@ class MessageStore {
   // Check if topic is cached and move to setter at the bottom
   handleStartTopicRequest(topicName) {
     // Check if topic is indeed new. If not, launch it.
-    debugger
     if (topicName && this.tinode.isTopicCached(topicName)) {
       this.setTopicSelected = topicName
       return
@@ -463,6 +462,7 @@ class MessageStore {
 
   // Setters
   set setTopicSelected(topicName) {
+    
     const topic = this.tinode.getTopic(topicName)
     if (topicName != this.topicSelected) {
       // Leave old one if it was defined
@@ -489,6 +489,13 @@ class MessageStore {
       this.isChatReady &&
       this.topicSelected != topicName
     ) {
+      const msgs = [];
+      topic.messages(function(msg) {
+        if (!msg.deleted) {
+          msgs.push(msg);
+        }
+      });
+      this.messages = msgs
       const newTopic =
         this.newTopicParams && this.newTopicParams._topicName == topicName
       let getQuery = topic.startMetaQuery().withLaterDesc()

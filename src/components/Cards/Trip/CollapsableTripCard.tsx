@@ -16,12 +16,15 @@ import {
 } from "@chakra-ui/react"
 import { chakra } from "@chakra-ui/system"
 import { navigate } from "gatsby-link"
+import { flowResult } from "mobx"
 import React, { useState } from "react"
 import { removeTrip } from "../../../api/trip"
 import plane from "../../../images/planeicon.svg"
+import UserStore from '../../../store/UserStore'
 import LayoutStore from "../../../store/LayoutStore"
 import { Trip } from "../../../types/trip"
 import { tripCityAnywhere } from "../../../utils/misc"
+import { TOASTS } from "../../../utils/toast"
 
 export const CollapsableTripCard = chakra(
   ({ className, trip }: { className?: any; trip: Trip }) => {
@@ -31,17 +34,12 @@ export const CollapsableTripCard = chakra(
 
     const removeHandler = async ()=>{
       setLoading(true)
-      return removeTrip(trip.id).then(()=>{
+      flowResult(UserStore.deleteTrip(trip))
+      .then(()=>{
           navigate('/profile')
       })
       .catch(()=>{
-        toast({
-          title: "Failed to delete Trip",
-          description: "Make sure to handle all your deals before deleteing your trip",
-          status: "error",
-          duration: 5000,
-          isClosable: true,
-        })
+        toast(TOASTS.DELETE_TRIP_FAIL)
       })
       .finally(()=>{
         setLoading(false)

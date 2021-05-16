@@ -118,7 +118,7 @@ const Summary = ({ files, pageChange, back, page, adding }) => {
             color="black"
             fontWeight="600"
           >
-            {quote.loading ? <Spinner /> : `$ ${quote.total}`}
+            {quote.loading ? <Spinner /> : `$ ${quote.total_after_stripe}`}
           </Text>
         </Text>
         <Divider my={5} />
@@ -501,7 +501,8 @@ const AddOrderPage = ({ location }: PageProps) => {
         const [title, price, img] = data.result
 
         setValue("title", title)
-        price.length > 0 ? setValue("item_price", price) : null
+        if(!price.length)throw new Error("")
+        setValue("item_price", price)
         return img
       })
       .then(imageFromUrl)
@@ -512,7 +513,7 @@ const AddOrderPage = ({ location }: PageProps) => {
         setPage(1)
       })
 
-    // console.log(url)
+
   }
 
   useEffect(() => {

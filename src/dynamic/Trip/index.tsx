@@ -306,7 +306,7 @@ const SpecificTripPage = observer(({ tripId }) => {
         setTrip(trip.data)
       })
       .catch(e => {
-        navigate("/404")
+        navigate("/404",{replace:false})
       })
       .finally(() => {})
   }, [tripId])

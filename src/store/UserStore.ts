@@ -9,13 +9,15 @@ import {
   uploadFilestoOrder,
 } from "../api/order"
 import { createNewAccount } from "../api/payment"
-import { addTrip, emailSuggestedOrderers, getMyTrips } from "../api/trip"
+import { addTrip, emailSuggestedOrderers, getMyTrips, removeTrip } from "../api/trip"
 import {
   askForEmailCode,
   createUser,
   getMyDetails,
   getNotifications,
   loginUser,
+  readnotifications,
+  redeemPromoCode,
   verifyEmail,
   verifyPhoneNumber,
 } from "../api/user"
@@ -140,6 +142,10 @@ class UserStore {
   save_new_trip(tripData) {
     this.new_trip = tripData
   }
+  *readNotification(){
+    this.me.unread_notifications=0
+    yield readnotifications()
+  }
   *saveNewTrip() {
     // Trip 1
   
@@ -185,6 +191,13 @@ class UserStore {
 
     return trip1
   }
+  *deleteTrip(trip:Trip){
+    if(trip.number_of_contracts > 0) throw Error
+    yield removeTrip(trip.id)
+    this.trips.results = this.trips.results.filter(item=>item.id!=trip.id)
+    this.trips.count--
+
+  }
   *sign_up(props: {
     first_name: string
     last_name: string
@@ -224,6 +237,13 @@ class UserStore {
     } catch (err) {
       throw err
     }
+  }
+  *addPromo(code){
+    const data = yield redeemPromoCode(code)
+    this.me.used_promo=true
+    const discount = parseFloat(data.data.discount)
+    this.me.promo_balance = (parseFloat(this.me.promo_balance) + discount).toFixed(2)
+    return data
   }
   *verifyEmail(key) {
     try {

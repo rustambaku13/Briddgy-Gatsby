@@ -134,7 +134,7 @@ const MyOrderThridPage = ({ loading }) => {
                 {
                   title: "Product Grabbed",
                   description:
-                    "The traveler has bought the product with his money",
+                    "The traveler has bought the product with their money and is on their way",
                   icon: <DeliveryBoxIcon />,
                 },
                 {
@@ -463,7 +463,7 @@ const SpecificOrderPage = observer(({ orderId }) => {
         setOrder(order.data)
       })
       .catch(e => {
-        navigate("/404")
+        navigate("/404",{replace:false})
       })
       .finally(() => {})
   }, [orderId])

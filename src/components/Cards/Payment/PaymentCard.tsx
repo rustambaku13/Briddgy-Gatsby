@@ -26,7 +26,7 @@ import CheckIcon from "../../../icons/Check"
 import UserStore from '../../../store/UserStore'
 import { LockIcon } from "../../../icons/Lock"
 import { StripeIcon } from "../../../icons/Stripe"
-import { createPaymentIntent } from "../../../api/payment"
+import { createPaymentIntent, makeBalancePayment } from "../../../api/payment"
 import { getQuote } from "../../../api/order"
 
 const CARD_ELEMENT_OPTIONS = {
@@ -55,11 +55,31 @@ export const PaymentCard = () => {
   const [loading, setLoading] = useState(false)
   const [disabled, setDisabled] = useState(true)
   const [error, setError] = useState(null)
+  const [prices, setPrices] = useState({
+    loading: true,
+  })
   const [succeeded, setSucceeded] = useState(false)
   const handleChange = async event => {
     setDisabled(event.empty || event.error)
 
     setError(event.error ? event.error.message : "")
+  }
+  const handleBalancePay =  e=>{
+    setLoading(true)
+    e.preventDefault()
+    makeBalancePayment(context.contract.id).then(e=>{
+      context.contract.state = "FRZ"
+      context.setStep(2)
+      UserStore.me.balance = (parseFloat(UserStore.me.balance) - parseFloat(prices.stripe_balance_change)).toFixed(2)
+      setError(null)
+      setSucceeded(true)
+    })
+    .catch(()=>{
+
+    })
+    .finally(()=>{
+      setLoading(false)
+    })
   }
   const handleSubmit = async e => {
     try {
@@ -89,11 +109,8 @@ export const PaymentCard = () => {
     }
   }
 
-  const [prices, setPrices] = useState({
-    loading: true,
-  })
   useEffect(()=>{
-    getQuote(context.contract.item_price,context.contract.price_bid,UserStore.me?.promo_balance || 0).then(({data})=>{
+    getQuote(context.contract.item_price,context.contract.price_bid,UserStore.me?.promo_balance || 0,UserStore.me?.balance || 0).then(({data})=>{
       setPrices(data)
     })
     .catch(()=>{
@@ -114,10 +131,38 @@ export const PaymentCard = () => {
           color="black"
           fontWeight="600"
         >
-          ${prices.total}
+          ${prices.total_after_stripe}
         </Text>
         <Divider my={7} />
       </Text>{" "}
+      <Box d={prices.total_after_stripe!=0?'none':'block'}>
+      <Flex w="100%" mb={1} justifyContent="" alignItems="flex-end" flex={1}>
+        <StripeIcon
+          fill="white"
+          w="auto"
+          h="35px"
+          pos="relative"
+          left="-9px"
+          // ml="auto"
+          color="lilaPurple.dark"
+        />
+      </Flex>
+      <Button
+          size="lg"
+         
+          onClick={handleBalancePay}
+          fontWeight="600"
+          type="submit"
+          rightIcon={<LockIcon />}
+          w="100%"
+          mt={5}
+          isLoading={loading}
+          variant="success"
+        >
+          Pay With Balance
+        </Button>
+      </Box>
+      <Box d={prices.total_after_stripe!=0?"block":"none"}>
       <Flex w="100%" mb={1} justifyContent="" alignItems="flex-end" flex={1}>
         <StripeIcon
           fill="white"
@@ -191,6 +236,7 @@ export const PaymentCard = () => {
           Pay Now
         </Button>
       </form>
+      </Box>
     </>
   )
 }

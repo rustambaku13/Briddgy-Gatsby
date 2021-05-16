@@ -9,7 +9,7 @@ import {
   Flex,
   Img,
   LinkBox,
-  LinkOverlay,
+
   Link as CLink,
   Text,
   VStack,
@@ -27,6 +27,7 @@ import { Avatar } from "../../Avatar/Avatar"
 import LayoutStore from "../../../store/LayoutStore"
 import { TripPageState } from "../../../providers/navPage"
 import { getTripProposals } from "../../../api/contract"
+import { LinkOverlay } from "../../Misc/LinkOverlay"
 
 // This page is all about medium sized order compoentns
 
@@ -65,8 +66,8 @@ const MediumOrderCard = chakra(
   }) => {
     return (
       <LinkBox w="100%">
-        <LinkOverlay>
-          <Link className="medium-order-card" to={`/orders/${orderData.id}/`}>
+        <LinkOverlay to={`/orders/${orderData.id}/`}>
+          
             <Box
               w="100%"
               className={className}
@@ -218,7 +219,7 @@ const MediumOrderCard = chakra(
                 </Text>
               </HStack>
             </Box>
-          </Link>
+          
         </LinkOverlay>
       </LinkBox>
     )
