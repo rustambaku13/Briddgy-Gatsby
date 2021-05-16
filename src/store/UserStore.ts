@@ -6,6 +6,7 @@ import {
   emailSuggestedTravellers,
   getMyOrders,
   getMyReviews,
+  remvoeOrder,
   uploadFilestoOrder,
 } from "../api/order"
 import { createNewAccount } from "../api/payment"
@@ -27,7 +28,7 @@ import { Trips } from "../types/trip"
 import { compressAndReturn } from "../utils/compression"
 import { makeStaticUrl } from "../utils/makeStaticUrl"
 import { axios_normal, bmify } from "./../api/index"
-import { Orders } from "./../types/orders"
+import { Order, Orders } from "./../types/orders"
 import { Trip } from "./../types/trip"
 import { User } from "./../types/user"
 import LayoutStore from "./LayoutStore"
@@ -196,6 +197,13 @@ class UserStore {
     yield removeTrip(trip.id)
     this.trips.results = this.trips.results.filter(item=>item.id!=trip.id)
     this.trips.count--
+
+  }
+  *deleteOrder(order:Order){
+    if(order.deliverer) throw Error
+    yield remvoeOrder(order.id)
+    this.orders.results = this.orders.results.filter(item=>item.id!=order.id)
+    this.orders.count--
 
   }
   *sign_up(props: {

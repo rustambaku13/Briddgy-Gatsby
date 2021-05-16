@@ -11,6 +11,7 @@ import {
   Center,
   Textarea,
 } from "@chakra-ui/react"
+import { Link } from "gatsby-plugin-intl"
 import React from "react"
 import { useForm } from "react-hook-form"
 import { IncrementalNumberSelector } from "../Inputs/IncrementalNumberSelector"
@@ -60,7 +61,7 @@ export const AddTripDetailsModal = ({ isOpen, setOpen, callback }) => {
           </ModalBody>
 
           <ModalFooter>
-            <Button variant="link">Support countries</Button>
+            <Link to="/faq/post/supported-countries-temp">Support countries</Link>
             <Button variant="red_gradient" type="submit" ml="auto" px={10}>
               Add Trip
             </Button>

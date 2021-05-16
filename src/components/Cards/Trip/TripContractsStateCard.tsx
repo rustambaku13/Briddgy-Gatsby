@@ -33,7 +33,7 @@ const STATE_TEXT = (state)=>{
     case "GRB":
       return "Deliver the product and ask the orderer to confirm the delivery."
     case "DLV":
-        return "You did great😃 Your will receive your payment in 1 week"
+        return "You did great😃 You will receive your payment in 1 week"
     default:
       return null
   }

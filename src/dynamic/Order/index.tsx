@@ -54,6 +54,7 @@ import UserStore from "../../store/UserStore"
 import { Contract, Contracts, defaultContracts } from "../../types/contract"
 import { defaultOrders, Order, Orders } from "../../types/orders"
 import { Trips } from "../../types/trip"
+import { tripCityAnywhere } from "../../utils/misc"
 const stripePromise = loadStripe(
   "pk_test_51Htr6JGfJpinijwgZ0o2g7zbJNN9ayprpLtKsv2SpyO5f8pn849rn1EApeCVID7C7mUo4jUjEcYJ4Z2SthL0TcIB00L0hynXAX"
 )
@@ -436,7 +437,8 @@ const PublicPage = ({ order }: { order: Order }) => {
           Similar Orders
         </Heading>
         <Text mb={10} textAlign="center" variant="light" fontSize="600">
-          Baku, Azerbaijan - Ankara, Turkey
+        {tripCityAnywhere(order.src.city)}, {order.src.country} -{" "}
+          {tripCityAnywhere(order.dest.city)}, {order.dest.country}
         </Text>
         {loading ? (
           <Loader />

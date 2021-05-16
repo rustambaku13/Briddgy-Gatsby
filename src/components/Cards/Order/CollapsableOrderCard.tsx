@@ -19,6 +19,7 @@ import {
 } from "@chakra-ui/react"
 import { chakra } from "@chakra-ui/system"
 import { navigate } from "gatsby-link"
+import { flowResult } from "mobx"
 import moment from "moment"
 import React, { useContext, useEffect, useState } from "react"
 import { bmify, FRONTEND_DATE_FORMAT } from "../../../api"
@@ -33,7 +34,8 @@ import { Avatar } from "../../Avatar/Avatar"
 import { ImageViewer } from "../../Misc/ImageThumbnailViewer"
 import { Rating } from "../../Misc/Rating"
 import { SendMessage } from "../../Misc/SendMessageButton"
-
+import UserStore from '../../../store/UserStore'
+import { TOASTS } from "../../../utils/toast"
 export const CollapsableOrderCard = chakra(
   ({
     className,
@@ -53,17 +55,12 @@ export const CollapsableOrderCard = chakra(
 
     const removeHandler = async ()=>{
       setLoading(true)
-      return remvoeOrder(orderData.id).then(()=>{
+      flowResult(UserStore.deleteOrder(orderData))
+      .then(()=>{
           navigate('/profile')
       })
       .catch(()=>{
-        toast({
-          title: "Failed to delete Order",
-          description: "Make sure to handle settled deals before deleting order",
-          status: "error",
-          duration: 5000,
-          isClosable: true,
-        })
+        toast(TOASTS.DELETE_ORDER_FAIL)
       })
       .finally(()=>{
         setLoading(false)
@@ -214,7 +211,7 @@ export const CollapsableOrderCardwTrip = chakra(
       }
     }
     let buttons = <></>
-    if (contract.state == "SET") {
+    if (contract.state == "SET" ) {
       buttons = (
         <Button
           onClick={() => {

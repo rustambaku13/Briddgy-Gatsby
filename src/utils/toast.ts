@@ -14,5 +14,12 @@ export const TOASTS = {
     status: "error",
     duration: 5000,
     isClosable: true,
+  },
+  "DELETE_ORDER_FAIL":{
+    title: "Failed to delete Order",
+    description: "Make sure to handle your deals before deleting your order",
+    status: "error",
+    duration: 5000,
+    isClosable: true,
   }
 }

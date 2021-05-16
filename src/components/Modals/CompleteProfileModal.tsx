@@ -22,6 +22,7 @@ import { Loader } from "../Misc/Loader"
 import UserStore from "../../store/UserStore"
 import { getOnboardingLink } from "../../api/payment"
 import { Hint } from "../Misc/Hint"
+import { Link } from "gatsby-plugin-intl"
 export const CompleteProfileModal = observer(() => {
   const {
     register,
@@ -87,7 +88,7 @@ export const CompleteProfileModal = observer(() => {
             </ModalBody>
 
             <ModalFooter>
-              <Button variant="link">How payout work</Button>
+              <Link to='/faq/post/supported-countries-temp'>How payout work</Link>
               <Button
                 isLoading={loading}
                 variant="success"

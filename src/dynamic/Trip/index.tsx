@@ -278,7 +278,7 @@ const PublicPage = ({ trip }: { trip: Trip }) => {
         </Heading>
         <Text mb={10} textAlign="center" variant="light" fontSize="600">
           {tripCityAnywhere(trip.src.city)}, {trip.src.country} -{" "}
-          {tripCityAnywhere(trip.src.city)}, {trip.dest.country}
+          {tripCityAnywhere(trip.dest.city)}, {trip.dest.country}
         </Text>
         {loading ? (
           <Loader />

@@ -38,8 +38,10 @@ export const LocationAutoComplete = chakra(
     const [results, setResults] = useState([])
     const fetchData = value => {
       searchLocation(value)
-        .then(({ data }) => {
-          setResults(data)
+        .then(({ data }) => {      
+          if(Array.isArray(data)){
+            setResults(data)
+          }
           return data
         })
 
@@ -73,6 +75,8 @@ export const LocationAutoComplete = chakra(
       // setValue(name + "_input", title)
       document.activeElement.blur()
     }
+    console.log(results);
+    
     return (
       <Box pos="relative" className={className + " autocomplete"}>
         <InputGroup fontSize="inherit">

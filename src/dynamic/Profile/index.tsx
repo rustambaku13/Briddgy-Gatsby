@@ -427,11 +427,11 @@ const SpecificProfilePage = ({userId}) => {
             orientation="horizontal"
             index={openTab}
           >
-            <TabList style={{ "--count": "4" }} className="tabs">
+            <TabList style={{ "--count": "3" }} className="tabs">
               <Tab fontSize={[400, 500]}>Personal Details</Tab>
               <Tab fontSize={[400, 500]}>Trips</Tab>
               <Tab fontSize={[400, 500]}>Orders</Tab>
-              <Tab fontSize={[400, 500]}>Promo Code</Tab>
+              {/* <Tab fontSize={[400, 500]}>Promo Code</Tab> */}
               <li className="presentation-slider" role="presentation"></li>
             </TabList>
             <TabPanels>
@@ -444,9 +444,9 @@ const SpecificProfilePage = ({userId}) => {
               <TabPanel px={0}>
                 <MyOrdersSection userId={userId} user={user}/>
               </TabPanel>
-              <TabPanel px={0}>
+              {/* <TabPanel px={0}>
                 <EarnCreditsSection user={user} />
-              </TabPanel>
+              </TabPanel> */}
             </TabPanels>
           </Tabs>
         </Container>
