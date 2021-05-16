@@ -17,6 +17,7 @@ topic: get_started
  7. You can always extend these styles but never make it opinionated about the design: That is never include font-sizes, colors, design elements in it.
  -->
 
+
  <style>
  .briddgy-faq-grid{
  display:grid;
