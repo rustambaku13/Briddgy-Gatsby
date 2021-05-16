@@ -1,6 +1,6 @@
 ---
 templateKey: faq
-slug: ""
+slug: using-briddgy-from-smartphone
 popular: false
 language: en
 title: Using Briddgy from smartphone
@@ -16,6 +16,7 @@ topic: get_started
  6. Use proper headings starting from H2. H1 is reserved for title
  7. You can always extend these styles but never make it opinionated about the design: That is never include font-sizes, colors, design elements in it.
  -->
+
  <style>
  .briddgy-faq-grid{
  display:grid;
