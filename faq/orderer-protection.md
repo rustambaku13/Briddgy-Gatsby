@@ -1,12 +1,12 @@
 ---
 templateKey: faq
-slug: ""
+slug: orderer-protection
 popular: false
 language: en
 title: Orderer Protection
 topic: orderer
 ---
-<!-- Guidelines for making a new FAQ POST
+<!-- Guidelines for making a new FAQ POST 
  1. Everything inside \*\*briddgy-faq-grid\*\* class
  2. Use \*\*col-2\*\* and \*\*span-2\*\* classes to position elements in grid. NOTE: No need for col-1 span-2
  3. Use \*\*<br/>\*\* Tags for adding vertical space
