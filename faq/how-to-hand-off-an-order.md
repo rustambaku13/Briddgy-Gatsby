@@ -1,12 +1,12 @@
 ---
 templateKey: faq
-slug: ""
+slug: how-to-hand-off-an-order
 popular: false
 language: en
 title: How to hand off an order
 topic: traveler
 ---
-After buying an item and traveling to a destination city, you need to hand off it to the orderer. The meeting location is chosen through Briddgy Messenger by traveler and orderer.
+ After buying an item and traveling to a destination city, you need to hand off it to the orderer. The meeting location is chosen through Briddgy Messenger by traveler and orderer.
 We encourage our users to meet at public places for safety and security reasons.
 
 Document the condition of the delivered item by taking its photo and keeps its receipt.
