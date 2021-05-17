@@ -70,10 +70,10 @@ class UserStore {
     this.complete = true
   }
   changeAvatarPic(url){
-    const bm_url = bmify(url)
-    this.me.avatarpic = bm_url
-    this.orders.results.forEach(item=>{item.owner.avatarpic=bm_url})
-    this.trips.results.forEach(item=>{item.owner.avatarpic=bm_url})
+    
+    this.me.avatarpic = url
+    this.orders.results.forEach(item=>{item.owner.avatarpic=url})
+    this.trips.results.forEach(item=>{item.owner.avatarpic=url})
     
   }
   *fetchMyOrders(page = 1) {
