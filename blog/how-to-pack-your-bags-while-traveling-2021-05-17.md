@@ -1,6 +1,6 @@
 ---
 templateKey: blog
-slug: ""
+slug: how-to-pack-your-bags-while-traveling-2021-05-17
 language: en
 title: How to pack your bags while traveling
 date: 2021-05-17T12:47:47.619Z
@@ -13,4 +13,4 @@ tag:
   - Traveler
 scoppe_tag: Traveler
 ---
-This is the content of our blog
+This is the content of our blogd
