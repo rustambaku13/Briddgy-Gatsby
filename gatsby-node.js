@@ -6,7 +6,7 @@ exports.createPages = async ({ graphql, actions }) => {
   const blogPostTemplate = path.resolve(`src/dynamic/Blog/index.tsx`)
   const blogs = await graphql(`
   {allMarkdownRemark(
-    filter: { frontmatter: { templateKey: { eq: "blog-post" } } }
+    filter: { frontmatter: { templateKey: { eq: "blog" } } }
   ) {
     nodes {
       frontmatter {

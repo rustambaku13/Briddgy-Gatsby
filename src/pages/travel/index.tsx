@@ -311,8 +311,7 @@ export const query = graphql`
     # Blogs
     blogs: allMarkdownRemark(
       filter: {
-        fields: { sourceName: { eq: "blogs" } }
-        frontmatter: { scoppe_tag: { eq: "Traveler" } }
+        frontmatter: { scoppe_tag: { eq: "Traveler" },templateKey: { eq: "blog" } }
       }
       limit: 4
     ) {
