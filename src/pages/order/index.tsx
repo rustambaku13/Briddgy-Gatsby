@@ -203,6 +203,7 @@ export const query = graphql`
           frontmatter {
             description
             title
+            slug
             featuredimage {
               childImageSharp {
                 fluid(fit: INSIDE) {
