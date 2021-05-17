@@ -13,4 +13,4 @@ tag:
   - Traveler
 scoppe_tag: Traveler
 ---
-This is the content of our blog
+How to add trip in briddgy
