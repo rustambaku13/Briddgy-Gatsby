@@ -72,7 +72,7 @@ const PersonalDetailsSection = observer(() => {
             borderColor="gray.100"
             size="xl"
             boxShadow="inner"
-            src={UserStore.me.avatarpic}
+            src={bmify(UserStore.me.avatarpic)}
           />
           <ImageChangeButton/>
         </Flex>

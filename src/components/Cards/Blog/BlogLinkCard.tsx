@@ -31,7 +31,7 @@ export const BlogLinkCard = chakra(
             </Heading>
           </Link>
           <Text variant="secondary">{blog.description}</Text>
-          <Link to="blog/">
+          <Link to={`/blog/${blog.slug}`}>
             <Text color="tealBlue.base" as="span">
               Read more
             </Text>

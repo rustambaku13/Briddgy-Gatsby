@@ -3,6 +3,39 @@ const path = require("path")
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
   const faqPostTemplate = path.resolve(`src/dynamic/Faq/index.tsx`)
+  const blogPostTemplate = path.resolve(`src/dynamic/Blog/index.tsx`)
+  const blogs = await graphql(`
+  {allMarkdownRemark(
+    filter: { frontmatter: { templateKey: { eq: "blog-post" } } }
+  ) {
+    nodes {
+      frontmatter {
+       description
+        slug
+        title
+        featuredimage {
+          childImageSharp {
+            fluid(maxWidth: 800) {
+              base64
+              aspectRatio
+              src
+              srcSet
+              sizes
+            }
+          }
+        }
+        date
+        tag
+      }
+      html
+      timeToRead
+      fileAbsolutePath
+      fields {
+        sourceName
+      }
+    }
+  }}
+  `)
   const faqs = await graphql(`
     {
       allMarkdownRemark(
@@ -34,6 +67,16 @@ exports.createPages = async ({ graphql, actions }) => {
       component: faqPostTemplate,
       context: {
         faq: faq,
+      },
+    })
+  })
+
+  blogs.data.allMarkdownRemark.nodes.forEach(blog => {
+    createPage({
+      path: `/blog/${blog.frontmatter.slug}`,
+      component: blogPostTemplate,
+      context: {
+        blog: blog,
       },
     })
   })

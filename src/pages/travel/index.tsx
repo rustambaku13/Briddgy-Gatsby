@@ -321,6 +321,7 @@ export const query = graphql`
           frontmatter {
             description
             title
+            slug
             featuredimage {
               childImageSharp {
                 fluid(maxWidth: 800) {

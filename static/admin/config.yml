@@ -100,7 +100,7 @@ collections:
     folder: blog
     create: true
     delete: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    slug: "{{slug}}-{{year}}-{{month}}-{{day}}"
     fields:
       - {
           label: "Template Key",

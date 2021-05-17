@@ -38,7 +38,6 @@ export async function createUser({
 
 export async function getMyDetails(): Promise<AxiosResponse<User>> {
   const data= await axios_normal.get(`/main/api/users/me/`)
-  if(data.data.avatarpic)data.data.avatarpic = bmify(data.data.avatarpic)
   return data
 }
 
