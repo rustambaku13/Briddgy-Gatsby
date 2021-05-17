@@ -5,11 +5,16 @@ CMS.registerEventListener({
   name: "preSave",
   handler: ({ entry }) => {
     try{
-      const slug = entry.get("slug")
-      if(slug && slug.length){
-      return entry.get("data").set("slug", )}
+      if (entry.get('slug')) {
+        return entry.get('data').set('slug', entry.get('slug'));
+      }
+      else{
+        return entry.get('data')
+      }
     }catch{
 
+    }finally{
+      return entry.get('data')
     }
   },
 })
