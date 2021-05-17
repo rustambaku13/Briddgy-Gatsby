@@ -1,6 +1,6 @@
 ---
 templateKey: blog
-slug: ""
+slug: guide-how-to-add-a-trip-in-briddgy-2021-05-17
 language: en
 title: "Guide: How to add a trip in Briddgy"
 date: 2021-05-17T12:46:09.875Z
@@ -13,4 +13,4 @@ tag:
   - Traveler
 scoppe_tag: Traveler
 ---
-How to add trip in briddgy
+How to add trip in briddgya
