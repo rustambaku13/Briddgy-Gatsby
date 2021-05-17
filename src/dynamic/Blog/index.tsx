@@ -8,13 +8,11 @@ import Footer from "../../components/Footer"
 import Img from "gatsby-image"
 import { CalendarIcon } from "../../icons/Calendar"
 const BlogPostPage = ({ pageContext }) => {
-  const blog = pageContext.blog
-  console.log(blog);
-  
+  const blog = pageContext.blog 
 
   return (
     <>
-      <Helmet title={`FAQ | ${blog.frontmatter.title}`} defer={false}>
+      <Helmet title={`Blog | ${blog.frontmatter.title}`} defer={false}>
         <meta
           name="description"
           content="Help Center and FAQ page. Briddgy postless, peer-to-peer delivery platform. Worldwide shopping with fastest and cheapest delivery. Travel with minimum costs and earn money."
