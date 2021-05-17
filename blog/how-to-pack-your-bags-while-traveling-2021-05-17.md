@@ -3,7 +3,7 @@ templateKey: blog
 slug: ""
 language: en
 title: How to pack your bags while traveling
-date: 2021-05-17T12:29:13.860Z
+date: 2021-05-17T12:47:47.619Z
 description: Packing your bags for maximum space is a common trouble our fellow
   travelers face. Here are some tips and tricks on that.
 featuredpost: true
