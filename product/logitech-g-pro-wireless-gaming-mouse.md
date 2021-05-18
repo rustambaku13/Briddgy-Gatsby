@@ -7,7 +7,7 @@ description: Wireless, Black
 weight: 1
 vertical: true
 price: 113
-slug: ""
+slug: logitech-g-pro-wireless-gaming-mouse
 url: https://www.amazon.com/Logitech-Wireless-Gaming-Esports-Performance/dp/B07GCKQD77?crid=3ERSNVH98DJDK%2F&linkCode=ll1&tag=briddgywebsit-20&ref_=as_li_ss_tl
-image: https://images-na.ssl-images-amazon.com/images/I/51ySu55JzAL._AC_SL1500_.jpg
+image: /assets/51ysu55jzal._ac_sl1500_.jpg
 ---
