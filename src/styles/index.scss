@@ -507,7 +507,7 @@ html {
 }
 .autocomplete {
   width: 100%;
-  &:focus-within > div {
+  &:focus-within > ul {
     display: block;
   }
   .flag-autocomplete {
@@ -518,7 +518,7 @@ html {
     border-radius: 2px;
     overflow: hidden;
   }
-}
+
 .options-autocomplete {
   position: absolute;
   min-width: 300px;
@@ -533,7 +533,7 @@ html {
   left: 0;
   outline: none;
 
-  > button {
+  > li {
     outline: none;
     min-height: 60px;
 
@@ -558,6 +558,7 @@ html {
       display: inline-block;
     }
   }
+}
 }
 
 .link-overlay {

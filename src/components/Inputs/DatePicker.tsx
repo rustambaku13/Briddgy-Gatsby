@@ -2,7 +2,10 @@ import { Box, chakra, Checkbox, Input, InputGroup } from "@chakra-ui/react"
 import moment from "moment"
 import React, { useState } from "react"
 import { Calendar } from "react-modern-calendar-datepicker"
-
+import 'react-dates/initialize';
+import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
+import 'react-dates/lib/css/_datepicker.css';
+import { BACKEND_DATE_FORMAT } from "../../api";
 const dateObjectToArray = (date: {
   year: number
   month: number
@@ -117,3 +120,120 @@ export const DatePicker = chakra(
     )
   }
 )
+
+
+
+const DEFAULT_SETTINGS = {
+  minimumNights: 1,
+  daysViolatingMinNightsCanBeClicked:false,
+
+
+
+}
+
+export const START_DATE = 'startDate';
+export const END_DATE = 'endDate';
+
+
+export const NewDatePicker = chakra(({className,nameDeparture,
+  nameArrival,
+  refDeparture,
+  refArrival,})=>{
+  const [state,setState] = useState({startDate:null,endDate:null,errorMessage:null})
+  const [focusedInput,setFocusedInput] = useState(null)
+  const [focusedSingle,setFocusedSingle] = useState(null)
+  const [oneWay,setOneWay] = useState(true)
+  const onDatesChange = ({ startDate, endDate })=> {
+  setState({
+      startDate: startDate, 
+      endDate: endDate,
+      errorMessage:null
+    })
+  }
+
+  const onSingleDateChange = (date)=>{
+    setState({
+      startDate:date,
+      endDate:null,
+      errorMessage:null
+    })
+  }
+  const onFocusChange = (focusedInput)=>{    
+      setFocusedInput(
+        // Force the focusedInput to always be truthy so that dates are always selectable
+        focusedInput
+      );
+    
+  }
+  const onFocusChangeSingle = ({focused})=>{    
+    setFocusedSingle(
+      // Force the focusedInput to always be truthy so that dates are always selectable
+      focused
+    );
+  
+}
+
+  const OneWayCheck = ()=> (
+    <Box pt={2} pr={4} float='right'>
+      <Checkbox isChecked={oneWay} onChange={e=>{
+      const state = e.target.checked
+      if(state){
+        // One Way
+        setFocusedInput(null)
+
+
+      }
+      setOneWay(e.target.checked)
+    }}>
+      One way
+    </Checkbox>
+    </Box>
+  )
+
+  return(
+<>
+    <Box d={oneWay?"block":"none"}>
+    <SingleDatePicker
+      id='date_input'
+      date={state.startDate}
+      focused={focusedSingle}
+      onDateChange={onSingleDateChange}
+      onFocusChange={onFocusChangeSingle}
+      small={true}
+      monthFormat= 'MMMM YYYY'
+      noBorder={true}
+      renderCalendarInfo={OneWayCheck}
+      /></Box>
+
+    <Box d={oneWay?"none":"block"}>
+    <DateRangePicker 
+      startDate={state.startDate} // momentPropTypes.momentObj or null,
+      // startDateId="your_unique_start_date_id" // PropTypes.string.isRequired,
+      endDate={state.endDate} // momentPropTypes.momentObj or null,
+      // endDateId="your_unique_end_date_id" // PropTypes.string.isRequired,
+      onDatesChange={onDatesChange} // PropTypes.func.isRequired,
+      focusedInput={focusedInput} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+      onFocusChange={onFocusChange} // PropTypes.func.isRequired,
+        small={true}
+        monthFormat= 'MMMM YYYY'
+        noBorder={true}
+        renderCalendarInfo={OneWayCheck}
+    
+    /></Box>
+
+<input
+            ref={refDeparture}
+            name={nameDeparture}
+            value={state.startDate?.format(BACKEND_DATE_FORMAT)}
+            type="hidden"
+          />
+
+          <input ref={refArrival} name={nameArrival} value={state.endDate?.format(BACKEND_DATE_FORMAT)} type="hidden" />
+        </>
+        // </Box>
+    // </Box>
+  )
+
+
+})
+

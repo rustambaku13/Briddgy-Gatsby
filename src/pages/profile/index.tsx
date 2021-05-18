@@ -240,7 +240,7 @@ const EarnCreditsSection = observer(() => {
             1
           </Circle>
           <Text w="100%">
-            Your friends will get USD 3.00 in Briddgy credits when they use your
+            Your friends will get USD 5.00 in Briddgy credits when they use your
             code.
           </Text>
         </Box>
@@ -258,7 +258,7 @@ const EarnCreditsSection = observer(() => {
             2
           </Circle>
           <Text w="100%">
-            You’ll get USD 3.00 in Briddgy credits for each new registered
+            You’ll get USD 5.00 in Briddgy credits for each new registered
             friend.
           </Text>
           <Button

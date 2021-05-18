@@ -135,7 +135,7 @@ export const TripContractsStateCard = chakra(
       <Box py={4} transition="0.3s ease">
         <Flex alignItems="center" mb={3}>
           <Box overflow="hidden" mr={3}>
-            <Link to={`/orders/${contract.order.id}`}>
+            <Link to={`/orders/${contract.order.id}`} state={{haveProposal:true}}>
               <Text className="clamp-1" fontWeight="700" as="h3">
                 {contract.order.title}
               </Text>

@@ -21,7 +21,7 @@ import LayoutStore from "../../store/LayoutStore"
 import UserStore from "../../store/UserStore"
 import { Trip } from "../../types/trip"
 import { swapItinerary } from "../../utils/misc"
-import { DatePicker } from "../Inputs/DatePicker"
+import { DatePicker, NewDatePicker } from "../Inputs/DatePicker"
 import { LocationAutoComplete } from "../Inputs/LocationAutoComplete"
 import { AddTripDetailsModal } from "../Modals/AddTripDetailsModal"
 /**
@@ -81,6 +81,7 @@ export const AddTripForm = chakra(({ className }: { className?: any }) => {
   } = useFormContext()
   const [modalOpen, setModalOpen] = useState(false)
   const [loading, setLoading] = useState(false)
+  
   const addTrip = () => {
     // Actually adding the trip, of course if the user is logged in
     setLoading(true)
@@ -89,12 +90,13 @@ export const AddTripForm = chakra(({ className }: { className?: any }) => {
         navigate(`/trips/${e.id}`)
       })
       .then(e => {
-        console.log(e)
+        // console.log(e)
       })
       .finally(() => {
         setLoading(false)
       })
   }
+  
   const checkEmail = () => {
     if (UserStore.me.is_email_verified) addTrip()
     else {
@@ -174,7 +176,7 @@ export const AddTripForm = chakra(({ className }: { className?: any }) => {
       </Center>
       <Flex py={3} alignItems="center" pl={4} flex={1}>
         <CalendarIcon color="gray.500" />
-        <DatePicker
+        <NewDatePicker
           refDeparture={register({ required: true })}
           refArrival={register()}
           nameDeparture="date1"

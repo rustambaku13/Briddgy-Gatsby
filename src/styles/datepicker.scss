@@ -1,0 +1,27 @@
+.CalendarDay__selected_span {
+    background: #238BB3; //background
+    color: white; //text
+    border-color: transparent;
+  }
+
+.CalendarDay__selected {
+    background: #238BB3; //background
+    color: white; //text
+    border-color: transparent;
+  }
+  .CalendarDay__selected:hover {
+    background: #1B6A88;
+    color: white;
+    border-color: transparent;
+  }
+
+  .CalendarDay__hovered_span:hover,
+.CalendarDay__hovered_span {
+  background: #E1E4E8;
+  color:initial;
+  border-color: transparent;
+
+}
+.SingleDatePicker_picker,.DateRangePicker_picker{
+    border-radius: 4px;
+}

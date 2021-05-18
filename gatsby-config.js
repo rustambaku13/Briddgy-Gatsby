@@ -135,5 +135,12 @@ module.exports = {
         precachePages: [`/order`,`/travel`,`/faq*`,'/trips','/orders','/profile',`/login`,`/signup`],
       },
     },
+
+    {
+      resolve: `gatsby-plugin-s3`,
+      options: {
+        bucketName: "briddgyweb",
+      },
+    },
   ],
 }

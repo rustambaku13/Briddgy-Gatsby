@@ -27,7 +27,7 @@ import moment from "moment"
 import { CurvedArrowRight } from "../../../icons/CurvedArrowRight"
 import LayoutStore from "../../../store/LayoutStore"
 export const BigOrderCard = chakra(
-  ({ className, orderData }: { className?: any; orderData: Order }) => {
+  ({ className, orderData,hideButton }: { className?: any; orderData: Order,hideButton?:any }) => {
     const [images, setImages] = useState([])
     useEffect(() => {
       setImages(
@@ -109,6 +109,7 @@ export const BigOrderCard = chakra(
             </Box>
             <Divider my={0} />
             <Button
+              d={hideButton?"none":"block"}
               onClick={() => {
                 LayoutStore.toOrderProposalModalOpen({ order: orderData })
               }}

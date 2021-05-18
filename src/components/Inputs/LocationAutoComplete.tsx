@@ -2,8 +2,12 @@ import {
   Box,
   chakra,
   Flex,
+  IconButton,
   Input,
   InputGroup,
+  InputRightElement,
+  ListIcon,
+  MenuIcon,
   Spinner,
   Text,
 } from "@chakra-ui/react"
@@ -11,6 +15,7 @@ import { graphql, StaticQuery } from "gatsby"
 import React, { useState } from "react"
 import { useForm, FormProvider, useFormContext } from "react-hook-form"
 import { searchLocation } from "../../api/location"
+import CrossIcon from "../../icons/Cross"
 import { LocationIcon } from "../../icons/Location"
 import { Location } from "../../types/location"
 import { getCountryFromCode, trimCityEmpty } from "../../utils/misc"
@@ -30,7 +35,7 @@ let a = null
  * @method <selecthandler> // Populate hidden input fields on selecting the option
  */
 export const LocationAutoComplete = chakra(
-  ({ className, name, size, placeholder, error_msg, countries }) => {
+  ({ className, name, size, placeholder, error_msg }) => {
     const { register, setValue } = useFormContext()
 
     const [hidden, setHidden] = useState(true)
@@ -63,19 +68,19 @@ export const LocationAutoComplete = chakra(
       a = setTimeout(fetchData, 400, value)
       setSearching(true)
     }
-    const selectHandler = e => {
-      const [id, title, type] = [
-        e.currentTarget.getAttribute("value"),
-        e.currentTarget.getAttribute("title"),
-        e.currentTarget.getAttribute("data-type"),
+    function selectHandler(e) {
+      
+      
+      const [id, title] = [
+        e.currentTarget.getAttribute("data-value"),
+        e.currentTarget.getAttribute("data-title"),
+        
       ]
-
       setValue(name + "_id", id)
       setValue(name, title)
-      // setValue(name + "_input", title)
       document.activeElement.blur()
     }
-    console.log(results);
+  
     
     return (
       <Box pos="relative" className={className + " autocomplete"}>
@@ -86,15 +91,19 @@ export const LocationAutoComplete = chakra(
             aria-haspopup="listbox"
             autoComplete="off"
             onChange={searchHandler}
-            type="search"
+            type="text"
             name={name}
             ref={register({ required: error_msg })}
             border="none"
             placeholder={placeholder}
           />
+          <InputRightElement>
+          <IconButton onClick={clear}  minW='0' fontSize='200' aria-label='Clear' variant='link' icon={<CrossIcon/>}/></InputRightElement>
           <input type="hidden" ref={register()} name={name + "_id"} />
+          
         </InputGroup>
         <Box
+          as='ul'
           hidden={hidden}
           tabIndex={0}
           className="options-autocomplete scrollbar"
@@ -113,18 +122,16 @@ export const LocationAutoComplete = chakra(
               return (
                 <Flex
                   textAlign="center"
-                  as="button"
+                  as="li"
                   fontSize="1em"
                   alignItems="center"
-                  type="button"
                   onClick={selectHandler}
-                  data-type="city"
-                  value={location._id.$oid}
+                  data-value={location._id.$oid}
+                  data-title={`${trimCityEmpty(location.city)}${location.country}`}
                   key={index}
-                  title={`${trimCityEmpty(location.city)}${location.country}`}
                 >
                   <LocationIcon />
-                  <Text as="h5">
+                  <Text fontWeight='400' as="h5">
                     {trimCityEmpty(location.city)}{" "}
                     <Text ml="auto" as="span" variant="secondary">
                       {location.country}

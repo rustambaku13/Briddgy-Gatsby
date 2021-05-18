@@ -397,10 +397,12 @@ const MyOrderPage = ({ order }: { order: Order }) => {
     </>
   )
 }
-const PublicPage = ({ order }: { order: Order }) => {
+const PublicPage = ({ order,location }: { order: Order,location:any }) => {
   const [similarOrders, setSimilarOrders]: [Orders, any] = useState(
     defaultOrders
   )
+  console.log(location);
+  
   const [loading, setLoading] = useState(false)
   useEffect(() => {
     setLoading(true)
@@ -429,7 +431,7 @@ const PublicPage = ({ order }: { order: Order }) => {
         <BottomNavbar />
       </NavigationContext.Provider>
       <Container maxW="container.lg" mt={[5, 10]}>
-        <BigOrderCard orderData={order} />
+        <BigOrderCard hideButton={location.state?.haveProposal} orderData={order} />
       </Container>
       <Divider my="60px" />
       <Container maxW="container.md">
@@ -445,7 +447,7 @@ const PublicPage = ({ order }: { order: Order }) => {
         ) : similarOrders.results.length ? (
           <VStack w="100%" mx="auto" py={9} spacing={10}>
             {similarOrders.results.map((order: Order) => (
-              <PublicMediumOrderCard mx="auto" orderData={order} />
+              <PublicMediumOrderCard  mx="auto" orderData={order} />
             ))}
           </VStack>
         ) : (
@@ -457,7 +459,7 @@ const PublicPage = ({ order }: { order: Order }) => {
   )
 }
 
-const SpecificOrderPage = observer(({ orderId }) => {
+const SpecificOrderPage = observer(({ orderId,location }) => {
   const [order, setOrder]: [Order | null, any] = useState(null)
   useEffect(() => {
     getOrder(orderId)
@@ -493,7 +495,7 @@ const SpecificOrderPage = observer(({ orderId }) => {
   if (order.owner.id == UserStore.me?.id) {
     return <MyOrderPage order={order} />
   }
-  return <PublicPage order={order} />
+  return <PublicPage location={location} order={order} />
 })
 
 export default SpecificOrderPage

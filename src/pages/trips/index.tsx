@@ -91,8 +91,8 @@ const MainTripsPage = ({ data, location }) => {
     const searchParams = new URLSearchParams(filteredData)
     navigate(`.?${searchParams.toString()}`)
   }
-
   useEffect(updateFilters, [location])
+
   return (
     <FormProvider {...methods}>
       <Helmet title="Briddgy | Available Travelers" defer={false}>

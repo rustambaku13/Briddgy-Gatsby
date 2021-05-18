@@ -102,7 +102,8 @@ const KeyPressDetector = observer(() => {
       transition=".5s ease"
       overflow="hidden"
       w="100px"
-      ml="auto"
+      ml="12"
+      pl={3}
     >
       <Box
         h="auto"
