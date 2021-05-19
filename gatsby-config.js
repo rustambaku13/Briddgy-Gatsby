@@ -140,6 +140,8 @@ module.exports = {
       resolve: `gatsby-plugin-s3`,
       options: {
         bucketName: "briddgyweb",
+        protocol: "https",
+        hostname: "www.briddgy.com",
       },
     },
   ],

@@ -8,7 +8,7 @@ import { Helmet } from "react-helmet"
 export function wrapRootElement({ element }) {
   return (
     <>
-      <Helmet>
+      <Helmet defer={false}>
         <link
           rel="apple-touch-icon"
           sizes="57x57"
