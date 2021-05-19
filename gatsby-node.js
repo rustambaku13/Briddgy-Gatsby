@@ -88,28 +88,28 @@ exports.onCreatePage = async ({ page, actions }) => {
   if (page.path.match(/^\/messages/)) {
     // page.matchPath is a special key that's used for matching pages
     // with corresponding routes only on the client.
-    page.matchPath = "/messages/+"
+    page.matchPath = "/messages/*"
     // Update the page.
     createPage(page)
   }
   if (page.path.match(/^\/profile/)) {
     // page.matchPath is a special key that's used for matching pages
     // with corresponding routes only on the client.
-    page.matchPath = "/profile/+"
+    page.matchPath = "/profile/*"
     // Update the page.
     createPage(page)
   }
   if (page.path.match(/^\/orders/)) {
     // page.matchPath is a special key that's used for matching pages
     // with corresponding routes only on the client.
-    page.matchPath = "/orders/+"
+    page.matchPath = "/orders/*"
     // Update the page.
     createPage(page)
   }
   if (page.path.match(/^\/trips/)) {
     // page.matchPath is a special key that's used for matching pages
     // with corresponding routes only on the client.
-    page.matchPath = "/trips/+"
+    page.matchPath = "/trips/*"
     // Update the page.
     createPage(page)
   }
