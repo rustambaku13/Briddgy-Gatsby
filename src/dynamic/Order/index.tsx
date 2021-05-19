@@ -56,7 +56,7 @@ import { defaultOrders, Order, Orders } from "../../types/orders"
 import { Trips } from "../../types/trip"
 import { tripCityAnywhere } from "../../utils/misc"
 const stripePromise = loadStripe(
-  "pk_test_51Htr6JGfJpinijwgZ0o2g7zbJNN9ayprpLtKsv2SpyO5f8pn849rn1EApeCVID7C7mUo4jUjEcYJ4Z2SthL0TcIB00L0hynXAX"
+  "pk_live_51Htr6JGfJpinijwgVXSXauoLqTxWqoembZ8NIEz3xhQYNCVUStsEux8p76gzP2L6dt37PmyfNDwHbDNtPsJJYLnn00SH0NiTId"
 )
 
 const MyOrderThridPage = ({ loading }) => {
