@@ -61,7 +61,7 @@ const Home = ({ data }) => {
               texts={["40%", "55%", "35%", "45%", "60%"]}
             />{" "}
             <br />
-            by ordering from{" "}
+            by ordering from**{" "}
             <TextAnimate
               delay={4000}
               texts={["USA", "UK", "China", "Germany"]}
