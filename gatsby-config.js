@@ -129,6 +129,22 @@ module.exports = {
         
       },
     },
+
+    {
+      resolve: `gatsby-plugin-yandex-metrica`,
+      options: {
+        trackingId: "78149011",
+        clickmap: true,
+        trackLinks: true,
+        accurateTrackBounce: true,
+        trackHash: true,
+
+        // Detailed recordings of user activity on the site: mouse movement, scrolling, and clicks.
+        webvisor: true,
+      }
+    },
+
+
     {
       resolve: `gatsby-plugin-offline`,
       options: {
@@ -142,6 +158,8 @@ module.exports = {
         bucketName: "briddgyweb",
         protocol: "https",
         hostname: "www.briddgy.com",
+        generateRoutingRules:false, // I have it edited in aws console
+
       },
     },
   ],
