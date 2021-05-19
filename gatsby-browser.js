@@ -96,7 +96,6 @@ export function wrapRootElement({ element }) {
         `}} type="text/javascript" >
         
         </script>
-        <noscript><div><img src="https://mc.yandex.ru/watch/78149011" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
 
       </Helmet>
       {element}
