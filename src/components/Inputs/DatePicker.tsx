@@ -6,6 +6,7 @@ import 'react-dates/initialize';
 import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
 import 'react-dates/lib/css/_datepicker.css';
 import { BACKEND_DATE_FORMAT } from "../../api";
+import { ChevronDownIcon, ChevronUpIcon } from "../../icons/ChevronDown";
 const dateObjectToArray = (date: {
   year: number
   month: number
@@ -202,7 +203,13 @@ export const NewDatePicker = chakra(({className,nameDeparture,
       small={true}
       monthFormat= 'MMMM YYYY'
       noBorder={true}
+      hideKeyboardShortcutsPanel={true}
       renderCalendarInfo={OneWayCheck}
+      navNext={<ChevronDownIcon/>}
+      navPrev={<ChevronUpIcon/>}
+      anchorDirection={"ANCHOR_RIGHT"}
+      orientation="vertical" verticalHeight={568}
+      
       /></Box>
 
     <Box d={oneWay?"none":"block"}>
@@ -217,7 +224,13 @@ export const NewDatePicker = chakra(({className,nameDeparture,
         small={true}
         monthFormat= 'MMMM YYYY'
         noBorder={true}
+        hideKeyboardShortcutsPanel={true}
         renderCalendarInfo={OneWayCheck}
+        navNext={<ChevronDownIcon/>}
+        navPrev={<ChevronUpIcon/>}
+        anchorDirection={"ANCHOR_RIGHT"}
+        orientation="vertical" verticalHeight={568}
+        
     
     /></Box>
 

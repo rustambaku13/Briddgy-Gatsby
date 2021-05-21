@@ -11,6 +11,7 @@ import { ConfirmEmailModal } from "../Modals/ConfirmEmailModal"
 import { LoginModalForm } from "../Modals/LoginModalForm"
 import { MakeProposaltoOrderModal } from "../Modals/MakeProposaltoOrderModal"
 import { MakeProposaltoTripModal } from "../Modals/MakeProposaltoTripModal"
+import { OverlayPreloaderModal } from "../Modals/OverlayPreloaderModal"
 
 export default ({ children }) => {
   return (
@@ -21,7 +22,7 @@ export default ({ children }) => {
       <CompleteProfileModal />
       <AreYouSure />
       <LoginModalForm />
-      <Box></Box>
+      <OverlayPreloaderModal/>
       <div id="top-progress">
         <span className="progress-bar"></span>
       </div>

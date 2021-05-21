@@ -1,5 +1,5 @@
 import "./src/styles/index.scss"
-import "./src/styles/datepicker.scss"
+import "./src/styles/salam.css"
 // import "react-modern-calendar-datepicker/lib/DatePicker.css"
 import "swiper/swiper.scss"
 import React from "react"

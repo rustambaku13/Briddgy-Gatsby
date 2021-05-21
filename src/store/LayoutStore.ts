@@ -14,6 +14,9 @@ interface toTripProposalContext {
   order?: Order
   trip: Trip
 }
+interface overlayPreloaderContext{
+  text:string
+}
 interface alertDialogContext {
   title: string
   success?: boolean
@@ -26,8 +29,9 @@ interface alertDialogContext {
 class LayoutStore {
   completeProfileModalVisible: boolean = false
   toOrderProposalModalContext: toOrderProposalContext = null
-  toTripProposalModalContext: toOrderProposalContext = null
+  toTripProposalModalContext: toTripProposalContext = null
   alertDialogModalContext: alertDialogContext = null
+  overlayPreloaderModalContext: overlayPreloaderContext = null
   loginModalFormCallback: any = null
   emailModalFormCallback: any = null
   constructor() {
@@ -92,6 +96,17 @@ class LayoutStore {
   }
   get emailConfirmModalVisible() {
     return !(this.emailModalFormCallback == null) //true
+  }
+
+  // ***** Preloader Modal Context *****
+  overlayPreloaderModalOpen(context:overlayPreloaderContext){
+    this.overlayPreloaderModalContext = context
+  }
+  get overlayPreloaderModalVisible(){
+    return !(this.overlayPreloaderModalContext == null) //true
+  }
+  overlayPreloaderModalClose(){
+    this.overlayPreloaderModalContext=null
   }
 }
 

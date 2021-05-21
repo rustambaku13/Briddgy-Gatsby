@@ -3,9 +3,16 @@
  *
  * See: https://www.gatsbyjs.com/docs/gatsby-config/
  */
+ const autoprefixer = require('autoprefixer');
 module.exports = {
   plugins: [
-    `gatsby-plugin-sass`,
+    {
+      resolve:  `gatsby-plugin-sass`,
+      options: {
+        postCssPlugins:[autoprefixer()]
+      },
+    },
+   
     `@chakra-ui/gatsby-plugin`,
     // `gatsby-plugin-react-helmet`,
     {
@@ -151,7 +158,9 @@ module.exports = {
         precachePages: [`/order`,`/travel`,`/faq*`,'/trips','/orders','/profile',`/login`,`/signup`],
       },
     },
-
+    // {
+    //   resolve:`gatsby-plugin-postcss`,
+    // },
     {
       resolve: `gatsby-plugin-s3`,
       options: {

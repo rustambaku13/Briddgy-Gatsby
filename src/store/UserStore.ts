@@ -59,7 +59,7 @@ class UserStore {
   }
   constructor() {
     makeAutoObservable(this)
-
+    this.handleUnsavedTripsandOrders = this.handleUnsavedTripsandOrders.bind(this)
     const token = Cookies.get("token")
     if (token) {
       flowResult(this.login_cookie(token)).then(() => {
@@ -273,8 +273,20 @@ class UserStore {
       this.logout()
     }
   }
+  *handleUnsavedTripsandOrders(){
+    if(this.new_order){
+      LayoutStore.overlayPreloaderModalOpen({text:"Saving your new Order"})
+      yield this.saveNewOrder()
+      LayoutStore.overlayPreloaderModalClose()
+    }
+    if(this.new_trip){
+      LayoutStore.overlayPreloaderModalOpen({text:"Saving your new Trip"})
+      yield this.saveNewTrip()
+      LayoutStore.overlayPreloaderModalClose()
+    }
 
-  *login(username: String, password: String) {
+  }
+  *login(username: String, password: String,saveUnsavedTripOrders:boolean=true) {
     try {
       let { data } = yield loginUser(username, password)
       Cookies.set("token", data)
@@ -282,6 +294,7 @@ class UserStore {
       axios_normal.defaults.headers["Authorization"] = `Token ${data}`
       data = (yield getMyDetails()).data
       this.me = data
+      if(saveUnsavedTripOrders) yield this.handleUnsavedTripsandOrders()
       return data
     } catch (err) {
       this.logout()

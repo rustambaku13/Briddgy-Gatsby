@@ -24,7 +24,7 @@ export const LoginModalForm = observer(({}: {}) => {
   const error_text = useRef(null)
   const onSubmit = data => {
     setLoading(true)
-    flowResult(UserStore.login(data.email, data.password))
+    flowResult(UserStore.login(data.email, data.password,false))
       .then(e => {
         // Successfully Logged In
         LayoutStore?.loginModalFormCallback() //optional chaining
@@ -93,7 +93,9 @@ export const LoginModalForm = observer(({}: {}) => {
             </Button>
             <Text mb={5} variant="secondary">
               Don't have an account{" "}
-              <Link to="/signup">
+              <Link onClick={()=>{
+                LayoutStore.loginModalFormClose()
+              }} to="/signup">
                 <Text as="span" color="blue.400">
                   Sign Up
                 </Text>

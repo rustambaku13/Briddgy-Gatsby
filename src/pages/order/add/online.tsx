@@ -49,6 +49,7 @@ import RefreshIcon from "../../../icons/Refresh"
 import { NavigationContext } from "../../../providers/navPage"
 import LayoutStore from "../../../store/LayoutStore"
 import UserStore from "../../../store/UserStore"
+import { REGEX_PRICE } from "../../../utils/misc"
 
 const pageFields = {
   1: [
@@ -498,11 +499,12 @@ const AddOrderPage = ({ location }: PageProps) => {
   const fetchScraper = async url => {
     return fetchScraperData(url)
       .then(({ data }) => {
-        const [title, price, img] = data.result
-
+        const [title, price, img]:[string,string,string] = data.result
+        
         setValue("title", title)
         if(!price.length)throw new Error("")
-        setValue("item_price", price)
+        const item_price_cleaned = price.match(REGEX_PRICE)
+        setValue("item_price", item_price_cleaned?.[0])
         return img
       })
       .then(imageFromUrl)
@@ -512,8 +514,6 @@ const AddOrderPage = ({ location }: PageProps) => {
       .finally(() => {
         setPage(1)
       })
-
-
   }
 
   useEffect(() => {

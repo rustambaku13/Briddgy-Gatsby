@@ -1,16 +1,19 @@
 .CalendarDay__selected_span {
-    background: #238BB3; //background
+    background: #FFC9D5; //background
     color: white; //text
     border-color: transparent;
+    &:hover{
+      background: #E1E4E8; //background
+    }
   }
 
 .CalendarDay__selected {
-    background: #238BB3; //background
+    background: #F64C72; //background
     color: white; //text
     border-color: transparent;
   }
   .CalendarDay__selected:hover {
-    background: #1B6A88;
+    background: #F64C72;
     color: white;
     border-color: transparent;
   }
@@ -22,6 +25,37 @@
   border-color: transparent;
 
 }
+// .CalendarDay{
+//   border-radius: 50%;
+ 
+// }
 .SingleDatePicker_picker,.DateRangePicker_picker{
-    border-radius: 4px;
+    border-radius: 8px;
+    overflow: hidden;
+    border:1px solid #C9CED6;
+    box-shadow: 0 16px 32px 0px rgba(0,0,0,0.05) ;;
+    padding:1rem;
+    >div{
+      box-shadow:none;
+    }
+}
+.DayPickerNavigation{
+  height:3rem;
+  font-size: 2rem;
+  color:#8B9AA0;
+  padding:0rem 1rem;
+  box-shadow: 0 -3px 6px 0px rgba(0,0,0,0.05);
+  position: absolute;
+  z-index: 2;
+  bottom: 0;
+  background: white;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  [role='button']{
+    &:hover{
+      color:#238BB3;
+    }
+  }
+
 }

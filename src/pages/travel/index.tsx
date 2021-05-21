@@ -8,7 +8,7 @@ import {
   IconButton,
   Image,
   LinkBox,
-  SimpleGrid,
+
   Stack,
   Tab,
   TabList,
@@ -16,17 +16,13 @@ import {
   TabPanels,
   Tabs,
   Tag,
-  Text,
+  Text
 } from "@chakra-ui/react"
 import { graphql, PageProps } from "gatsby"
-import Img from "gatsby-image"
 import { injectIntl, Link } from "gatsby-plugin-intl"
 import React from "react"
 import { Helmet } from "react-helmet"
-import { Swiper, SwiperSlide } from "swiper/react"
 import { BlogLinkCard } from "../../components/Cards/Blog/BlogLinkCard"
-import { TestimonialLinkCard } from "../../components/Cards/Testimonial/TestimonialLinkCard"
-import { TravelDestinationCard } from "../../components/Cards/Trip/TravelDestination"
 import Footer from "../../components/Footer"
 import { DestinationSwiper } from "../../components/Layout/DestinationSwiper"
 import { HowToEarnMoney } from "../../components/Layout/HowToEarnMoney"
@@ -37,6 +33,7 @@ import { ChevronLeftIcon } from "../../icons/ChevronLeft"
 import { ChevronRightIcon } from "../../icons/ChevronRight"
 import SupportIcon from "../../icons/Support"
 import { NavigationContext } from "../../providers/navPage"
+import "../../styles/datepicker.scss"
 
 const AddTrip = ({ data }: PageProps) => {
   return (

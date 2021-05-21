@@ -3,3 +3,7 @@ import { ChevronRightIcon } from "./ChevronRight"
 export const ChevronDownIcon = props => (
   <ChevronRightIcon transform="rotate(90deg)" {...props} />
 )
+export const ChevronUpIcon = props => (
+  <ChevronRightIcon transform="rotate(-90deg)" {...props} />
+)
+

@@ -348,6 +348,7 @@ const ProductDetails = ({ pageChange, files, setFiles }) => {
                 name="item_price"
                 ref={register({
                   required: "Product price is required",
+
                 })}
                 placeholder="159.99"
               />

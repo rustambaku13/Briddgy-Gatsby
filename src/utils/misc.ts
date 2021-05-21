@@ -35,3 +35,5 @@ export const tripCityAnywhere = city => {
   if (city?.length) return city
   return "Anywhere"
 }
+
+export const REGEX_PRICE = RegExp(/-?\d+(?:,\d{3})*(?:\.\d+)?/)
