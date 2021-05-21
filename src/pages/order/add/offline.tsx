@@ -58,7 +58,6 @@ const pageFields = {
     "files",
     "src",
     "src_id",
-
     "dest",
     "dest_id",
   ],

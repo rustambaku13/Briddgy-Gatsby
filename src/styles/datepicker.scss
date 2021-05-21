@@ -23,7 +23,6 @@
   background: #E1E4E8;
   color:initial;
   border-color: transparent;
-
 }
 // .CalendarDay{
 //   border-radius: 50%;
@@ -31,14 +30,24 @@
 // }
 .SingleDatePicker_picker,.DateRangePicker_picker{
     border-radius: 8px;
-    overflow: hidden;
+    overflow: auto;
     border:1px solid #C9CED6;
     box-shadow: 0 16px 32px 0px rgba(0,0,0,0.05) ;;
     padding:1rem;
     >div{
       box-shadow:none;
-    }
+    }   
 }
+.SingleDatePicker_picker__portal{
+  z-index: 2;
+  display: none!important;
+  @media screen and(max-width:640px) {
+    display: block!important;
+  }
+}
+
+
+
 .DayPickerNavigation{
   height:3rem;
   font-size: 2rem;
@@ -59,3 +68,20 @@
   }
 
 }
+
+
+
+//  NEW ONE
+.datepicker{
+  &:focus-within > .wrapper {
+    display: block;
+  }
+.wrapper{
+  z-index: 51;;
+  display: none;
+  position: absolute;
+  top:50px;
+}
+}
+
+

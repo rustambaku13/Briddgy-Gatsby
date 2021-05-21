@@ -1,11 +1,18 @@
-import { Box, chakra, Checkbox, Input, InputGroup } from "@chakra-ui/react"
+import { Box, Button, chakra, Checkbox, HStack, Input, InputGroup,Text, useRadio, useRadioGroup} from "@chakra-ui/react"
 import moment from "moment"
 import React, { useState } from "react"
 import { Calendar } from "react-modern-calendar-datepicker"
 import 'react-dates/initialize';
-import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
+import { DateRangePicker, SingleDatePicker, DayPickerRangeController,SingleDatePickerInput } from 'react-dates';
+import DayPickerInput from 'react-day-picker/DayPickerInput'
+import DayPicker,{DateUtils} from 'react-day-picker'
 import 'react-dates/lib/css/_datepicker.css';
-import { BACKEND_DATE_FORMAT } from "../../api";
+import 'react-day-picker/lib/style.css';
+import MomentLocaleUtils, {
+  formatDate,
+  parseDate,
+} from 'react-day-picker/moment';
+import { BACKEND_DATE_FORMAT, FRONTEND_DATE_FORMAT } from "../../api";
 import { ChevronDownIcon, ChevronUpIcon } from "../../icons/ChevronDown";
 const dateObjectToArray = (date: {
   year: number
@@ -159,7 +166,9 @@ export const NewDatePicker = chakra(({className,nameDeparture,
       errorMessage:null
     })
   }
-  const onFocusChange = (focusedInput)=>{    
+  const onFocusChange = (focusedInput)=>{  
+    console.log(focusedInput);
+      
       setFocusedInput(
         // Force the focusedInput to always be truthy so that dates are always selectable
         focusedInput
@@ -194,8 +203,8 @@ export const NewDatePicker = chakra(({className,nameDeparture,
   return(
 <>
     <Box d={oneWay?"block":"none"}>
+    <Box d={['block','block','none']} className='normal_picker'>
     <SingleDatePicker
-      id='date_input'
       date={state.startDate}
       focused={focusedSingle}
       onDateChange={onSingleDateChange}
@@ -210,7 +219,28 @@ export const NewDatePicker = chakra(({className,nameDeparture,
       anchorDirection={"ANCHOR_RIGHT"}
       orientation="vertical" verticalHeight={568}
       
-      /></Box>
+      />
+    </Box>
+      <Box d={['block','block','none']} className='portal_picker'>
+        <SingleDatePicker
+        date={state.startDate}
+        focused={focusedSingle}
+        onDateChange={onSingleDateChange}
+        onFocusChange={onFocusChangeSingle}
+        small={true}
+        monthFormat= 'MMMM YYYY'
+        noBorder={true}
+        hideKeyboardShortcutsPanel={true}
+        renderCalendarInfo={OneWayCheck}
+        navNext={<ChevronDownIcon/>}
+        navPrev={<ChevronUpIcon/>}
+        anchorDirection={"ANCHOR_RIGHT"}
+        orientation="vertical" verticalHeight={568}
+        withFullScreenPortal={true}
+        />
+      </Box>
+      
+      </Box>
 
     <Box d={oneWay?"none":"block"}>
     <DateRangePicker 
@@ -229,7 +259,9 @@ export const NewDatePicker = chakra(({className,nameDeparture,
         navNext={<ChevronDownIcon/>}
         navPrev={<ChevronUpIcon/>}
         anchorDirection={"ANCHOR_RIGHT"}
-        orientation="vertical" verticalHeight={568}
+        orientation="vertical"
+        verticalHeight={568}
+        
         
     
     /></Box>
@@ -250,3 +282,123 @@ export const NewDatePicker = chakra(({className,nameDeparture,
 
 })
 
+
+const now = new Date()
+
+export const NewestDatePicker = chakra(({className,nameDeparture,
+  nameArrival,
+  refDeparture,
+  refArrival})=>{
+const [state,setState] = useState({
+    from: null,
+    to: null,
+    enteredTo: null, // Keep track of the last day for mouseEnter.
+})
+const [oneWay,setOneWay] = useState(true)
+const modifiers = { start: state.from, end: state.enteredTo };
+const disabledDays = oneWay?{before:now}:{ before: state.from || now };
+const selectedDays = [state.from, { from:state.from, to: state.enteredTo }];
+
+
+let displayedDate = ``
+if(state.from && !state.to){
+  displayedDate = `${moment(state.from).format(FRONTEND_DATE_FORMAT)}`
+}
+else if(state.from && state.to){
+  displayedDate = `${moment(state.from).format(FRONTEND_DATE_FORMAT)} - ${moment(state.to).format(FRONTEND_DATE_FORMAT)}`
+}
+
+
+const isSelectingFirstDay = (from, to, day)=> {
+  const isBeforeFirstDay = from && DateUtils.isDayBefore(day, from);
+  const isRangeSelected = from && to;
+  return !from || isBeforeFirstDay || isRangeSelected;
+}
+const handleDayMouseEnter = (day)=>{
+  if(oneWay)return
+  const { from, to } = state;
+  if (!isSelectingFirstDay(from, to, day)) {
+    setState({
+      from,to,
+      enteredTo: day,
+    });
+  }
+}
+const handleDayClick = (day)=>{
+  
+  
+  if(oneWay){
+
+    setState({
+      from:day.getTime()===state.from?.getTime()?null:day,
+      to:null,
+      enteredTo:null
+    })
+    return
+  }
+  const { from, to } = state;
+    if (from && to && day >= from && day <= to) {
+      setState({
+        from:null,
+        to: null,
+      enteredTo: null,
+
+      })
+      return;
+    }
+    if (isSelectingFirstDay(from, to, day)) {
+      setState({
+        from: day,
+        to: null,
+        enteredTo: null,
+      });
+    } else {
+      setState({
+        from:state.from,
+        to: day,
+        enteredTo: day,
+      });
+    }
+}
+
+  
+  
+
+return(
+  <Box flex={1} className='datepicker' pos='relative'>
+  <Input border='none' aria-haspopup="listbox"
+            autoComplete="off" placeholder="Select Date"  flex={1} fontWeight='500' 
+    ml={2}
+    value={displayedDate}
+  />
+  <input
+            ref={refDeparture}
+            name={nameDeparture}
+            value={state.from?moment(state.from)?.format(BACKEND_DATE_FORMAT):undefined}
+            type="hidden"
+          />
+
+          <input ref={refArrival} name={nameArrival} value={state.to?moment(state.to)?.format(BACKEND_DATE_FORMAT):undefined} type="hidden" />
+  <Box borderRadius='md' borderWidth='1px' borderColor='outline.base' boxShadow='elevation_4' tabIndex={0} bg='white' p={2} className='wrapper'>
+    <HStack mb={1} spacing={2} justifyContent='center'>
+      <Button _selected={{bg:"tealBlue.base",color:"white"}} onClick={()=>{setOneWay(true)}} aria-selected={oneWay} size='sm'>One Way</Button>
+      <Button _selected={{bg:"tealBlue.base",color:"white"}} onClick={()=>{setState({from:state.from,to:null,enteredTo:null});setOneWay(false)}} aria-selected={!oneWay} size='sm'>Round Trip</Button>
+    </HStack>
+  <DayPicker 
+  onDayClick={handleDayClick}
+    fromMonth={state.from}
+    selectedDays={selectedDays}
+    modifiers={modifiers}
+    disabledDays={disabledDays}
+    onDayMouseEnter={handleDayMouseEnter}/>
+    
+  </Box>
+  </Box>
+   
+)
+
+
+
+
+
+})

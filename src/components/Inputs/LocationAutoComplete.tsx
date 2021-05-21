@@ -35,7 +35,7 @@ let a = null
  * @method <selecthandler> // Populate hidden input fields on selecting the option
  */
 export const LocationAutoComplete = chakra(
-  ({ className, name, size, placeholder, error_msg }) => {
+  ({ className, name, size, placeholder, error_msg,required }) => {
     const { register, setValue } = useFormContext()
 
     const [hidden, setHidden] = useState(true)
@@ -99,7 +99,7 @@ export const LocationAutoComplete = chakra(
           />
           <InputRightElement>
           <IconButton onClick={clear}  minW='0' fontSize='200' aria-label='Clear' variant='link' icon={<CrossIcon/>}/></InputRightElement>
-          <input type="hidden" ref={register()} name={name + "_id"} />
+          <input type="hidden" ref={register({required:error_msg})} name={name + "_id"} />
           
         </InputGroup>
         <Box
