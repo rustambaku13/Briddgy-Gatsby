@@ -93,8 +93,10 @@ const MessagesWithRoom = props => {
 const Messages = observer(() => {
   useEffect(() => {
     MessageStore.pageOpen = true
+    FB?.CustomerChat?.hide();
     return () => {
       MessageStore.pageOpen = false
+      FB?.CustomerChat?.show(false)
     }
   }, [])
   if (!MessageStore.isChatReady) {
