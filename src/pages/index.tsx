@@ -44,12 +44,15 @@ const Home = ({ data }) => {
         maxW="full"
         mb={[20]}
         as="main"
+        pos='relative'
         // bgGradient="linear(to-t,crayolaGreen.base,tealBlue.dark)"
         className="landing-header"
-      >
-        <Box pl={[0, 0, 10]} pt={[14, 14, "120px"]} maxW='900px' w="100%">
+      >     
+      <Center d={['none','none','none','flex']} pos='absolute'  right={0} zIndex={-1} height='100%' w='100%' maxW='700px'>
+        <Img style={{flex:1}} alt="Overlay" fluid={data.overlay.childImageSharp.fluid}/>
+        </Center>   
+        <Box  pl={[0, 0, 10]} pt={[14, 14, "120px"]} maxW='770px' w="100%">
           <Heading
-            color="white"
             mb={12}
             textAlign="left"
             fontWeight="600"
@@ -80,7 +83,7 @@ const Home = ({ data }) => {
               ]}
             />
           </Heading>
-          <Text color="white" mb={12} fontSize="600" textAlign="left">
+          <Text mb={12} fontSize="600" textAlign="left">
             We connect travelers and orderers, making delivery more accessible
           </Text>
           <Flex>
@@ -90,7 +93,10 @@ const Home = ({ data }) => {
                   mb={5}
                   w={["100%", "100%", "auto"]}
                   mr={4}
-                  variant="outline"
+                  variant="lieBlueText"
+                  borderWidth='1px'
+                  fontWeight='600'
+                  borderColor='tealBlue.light'
                   size="lg"
                 >
                   Order with Briddgy
@@ -98,10 +104,10 @@ const Home = ({ data }) => {
               </Link>
               <Link to="/travel">
                 <Button
-                  color="text.dark"
+                  
                   mb={5}
                   w={["100%", "100%", "auto"]}
-                  variant="outline"
+                  variant="primary"
                   size="lg"
                 >
                   Travel with Briddgy
@@ -110,6 +116,8 @@ const Home = ({ data }) => {
             </Box>
           </Flex>
         </Box>
+        
+     
       </Container>
       <Box w="100%" mb={[20, 20, "150px"]} as="section">
         <Container h="100%" maxW="container.xl">
@@ -193,7 +201,7 @@ const Home = ({ data }) => {
             Purchase the most <strong>interesting</strong> and
             <strong> exclusive</strong> items from any point in the world
           </Text>
-          <Text textAlign="right">
+          <Text d='none' textAlign="right">
             <Text _hover={{ textDecor: "underline" }} as="span">
               <Link to="#">
                 more products <ChevronRightIcon />
@@ -203,7 +211,7 @@ const Home = ({ data }) => {
 
           <ProductGrid />
 
-          <Text mt="50px" fontSize="hb1" textAlign="right">
+          <Text d='none' mt="50px" fontSize="hb1" textAlign="right">
             Check our{" "}
             <Link to="/advice">
               <Text
@@ -276,7 +284,7 @@ const Home = ({ data }) => {
             Pick a travel destination with most orders and travel with{" "}
             <strong>minimum</strong> costs
           </Text>
-          <Text textAlign="right">
+          <Text d='none' textAlign="right">
             <Text _hover={{ textDecor: "underline" }} as="span">
               <Link to="#">
                 more destinations <ChevronRightIcon />
@@ -284,7 +292,7 @@ const Home = ({ data }) => {
             </Text>
           </Text>
             <DestinationSwiper/>
-          <Text mt="50px" fontSize="hb1" textAlign="right">
+          <Text d='none' mt="50px" fontSize="hb1" textAlign="right">
             Check our{" "}
             <Link to="/advice">
               <Text
@@ -331,10 +339,10 @@ export const query = graphql`
     #     }
     #   }
     # }
-    overlay: file(relativePath: { eq: "landing-overlay.png" }) {
+    overlay: file(relativePath: { eq: "landing_image.png" }) {
       childImageSharp {
-        fixed(width: 500) {
-          ...GatsbyImageSharpFixed
+        fluid {
+          ...GatsbyImageSharpFluid
         }
       }
     }

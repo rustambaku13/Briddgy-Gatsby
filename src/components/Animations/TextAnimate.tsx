@@ -30,7 +30,7 @@ export const TextAnimate = ({ texts, delay, ...props }) => {
   return (
     <Box d="inline-flex">
       <div className="typewriter">
-        <Text ref={ref} fontWeight="700" as="span" {...props}>
+        <Text  color='tealBlue.light' ref={ref} fontWeight="700" as="span" {...props}>
           {texts[0]}
         </Text>
       </div>

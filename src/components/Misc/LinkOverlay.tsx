@@ -4,7 +4,7 @@ import React from "react"
 
 export const LinkOverlay = chakra(({className,...props}) => {
   return (
-    <Link className={`link-overlay ${className}`} {...props}>
+    <Link zIndex={2} className={`link-overlay ${className}`} {...props}>
       {props.children}
     </Link>
   )

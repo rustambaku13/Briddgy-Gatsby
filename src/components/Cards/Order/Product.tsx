@@ -8,8 +8,11 @@ import { LinkOverlay } from "../../Misc/LinkOverlay"
 export const ProductCard = chakra(
   ({ className, product }: { className?: any; product: Product }) => {
     return (
+      
       <Flex
+        h='100%'
         className={className}
+        pos='relative'
         border="1px solid"
         cursor="pointer"
         borderRadius="lg"
@@ -18,7 +21,8 @@ export const ProductCard = chakra(
         _hover={{ bg: "gray.100" }}
         flexDir="column"
       >
-        <Link to={`/order/add/online?order_url=${product.url}&title=${product.title}&item_price=${product.price}&description=${product.description}`}>
+        <LinkOverlay  to={`/order/add/online?order_url=${product.url}&title=${product.title}&item_price=${product.price}&description=${product.description}`}/>
+       
         <Box p={3}>
           <Heading className="clamp-2" fontSize="xl" as="h4" mb={1}>
             {product.title}
@@ -30,7 +34,7 @@ export const ProductCard = chakra(
             </Text>
           </Text>
         </Box>
-        <Center flexGrow={1} overflow="hidden" m="auto" w="60%">
+        <Center   flex="1 1 auto" overflow="hidden" m="auto" w="60%">
           <Img
             className="full-width"
             alt="Product Item"
@@ -43,7 +47,7 @@ export const ProductCard = chakra(
             {product.price}$
           </Text>
         </Box>
-        </Link>
+        
       </Flex>
     )
   }

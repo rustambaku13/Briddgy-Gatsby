@@ -71,7 +71,7 @@ export const ProductGrid = () => {
       `}
       render={data => {
         return (
-          <Grid pt="50px" templateColumns="repeat(8, 1fr)" gap={[3, 5, 8]}>
+          <Grid pt="50px" gridAutoRows='1fr' templateColumns="repeat(8, 1fr)" gap={[3, 5, 8]}>
             <ProductCard
               gridColumn={["1 / span 4", "1 / span 4", "1 / span 2"]}
               product={data.products_vertical.edges?.[0].node.frontmatter}
