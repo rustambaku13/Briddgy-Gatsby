@@ -72,8 +72,8 @@ export const LocationAutoComplete = chakra(
       
       
       const [id, title] = [
-        e.currentTarget.getAttribute("data-value"),
-        e.currentTarget.getAttribute("data-title"),
+        e.target.getAttribute("data-value"),
+        e.target.getAttribute("data-title"),
         
       ]
       setValue(name + "_id", id)
@@ -126,6 +126,11 @@ export const LocationAutoComplete = chakra(
                   as="li"
                   fontSize="1em"
                   alignItems="center"
+                  sx={{
+                    ">*": {
+                      pointerEvents: "none",
+                    },
+                  }}
                   onClick={selectHandler}
                   data-value={location._id.$oid}
                   data-title={`${trimCityEmpty(location.city)}${location.country}`}

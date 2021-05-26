@@ -522,6 +522,7 @@ const AddOrderPage = ({ location }: PageProps) => {
           mx="auto"
           onSubmit={handleSubmit(pageChange)}
           as="form"
+          autoComplete='off'
           maxW="container.lg"
         >
           <FormProvider {...methods}>

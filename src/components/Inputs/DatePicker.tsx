@@ -365,7 +365,8 @@ const handleDayClick = (day)=>{
   
 
 return(
-  <Box flex={1} className='datepicker' pos='relative'>
+  <>
+  <Box flex={1} className='datepicker'>
   <Input border='none' aria-haspopup="listbox"
             autoComplete="off" placeholder="Select Date"  flex={1} fontWeight='500' 
     ml={2}
@@ -392,8 +393,14 @@ return(
     disabledDays={disabledDays}
     onDayMouseEnter={handleDayMouseEnter}/>
     
+   
   </Box>
+  <Box  className='datepicker-shadow'>
+
   </Box>
+  
+  </Box>
+  </>
    
 )
 

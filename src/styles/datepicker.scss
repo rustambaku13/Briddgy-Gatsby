@@ -73,14 +73,41 @@
 
 //  NEW ONE
 .datepicker{
-  &:focus-within > .wrapper {
-    display: block;
+  
+  position: relative;
+  &:not(.datepicker-shadow):focus-within >  {
+    .wrapper{
+      display: block;}
+      .datepicker-shadow{
+        display: block;;
+      }
+    
+    
+  }
+  .datepicker-shadow{
+    position: fixed;
+    z-index: -1;
+    display: none;
+    width: 100%;
+    left:0;
+    right:0;
+    top:0;
+    bottom:0;
+    height: 100%;
+    background-color: rgba(0,0,0,0.25);
   }
 .wrapper{
   z-index: 51;;
   display: none;
   position: absolute;
   top:50px;
+  @media screen and(max-width:640px) {
+    position: fixed;
+    top: 50vh;
+    transform: translate(-50%,-50%);
+    left:50vw;
+    box-shadow: 0 32px 80px 0px rgba(0,0,0,0.05);
+  }
 }
 }
 
