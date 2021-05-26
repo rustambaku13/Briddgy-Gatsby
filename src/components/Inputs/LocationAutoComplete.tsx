@@ -121,6 +121,7 @@ export const LocationAutoComplete = chakra(
             results.map((location: Location, index) => {
               return (
                 <Flex
+                  cursor='pointer'
                   textAlign="center"
                   as="li"
                   fontSize="1em"
