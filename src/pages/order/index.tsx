@@ -166,7 +166,7 @@ const AddOrder = ({ data }) => {
                 How are deliveries arranged?
               </Heading>
               <Text variant="secondary">
-                Arrange to meet in a public place with your shoppers via Grabr
+                Arrange to meet in a public place with your shoppers via Briddgy
                 messenger.
               </Text>
             </Box>

@@ -89,7 +89,7 @@ export const CollapsableOrderCard = chakra(
           <Box>
             <Text
               className="clamp-2"
-              h="3rem"
+              h="3.5rem"
               fontSize="600"
               color="text.medium"
               fontWeight="700"

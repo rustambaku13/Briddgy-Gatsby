@@ -107,7 +107,7 @@ const MediumOrderCard = chakra(
                     src={bmify(orderData.orderimage[0])}
                   />
                 </AspectRatio>
-                <VStack overflow="hidden" flex={1} h="100%">
+                <VStack overflow="hidden" alignItems='stretch' flex={1} h="100%">
                   <Flex alignItems="center" w="100%">
                     <Text
                       mr={2}
@@ -154,6 +154,8 @@ const MediumOrderCard = chakra(
                       </Text>
                     </Text>
                   </Box>
+                  
+                  <Link to={`/orders/${orderData.id}/`} >
                   <Button
                     onClick={callback}
                     d={["none", "block"]}
@@ -162,7 +164,7 @@ const MediumOrderCard = chakra(
                     w="100%"
                   >
                     {children}
-                  </Button>
+                  </Button></Link>
                 </VStack>
               </Flex>
               <Box
@@ -188,7 +190,8 @@ const MediumOrderCard = chakra(
                   </Text>
                 </Text>
               </Box>
-
+              <Box w='100%' zIndex={1}>
+              <Link to={`/orders/${orderData.id}/`}>
               <Button
                 onClick={callback}
                 d={["block", "none"]}
@@ -197,7 +200,8 @@ const MediumOrderCard = chakra(
                 w="100%"
               >
                 {children}
-              </Button>
+              </Button></Link>
+              </Box>
               <HStack alignItems="center" w="100%">
                 <Text color="text.medium" as="span">{`${trimCityEmpty(
                   orderData.src.city
@@ -232,10 +236,11 @@ export const MyMediumOrderCard = props => {
 
 export const PublicMediumOrderCardProposal = props => {
   const context = useContext(TripPageState)
-  const callback = () => {
+  const callback = (e) => {
     context.suggested.results = context.suggested.results.filter(
       item => item.id != props.orderData.id
     )
+    context.setSuggested({...context.suggested})
     context.suggested.count--
     getTripProposals(context.trip.id).then(e => {
       context.setProposals(e.data)

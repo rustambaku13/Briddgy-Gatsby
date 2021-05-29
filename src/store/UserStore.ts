@@ -118,7 +118,6 @@ class UserStore {
   *saveNewOrder() {
 
       if (this.new_order == null) throw Error("New Order is not defined")
-      debugger;
       const { data } = yield addOrder(this.new_order)
       const formData: FormData = yield compressAndReturn(this.new_order.files)
       formData.append("order_id", data.id)

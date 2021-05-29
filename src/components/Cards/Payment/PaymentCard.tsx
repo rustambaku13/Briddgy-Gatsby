@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react"
 import { OrderPageState } from "../../../providers/navPage"
 import { PaymentDisplay } from "../../Misc/Payment/PaymentDisplay"
 import logo from "../../../../static/assets/sgl.png"
+import {Hint} from '../../../components/Misc/Hint'
 import {
   Box,
   Button,
@@ -11,6 +12,9 @@ import {
   Image,
   Img,
   Flex,
+  CheckboxGroup,
+  Checkbox,
+  VStack,
 } from "@chakra-ui/react"
 import {
   CardCvcElement,
@@ -26,8 +30,11 @@ import CheckIcon from "../../../icons/Check"
 import UserStore from '../../../store/UserStore'
 import { LockIcon } from "../../../icons/Lock"
 import { StripeIcon } from "../../../icons/Stripe"
-import { createPaymentIntent, makeBalancePayment } from "../../../api/payment"
+import { createPaymentIntent, makeBalancePayment,convertCurrency } from "../../../api/payment"
 import { getQuote } from "../../../api/order"
+import { CountrySelectorCurrency } from "../../Inputs/CountrySelectorCurrency"
+import { FormProvider, useForm, useFormContext } from "react-hook-form"
+import { Loader } from "../../Misc/Loader"
 
 const CARD_ELEMENT_OPTIONS = {
   style: {
@@ -46,32 +53,145 @@ const CARD_ELEMENT_OPTIONS = {
   },
 }
 
+
+const PaymentStripe = ({loading,currency,prices})=>{
+  const [disabled, setDisabled] = useState(true)
+  const [selectedOption,setSelectedOption] = useState([])
+  const {register} = useFormContext()
+  const handleChange = async event => {
+    setDisabled(event.empty || event.error)
+  }
+  if(prices.loading)return null
+  
+  return(
+    <>
+    
+  <VStack alignItems='flex-start'>
+  <CheckboxGroup onChange={e=>{setSelectedOption(e.length?e.length==1?e:[e[1]]:[])}} value={selectedOption}   defaultValue={[]}>
+    <Flex alignItems='center' py={3} w='100%'>
+      <Checkbox  value="USD" mr={3}/>
+      <Box>
+      <Text fontWeight='600'>
+        International Credit Card
+      </Text>
+      <Text fontSize='300' variant='secondary'>
+        Pay with USD from anywhere in the world
+      </Text>
+      </Box>
+      <Box fontWeight='600' fontSize='500' ml='auto'>
+      ${prices.total_after_stripe}
+      </Box>
+    </Flex>
+    <Divider my={3}/>
+    {!prices.converted?null:(
+      <>
+      <Flex alignItems='center' py={3} w='100%'>
+      <Checkbox value={currency} mr={3}/>
+      <Box>
+      <Text fontWeight='600'>
+        Credit or debit card
+      </Text>
+      <Text fontSize='300' variant='secondary'>
+        Pay with local {currency}
+      </Text>
+      </Box>
+      <Box fontWeight='600' fontSize='500' ml='auto'>
+      {currency} {prices.converted}
+      </Box>
+    </Flex>
+    <Divider my={3}/></>
+    )}
+</CheckboxGroup>
+  <input type='hidden' name="payment_method"  value="stripe" ref={register()}/>
+  <input type='hidden' name="orderer_currency"  value={selectedOption[0]} ref={register()}/>
+  </VStack>
+    <Flex d='none' w="100%" mb={1} justifyContent="" alignItems="flex-end" flex={1}>
+        <StripeIcon
+          fill="white"
+          w="auto"
+          h="35px"
+          pos="relative"
+          left="-9px"
+          // ml="auto"
+          color="lilaPurple.dark"
+        />
+      </Flex>
+    <HStack spacing={3} mb={3}>
+    <Box
+      bg="outline.light"
+      px={2}
+      py={5}
+      borderRadius="base"
+      w="100%"
+      borderWidth="1px"
+    >
+      <CardNumberElement
+        onChange={handleChange}
+        options={{ showIcon: true }}
+      />
+    </Box>
+
+    <Box
+      w="150px"
+      bg="outline.light"
+      px={2}
+      py={5}
+      borderRadius="base"
+      borderWidth="1px"
+    >
+      <CardExpiryElement onChange={handleChange} />
+    </Box>
+    <Box
+      w="100px"
+      bg="outline.light"
+      px={2}
+      py={5}
+      borderRadius="base"
+      borderWidth="1px"
+    >
+      <CardCvcElement onChange={handleChange} />
+    </Box>
+  </HStack>
+  <Button
+    size="lg"
+    isDisabled={disabled || selectedOption.length==0}
+    fontWeight="600"
+    type="submit"
+    rightIcon={<LockIcon />}
+    w="100%"
+    mt={5}
+    isLoading={loading}
+    variant="success"
+  >
+    Pay Now
+  </Button>
+  </>
+
+  )
+
+}
+
+
 export const PaymentCard = () => {
   const context = useContext(OrderPageState)
-
-  const [clientSecret, setClientSecret] = useState("")
   const stripe = useStripe()
   const elements = useElements()
-  const [loading, setLoading] = useState(false)
-  const [disabled, setDisabled] = useState(true)
-  const [error, setError] = useState(null)
+  const [loading,setLoading] = useState(false)
   const [prices, setPrices] = useState({
     loading: true,
   })
   const [succeeded, setSucceeded] = useState(false)
-  const handleChange = async event => {
-    setDisabled(event.empty || event.error)
-
-    setError(event.error ? event.error.message : "")
-  }
+  const methods = useForm()
+  const currency = methods.watch("country_currency")
+  
+  
   const handleBalancePay =  e=>{
     setLoading(true)
-    e.preventDefault()
     makeBalancePayment(context.contract.id).then(e=>{
       context.contract.state = "FRZ"
       context.setStep(2)
       UserStore.me.balance = (parseFloat(UserStore.me.balance) - parseFloat(prices.stripe_balance_change)).toFixed(2)
-      setError(null)
+      // setError(null)
       setSucceeded(true)
     })
     .catch(()=>{
@@ -81,61 +201,98 @@ export const PaymentCard = () => {
       setLoading(false)
     })
   }
-  const handleSubmit = async e => {
+  const handleStripePay = async e => {    
     try {
       setLoading(true)
-      e.preventDefault()
       const {
         data: { clientSecret },
-      } = await createPaymentIntent(context.contract.id)
+      } = await createPaymentIntent(context.contract.id,e)
       const payload = await stripe.confirmCardPayment(clientSecret, {
         payment_method: {
           card: elements.getElement(CardNumberElement),
         },
       })
-
+      console.log(payload);
+      
       if (payload.error) {
-        setError(`Payment failed ${payload.error.message}`)
+        methods.setError("payment",{message:payload.error.message})
       } else {
         context.contract.state = "FRZ"
         context.setStep(2)
-        setError(null)
+        methods.setError("payment",undefined)
         setSucceeded(true)
       }
     } catch {
-      setError("Error has occured")
+      methods.setError("payment",{message:"Error has occured"})
     } finally {
       setLoading(false)
     }
   }
+  const handlePayment = async (e)=>{    
+    switch(e.payment_method){
+      case "stripe":
+        await handleStripePay(e)
+        break;
+      case "balance":
+        await handleBalancePay(e);
+        break;
+    }
+
+  }
+
 
   useEffect(()=>{
-    getQuote(context.contract.item_price,context.contract.price_bid,UserStore.me?.promo_balance || 0,UserStore.me?.balance || 0).then(({data})=>{
+    setPrices({loading:true})
+    if(!currency)return
+    getQuote(context.contract.item_price,context.contract.price_bid,UserStore.me?.promo_balance || 0,UserStore.me?.balance || 0).then(async ({data})=>{
+      if(currency=="USD")return data
+      const res = await convertCurrency(currency,data.total_after_stripe)
+      return {...data,converted:res.data}
+    })
+    .then((data)=>{
       setPrices(data)
+
     })
     .catch(()=>{
       
     })
-  },[])
+  },[currency])
 
   return (
-    <>
-      <PaymentDisplay p={0} borderRadius="0" bg="white" {...prices} />
-      <Text mt={5} as="h3" variant="secondary">
-        Total{" "}
-        <Text
-          as="span"
-          mt="-8px"
-          float="right"
-          fontSize="700"
-          color="black"
-          fontWeight="600"
-        >
-          ${prices.total_after_stripe}
-        </Text>
-        <Divider my={7} />
-      </Text>{" "}
-      <Box d={prices.total_after_stripe!=0?'none':'block'}>
+    <FormProvider {...methods}>
+      <form onSubmit={methods.handleSubmit(handlePayment)} >
+      <Flex
+              mb={5}
+              w="100%"
+              bg='white'
+              alignItems="center"
+              borderWidth="1px"
+              borderColor='tealBlue.base'
+              px={3}
+              borderRadius="md"
+              h="60px"
+            >
+              <Text color='tealBlue.base' as="label" whiteSpace='nowrap'>
+                Your Country
+              </Text>
+              <CountrySelectorCurrency
+                
+                name="country"
+                placeholder="United States"
+                fontSize="md"
+                
+              />
+            </Flex>
+      <Box>
+      {currency?<>
+      <PaymentDisplay  p={0} borderRadius="0" bg="white" {...prices} />
+      </>:
+      <Text textAlign='center'>
+        Please select your country to proceed with payment
+      </Text>
+      }
+      {currency?<PaymentStripe prices={prices} currency={currency} loading={loading}/>:null}
+      {/* <Box d={prices.total_after_stripe!=0?'none':'block'}>
       <Flex w="100%" mb={1} justifyContent="" alignItems="flex-end" flex={1}>
         <StripeIcon
           fill="white"
@@ -162,81 +319,9 @@ export const PaymentCard = () => {
           Pay With Balance
         </Button>
       </Box>
-      <Box d={prices.total_after_stripe!=0?"block":"none"}>
-      <Flex w="100%" mb={1} justifyContent="" alignItems="flex-end" flex={1}>
-        <StripeIcon
-          fill="white"
-          w="auto"
-          h="35px"
-          pos="relative"
-          left="-9px"
-          // ml="auto"
-          color="lilaPurple.dark"
-        />
-      </Flex>
-      <form id="payment-form" onSubmit={handleSubmit}>
-        <HStack spacing={3} mb={3}>
-          <Box
-            bg="outline.light"
-            px={2}
-            py={5}
-            borderRadius="base"
-            w="100%"
-            borderWidth="1px"
-          >
-            <CardNumberElement
-              onChange={handleChange}
-              options={{ showIcon: true }}
-            />
-          </Box>
-
-          <Box
-            w="150px"
-            bg="outline.light"
-            px={2}
-            py={5}
-            borderRadius="base"
-            borderWidth="1px"
-          >
-            <CardExpiryElement onChange={handleChange} />
-          </Box>
-          <Box
-            w="100px"
-            bg="outline.light"
-            px={2}
-            py={5}
-            borderRadius="base"
-            borderWidth="1px"
-          >
-            <CardCvcElement onChange={handleChange} />
-          </Box>
-        </HStack>
-        {error && (
-          <Text
-            className="card-error"
-            role="alert"
-            color="danger.base"
-            as="small"
-          >
-            {error}
-          </Text>
-        )}
-
-        <Button
-          size="lg"
-          isDisabled={disabled}
-          fontWeight="600"
-          type="submit"
-          rightIcon={<LockIcon />}
-          w="100%"
-          mt={5}
-          isLoading={loading}
-          variant="success"
-        >
-          Pay Now
-        </Button>
-      </form>
+       */}
       </Box>
-    </>
+      </form>
+    </FormProvider>
   )
 }

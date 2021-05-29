@@ -522,6 +522,8 @@ html {
 .options-autocomplete {
   position: absolute;
   min-width: 300px;
+  width:100%;
+  
   min-height: 50px;
   top: 100%;
   transition: 0.2s ease-in-out;

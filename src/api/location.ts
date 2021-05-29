@@ -12,14 +12,27 @@ import { ApiLocation } from "./../types/location"
 //   "x-rapidapi-host": "referential.p.rapidapi.com",
 //   useQueryString: true,
 // }
+
 export async function searchLocation(
   prefix: string,
   lang: string = "en"
 ): Promise<AxiosResponse<[ApiLocation]>> {
-  return axios_normal.get("/locations/autocomplete", {
+  return axios.get("https://backend.briddgy.com/locations/autocomplete", {
     params: {
       prefix,
       lang,
     },
   })
 }
+
+// export async function searchLocation(
+//   prefix: string,
+//   lang: string = "en"
+// ): Promise<AxiosResponse<[ApiLocation]>> {
+//   return axios_normal.get("/locations/autocomplete", {
+//     params: {
+//       prefix,
+//       lang,
+//     },
+//   })
+// }

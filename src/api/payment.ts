@@ -9,9 +9,12 @@ export async function getAccountUpdateLink(): Promise<any> {
 export async function createNewAccount(country): Promise<any> {
   return axios_normal.post(`/main/api/payment/new/`, { country })
 }
-export async function createPaymentIntent(contract_id): Promise<any> {
-  return axios_normal.get(`main/api/payment/intent/create/${contract_id}/`)
+export async function createPaymentIntent(contract_id,params): Promise<any> {
+  return axios_normal.get(`main/api/payment/intent/create/${contract_id}/`,{params})
 }
 export async function makeBalancePayment(contract_id):Promise<any>{
   return axios_normal.post(`main/api/payment/intent/balance/${contract_id}/`)
+} 
+export async function convertCurrency(currency,amount):Promise<any>{
+  return axios_normal.post(`main/api/payment/currency/`,{currency,amount})
 } 

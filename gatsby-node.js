@@ -1,4 +1,6 @@
 const path = require("path")
+const axios = require('axios');
+
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
@@ -81,6 +83,18 @@ exports.createPages = async ({ graphql, actions }) => {
     })
   })
 }
+exports.sourceNodes = async ({actions: {createNode}, createNodeId, createContentDigest}) => {
+  const {data} = await axios.get("https://backend.briddgy.com/locations/countries")
+  
+  return data.map(country => createNode({
+    ...country,
+    id: createNodeId(country.code),
+    internal: {
+      type: `Country`,
+      contentDigest: createContentDigest(country)
+    }
+  }));
+};
 
 exports.onCreatePage = async ({ page, actions }) => {
   const { createPage } = actions

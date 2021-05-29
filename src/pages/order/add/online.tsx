@@ -109,7 +109,7 @@ const Summary = ({ files, pageChange, back, page, adding }) => {
           Payment Details
         </Heading>
         <PaymentDisplay {...quote} />
-        <Text mt={8} as="h3" variant="secondary">
+        <Text mt={8} mb={5} as="h3" variant="secondary">
           Estimated Total{" "}
           <Text
             as="span"
@@ -121,6 +121,9 @@ const Summary = ({ files, pageChange, back, page, adding }) => {
           >
             {quote.loading ? <Spinner /> : `$ ${quote.total_after_stripe}`}
           </Text>
+        </Text>
+        <Text as='small'  variant="secondary">
+          *You will be able to pay with your local currency depending on your country once your settle a deal with traveler
         </Text>
         <Divider my={5} />
         <Text variant="secondary">
