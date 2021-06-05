@@ -2,7 +2,7 @@
 templateKey: blog
 slug: guide-how-to-add-a-trip-in-briddgy-2021-05-17
 language: en
-title: "Guide: How to add a trip in Briddgy"
+title: How to add Trip in Briddgy
 date: 2021-05-17T12:46:09.875Z
 description: Adding a trip in Briddgy is an essential step of earning while
   traveling. This post is going to guide you on that
@@ -13,6 +13,38 @@ tag:
   - Traveler
 scoppe_tag: Traveler
 ---
+<!--
+Guidelines for making a new FAQ POST
+1. Everything inside \\*\\*briddgy-faq-grid\\*\\* class
+2. Use \\*\\*col-2\\*\\* and \\*\\*span-2\\*\\* classes to position elements in grid. NOTE: No need for col-1 span-2
+3. Use \\*\\*<br/>\\*\\* Tags for adding vertical space
+4. Wrap the text in a \*\*<div></div>\*\* To modify its styles
+4. Use \*\*text-secondary\*\* class for lighter text. NOTE: It will be added in the website
+5. Use **text-center** class for centering the text
+6. Use proper headings starting from H2. H1 is reserved for title
+7. You can always extend these styles but never make it opinionated about the design: That is never include font-sizes, colors, design elements in it.
+-->
+
+<style>
+.briddgy-faq-grid{
+display:grid;
+grid-template-columns:repeat(2, 1fr);
+}
+.col-2{
+grid-column-start: 2;
+}
+.text-center{
+text-align:center;
+}
+.span-2{
+grid-column-end:span 2;
+}
+
+
+</style>
+
+<div class="briddgy-faq-grid">
+<div>
 
 ## **Adding a trip on Briddgy is very fast and easy**
 
@@ -31,3 +63,15 @@ That's it! Now that your trip is on Briddgy you can start earning money by trave
 <br/>
 
 Just contact the orderers and start your amazing journey :)
+
+</div>
+
+</div>
+
+<div class='col-2'>
+
+![Adding Trip on Briddgy](/assets/add_trip.gif "Adding Trip")
+
+</div>
+
+</div>
