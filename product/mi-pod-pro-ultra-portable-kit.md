@@ -1,7 +1,7 @@
 ---
 templateKey: product
 title: MI-POD PRO ULTRA PORTABLE KIT
-date: 2021-06-30T18:28:06.631Z
+date: 2021-06-29T18:28:06.631Z
 store: VaporDna
 categories:
   - MI-POD
